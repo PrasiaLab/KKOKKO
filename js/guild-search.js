@@ -388,7 +388,7 @@
       memberMessage.hidden = false;
       memberMessage.textContent =
         "랭킹 데이터에서 해당 결사 소속 멤버를 찾지 못했습니다. " +
-        "Who_are_you.json이 비어 있거나, 해당 멤버가 개인 랭킹에 포함되지 않았을 수 있습니다.";
+        "홈페이지 랭킹 기반으로 해당 멤버가 개인 랭킹에 포함되지 않았을 수 있습니다.";
 
       memberTableWrap.hidden = true;
     } else {
@@ -452,7 +452,7 @@
 
       if (!guildData.length) {
         setStatus(
-          "Who_are_you_guild.json에 조회할 결사 데이터가 없습니다.",
+          "조회할 결사 데이터가 없습니다.",
           "error"
         );
         return;
