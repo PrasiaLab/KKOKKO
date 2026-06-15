@@ -1,34 +1,93 @@
 (() => {
   "use strict";
 
-  const GUILD_DATA_URL = "./data/Who_are_you_guild.json";
-  const CHARACTER_DATA_URL = "./data/Who_are_you.json";
+  const GUILD_DATA_URL =
+    "./data/Who_are_you_guild.json";
 
-  const SERVER_NAMES = window.PRASIA_MAPPINGS?.servers || {};
-  const CLASS_NAMES = window.PRASIA_MAPPINGS?.classes || {};
+  /*
+   * 결사 자체 조회는 길드 랭킹 데이터,
+   * 보기 팝업의 멤버는 클래스별 랭킹 데이터를 참조합니다.
+   */
+  const MEMBER_DATA_URL =
+    "./data/Who_are_you_class.json";
 
-  const form = document.getElementById("guildSearchForm");
-  const input = document.getElementById("guildSearchInput");
-  const button = document.getElementById("guildSearchButton");
-  const status = document.getElementById("guildSearchStatus");
-  const resultWrap = document.getElementById("guildResultWrap");
-  const resultCount = document.getElementById("guildResultCount");
-  const resultBody = document.getElementById("guildResultBody");
+  const mappings =
+    window.PRASIA_MAPPINGS || {};
 
-  const memberModal = document.getElementById("guildMemberModal");
-  const memberModalTitle = document.getElementById("guildMemberModalTitle");
-  const memberModalSub = document.getElementById("guildMemberModalSub");
-  const memberMessage = document.getElementById("guildMemberMessage");
-  const memberTableWrap = document.getElementById("guildMemberTableWrap");
-  const memberBody = document.getElementById("guildMemberBody");
-  const memberClose = document.getElementById("guildMemberModalClose");
+  const serverNames =
+    mappings.servers || {};
 
-  if (!form || !input || !resultBody || !memberModal) {
+  const classNames =
+    mappings.classes || {};
+
+  const form = document.getElementById(
+    "guildSearchForm"
+  );
+
+  const input = document.getElementById(
+    "guildSearchInput"
+  );
+
+  const button = document.getElementById(
+    "guildSearchButton"
+  );
+
+  const status = document.getElementById(
+    "guildSearchStatus"
+  );
+
+  const resultWrap = document.getElementById(
+    "guildResultWrap"
+  );
+
+  const resultCount = document.getElementById(
+    "guildResultCount"
+  );
+
+  const resultBody = document.getElementById(
+    "guildResultBody"
+  );
+
+  const memberModal = document.getElementById(
+    "guildMemberModal"
+  );
+
+  const memberModalTitle = document.getElementById(
+    "guildMemberModalTitle"
+  );
+
+  const memberModalSub = document.getElementById(
+    "guildMemberModalSub"
+  );
+
+  const memberMessage = document.getElementById(
+    "guildMemberMessage"
+  );
+
+  const memberTableWrap = document.getElementById(
+    "guildMemberTableWrap"
+  );
+
+  const memberBody = document.getElementById(
+    "guildMemberBody"
+  );
+
+  const memberClose = document.getElementById(
+    "guildMemberModalClose"
+  );
+
+  if (
+    !form ||
+    !input ||
+    !resultBody ||
+    !memberModal
+  ) {
     return;
   }
 
   let guildData = null;
-  let characterData = null;
+  let memberRankings = null;
+  let memberClassMap = {};
 
   function normalizeText(value) {
     return String(value ?? "")
@@ -37,40 +96,31 @@
       .toLocaleLowerCase("en-US");
   }
 
-  function getFirst(source, keys, fallback = "") {
-    if (!source || typeof source !== "object") {
+  function getFirst(
+    source,
+    keys,
+    fallback = ""
+  ) {
+    if (
+      !source ||
+      typeof source !== "object"
+    ) {
       return fallback;
     }
 
     for (const key of keys) {
       const value = source[key];
 
-      if (value !== undefined && value !== null && value !== "") {
+      if (
+        value !== undefined &&
+        value !== null &&
+        value !== ""
+      ) {
         return value;
       }
     }
 
     return fallback;
-  }
-
-  function toArray(value) {
-    if (Array.isArray(value)) {
-      return value;
-    }
-
-    if (value && Array.isArray(value.data)) {
-      return value.data;
-    }
-
-    if (value && Array.isArray(value.items)) {
-      return value.items;
-    }
-
-    if (value && Array.isArray(value.list)) {
-      return value.list;
-    }
-
-    return [];
   }
 
   async function fetchJson(url) {
@@ -79,40 +129,52 @@
     });
 
     if (!response.ok) {
-      throw new Error(`${url} 불러오기 실패 (${response.status})`);
+      throw new Error(
+        "데이터를 불러오지 못했습니다."
+      );
     }
 
-    const text = await response.text();
-
-    if (!text.trim()) {
-      return [];
-    }
-
-    return JSON.parse(text);
+    return response.json();
   }
 
-  async function loadData() {
-    if (guildData && characterData) {
+  async function loadGuildData() {
+    if (guildData) {
       return;
     }
 
-    const [guildJson, characterJson] = await Promise.all([
-      fetchJson(GUILD_DATA_URL),
-      fetchJson(CHARACTER_DATA_URL)
-    ]);
+    const data = await fetchJson(
+      GUILD_DATA_URL
+    );
 
-    guildData = toArray(guildJson);
-    characterData = toArray(characterJson);
+    guildData = Array.isArray(data)
+      ? data
+      : [];
+  }
+
+  async function loadMemberData() {
+    if (memberRankings) {
+      return;
+    }
+
+    const data = await fetchJson(
+      MEMBER_DATA_URL
+    );
+
+    memberRankings = Array.isArray(
+      data?.rankings
+    )
+      ? data.rankings
+      : [];
+
+    memberClassMap =
+      data?.class_map || {};
   }
 
   function getGuildName(item) {
     return getFirst(item, [
       "guild_name",
       "guildName",
-      "guild",
-      "guild_nm",
-      "clan_name",
-      "clanName"
+      "guild"
     ]);
   }
 
@@ -120,141 +182,98 @@
     return getFirst(item, [
       "world",
       "server",
-      "server_name",
-      "serverName",
-      "world_name",
-      "worldName",
       "world_id",
       "worldId"
     ]);
   }
 
-  function getCharacterWorld(item) {
-    return getFirst(item, [
-      "world",
-      "server",
-      "server_name",
-      "serverName",
-      "world_name",
-      "worldName",
-      "world_id",
-      "worldId"
-    ]);
+  function formatServerName(value) {
+    const raw = String(value ?? "").trim();
+
+    return serverNames[raw] || raw || "-";
   }
 
-  /*
-   * JSON의 world 값이 "2-1"처럼 들어오면
-   * 공통 서버 매핑을 사용해 "론도01"로 출력합니다.
-   */
-  function displayServerName(worldValue) {
-    const worldCode = String(worldValue ?? "").trim();
+  function formatClassName(item) {
+    const code = String(
+      item.class ||
+      item.ranking_class_code ||
+      ""
+    ).trim();
 
-    if (!worldCode) {
-      return "알 수 없음";
-    }
+    const lower = code.toLowerCase();
 
-    return SERVER_NAMES[worldCode] || worldCode;
-  }
-
-  function sameWorld(guild, character) {
-    const guildWorld = normalizeText(getGuildWorld(guild));
-    const characterWorld = normalizeText(getCharacterWorld(character));
-
-    if (!guildWorld || !characterWorld) {
-      return true;
-    }
-
-    return guildWorld === characterWorld;
+    return (
+      item.ranking_class_name ||
+      classNames[code] ||
+      memberClassMap[lower] ||
+      code ||
+      "-"
+    );
   }
 
   function findRankedMembers(guild) {
-    const targetGuild = normalizeText(getGuildName(guild));
+    const targetWorld = normalizeText(
+      getGuildWorld(guild)
+    );
 
-    return characterData
-      .filter((character) => {
-        const characterGuild = normalizeText(getGuildName(character));
+    const targetGuild = normalizeText(
+      getGuildName(guild)
+    );
 
-        return characterGuild === targetGuild && sameWorld(guild, character);
-      })
-      .map((character) => {
-        return {
-          nickname: getFirst(
-            character,
-            [
-              "gc_name",
-              "gcName",
-              "character_name",
-              "characterName",
-              "nickname",
-              "name"
-            ],
-            "알 수 없음"
-          ),
+    const unique = new Map();
 
-          raidLevel: getFirst(
-            character,
-            [
-              "raid_level",
-              "raidLevel",
-              "grade",
-              "subjugation_level",
-              "subjugationLevel",
-              "boss_level",
-              "bossLevel"
-            ],
-            "-"
-          ),
+    memberRankings.forEach((member) => {
+      const sameWorld =
+        normalizeText(member.world) ===
+        targetWorld;
 
-          className: getFirst(
-            character,
-            [
-              "class_name",
-              "className",
-              "class",
-              "job",
-              "job_name",
-              "jobName"
-            ],
-            "-"
-          ),
+      const sameGuild =
+        normalizeText(member.guild) ===
+        targetGuild;
 
-          level: getFirst(
-            character,
-            [
-              "level",
-              "character_level",
-              "characterLevel",
-              "lv"
-            ],
-            "-"
-          )
-        };
-      })
+      if (!sameWorld || !sameGuild) {
+        return;
+      }
+
+      const uniqueKey = [
+        normalizeText(member.world),
+        normalizeText(member.name)
+      ].join("|");
+
+      if (!unique.has(uniqueKey)) {
+        unique.set(uniqueKey, {
+          nickname: member.name || "-",
+          grade: Number(member.grade) || 0,
+          className: formatClassName(member),
+          level: Number(member.level) || 0
+        });
+      }
+    });
+
+    return Array.from(unique.values())
       .sort((a, b) => {
-        const raidDifference =
-          Number(b.raidLevel || 0) - Number(a.raidLevel || 0);
-
-        if (raidDifference !== 0) {
-          return raidDifference;
+        if (b.level !== a.level) {
+          return b.level - a.level;
         }
 
-        return Number(b.level || 0) - Number(a.level || 0);
+        if (b.grade !== a.grade) {
+          return b.grade - a.grade;
+        }
+
+        return a.nickname.localeCompare(
+          b.nickname,
+          "ko"
+        );
       });
   }
 
-  function formatClassName(value) {
-    const classCode = String(value ?? "").trim();
-
-    if (!classCode) {
-      return "-";
-    }
-
-    return CLASS_NAMES[classCode] || classCode;
-  }
-
-  function setStatus(message, type = "") {
+  function setStatus(
+    message,
+    type = ""
+  ) {
     status.textContent = message;
-    status.className = "guild-search-status";
+    status.className =
+      "guild-search-status";
 
     if (type) {
       status.classList.add(type);
@@ -267,7 +286,10 @@
     resultCount.textContent = "0개";
   }
 
-  function createCell(text, className = "") {
+  function createCell(
+    text,
+    className = ""
+  ) {
     const cell = document.createElement("td");
 
     cell.textContent = String(text ?? "-");
@@ -289,9 +311,7 @@
         guild,
         [
           "guild_member_count",
-          "guildMemberCount",
-          "member_count",
-          "memberCount"
+          "guildMemberCount"
         ],
         0
       );
@@ -300,19 +320,24 @@
         guild,
         [
           "max_guild_member_count",
-          "maxGuildMemberCount",
-          "max_member_count",
-          "maxMemberCount"
+          "maxGuildMemberCount"
         ],
         "-"
       );
 
       row.appendChild(
-        createCell(displayServerName(getGuildWorld(guild)))
+        createCell(
+          formatServerName(
+            getGuildWorld(guild)
+          )
+        )
       );
 
       row.appendChild(
-        createCell(getGuildName(guild), "guild-name-cell")
+        createCell(
+          getGuildName(guild),
+          "guild-name-cell"
+        )
       );
 
       row.appendChild(
@@ -321,11 +346,7 @@
             guild,
             [
               "guild_master",
-              "guildMaster",
-              "master_name",
-              "masterName",
-              "leader_name",
-              "leaderName"
+              "guildMaster"
             ],
             "-"
           )
@@ -345,70 +366,109 @@
             guild,
             [
               "guild_level",
-              "guildLevel",
-              "level"
+              "guildLevel"
             ],
             "-"
           )
         )
       );
 
-      const actionCell = document.createElement("td");
-      const viewButton = document.createElement("button");
+      const actionCell =
+        document.createElement("td");
+
+      const viewButton =
+        document.createElement("button");
 
       viewButton.type = "button";
-      viewButton.className = "guild-view-button";
+      viewButton.className =
+        "guild-view-button";
       viewButton.textContent = "보기";
 
-      viewButton.addEventListener("click", () => {
-        openMemberModal(guild);
-      });
+      viewButton.addEventListener(
+        "click",
+        () => {
+          openMemberModal(guild);
+        }
+      );
 
       actionCell.appendChild(viewButton);
       row.appendChild(actionCell);
       resultBody.appendChild(row);
     });
 
-    resultCount.textContent = `${guilds.length}개`;
+    resultCount.textContent =
+      `${guilds.length}개`;
+
     resultWrap.hidden = false;
   }
 
-  function openMemberModal(guild) {
-    const members = findRankedMembers(guild);
+  async function openMemberModal(guild) {
     const guildName = getGuildName(guild);
-    const serverName = displayServerName(getGuildWorld(guild));
+    const serverName = formatServerName(
+      getGuildWorld(guild)
+    );
 
-    memberModalTitle.textContent = guildName || "결사 멤버";
+    memberModalTitle.textContent =
+      guildName || "결사 멤버";
+
     memberModalSub.textContent =
-      `${serverName} · 랭킹 데이터에 존재하는 멤버 ${members.length}명`;
+      `${serverName} · 멤버 데이터를 불러오는 중`;
 
     memberBody.innerHTML = "";
+    memberTableWrap.hidden = true;
+    memberMessage.hidden = false;
+    memberMessage.textContent =
+      "멤버 정보를 불러오는 중입니다.";
 
-    if (!members.length) {
-      memberMessage.hidden = false;
-      memberMessage.textContent =
-        "랭킹 데이터에서 해당 결사 소속 멤버를 찾지 못했습니다. " +
-        "홈페이지 랭킹 기반으로 해당 멤버가 개인 랭킹에 포함되지 않았을 수 있습니다.";
+    memberModal.classList.add("open");
+    memberModal.setAttribute(
+      "aria-hidden",
+      "false"
+    );
 
-      memberTableWrap.hidden = true;
-    } else {
+    document.body.style.overflow = "hidden";
+
+    try {
+      await loadMemberData();
+
+      const members =
+        findRankedMembers(guild);
+
+      memberModalSub.textContent =
+        `${serverName} · 랭킹에 존재하는 멤버 ${members.length}명`;
+
+      memberBody.innerHTML = "";
+
+      if (!members.length) {
+        memberMessage.hidden = false;
+        memberMessage.textContent =
+          "랭킹 데이터에서 해당 결사 소속 멤버를 찾지 못했습니다.";
+
+        memberTableWrap.hidden = true;
+        return;
+      }
+
       memberMessage.hidden = true;
       memberTableWrap.hidden = false;
 
       members.forEach((member) => {
-        const row = document.createElement("tr");
+        const row =
+          document.createElement("tr");
 
         row.appendChild(
           createCell(member.nickname)
         );
 
         row.appendChild(
-          createCell(member.raidLevel, "guild-member-raid")
+          createCell(
+            member.grade,
+            "guild-member-raid"
+          )
         );
 
         row.appendChild(
           createCell(
-            formatClassName(member.className),
+            member.className,
             "guild-member-job"
           )
         );
@@ -419,59 +479,89 @@
 
         memberBody.appendChild(row);
       });
-    }
+    } catch (error) {
+      console.error(error);
 
-    memberModal.classList.add("open");
-    memberModal.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
+      memberModalSub.textContent =
+        `${serverName} · 멤버 정보`;
+
+      memberMessage.hidden = false;
+      memberMessage.textContent =
+        "멤버 정보를 불러오지 못했습니다.";
+
+      memberTableWrap.hidden = true;
+    }
   }
 
   function closeMemberModal() {
     memberModal.classList.remove("open");
-    memberModal.setAttribute("aria-hidden", "true");
+    memberModal.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
     document.body.style.overflow = "";
   }
 
   async function searchGuilds() {
-    const keyword = normalizeText(input.value);
+    const keyword = normalizeText(
+      input.value
+    );
 
     clearResults();
 
     if (!keyword) {
-      setStatus("조회할 결사명을 입력해주세요.", "error");
+      setStatus(
+        "조회할 결사명을 입력해주세요.",
+        "error"
+      );
+
       input.focus();
       return;
     }
 
     button.disabled = true;
     button.textContent = "조회 중";
-    setStatus("결사 데이터를 불러오는 중입니다.");
+
+    setStatus(
+      "결사 데이터를 불러오는 중입니다."
+    );
 
     try {
-      await loadData();
+      await loadGuildData();
 
       if (!guildData.length) {
         setStatus(
-          "조회할 결사 데이터가 없습니다.",
+          "표시할 결사 데이터가 없습니다.",
           "error"
         );
+
         return;
       }
 
-      const matches = guildData.filter((guild) => {
-        return normalizeText(getGuildName(guild)) === keyword;
-      });
+      const matches = guildData.filter(
+        (guild) => {
+          return (
+            normalizeText(
+              getGuildName(guild)
+            ) === keyword
+          );
+        }
+      );
 
       if (!matches.length) {
         setStatus(
           `‘${input.value.trim()}’와 일치하는 결사를 찾지 못했습니다.`,
           "error"
         );
+
         return;
       }
 
       matches.sort((a, b) => {
-        const worldCompare = String(getGuildWorld(a)).localeCompare(
+        const worldCompare = String(
+          getGuildWorld(a)
+        ).localeCompare(
           String(getGuildWorld(b)),
           "ko",
           {
@@ -489,8 +579,7 @@
               b,
               [
                 "guild_level",
-                "guildLevel",
-                "level"
+                "guildLevel"
               ],
               0
             )
@@ -500,8 +589,7 @@
               a,
               [
                 "guild_level",
-                "guildLevel",
-                "level"
+                "guildLevel"
               ],
               0
             )
@@ -512,14 +600,14 @@
       renderResults(matches);
 
       setStatus(
-        `대소문자를 구분하지 않고 ‘${input.value.trim()}’와 일치하는 결사를 조회했습니다.`,
+        `‘${input.value.trim()}’와 일치하는 결사를 조회했습니다.`,
         "success"
       );
     } catch (error) {
       console.error(error);
 
       setStatus(
-        "결사 데이터를 불러오지 못했습니다. JSON 파일 경로와 형식을 확인해주세요.",
+        "결사 데이터를 불러오지 못했습니다.",
         "error"
       );
     } finally {
@@ -528,25 +616,37 @@
     }
   }
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    searchGuilds();
-  });
-
-  memberClose.addEventListener("click", closeMemberModal);
-
-  memberModal.addEventListener("click", (event) => {
-    if (event.target === memberModal) {
-      closeMemberModal();
+  form.addEventListener(
+    "submit",
+    (event) => {
+      event.preventDefault();
+      searchGuilds();
     }
-  });
+  );
 
-  document.addEventListener("keydown", (event) => {
-    if (
-      event.key === "Escape" &&
-      memberModal.classList.contains("open")
-    ) {
-      closeMemberModal();
+  memberClose.addEventListener(
+    "click",
+    closeMemberModal
+  );
+
+  memberModal.addEventListener(
+    "click",
+    (event) => {
+      if (event.target === memberModal) {
+        closeMemberModal();
+      }
     }
-  });
+  );
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (
+        event.key === "Escape" &&
+        memberModal.classList.contains("open")
+      ) {
+        closeMemberModal();
+      }
+    }
+  );
 })();
