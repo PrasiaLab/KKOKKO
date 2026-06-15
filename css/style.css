@@ -95,8 +95,13 @@ button {
 .side-menu {
   min-height:0;
   margin-top:13px;
-  overflow-y:auto;
-  scrollbar-width:thin
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.side-menu::-webkit-scrollbar {
+  display: none;
 }
 
 .menu-section-title {
@@ -127,6 +132,7 @@ button {
   text-align:left;
   cursor:pointer;
   transition:.18s
+  max-width: 100%;
 }
 
 .side-menu-item span {
