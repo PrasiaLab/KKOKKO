@@ -7,6 +7,7 @@
   <title>맛나는꼬꼬 | Prasia Lab</title>
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/guild-search.css">
+  <link rel="stylesheet" href="./css/statistics.css">
 </head>
 <body>
   <button class="mobile-menu-button" id="mobileMenuButton" aria-label="메뉴 열기">☰</button>
@@ -100,7 +101,128 @@
 
       <section class="page" id="recruit"><div class="page-heading simple"><div><p class="eyebrow">RECRUIT</p><h1>결사원 모집</h1><p class="page-description">맛나는꼬꼬 결사원 모집 안내 이미지입니다.</p></div></div><div class="content-panel image-viewer"><img src="./images/kkokkocm.png" alt="결사원 모집 안내 이미지"></div></section>
 
-      <section class="page" id="statistics"><div class="page-heading simple"><div><p class="eyebrow">SERVER DATA</p><h1>전체 서버 통계</h1><p class="page-description">레벨, 클래스, 토벌 레벨별 통계를 제공할 예정입니다.</p></div></div><div class="content-panel"><div class="empty-state"><span class="empty-icon">▥</span><strong>통계 데이터 연동 준비 중</strong><p>‘너 누구야’에서 추출한 JSON 데이터를 기준으로 차트와 표를 구성합니다.</p></div></div></section>
+      <section class="page" id="statistics">
+        <div class="page-heading simple">
+          <div>
+            <p class="eyebrow">SERVER DATA</p>
+            <h1>전체 서버 통계</h1>
+            <p class="page-description">
+              전체 서버의 레벨, 토벌 레벨, 직업 분포와 대상자 정보를 확인합니다.
+            </p>
+          </div>
+
+          <div class="statistics-updated">
+            <span>자료 갱신 시간</span>
+            <strong id="statisticsUpdatedAt">불러오는 중</strong>
+          </div>
+        </div>
+
+        <div class="content-panel statistics-panel">
+          <div class="statistics-tabs" role="tablist" aria-label="통계 구분">
+            <button
+              class="statistics-tab active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              data-stat-mode="level"
+            >
+              레벨통계
+            </button>
+
+            <button
+              class="statistics-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-stat-mode="grade"
+            >
+              토벌통계
+            </button>
+
+            <button
+              class="statistics-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-stat-mode="class"
+            >
+              직업통계
+            </button>
+          </div>
+
+          <div class="statistics-status" id="statisticsStatus" role="status">
+            통계 데이터를 불러오는 중입니다.
+          </div>
+
+          <div class="statistics-content" id="statisticsContent" hidden>
+            <div class="statistics-summary">
+              <div>
+                <span id="statisticsModeLabel">레벨통계</span>
+                <strong id="statisticsTotalCount">0명</strong>
+              </div>
+
+              <p id="statisticsDescription">
+                최고 레벨부터 10개 레벨의 인원과 비율입니다.
+              </p>
+            </div>
+
+            <div class="statistics-card-grid" id="statisticsCardGrid"></div>
+
+            <section class="statistics-detail">
+              <div class="statistics-detail-heading">
+                <div>
+                  <span class="statistics-detail-kicker">TARGET LIST</span>
+                  <h2 id="statisticsDetailTitle">대상자 목록</h2>
+                </div>
+
+                <div class="statistics-detail-count">
+                  <strong id="statisticsDetailCount">0명</strong>
+                  <span>최대 1,000명</span>
+                </div>
+              </div>
+
+              <div class="statistics-table-scroll">
+                <table class="statistics-table">
+                  <thead>
+                    <tr>
+                      <th>닉네임</th>
+                      <th>결사명</th>
+                      <th>직업</th>
+                      <th>레벨</th>
+                      <th>토벌레벨</th>
+                      <th>서버명</th>
+                    </tr>
+                  </thead>
+
+                  <tbody id="statisticsTableBody"></tbody>
+                </table>
+              </div>
+
+              <div class="statistics-pagination" id="statisticsPagination">
+                <button
+                  class="statistics-page-arrow"
+                  id="statisticsPrevPage"
+                  type="button"
+                  aria-label="이전 페이지"
+                >
+                  ◀
+                </button>
+
+                <span id="statisticsPageInfo">1 / 1</span>
+
+                <button
+                  class="statistics-page-arrow"
+                  id="statisticsNextPage"
+                  type="button"
+                  aria-label="다음 페이지"
+                >
+                  ▶
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
 
       <section class="page" id="guild-ranking"><div class="page-heading simple"><div><p class="eyebrow">GUILD RANKING</p><h1>결사 순위</h1><p class="page-description">전체 순위와 레벨·토벌 기준 순위를 구분해 제공할 예정입니다.</p></div></div><div class="content-panel"><div class="empty-state"><span class="empty-icon">♛</span><strong>결사 순위 기능 준비 중</strong><p>결사 랭킹 추출값과 별도 계산 기준을 결합해 표시합니다.</p></div></div></section>
 
@@ -109,24 +231,66 @@
           <div>
             <p class="eyebrow">GUILD SEARCH</p>
             <h1>결사 조회</h1>
-            <p class="page-description">전체 서버의 결사명을 검색하고 결사 정보와 랭킹에 존재하는 멤버를 확인합니다.</p>
+            <p class="page-description">
+              전체 서버의 결사명을 검색하고 결사 정보와 랭킹에 존재하는 멤버를 확인합니다.
+            </p>
           </div>
         </div>
+
         <div class="content-panel guild-search-panel">
           <form class="guild-search-form" id="guildSearchForm">
             <label class="guild-search-field" for="guildSearchInput">
               <span>결사명</span>
-              <input id="guildSearchInput" type="search" placeholder="조회할 결사명을 입력하세요" autocomplete="off" spellcheck="false">
+              <input
+                id="guildSearchInput"
+                type="search"
+                placeholder="조회할 결사명을 입력하세요"
+                autocomplete="off"
+                spellcheck="false"
+              >
             </label>
-            <button class="guild-search-button" id="guildSearchButton" type="submit">조회</button>
+
+            <button
+              class="guild-search-button"
+              id="guildSearchButton"
+              type="submit"
+            >
+              조회
+            </button>
           </form>
-          <div class="guild-search-guide">영문 결사명은 대소문자를 구분하지 않습니다. 예: <strong>DOG</strong>, <strong>Dog</strong>, <strong>dog</strong></div>
-          <div class="guild-search-status" id="guildSearchStatus" role="status">결사명을 입력한 뒤 조회 버튼을 눌러주세요.</div>
+
+          <div class="guild-search-guide">
+            영문 결사명은 대소문자를 구분하지 않습니다.
+            예: <strong>DOG</strong>, <strong>Dog</strong>, <strong>dog</strong>
+          </div>
+
+          <div
+            class="guild-search-status"
+            id="guildSearchStatus"
+            role="status"
+          >
+            결사명을 입력한 뒤 조회 버튼을 눌러주세요.
+          </div>
+
           <div class="guild-result-wrap" id="guildResultWrap" hidden>
-            <div class="guild-result-summary"><strong id="guildResultCount">0개</strong><span>의 결사를 찾았습니다.</span></div>
+            <div class="guild-result-summary">
+              <strong id="guildResultCount">0개</strong>
+              <span>의 결사를 찾았습니다.</span>
+            </div>
+
             <div class="guild-table-scroll">
               <table class="guild-result-table">
-                <thead><tr><th>서버명</th><th>결사명</th><th>결사장</th><th>결사멤버</th><th>결사레벨</th><th>보기</th></tr></thead>
+                <thead>
+                  <tr>
+                    <th>서버명</th>
+                    <th>결사명</th>
+                    <th>결사장</th>
+                    <th>결사멤버</th>
+                    <th>결사레벨</th>
+                    <th>보기</th>
+                  </tr>
+                </thead>
+
                 <tbody id="guildResultBody"></tbody>
               </table>
             </div>
@@ -143,17 +307,55 @@
   </div>
 
 
-  <div class="guild-member-modal" id="guildMemberModal" aria-hidden="true">
-    <div class="guild-member-dialog" role="dialog" aria-modal="true" aria-labelledby="guildMemberModalTitle">
+  <div
+    class="guild-member-modal"
+    id="guildMemberModal"
+    aria-hidden="true"
+  >
+    <div
+      class="guild-member-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="guildMemberModalTitle"
+    >
       <div class="guild-member-header">
-        <div><span class="modal-kicker">RANKED GUILD MEMBERS</span><strong id="guildMemberModalTitle">결사 멤버</strong><p id="guildMemberModalSub"></p></div>
-        <button class="guild-member-close" id="guildMemberModalClose" type="button" aria-label="닫기">✕</button>
+        <div>
+          <span class="modal-kicker">RANKED GUILD MEMBERS</span>
+          <strong id="guildMemberModalTitle">결사 멤버</strong>
+          <p id="guildMemberModalSub"></p>
+        </div>
+
+        <button
+          class="guild-member-close"
+          id="guildMemberModalClose"
+          type="button"
+          aria-label="닫기"
+        >
+          ✕
+        </button>
       </div>
+
       <div class="guild-member-body">
-        <div class="guild-member-message" id="guildMemberMessage"></div>
-        <div class="guild-member-table-scroll" id="guildMemberTableWrap" hidden>
+        <div
+          class="guild-member-message"
+          id="guildMemberMessage"
+        ></div>
+
+        <div
+          class="guild-member-table-scroll"
+          id="guildMemberTableWrap"
+          hidden
+        >
           <table class="guild-member-table">
-            <thead><tr><th>닉네임</th><th>토벌레벨</th><th>직업</th><th>레벨</th></tr></thead>
+            <thead>
+              <tr>
+                <th>닉네임</th>
+                <th>토벌레벨</th>
+                <th>직업</th>
+                <th>레벨</th>
+              </tr>
+            </thead>
+
             <tbody id="guildMemberBody"></tbody>
           </table>
         </div>
@@ -170,6 +372,7 @@
 
   <script src="./js/app.js"></script>
   <script src="./js/mappings.js"></script>
+  <script src="./js/statistics.js"></script>
   <script src="./js/guild-search.js"></script>
 </body>
 </html>
