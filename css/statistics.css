@@ -361,3 +361,58 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* =========================================================
+   통계 화면 가독성 보강
+   ========================================================= */
+
+.statistics-status[hidden],
+.statistics-content[hidden] {
+  display: none !important;
+}
+
+.statistics-tab {
+  font-size: 16px;
+  letter-spacing: -0.2px;
+}
+
+.statistics-summary span {
+  color: #b8c1ce;
+  font-size: 15px;
+}
+
+.statistics-summary p {
+  color: #aeb8c7;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.statistics-card-label {
+  font-size: 18px;
+  letter-spacing: -0.3px;
+}
+
+.statistics-card-count {
+  font-size: 24px;
+}
+
+.statistics-card-ratio {
+  color: #a9b7cb;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.statistics-detail-heading h2 {
+  font-size: 25px;
+}
+
+.statistics-table th {
+  color: #c2cad5;
+  font-size: 13px;
+}
+
+.statistics-table td {
+  font-size: 15px;
+  font-weight: 650;
+}

@@ -1,0 +1,114 @@
+/* =========================================================
+   공통 개선 사항
+   - 폰트 가독성
+   - hidden 요소 숨김
+   - 좌측 캐릭터 이미지 맞춤
+   - 메인 데이터 상태 배지
+   ========================================================= */
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.side-menu-item {
+  font-size: 16px;
+  letter-spacing: -0.2px;
+}
+
+.page-description {
+  color: #aeb8c7;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.quick-copy strong {
+  font-size: 19px;
+}
+
+.quick-copy small {
+  color: #aeb8c7;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.panel-heading h2,
+.panel-heading.compact h2 {
+  color: #f7f8fb;
+  font-weight: 950;
+}
+
+.notice-row strong {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* 좌측 하단 캐릭터 영역 */
+.sidebar-character img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  object-position: center bottom;
+  transform: none;
+}
+
+/* 메인 우측 상단 데이터 상태 */
+.data-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 168px;
+  justify-content: center;
+  transition:
+    border-color .2s ease,
+    background .2s ease,
+    color .2s ease;
+}
+
+.data-status-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.data-status-badge.loading {
+  border-color: rgba(225, 184, 62, .28);
+  background: rgba(225, 184, 62, .07);
+  color: #f1d06b;
+}
+
+.data-status-badge.normal {
+  border-color: rgba(84, 205, 167, .28);
+  background: rgba(84, 205, 167, .08);
+  color: #9fe5cf;
+}
+
+.data-status-badge.partial {
+  border-color: rgba(244, 165, 75, .28);
+  background: rgba(244, 165, 75, .08);
+  color: #ffc27b;
+}
+
+.data-status-badge.error {
+  border-color: rgba(255, 109, 101, .28);
+  background: rgba(255, 109, 101, .08);
+  color: #ffaaa5;
+}
+
+@media (max-width: 900px) {
+  .data-status-badge {
+    min-width: auto;
+  }
+}
