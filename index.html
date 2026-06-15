@@ -6,6 +6,7 @@
   <meta name="description" content="맛나는꼬꼬의 프라시아 전기 정보·공략 커뮤니티">
   <title>맛나는꼬꼬 | Prasia Lab</title>
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/guild-search.css">
 </head>
 <body>
   <button class="mobile-menu-button" id="mobileMenuButton" aria-label="메뉴 열기">☰</button>
@@ -103,7 +104,35 @@
 
       <section class="page" id="guild-ranking"><div class="page-heading simple"><div><p class="eyebrow">GUILD RANKING</p><h1>결사 순위</h1><p class="page-description">전체 순위와 레벨·토벌 기준 순위를 구분해 제공할 예정입니다.</p></div></div><div class="content-panel"><div class="empty-state"><span class="empty-icon">♛</span><strong>결사 순위 기능 준비 중</strong><p>결사 랭킹 추출값과 별도 계산 기준을 결합해 표시합니다.</p></div></div></section>
 
-      <section class="page" id="guild-search"><div class="page-heading simple"><div><p class="eyebrow">GUILD SEARCH</p><h1>결사 조회</h1><p class="page-description">전체 서버에서 결사명으로 검색하고 상세 정보를 확인할 예정입니다.</p></div></div><div class="content-panel"><div class="search-preview"><input type="search" placeholder="조회할 결사명을 입력하세요" disabled><button disabled>조회</button></div><div class="empty-state compact-state"><strong>결사 조회 기능 준비 중</strong><p>인원, 토벌 레벨, 결사 레벨, 클래스 구성 정보를 제공할 예정입니다.</p></div></div></section>
+      <section class="page" id="guild-search">
+        <div class="page-heading simple">
+          <div>
+            <p class="eyebrow">GUILD SEARCH</p>
+            <h1>결사 조회</h1>
+            <p class="page-description">전체 서버의 결사명을 검색하고 결사 정보와 랭킹에 존재하는 멤버를 확인합니다.</p>
+          </div>
+        </div>
+        <div class="content-panel guild-search-panel">
+          <form class="guild-search-form" id="guildSearchForm">
+            <label class="guild-search-field" for="guildSearchInput">
+              <span>결사명</span>
+              <input id="guildSearchInput" type="search" placeholder="조회할 결사명을 입력하세요" autocomplete="off" spellcheck="false">
+            </label>
+            <button class="guild-search-button" id="guildSearchButton" type="submit">조회</button>
+          </form>
+          <div class="guild-search-guide">영문 결사명은 대소문자를 구분하지 않습니다. 예: <strong>DOG</strong>, <strong>Dog</strong>, <strong>dog</strong></div>
+          <div class="guild-search-status" id="guildSearchStatus" role="status">결사명을 입력한 뒤 조회 버튼을 눌러주세요.</div>
+          <div class="guild-result-wrap" id="guildResultWrap" hidden>
+            <div class="guild-result-summary"><strong id="guildResultCount">0개</strong><span>의 결사를 찾았습니다.</span></div>
+            <div class="guild-table-scroll">
+              <table class="guild-result-table">
+                <thead><tr><th>서버명</th><th>결사명</th><th>결사장</th><th>결사멤버</th><th>결사레벨</th><th>보기</th></tr></thead>
+                <tbody id="guildResultBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section class="page" id="review"><div class="page-heading simple"><div><p class="eyebrow">REVIEW LIVE</p><h1>리뷰 방송</h1><p class="page-description">쟁 리뷰와 콘텐츠 리뷰 방송을 앨범형으로 모아봅니다.</p></div></div><div class="content-panel"><div class="video-grid" id="reviewVideoGrid"></div></div></section>
 
@@ -111,6 +140,25 @@
 
       <section class="page" id="archive"><div class="page-heading simple"><div><p class="eyebrow">ARCHIVE</p><h1>자료실</h1><p class="page-description">프라시아 전기 관련 자료를 정리할 공간입니다.</p></div></div><div class="content-panel"><div class="empty-state"><span class="empty-icon">▣</span><strong>자료실 준비 중</strong><p>이미지, 문서, 링크 등 필요한 자료를 추후 등록할 예정입니다.</p></div></div></section>
     </main>
+  </div>
+
+
+  <div class="guild-member-modal" id="guildMemberModal" aria-hidden="true">
+    <div class="guild-member-dialog" role="dialog" aria-modal="true" aria-labelledby="guildMemberModalTitle">
+      <div class="guild-member-header">
+        <div><span class="modal-kicker">RANKED GUILD MEMBERS</span><strong id="guildMemberModalTitle">결사 멤버</strong><p id="guildMemberModalSub"></p></div>
+        <button class="guild-member-close" id="guildMemberModalClose" type="button" aria-label="닫기">✕</button>
+      </div>
+      <div class="guild-member-body">
+        <div class="guild-member-message" id="guildMemberMessage"></div>
+        <div class="guild-member-table-scroll" id="guildMemberTableWrap" hidden>
+          <table class="guild-member-table">
+            <thead><tr><th>닉네임</th><th>토벌레벨</th><th>직업</th><th>레벨</th></tr></thead>
+            <tbody id="guildMemberBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="sheet-modal" id="sheetModal" aria-hidden="true">
@@ -121,5 +169,6 @@
   </div>
 
   <script src="./js/app.js"></script>
+  <script src="./js/guild-search.js"></script>
 </body>
 </html>
