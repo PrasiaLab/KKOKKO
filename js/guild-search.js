@@ -1,1 +1,552 @@
-(()=>{"use strict";const GUILD_DATA_URL="./data/Who_are_you_guild.json",CHARACTER_DATA_URL="./data/Who_are_you.json";const CLASS_NAMES={AbyssRevenant:"심연추방자",Enforcer:"집행관",SolarSentinel:"태양감시자",RuneScribe:"주문각인사",MirageBlade:"환영검사",WildWarrior:"야만투사",IncenseArcher:"향사수"};const SERVER_NAMES={"2-1":"론도01","2-2":"론도02","2-3":"론도03","2-4":"론도04","2-5":"론도05","3-1":"라인소프01","3-2":"라인소프02","3-3":"라인소프03","3-4":"라인소프04","3-5":"라인소프05","4-1":"크론01","4-2":"크론02","4-3":"크론03","4-4":"크론04","4-5":"크론05","5-1":"아민타01","5-2":"아민타02","5-3":"아민타03","5-4":"아민타04","5-5":"아민타05"};const form=document.getElementById("guildSearchForm"),input=document.getElementById("guildSearchInput"),button=document.getElementById("guildSearchButton"),status=document.getElementById("guildSearchStatus"),resultWrap=document.getElementById("guildResultWrap"),resultCount=document.getElementById("guildResultCount"),resultBody=document.getElementById("guildResultBody"),memberModal=document.getElementById("guildMemberModal"),memberModalTitle=document.getElementById("guildMemberModalTitle"),memberModalSub=document.getElementById("guildMemberModalSub"),memberMessage=document.getElementById("guildMemberMessage"),memberTableWrap=document.getElementById("guildMemberTableWrap"),memberBody=document.getElementById("guildMemberBody"),memberClose=document.getElementById("guildMemberModalClose");if(!form||!input||!resultBody||!memberModal)return;let guildData=null,characterData=null;const norm=v=>String(v??"").normalize("NFKC").trim().toLocaleLowerCase("en-US");function first(o,keys,f=""){for(const k of keys){const v=o?.[k];if(v!==undefined&&v!==null&&v!=="")return v}return f}function arr(v){if(Array.isArray(v))return v;for(const k of ["data","items","list"]){if(Array.isArray(v?.[k]))return v[k]}return[]}async function getJson(url){const r=await fetch(url,{cache:"no-store"});if(!r.ok)throw Error(`${url} ${r.status}`);const t=await r.text();return t.trim()?JSON.parse(t):[]}async function load(){if(guildData&&characterData)return;const[g,c]=await Promise.all([getJson(GUILD_DATA_URL),getJson(CHARACTER_DATA_URL)]);guildData=arr(g);characterData=arr(c)}const guildName=o=>first(o,["guild_name","guildName","guild","guild_nm","clan_name","clanName"]),world=o=>first(o,["world","server","server_name","serverName","world_name","worldName","world_id","worldId"]);function serverName(v){const s=String(v??"").trim();return SERVER_NAMES[s]||s||"알 수 없음"}function sameWorld(g,c){const a=norm(world(g)),b=norm(world(c));return !a||!b||a===b}function members(g){const target=norm(guildName(g));return characterData.filter(c=>norm(guildName(c))===target&&sameWorld(g,c)).map(c=>({nickname:first(c,["gc_name","gcName","character_name","characterName","nickname","name"],"알 수 없음"),raid:first(c,["raid_level","raidLevel","grade","subjugation_level","subjugationLevel","boss_level","bossLevel"],"-"),job:first(c,["class_name","className","class","job","job_name","jobName"],"-"),level:first(c,["level","character_level","characterLevel","lv"],"-")})).sort((a,b)=>Number(b.raid||0)-Number(a.raid||0)||Number(b.level||0)-Number(a.level||0))}function className(v){const s=String(v??"").trim();return CLASS_NAMES[s]||s||"-"}function setStatus(msg,type=""){status.textContent=msg;status.className="guild-search-status";if(type)status.classList.add(type)}function clear(){resultBody.innerHTML="";resultWrap.hidden=true;resultCount.textContent="0개"}function td(text,cls=""){const x=document.createElement("td");x.textContent=String(text??"-");if(cls)x.className=cls;return x}function render(list){resultBody.innerHTML="";for(const g of list){const tr=document.createElement("tr"),count=first(g,["guild_member_count","guildMemberCount","member_count","memberCount"],0),max=first(g,["max_guild_member_count","maxGuildMemberCount","max_member_count","maxMemberCount"],"-");tr.append(td(serverName(world(g))),td(guildName(g),"guild-name-cell"),td(first(g,["guild_master","guildMaster","master_name","masterName","leader_name","leaderName"],"-")),td(`${count} / ${max}`,"guild-member-count"),td(first(g,["guild_level","guildLevel","level"],"-")));const c=document.createElement("td"),b=document.createElement("button");b.type="button";b.className="guild-view-button";b.textContent="보기";b.onclick=()=>openMembers(g);c.append(b);tr.append(c);resultBody.append(tr)}resultCount.textContent=`${list.length}개`;resultWrap.hidden=false}function openMembers(g){const list=members(g);memberModalTitle.textContent=guildName(g)||"결사 멤버";memberModalSub.textContent=`${serverName(world(g))} · 랭킹 데이터에 존재하는 멤버 ${list.length}명`;memberBody.innerHTML="";if(!list.length){memberMessage.hidden=false;memberMessage.textContent="랭킹 데이터에서 해당 결사 소속 멤버를 찾지 못했습니다. Who_are_you.json이 비어 있거나, 해당 멤버가 개인 랭킹에 포함되지 않았을 수 있습니다.";memberTableWrap.hidden=true}else{memberMessage.hidden=true;memberTableWrap.hidden=false;for(const m of list){const tr=document.createElement("tr");tr.append(td(m.nickname),td(m.raid,"guild-member-raid"),td(className(m.job),"guild-member-job"),td(m.level));memberBody.append(tr)}}memberModal.classList.add("open");memberModal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}function closeMembers(){memberModal.classList.remove("open");memberModal.setAttribute("aria-hidden","true");document.body.style.overflow=""}async function search(){const q=norm(input.value);clear();if(!q){setStatus("조회할 결사명을 입력해주세요.","error");input.focus();return}button.disabled=true;button.textContent="조회 중";setStatus("결사 데이터를 불러오는 중입니다.");try{await load();if(!guildData.length){setStatus("Who_are_you_guild.json에 조회할 결사 데이터가 없습니다.","error");return}const list=guildData.filter(g=>norm(guildName(g))===q);if(!list.length){setStatus(`‘${input.value.trim()}’와 일치하는 결사를 찾지 못했습니다.`,"error");return}list.sort((a,b)=>String(world(a)).localeCompare(String(world(b)),"ko",{numeric:true})||Number(first(b,["guild_level","guildLevel","level"],0))-Number(first(a,["guild_level","guildLevel","level"],0)));render(list);setStatus(`대소문자를 구분하지 않고 ‘${input.value.trim()}’와 일치하는 결사를 조회했습니다.`,"success")}catch(e){console.error(e);setStatus("결사 데이터를 불러오지 못했습니다. JSON 파일 경로와 형식을 확인해주세요.","error")}finally{button.disabled=false;button.textContent="조회"}}form.addEventListener("submit",e=>{e.preventDefault();search()});memberClose.addEventListener("click",closeMembers);memberModal.addEventListener("click",e=>{if(e.target===memberModal)closeMembers()});document.addEventListener("keydown",e=>{if(e.key==="Escape"&&memberModal.classList.contains("open"))closeMembers()})})();
+(() => {
+  "use strict";
+
+  const GUILD_DATA_URL = "./data/Who_are_you_guild.json";
+  const CHARACTER_DATA_URL = "./data/Who_are_you.json";
+
+  const SERVER_NAMES = window.PRASIA_MAPPINGS?.servers || {};
+  const CLASS_NAMES = window.PRASIA_MAPPINGS?.classes || {};
+
+  const form = document.getElementById("guildSearchForm");
+  const input = document.getElementById("guildSearchInput");
+  const button = document.getElementById("guildSearchButton");
+  const status = document.getElementById("guildSearchStatus");
+  const resultWrap = document.getElementById("guildResultWrap");
+  const resultCount = document.getElementById("guildResultCount");
+  const resultBody = document.getElementById("guildResultBody");
+
+  const memberModal = document.getElementById("guildMemberModal");
+  const memberModalTitle = document.getElementById("guildMemberModalTitle");
+  const memberModalSub = document.getElementById("guildMemberModalSub");
+  const memberMessage = document.getElementById("guildMemberMessage");
+  const memberTableWrap = document.getElementById("guildMemberTableWrap");
+  const memberBody = document.getElementById("guildMemberBody");
+  const memberClose = document.getElementById("guildMemberModalClose");
+
+  if (!form || !input || !resultBody || !memberModal) {
+    return;
+  }
+
+  let guildData = null;
+  let characterData = null;
+
+  function normalizeText(value) {
+    return String(value ?? "")
+      .normalize("NFKC")
+      .trim()
+      .toLocaleLowerCase("en-US");
+  }
+
+  function getFirst(source, keys, fallback = "") {
+    if (!source || typeof source !== "object") {
+      return fallback;
+    }
+
+    for (const key of keys) {
+      const value = source[key];
+
+      if (value !== undefined && value !== null && value !== "") {
+        return value;
+      }
+    }
+
+    return fallback;
+  }
+
+  function toArray(value) {
+    if (Array.isArray(value)) {
+      return value;
+    }
+
+    if (value && Array.isArray(value.data)) {
+      return value.data;
+    }
+
+    if (value && Array.isArray(value.items)) {
+      return value.items;
+    }
+
+    if (value && Array.isArray(value.list)) {
+      return value.list;
+    }
+
+    return [];
+  }
+
+  async function fetchJson(url) {
+    const response = await fetch(url, {
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error(`${url} 불러오기 실패 (${response.status})`);
+    }
+
+    const text = await response.text();
+
+    if (!text.trim()) {
+      return [];
+    }
+
+    return JSON.parse(text);
+  }
+
+  async function loadData() {
+    if (guildData && characterData) {
+      return;
+    }
+
+    const [guildJson, characterJson] = await Promise.all([
+      fetchJson(GUILD_DATA_URL),
+      fetchJson(CHARACTER_DATA_URL)
+    ]);
+
+    guildData = toArray(guildJson);
+    characterData = toArray(characterJson);
+  }
+
+  function getGuildName(item) {
+    return getFirst(item, [
+      "guild_name",
+      "guildName",
+      "guild",
+      "guild_nm",
+      "clan_name",
+      "clanName"
+    ]);
+  }
+
+  function getGuildWorld(item) {
+    return getFirst(item, [
+      "world",
+      "server",
+      "server_name",
+      "serverName",
+      "world_name",
+      "worldName",
+      "world_id",
+      "worldId"
+    ]);
+  }
+
+  function getCharacterWorld(item) {
+    return getFirst(item, [
+      "world",
+      "server",
+      "server_name",
+      "serverName",
+      "world_name",
+      "worldName",
+      "world_id",
+      "worldId"
+    ]);
+  }
+
+  /*
+   * JSON의 world 값이 "2-1"처럼 들어오면
+   * 공통 서버 매핑을 사용해 "론도01"로 출력합니다.
+   */
+  function displayServerName(worldValue) {
+    const worldCode = String(worldValue ?? "").trim();
+
+    if (!worldCode) {
+      return "알 수 없음";
+    }
+
+    return SERVER_NAMES[worldCode] || worldCode;
+  }
+
+  function sameWorld(guild, character) {
+    const guildWorld = normalizeText(getGuildWorld(guild));
+    const characterWorld = normalizeText(getCharacterWorld(character));
+
+    if (!guildWorld || !characterWorld) {
+      return true;
+    }
+
+    return guildWorld === characterWorld;
+  }
+
+  function findRankedMembers(guild) {
+    const targetGuild = normalizeText(getGuildName(guild));
+
+    return characterData
+      .filter((character) => {
+        const characterGuild = normalizeText(getGuildName(character));
+
+        return characterGuild === targetGuild && sameWorld(guild, character);
+      })
+      .map((character) => {
+        return {
+          nickname: getFirst(
+            character,
+            [
+              "gc_name",
+              "gcName",
+              "character_name",
+              "characterName",
+              "nickname",
+              "name"
+            ],
+            "알 수 없음"
+          ),
+
+          raidLevel: getFirst(
+            character,
+            [
+              "raid_level",
+              "raidLevel",
+              "grade",
+              "subjugation_level",
+              "subjugationLevel",
+              "boss_level",
+              "bossLevel"
+            ],
+            "-"
+          ),
+
+          className: getFirst(
+            character,
+            [
+              "class_name",
+              "className",
+              "class",
+              "job",
+              "job_name",
+              "jobName"
+            ],
+            "-"
+          ),
+
+          level: getFirst(
+            character,
+            [
+              "level",
+              "character_level",
+              "characterLevel",
+              "lv"
+            ],
+            "-"
+          )
+        };
+      })
+      .sort((a, b) => {
+        const raidDifference =
+          Number(b.raidLevel || 0) - Number(a.raidLevel || 0);
+
+        if (raidDifference !== 0) {
+          return raidDifference;
+        }
+
+        return Number(b.level || 0) - Number(a.level || 0);
+      });
+  }
+
+  function formatClassName(value) {
+    const classCode = String(value ?? "").trim();
+
+    if (!classCode) {
+      return "-";
+    }
+
+    return CLASS_NAMES[classCode] || classCode;
+  }
+
+  function setStatus(message, type = "") {
+    status.textContent = message;
+    status.className = "guild-search-status";
+
+    if (type) {
+      status.classList.add(type);
+    }
+  }
+
+  function clearResults() {
+    resultBody.innerHTML = "";
+    resultWrap.hidden = true;
+    resultCount.textContent = "0개";
+  }
+
+  function createCell(text, className = "") {
+    const cell = document.createElement("td");
+
+    cell.textContent = String(text ?? "-");
+
+    if (className) {
+      cell.className = className;
+    }
+
+    return cell;
+  }
+
+  function renderResults(guilds) {
+    resultBody.innerHTML = "";
+
+    guilds.forEach((guild) => {
+      const row = document.createElement("tr");
+
+      const memberCount = getFirst(
+        guild,
+        [
+          "guild_member_count",
+          "guildMemberCount",
+          "member_count",
+          "memberCount"
+        ],
+        0
+      );
+
+      const maxMemberCount = getFirst(
+        guild,
+        [
+          "max_guild_member_count",
+          "maxGuildMemberCount",
+          "max_member_count",
+          "maxMemberCount"
+        ],
+        "-"
+      );
+
+      row.appendChild(
+        createCell(displayServerName(getGuildWorld(guild)))
+      );
+
+      row.appendChild(
+        createCell(getGuildName(guild), "guild-name-cell")
+      );
+
+      row.appendChild(
+        createCell(
+          getFirst(
+            guild,
+            [
+              "guild_master",
+              "guildMaster",
+              "master_name",
+              "masterName",
+              "leader_name",
+              "leaderName"
+            ],
+            "-"
+          )
+        )
+      );
+
+      row.appendChild(
+        createCell(
+          `${memberCount} / ${maxMemberCount}`,
+          "guild-member-count"
+        )
+      );
+
+      row.appendChild(
+        createCell(
+          getFirst(
+            guild,
+            [
+              "guild_level",
+              "guildLevel",
+              "level"
+            ],
+            "-"
+          )
+        )
+      );
+
+      const actionCell = document.createElement("td");
+      const viewButton = document.createElement("button");
+
+      viewButton.type = "button";
+      viewButton.className = "guild-view-button";
+      viewButton.textContent = "보기";
+
+      viewButton.addEventListener("click", () => {
+        openMemberModal(guild);
+      });
+
+      actionCell.appendChild(viewButton);
+      row.appendChild(actionCell);
+      resultBody.appendChild(row);
+    });
+
+    resultCount.textContent = `${guilds.length}개`;
+    resultWrap.hidden = false;
+  }
+
+  function openMemberModal(guild) {
+    const members = findRankedMembers(guild);
+    const guildName = getGuildName(guild);
+    const serverName = displayServerName(getGuildWorld(guild));
+
+    memberModalTitle.textContent = guildName || "결사 멤버";
+    memberModalSub.textContent =
+      `${serverName} · 랭킹 데이터에 존재하는 멤버 ${members.length}명`;
+
+    memberBody.innerHTML = "";
+
+    if (!members.length) {
+      memberMessage.hidden = false;
+      memberMessage.textContent =
+        "랭킹 데이터에서 해당 결사 소속 멤버를 찾지 못했습니다. " +
+        "Who_are_you.json이 비어 있거나, 해당 멤버가 개인 랭킹에 포함되지 않았을 수 있습니다.";
+
+      memberTableWrap.hidden = true;
+    } else {
+      memberMessage.hidden = true;
+      memberTableWrap.hidden = false;
+
+      members.forEach((member) => {
+        const row = document.createElement("tr");
+
+        row.appendChild(
+          createCell(member.nickname)
+        );
+
+        row.appendChild(
+          createCell(member.raidLevel, "guild-member-raid")
+        );
+
+        row.appendChild(
+          createCell(
+            formatClassName(member.className),
+            "guild-member-job"
+          )
+        );
+
+        row.appendChild(
+          createCell(member.level)
+        );
+
+        memberBody.appendChild(row);
+      });
+    }
+
+    memberModal.classList.add("open");
+    memberModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMemberModal() {
+    memberModal.classList.remove("open");
+    memberModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  async function searchGuilds() {
+    const keyword = normalizeText(input.value);
+
+    clearResults();
+
+    if (!keyword) {
+      setStatus("조회할 결사명을 입력해주세요.", "error");
+      input.focus();
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "조회 중";
+    setStatus("결사 데이터를 불러오는 중입니다.");
+
+    try {
+      await loadData();
+
+      if (!guildData.length) {
+        setStatus(
+          "Who_are_you_guild.json에 조회할 결사 데이터가 없습니다.",
+          "error"
+        );
+        return;
+      }
+
+      const matches = guildData.filter((guild) => {
+        return normalizeText(getGuildName(guild)) === keyword;
+      });
+
+      if (!matches.length) {
+        setStatus(
+          `‘${input.value.trim()}’와 일치하는 결사를 찾지 못했습니다.`,
+          "error"
+        );
+        return;
+      }
+
+      matches.sort((a, b) => {
+        const worldCompare = String(getGuildWorld(a)).localeCompare(
+          String(getGuildWorld(b)),
+          "ko",
+          {
+            numeric: true
+          }
+        );
+
+        if (worldCompare !== 0) {
+          return worldCompare;
+        }
+
+        return (
+          Number(
+            getFirst(
+              b,
+              [
+                "guild_level",
+                "guildLevel",
+                "level"
+              ],
+              0
+            )
+          ) -
+          Number(
+            getFirst(
+              a,
+              [
+                "guild_level",
+                "guildLevel",
+                "level"
+              ],
+              0
+            )
+          )
+        );
+      });
+
+      renderResults(matches);
+
+      setStatus(
+        `대소문자를 구분하지 않고 ‘${input.value.trim()}’와 일치하는 결사를 조회했습니다.`,
+        "success"
+      );
+    } catch (error) {
+      console.error(error);
+
+      setStatus(
+        "결사 데이터를 불러오지 못했습니다. JSON 파일 경로와 형식을 확인해주세요.",
+        "error"
+      );
+    } finally {
+      button.disabled = false;
+      button.textContent = "조회";
+    }
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    searchGuilds();
+  });
+
+  memberClose.addEventListener("click", closeMemberModal);
+
+  memberModal.addEventListener("click", (event) => {
+    if (event.target === memberModal) {
+      closeMemberModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (
+      event.key === "Escape" &&
+      memberModal.classList.contains("open")
+    ) {
+      closeMemberModal();
+    }
+  });
+})();
