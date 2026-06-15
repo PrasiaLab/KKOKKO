@@ -1,35 +1,35 @@
 const sheetLinks = [
   [
     "토벌 스펙",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=1876922409"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=1876922409"
   ],
   [
     "마법 부여",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=2108346036"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=2108346036"
   ],
   [
     "심연 증폭",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=413772873"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=413772873"
   ],
   [
     "클래스 주문석",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=1044209677"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=1044209677"
   ],
   [
     "아퀴 채화",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=454167790"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=454167790"
   ],
   [
     "클래스 체인지",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=776991324"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=776991324"
   ],
   [
     "클래스 전승",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=1917128113"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=1917128113"
   ],
   [
     "몬스터 도감",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=1463186653"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=1463186653"
   ]
 ];
 
@@ -147,8 +147,8 @@ function openSheet(index) {
   openNew.href = sheet[1];
 
   /*
-   * 같은 시트를 다시 열 때 iframe 주소를 재설정하지 않아
-   * 불필요한 재로딩을 줄입니다.
+   * gid를 URL 쿼리스트링으로 전달해야
+   * 각 버튼이 서로 다른 시트 탭을 정확히 불러옵니다.
    */
   if (currentSheetUrl !== sheet[1]) {
     frame.src = sheet[1];
@@ -163,8 +163,8 @@ function closeSheet() {
   modal.classList.remove("open");
 
   /*
-   * 닫을 때 about:blank로 초기화하지 않습니다.
-   * 한 번 불러온 시트는 다시 열 때 빠르게 표시됩니다.
+   * 닫을 때 iframe을 비우지 않아
+   * 같은 시트를 다시 열 때 빠르게 표시합니다.
    */
   document.body.style.overflow = "";
 }
