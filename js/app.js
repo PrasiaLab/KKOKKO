@@ -1,35 +1,35 @@
 const sheetLinks = [
   [
     "토벌 스펙",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=1876922409"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=1876922409"
   ],
   [
     "마법 부여",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=2108346036"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=2108346036"
   ],
   [
     "심연 증폭",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=413772873"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=413772873"
   ],
   [
     "클래스 주문석",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=1044209677"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=1044209677"
   ],
   [
     "아퀴 채화",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=454167790"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=454167790"
   ],
   [
     "클래스 체인지",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=776991324"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=776991324"
   ],
   [
     "클래스 전승",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=1917128113"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=1917128113"
   ],
   [
     "몬스터 도감",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=1463186653"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=1463186653"
   ]
 ];
 
@@ -147,13 +147,18 @@ function openSheet(index) {
   openNew.href = sheet[1];
 
   /*
-   * gid를 URL 쿼리스트링으로 전달해야
-   * 각 버튼이 서로 다른 시트 탭을 정확히 불러옵니다.
+   * Google Sheets preview는 같은 문서 안에서 gid만 바뀔 때
+   * 기존 iframe 내용을 그대로 유지하는 경우가 있습니다.
+   *
+   * 따라서 버튼을 누를 때 iframe을 잠시 비운 뒤
+   * 선택한 시트 주소를 다시 넣어 강제로 새로 불러옵니다.
    */
-  if (currentSheetUrl !== sheet[1]) {
+  frame.src = "about:blank";
+  currentSheetUrl = sheet[1];
+
+  window.setTimeout(() => {
     frame.src = sheet[1];
-    currentSheetUrl = sheet[1];
-  }
+  }, 30);
 
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
@@ -163,9 +168,12 @@ function closeSheet() {
   modal.classList.remove("open");
 
   /*
-   * 닫을 때 iframe을 비우지 않아
-   * 같은 시트를 다시 열 때 빠르게 표시합니다.
+   * 다음 시트 선택 시 이전 시트가 남지 않도록
+   * iframe을 초기화합니다.
    */
+  frame.src = "about:blank";
+  currentSheetUrl = "";
+
   document.body.style.overflow = "";
 }
 
