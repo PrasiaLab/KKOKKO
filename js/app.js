@@ -1,35 +1,35 @@
 const sheetLinks = [
   [
     "토벌 스펙",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=1876922409"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=1876922409"
   ],
   [
     "마법 부여",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=2108346036"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=2108346036"
   ],
   [
     "심연 증폭",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=413772873"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=413772873"
   ],
   [
     "클래스 주문석",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=1044209677"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=1044209677"
   ],
   [
     "아퀴 채화",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=454167790"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=454167790"
   ],
   [
     "클래스 체인지",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=776991324"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=776991324"
   ],
   [
     "클래스 전승",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=1917128113"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=1917128113"
   ],
   [
     "몬스터 도감",
-    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview?gid=1463186653"
+    "https://docs.google.com/spreadsheets/d/10ZIjOh7VgaceXSbSuTR6fMGj28NCzrHujxF9SQyw_UU/preview#gid=1463186653"
   ]
 ];
 
