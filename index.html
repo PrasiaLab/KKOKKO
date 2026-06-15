@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/guild-search.css">
   <link rel="stylesheet" href="./css/statistics.css">
+  <link rel="stylesheet" href="./css/improvements.css">
 </head>
 <body>
   <button class="mobile-menu-button" id="mobileMenuButton" aria-label="메뉴 열기">☰</button>
@@ -61,7 +62,10 @@
             <h1>맛나는꼬꼬 프라시아 연구소</h1>
             <p class="page-description">프라시아 전기의 주요 정보와 공략, 방송 콘텐츠를 한곳에서 확인하세요.</p>
           </div>
-          <span class="site-badge">PRASIA LAB</span>
+          <span class="site-badge data-status-badge loading" id="mainDataStatus">
+            <span class="data-status-dot"></span>
+            <span id="mainDataStatusText">데이터 확인 중</span>
+          </span>
         </div>
 
         <section class="quick-links">
@@ -373,6 +377,7 @@
   <script src="./js/app.js"></script>
   <script src="./js/mappings.js"></script>
   <script src="./js/statistics.js"></script>
+  <script src="./js/data-status.js"></script>
   <script src="./js/guild-search.js"></script>
 </body>
 </html>
