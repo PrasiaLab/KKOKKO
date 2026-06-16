@@ -1,1 +1,67 @@
+name: Update ranking data
 
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "실행 사유"
+        required: false
+        default: "관리자 수동 갱신"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-ranking-data
+  cancel-in-progress: false
+
+jobs:
+  update-ranking:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run ranking extractor
+        run: |
+          python scripts/Who_are_you_all_ranking.py
+
+      - name: Verify generated files
+        run: |
+          test -f data/Who_are_you.json
+          test -f data/Who_are_you_guild.json
+          test -f data/Who_are_you_class.json
+          test -f data/ranking_update_status.json
+
+      - name: Commit updated ranking data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            data/Who_are_you.json \
+            data/Who_are_you_guild.json \
+            data/Who_are_you_class.json \
+            data/ranking_update_status.json
+
+          if git diff --cached --quiet; then
+            echo "변경된 데이터가 없습니다."
+            exit 0
+          fi
+
+          git commit -m "Update ranking data"
+          git push
