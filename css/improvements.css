@@ -48,7 +48,20 @@ body {
   line-height: 1.5;
 }
 
-/* 좌측 하단 캐릭터 영역 */
+/* 좌측 하단 캐릭터: 박스 없이 이미지 자체만 표시 */
+.sidebar-character {
+  position: relative;
+  height: 174px;
+  flex: 0 0 174px;
+  margin-top: 12px;
+  padding: 0;
+  overflow: visible;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
 .sidebar-character img {
   position: absolute;
   inset: 0;
@@ -56,8 +69,13 @@ body {
   height: 100%;
   max-width: none;
   max-height: none;
+  display: block;
   object-fit: contain;
   object-position: center bottom;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   transform: none;
 }
 
@@ -112,7 +130,6 @@ body {
     min-width: auto;
   }
 }
-
 
 /* =========================================================
    2026-06 가독성 체계 재정비
