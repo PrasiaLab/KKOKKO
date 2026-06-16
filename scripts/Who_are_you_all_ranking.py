@@ -492,8 +492,7 @@ def main() -> None:
         message=final_message,
     )
 
-    print("
-" + "=" * 66)
+    print("\n" + "=" * 66)
     print("추출 완료")
     print(f"갱신 시간: {extracted_at_text} (KST)")
     print(f"전체 랭킹: {len(all_characters):,}명")
