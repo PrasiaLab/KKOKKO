@@ -948,8 +948,6 @@
     }
   );
 
-  });
-
   statReset?.addEventListener(
     "click",
     resetMemberFilter
