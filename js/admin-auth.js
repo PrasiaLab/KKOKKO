@@ -31,12 +31,22 @@ const googleButton = document.getElementById("googleAdminLogin");
 const status = document.getElementById("adminLoginStatus");
 
 function openModal() {
+  if (window.KKOKKO_ADMIN_MODAL) {
+    window.KKOKKO_ADMIN_MODAL.open();
+    return;
+  }
+
   modal?.classList.add("open");
   modal?.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
 }
 
 function closeModal() {
+  if (window.KKOKKO_ADMIN_MODAL) {
+    window.KKOKKO_ADMIN_MODAL.close();
+    return;
+  }
+
   modal?.classList.remove("open");
   modal?.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
@@ -47,6 +57,8 @@ function setStatus(message = "") {
     status.textContent = message;
   }
 }
+
+setStatus("Google 관리자 계정으로 로그인해주세요.");
 
 loginButton?.addEventListener("click", () => {
   if (auth.currentUser && isConfiguredAdmin(auth.currentUser.uid)) {
