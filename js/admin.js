@@ -46,6 +46,7 @@ const pageTitles = {
 let noticeItems = [];
 let scheduleItems = [];
 let videoItems = [];
+let activeVideoFilter = "all";
 
 const $ = (id) => document.getElementById(id);
 
@@ -79,6 +80,59 @@ function youtubeIdFromUrl(url = "") {
   return match ? match[1] : "";
 }
 
+const VIDEO_TYPE_LABELS = {
+  featured: "메인 주요 영상",
+  review: "리뷰 방송",
+  raid: "토벌 공략"
+};
+
+function videoTypeLabel(type) {
+  return VIDEO_TYPE_LABELS[type] || "영상";
+}
+
+function updateVideoCounts() {
+  const counts = {
+    all: videoItems.length,
+    featured: 0,
+    review: 0,
+    raid: 0
+  };
+
+  videoItems.forEach((item) => {
+    if (Object.prototype.hasOwnProperty.call(counts, item.type)) {
+      counts[item.type] += 1;
+    }
+  });
+
+  $("videoCountAll").textContent = counts.all;
+  $("videoCountFeatured").textContent = counts.featured;
+  $("videoCountReview").textContent = counts.review;
+  $("videoCountRaid").textContent = counts.raid;
+}
+
+function renderVideoAdminList() {
+  updateVideoCounts();
+
+  const filtered =
+    activeVideoFilter === "all"
+      ? videoItems
+      : videoItems.filter(
+          (item) => item.type === activeVideoFilter
+        );
+
+  renderList(
+    "videoAdminList",
+    filtered,
+    (item) => ({
+      title: `${item.order ?? "-"} · ${item.title || "영상"}`,
+      meta:
+        `${videoTypeLabel(item.type)} · ` +
+        `${item.visible ? "공개" : "비공개"}`
+    }),
+    editVideo
+  );
+}
+
 function clearForm(prefix) {
   if (prefix === "notice") {
     $("noticeForm").reset();
@@ -97,7 +151,10 @@ function clearForm(prefix) {
   if (prefix === "video") {
     $("videoForm").reset();
     $("videoDocumentId").value = "";
-    $("videoType").value = "featured";
+    $("videoType").value =
+      activeVideoFilter === "all"
+        ? "featured"
+        : activeVideoFilter;
     $("videoCategory").value = "영상";
     $("videoOrder").value = "1";
     $("videoVisible").checked = true;
@@ -198,15 +255,7 @@ async function loadVideos() {
     ...item.data()
   }));
 
-  renderList(
-    "videoAdminList",
-    videoItems,
-    (item) => ({
-      title: `${item.order ?? "-"} · ${item.title || "영상"}`,
-      meta: `${item.type || "-"} · ${item.visible ? "공개" : "비공개"}`
-    }),
-    editVideo
-  );
+  renderVideoAdminList();
 }
 
 function editNotice(item) {
@@ -372,6 +421,28 @@ $("videoDelete").addEventListener("click", async () => {
 $("noticeReset").addEventListener("click", () => clearForm("notice"));
 $("scheduleReset").addEventListener("click", () => clearForm("schedule"));
 $("videoReset").addEventListener("click", () => clearForm("video"));
+
+document
+  .querySelectorAll("[data-video-filter]")
+  .forEach((button) => {
+    button.addEventListener("click", () => {
+      activeVideoFilter = button.dataset.videoFilter;
+
+      document
+        .querySelectorAll("[data-video-filter]")
+        .forEach((item) => {
+          const active = item === button;
+
+          item.classList.toggle("active", active);
+          item.setAttribute(
+            "aria-selected",
+            String(active)
+          );
+        });
+
+      renderVideoAdminList();
+    });
+  });
 
 document.querySelectorAll("[data-admin-page]").forEach((button) => {
   button.addEventListener("click", () => {
