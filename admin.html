@@ -229,7 +229,60 @@
           </form>
 
           <section class="admin-list-card">
-            <h2>등록된 영상</h2>
+            <div class="admin-list-heading">
+              <div>
+                <span class="admin-list-kicker">VIDEO LIBRARY</span>
+                <h2>등록된 영상</h2>
+              </div>
+            </div>
+
+            <div
+              class="video-admin-tabs"
+              id="videoAdminTabs"
+              role="tablist"
+              aria-label="영상 구분"
+            >
+              <button
+                class="video-admin-tab active"
+                type="button"
+                data-video-filter="all"
+                aria-selected="true"
+              >
+                전체
+                <strong id="videoCountAll">0</strong>
+              </button>
+
+              <button
+                class="video-admin-tab"
+                type="button"
+                data-video-filter="featured"
+                aria-selected="false"
+              >
+                주요 영상
+                <strong id="videoCountFeatured">0</strong>
+              </button>
+
+              <button
+                class="video-admin-tab"
+                type="button"
+                data-video-filter="review"
+                aria-selected="false"
+              >
+                리뷰 방송
+                <strong id="videoCountReview">0</strong>
+              </button>
+
+              <button
+                class="video-admin-tab"
+                type="button"
+                data-video-filter="raid"
+                aria-selected="false"
+              >
+                토벌 공략
+                <strong id="videoCountRaid">0</strong>
+              </button>
+            </div>
+
             <div class="admin-item-list" id="videoAdminList"></div>
           </section>
         </div>
