@@ -100,3 +100,28 @@
   white-space: nowrap;
   word-break: keep-all;
 }
+
+
+.admin-login-status strong {
+  color: #9ee2ca;
+  font-weight: 700;
+}
+
+.admin-uid-label {
+  display: inline-block;
+  margin-top: 10px;
+  color: #aeb8c6;
+}
+
+.admin-uid-value {
+  display: block;
+  margin: 6px 0 4px;
+  padding: 9px 10px;
+  overflow-wrap: anywhere;
+  border: 1px solid rgba(225, 184, 62, .22);
+  border-radius: 8px;
+  background: #11161c;
+  color: var(--gold2);
+  font-size: 12px;
+  user-select: all;
+}
