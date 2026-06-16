@@ -3,6 +3,10 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
+  firebaseConfig
+} from "./firebase-config.js";
+
+import {
   getFirestore,
   collection,
   getDocs,
@@ -11,16 +15,6 @@ import {
   orderBy,
   limit
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBTo1X0MbgYC-Kh_yqLrakXrBMoRibvWk",
-  authDomain: "prasialab.firebaseapp.com",
-  projectId: "prasialab",
-  storageBucket: "prasialab.firebasestorage.app",
-  messagingSenderId: "844238283131",
-  appId: "1:844238283131:web:b46548f82cc9e5948d5dde",
-  measurementId: "G-YSXY10S0XD"
-};
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
