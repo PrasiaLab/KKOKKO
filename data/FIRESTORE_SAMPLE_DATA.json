@@ -1,0 +1,28 @@
+{
+  "notices": {
+    "category": "공지",
+    "title": "프라시아 연구소 안내",
+    "content": "안내사항 테스트 게시물입니다.",
+    "visible": true,
+    "pinned": true,
+    "createdAt": "Firestore 타임스탬프",
+    "updatedAt": "Firestore 타임스탬프"
+  },
+  "scheduleEvents": {
+    "date": "2026-06-20",
+    "type": "dayoff",
+    "title": "휴방",
+    "description": "개인 일정으로 방송이 없습니다.",
+    "visible": true
+  },
+  "videos": {
+    "type": "review",
+    "title": "쟁 리뷰 방송",
+    "description": "영상 설명",
+    "category": "리뷰 방송",
+    "url": "https://www.youtube.com/watch?v=영상ID",
+    "youtubeId": "영상ID",
+    "order": 1,
+    "visible": true
+  }
+}
