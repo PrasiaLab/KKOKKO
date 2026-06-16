@@ -251,35 +251,63 @@
     padding: 11px;
   }
 }
-/* 결사 통계 프레임은 유지하고 결사원 목록 영역 확대 */
-.guild-stat-card {
-  padding: 12px 14px;
+
+
+/* =========================================================
+   결사 팝업 전체 스크롤 방식
+   - 통계와 결사원 목록이 함께 스크롤됩니다.
+   - 결사원 표 헤더는 상단에 고정됩니다.
+   ========================================================= */
+
+.guild-member-body {
+  min-height: 0;
+  flex: 1;
+  display: block;
+  overflow-y: auto;
+  padding: 18px;
 }
 
-.guild-stat-card-heading {
-  margin-bottom: 8px;
+.guild-member-table-scroll {
+  min-height: auto;
+  max-height: none;
+  flex: none;
+  overflow: visible;
+  border: 1px solid var(--line);
+  border-radius: 15px;
 }
 
-.guild-stat-list {
-  gap: 3px;
+.guild-member-table {
+  position: relative;
 }
 
-.guild-stat-item {
-  gap: 4px;
-  padding: 4px 7px;
+.guild-member-table thead {
+  position: sticky;
+  top: -18px;
+  z-index: 12;
 }
 
-.guild-stat-filter-bar {
-  margin-top: 8px;
-  padding: 8px 12px;
+.guild-member-table th {
+  background: #242a33;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .08),
+    0 8px 16px rgba(0, 0, 0, .18);
 }
 
 .guild-popup-statistics {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
-/* 남은 공간을 결사원 리스트가 최대한 사용 */
-.guild-member-table-scroll {
-  min-height: 330px;
-  flex: 1 1 auto;
+@media (max-width: 980px) {
+  .guild-member-body {
+    overflow-y: auto;
+  }
+
+  .guild-member-table-scroll {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .guild-member-table thead {
+    top: -11px;
+  }
 }
