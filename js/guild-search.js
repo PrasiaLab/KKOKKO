@@ -80,16 +80,36 @@
     "guildPopupStatistics"
   );
 
-  const statChart = document.getElementById(
-    "guildStatChart"
+  const classStatList = document.getElementById(
+    "guildClassStatList"
+  );
+
+  const gradeStatList = document.getElementById(
+    "guildGradeStatList"
+  );
+
+  const levelStatList = document.getElementById(
+    "guildLevelStatList"
+  );
+
+  const classTotal = document.getElementById(
+    "guildClassTotal"
+  );
+
+  const gradeTotal = document.getElementById(
+    "guildGradeTotal"
+  );
+
+  const levelTotal = document.getElementById(
+    "guildLevelTotal"
+  );
+
+  const statFilterLabel = document.getElementById(
+    "guildStatFilterLabel"
   );
 
   const statReset = document.getElementById(
     "guildStatReset"
-  );
-
-  const statTabs = Array.from(
-    document.querySelectorAll("[data-guild-stat]")
   );
 
   if (
@@ -106,7 +126,6 @@
   let memberClassMap = {};
   let currentMembers = [];
   let filteredMembers = [];
-  let currentStatMode = "class";
   let activeStatFilter = null;
 
   function normalizeText(value) {
@@ -422,64 +441,104 @@
     resultWrap.hidden = false;
   }
 
-  function groupMembers(mode) {
-    const grouped = new Map();
+  const FIXED_CLASS_ORDER = [
+    "심연추방자",
+    "집행관",
+    "태양감시자",
+    "주문각인사",
+    "환영검사",
+    "야만투사",
+    "향사수"
+  ];
 
-    currentMembers.forEach((member) => {
-      let key = "";
+  function countBy(members, getter) {
+    const counts = new Map();
 
-      if (mode === "class") {
-        key = member.className;
-      } else if (mode === "grade") {
-        key = String(member.grade);
-      } else {
-        key = String(member.level);
-      }
+    members.forEach((member) => {
+      const key = String(getter(member));
 
-      grouped.set(
+      counts.set(
         key,
-        (grouped.get(key) || 0) + 1
+        (counts.get(key) || 0) + 1
       );
     });
 
-    return Array.from(grouped.entries())
+    return counts;
+  }
+
+  function buildClassStats() {
+    const counts = countBy(
+      currentMembers,
+      (member) => member.className
+    );
+
+    return FIXED_CLASS_ORDER.map((name) => ({
+      key: name,
+      label: name,
+      count: counts.get(name) || 0
+    }));
+  }
+
+  function buildNumericStats(mode) {
+    const getter =
+      mode === "grade"
+        ? (member) => member.grade
+        : (member) => member.level;
+
+    const counts = countBy(
+      currentMembers,
+      getter
+    );
+
+    const sorted = Array.from(counts.entries())
       .map(([key, count]) => ({
         key,
         count
       }))
-      .sort((a, b) => {
-        if (mode === "class") {
-          return b.count - a.count ||
-            a.key.localeCompare(b.key, "ko");
-        }
+      .sort((a, b) => Number(b.key) - Number(a.key));
 
-        return Number(b.key) - Number(a.key);
-      })
-      .slice(0, mode === "class" ? 7 : 8);
-  }
+    const visible = sorted.slice(0, 6);
+    const remaining = sorted.slice(6);
 
-  function statLabel(mode, key) {
-    if (mode === "grade") {
-      return `토벌 ${key}`;
+    const result = visible.map((item) => ({
+      key: item.key,
+      label:
+        mode === "grade"
+          ? `토벌 ${item.key}`
+          : `Lv.${item.key}`,
+      count: item.count
+    }));
+
+    if (remaining.length) {
+      result.push({
+        key: "__other__",
+        label: "기타",
+        count: remaining.reduce(
+          (sum, item) => sum + item.count,
+          0
+        ),
+        values: remaining.map((item) => String(item.key))
+      });
     }
 
-    if (mode === "level") {
-      return `Lv.${key}`;
-    }
-
-    return key;
+    return result;
   }
 
-  function matchesStat(member, mode, key) {
+  function matchesStat(member, mode, item) {
     if (mode === "class") {
-      return member.className === key;
+      return member.className === item.key;
     }
 
-    if (mode === "grade") {
-      return String(member.grade) === String(key);
+    const value =
+      mode === "grade"
+        ? String(member.grade)
+        : String(member.level);
+
+    if (item.key === "__other__") {
+      return item.values.includes(value);
     }
 
-    return String(member.level) === String(key);
+    return value === String(item.key);
   }
 
   function renderMemberRows(members) {
@@ -528,26 +587,50 @@
     });
   }
 
-  function applyStatFilter(mode, key) {
+  function updateFilterLabel() {
+    if (!statFilterLabel) {
+      return;
+    }
+
+    if (!activeStatFilter) {
+      statFilterLabel.textContent =
+        `전체 결사원 · ${currentMembers.length}명`;
+
+      statReset.disabled = true;
+      return;
+    }
+
+    statFilterLabel.textContent =
+      `현재 필터: ${activeStatFilter.label} · ${filteredMembers.length}명`;
+
+    statReset.disabled = false;
+  }
+
+  function applyStatFilter(mode, item) {
     activeStatFilter = {
       mode,
-      key
+      key: item.key,
+      label: item.label
     };
 
     filteredMembers = currentMembers.filter((member) => {
-      return matchesStat(member, mode, key);
+      return matchesStat(member, mode, item);
     });
 
     document
-      .querySelectorAll(".guild-stat-row")
+      .querySelectorAll(".guild-stat-item")
       .forEach((row) => {
+        const isActive =
+          row.dataset.mode === mode &&
+          row.dataset.key === String(item.key);
+
         row.classList.toggle(
           "active",
-          row.dataset.key === String(key) &&
-          row.dataset.mode === mode
+          isActive
         );
       });
 
+    updateFilterLabel();
     renderMemberRows(filteredMembers);
   }
 
@@ -556,68 +639,109 @@
     filteredMembers = [...currentMembers];
 
     document
-      .querySelectorAll(".guild-stat-row.active")
+      .querySelectorAll(".guild-stat-item.active")
       .forEach((row) => {
         row.classList.remove("active");
       });
 
+    updateFilterLabel();
     renderMemberRows(filteredMembers);
   }
 
-  function renderGuildStats(mode = currentStatMode) {
-    currentStatMode = mode;
+  function renderStatList(target, items, mode) {
+    if (!target) {
+      return;
+    }
 
-    statTabs.forEach((tab) => {
-      const active =
-        tab.dataset.guildStat === mode;
+    target.innerHTML = "";
 
-      tab.classList.toggle("active", active);
-      tab.setAttribute(
-        "aria-selected",
-        String(active)
-      );
-    });
-
-    const grouped = groupMembers(mode);
     const maximum = Math.max(
       1,
-      ...grouped.map((item) => item.count)
+      ...items.map((item) => item.count)
     );
 
-    statChart.innerHTML = "";
+    items.forEach((item) => {
+      const ratio = currentMembers.length
+        ? (item.count / currentMembers.length) * 100
+        : 0;
 
-    grouped.forEach((item) => {
-      const row = document.createElement("button");
       const width = (item.count / maximum) * 100;
+      const button = document.createElement("button");
 
-      row.type = "button";
-      row.className = "guild-stat-row";
-      row.dataset.mode = mode;
-      row.dataset.key = item.key;
+      button.type = "button";
+      button.className = "guild-stat-item";
+      button.dataset.mode = mode;
+      button.dataset.key = String(item.key);
 
-      row.innerHTML = `
-        <span class="guild-stat-label">
-          ${statLabel(mode, item.key)}
+      if (item.count === 0) {
+        button.classList.add("zero");
+      }
+
+      button.innerHTML = `
+        <span class="guild-stat-item-top">
+          <span class="guild-stat-item-label">
+            ${item.label}
+          </span>
+
+          <span class="guild-stat-item-numbers">
+            <strong>${item.count}명</strong>
+            <small>${ratio.toFixed(1)}%</small>
+          </span>
         </span>
 
-        <span class="guild-stat-track">
+        <span class="guild-stat-line">
           <span
-            class="guild-stat-bar"
-            style="width: ${width.toFixed(2)}%;"
+            class="guild-stat-line-fill"
+            style="width: ${item.count ? width.toFixed(2) : 0}%;"
           ></span>
         </span>
-
-        <strong class="guild-stat-value">
-          ${item.count}
-        </strong>
       `;
 
-      row.addEventListener("click", () => {
-        applyStatFilter(mode, item.key);
-      });
+      if (item.count > 0) {
+        button.addEventListener("click", () => {
+          applyStatFilter(mode, item);
+        });
+      } else {
+        button.disabled = true;
+      }
 
-      statChart.appendChild(row);
+      target.appendChild(button);
     });
+  }
+
+  function renderAllGuildStats() {
+    const classStats = buildClassStats();
+    const gradeStats = buildNumericStats("grade");
+    const levelStats = buildNumericStats("level");
+
+    classTotal.textContent =
+      `${currentMembers.length}명`;
+
+    gradeTotal.textContent =
+      `${currentMembers.length}명`;
+
+    levelTotal.textContent =
+      `${currentMembers.length}명`;
+
+    renderStatList(
+      classStatList,
+      classStats,
+      "class"
+    );
+
+    renderStatList(
+      gradeStatList,
+      gradeStats,
+      "grade"
+    );
+
+    renderStatList(
+      levelStatList,
+      levelStats,
+      "level"
+    );
+
+    updateFilterLabel();
   }
 
   async function openMemberModal(guild) {
@@ -676,7 +800,7 @@
       activeStatFilter = null;
 
       popupStatistics.hidden = false;
-      renderGuildStats("class");
+      renderAllGuildStats();
       renderMemberRows(filteredMembers);
     } catch (error) {
       console.error(error);
@@ -824,11 +948,6 @@
     }
   );
 
-  statTabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      resetMemberFilter();
-      renderGuildStats(tab.dataset.guildStat);
-    });
   });
 
   statReset?.addEventListener(
