@@ -25,6 +25,11 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
+  getFunctions,
+  httpsCallable
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-functions.js";
+
+import {
   firebaseConfig,
   isConfiguredAdmin
 } from "./firebase-config.js";
@@ -35,18 +40,33 @@ const app = getApps().length
 
 const auth = getAuth(app);
 const db = getFirestore(app);
+const functions = getFunctions(app, "asia-northeast3");
 const provider = new GoogleAuthProvider();
+
+const triggerRankingUpdateCall = httpsCallable(
+  functions,
+  "triggerRankingUpdate"
+);
+
+const getRankingUpdateStatusCall = httpsCallable(
+  functions,
+  "getRankingUpdateStatus"
+);
 
 const pageTitles = {
   notice: "안내사항 관리",
   schedule: "방송 일정 관리",
-  video: "영상 관리"
+  video: "영상 관리",
+  data: "데이터 갱신"
 };
 
 let noticeItems = [];
 let scheduleItems = [];
 let videoItems = [];
 let activeVideoFilter = "all";
+let rankingStatusTimer = null;
+let activeRankingRunId = null;
+let rankingRequestedAt = null;
 
 const $ = (id) => document.getElementById(id);
 
@@ -133,6 +153,364 @@ function renderVideoAdminList() {
   );
 }
 
+
+const RANKING_STATUS_URL = "./data/ranking_update_status.json";
+const RANKING_POLL_INTERVAL = 7000;
+const RANKING_MAX_POLL_COUNT = 260;
+
+function formatDateTime(value) {
+  if (!value) {
+    return "-";
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return String(value);
+  }
+
+  return new Intl.DateTimeFormat("ko-KR", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  }).format(date);
+}
+
+function formatCount(value, suffix = "명") {
+  const number = Number(value);
+
+  if (!Number.isFinite(number)) {
+    return "-";
+  }
+
+  return `${number.toLocaleString("ko-KR")}${suffix}`;
+}
+
+function setRankingBadge(text, state = "idle") {
+  const badge = $("rankingUpdateBadge");
+
+  badge.textContent = text;
+  badge.className = `data-state-badge ${state}`;
+}
+
+function setRankingMessage(message, state = "") {
+  const target = $("rankingUpdateMessage");
+
+  target.textContent = message;
+  target.className = "data-update-message";
+
+  if (state) {
+    target.classList.add(state);
+  }
+}
+
+function setRankingProgress(step) {
+  const order = ["request", "queued", "running", "complete"];
+  const currentIndex = order.indexOf(step);
+
+  document
+    .querySelectorAll("[data-progress-step]")
+    .forEach((item) => {
+      const itemIndex = order.indexOf(item.dataset.progressStep);
+
+      item.classList.toggle("active", itemIndex === currentIndex);
+      item.classList.toggle(
+        "done",
+        currentIndex >= 0 && itemIndex < currentIndex
+      );
+    });
+}
+
+function resetRankingProgress() {
+  activeRankingRunId = null;
+  rankingRequestedAt = null;
+
+  if (rankingStatusTimer) {
+    window.clearTimeout(rankingStatusTimer);
+    rankingStatusTimer = null;
+  }
+
+  $("rankingRunId").textContent = "-";
+  $("rankingRequestedAt").textContent = "-";
+  $("rankingRunConclusion").textContent = "-";
+
+  setRankingProgress("request");
+}
+
+async function loadRankingDataStatus() {
+  try {
+    const response = await fetch(
+      `${RANKING_STATUS_URL}?ts=${Date.now()}`,
+      {
+        cache: "no-store"
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    $("rankingUpdatedAt").textContent =
+      data.updated_at_text || formatDateTime(data.updated_at);
+
+    $("rankingCharacterCount").textContent =
+      formatCount(data.character_count, "명");
+
+    $("rankingGuildCount").textContent =
+      formatCount(data.guild_count, "개");
+
+    $("rankingClassCount").textContent =
+      formatCount(data.class_count, "명");
+
+    if (!activeRankingRunId) {
+      if (data.status === "success") {
+        setRankingBadge("정상", "success");
+        setRankingMessage(
+          data.message || "랭킹 데이터가 정상적으로 반영되어 있습니다.",
+          "success"
+        );
+        setRankingProgress("complete");
+      } else if (data.status === "partial_failure") {
+        setRankingBadge("일부 실패", "error");
+        setRankingMessage(
+          data.message || "일부 데이터 요청이 실패했습니다.",
+          "error"
+        );
+      } else {
+        setRankingBadge("상태 확인", "idle");
+        setRankingMessage(
+          data.message || "최근 데이터 상태를 확인했습니다."
+        );
+      }
+    }
+
+    return data;
+  } catch (error) {
+    console.error("랭킹 상태 파일 로드 오류", error);
+
+    if (!activeRankingRunId) {
+      setRankingBadge("확인 불가", "error");
+      setRankingMessage(
+        "최근 데이터 상태를 불러오지 못했습니다.",
+        "error"
+      );
+    }
+
+    return null;
+  }
+}
+
+function rankingErrorMessage(error) {
+  const code = error?.code || "";
+
+  const messages = {
+    "functions/unauthenticated":
+      "관리자 로그인이 필요합니다.",
+    "functions/permission-denied":
+      "데이터 갱신 권한이 없는 계정입니다.",
+    "functions/internal":
+      "GitHub Actions 실행 요청 중 오류가 발생했습니다.",
+    "functions/unavailable":
+      "Firebase 함수에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.",
+    "functions/deadline-exceeded":
+      "요청 시간이 초과되었습니다. GitHub Actions 실행 여부를 확인해주세요."
+  };
+
+  return messages[code] ||
+    error?.message ||
+    "데이터 갱신 요청을 처리하지 못했습니다.";
+}
+
+function stopRankingPolling() {
+  if (rankingStatusTimer) {
+    window.clearTimeout(rankingStatusTimer);
+    rankingStatusTimer = null;
+  }
+}
+
+async function pollRankingRunStatus(runId, pollCount = 0) {
+  if (!runId) {
+    return;
+  }
+
+  try {
+    const result = await getRankingUpdateStatusCall({
+      runId
+    });
+
+    const data = result.data || {};
+    const status = data.status;
+    const conclusion = data.conclusion;
+
+    $("rankingRunConclusion").textContent =
+      conclusion || status || "-";
+
+    if (status === "queued") {
+      setRankingBadge("대기 중", "working");
+      setRankingMessage(
+        "GitHub Actions 실행 대기열에 등록되었습니다.",
+        "working"
+      );
+      setRankingProgress("queued");
+    } else if (status === "in_progress") {
+      setRankingBadge("갱신 중", "working");
+      setRankingMessage(
+        "랭킹 데이터를 추출하고 있습니다. 잠시만 기다려주세요.",
+        "working"
+      );
+      setRankingProgress("running");
+    } else if (status === "completed") {
+      stopRankingPolling();
+      activeRankingRunId = null;
+      $("rankingUpdateButton").disabled = false;
+
+      if (conclusion === "success") {
+        setRankingBadge("완료", "success");
+        setRankingMessage(
+          "전체 데이터 갱신과 홈페이지 반영이 완료되었습니다.",
+          "success"
+        );
+        setRankingProgress("complete");
+        showToast("랭킹 데이터 갱신이 완료되었습니다.");
+
+        window.setTimeout(() => {
+          loadRankingDataStatus();
+        }, 2500);
+      } else {
+        setRankingBadge("실패", "error");
+        setRankingMessage(
+          `데이터 갱신 작업이 실패했습니다. 결과: ${conclusion || "unknown"}`,
+          "error"
+        );
+        $("rankingRunConclusion").textContent =
+          conclusion || "실패";
+        showToast("랭킹 데이터 갱신에 실패했습니다.");
+      }
+
+      return;
+    }
+
+    if (pollCount >= RANKING_MAX_POLL_COUNT) {
+      stopRankingPolling();
+      activeRankingRunId = null;
+      $("rankingUpdateButton").disabled = false;
+      setRankingBadge("확인 지연", "error");
+      setRankingMessage(
+        "작업 상태 확인 시간이 길어지고 있습니다. 상태 새로고침을 눌러주세요.",
+        "error"
+      );
+      return;
+    }
+
+    rankingStatusTimer = window.setTimeout(() => {
+      pollRankingRunStatus(runId, pollCount + 1);
+    }, RANKING_POLL_INTERVAL);
+  } catch (error) {
+    console.error("랭킹 실행 상태 확인 오류", error);
+
+    if (pollCount >= 5) {
+      stopRankingPolling();
+      activeRankingRunId = null;
+      $("rankingUpdateButton").disabled = false;
+      setRankingBadge("확인 오류", "error");
+      setRankingMessage(
+        rankingErrorMessage(error),
+        "error"
+      );
+      return;
+    }
+
+    rankingStatusTimer = window.setTimeout(() => {
+      pollRankingRunStatus(runId, pollCount + 1);
+    }, RANKING_POLL_INTERVAL);
+  }
+}
+
+async function startRankingUpdate() {
+  if (activeRankingRunId) {
+    showToast("이미 데이터 갱신 작업을 확인하고 있습니다.");
+    return;
+  }
+
+  const confirmed = window.confirm(
+    "전체 랭킹 데이터를 새로 갱신할까요?\n" +
+    "완료까지 수 분이 걸릴 수 있습니다."
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  const button = $("rankingUpdateButton");
+
+  button.disabled = true;
+  resetRankingProgress();
+  setRankingBadge("요청 중", "working");
+  setRankingMessage(
+    "Firebase에서 관리자 권한을 확인하고 있습니다.",
+    "working"
+  );
+
+  try {
+    const result = await triggerRankingUpdateCall({
+      source: "admin-page"
+    });
+
+    const data = result.data || {};
+
+    rankingRequestedAt = data.requestedAt || new Date().toISOString();
+    activeRankingRunId = data.runId || null;
+
+    $("rankingRequestedAt").textContent =
+      formatDateTime(rankingRequestedAt);
+
+    $("rankingRunId").textContent =
+      activeRankingRunId || "확인 중";
+
+    setRankingProgress("queued");
+    setRankingBadge("실행 시작", "working");
+    setRankingMessage(
+      data.message || "랭킹 데이터 갱신 작업을 시작했습니다.",
+      "working"
+    );
+
+    if (!activeRankingRunId) {
+      button.disabled = false;
+      setRankingMessage(
+        "작업 실행 요청은 완료됐지만 실행 번호 확인이 지연되고 있습니다. " +
+        "잠시 후 상태 새로고침을 눌러주세요.",
+        "working"
+      );
+      showToast("데이터 갱신 작업을 요청했습니다.");
+      return;
+    }
+
+    showToast("데이터 갱신 작업을 시작했습니다.");
+    pollRankingRunStatus(activeRankingRunId);
+  } catch (error) {
+    console.error("랭킹 갱신 실행 오류", error);
+
+    button.disabled = false;
+    activeRankingRunId = null;
+
+    setRankingBadge("실행 실패", "error");
+    setRankingMessage(
+      rankingErrorMessage(error),
+      "error"
+    );
+    $("rankingRunConclusion").textContent = "요청 실패";
+
+    showToast("데이터 갱신 요청에 실패했습니다.");
+  }
+}
+
 function clearForm(prefix) {
   if (prefix === "notice") {
     $("noticeForm").reset();
@@ -190,7 +568,8 @@ async function loadAll() {
   await Promise.all([
     loadNotices(),
     loadSchedules(),
-    loadVideos()
+    loadVideos(),
+    loadRankingDataStatus()
   ]);
 }
 
@@ -421,6 +800,24 @@ $("videoDelete").addEventListener("click", async () => {
 $("noticeReset").addEventListener("click", () => clearForm("notice"));
 $("scheduleReset").addEventListener("click", () => clearForm("schedule"));
 $("videoReset").addEventListener("click", () => clearForm("video"));
+
+$("rankingUpdateButton").addEventListener(
+  "click",
+  startRankingUpdate
+);
+
+$("rankingStatusRefresh").addEventListener(
+  "click",
+  async () => {
+    await loadRankingDataStatus();
+
+    if (activeRankingRunId) {
+      pollRankingRunStatus(activeRankingRunId);
+    } else {
+      showToast("최근 데이터 상태를 새로고침했습니다.");
+    }
+  }
+);
 
 document
   .querySelectorAll("[data-video-filter]")
