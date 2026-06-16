@@ -76,6 +76,22 @@
     "guildMemberModalClose"
   );
 
+  const popupStatistics = document.getElementById(
+    "guildPopupStatistics"
+  );
+
+  const statChart = document.getElementById(
+    "guildStatChart"
+  );
+
+  const statReset = document.getElementById(
+    "guildStatReset"
+  );
+
+  const statTabs = Array.from(
+    document.querySelectorAll("[data-guild-stat]")
+  );
+
   if (
     !form ||
     !input ||
@@ -88,6 +104,10 @@
   let guildData = null;
   let memberRankings = null;
   let memberClassMap = {};
+  let currentMembers = [];
+  let filteredMembers = [];
+  let currentStatMode = "class";
+  let activeStatFilter = null;
 
   function normalizeText(value) {
     return String(value ?? "")
@@ -402,6 +422,204 @@
     resultWrap.hidden = false;
   }
 
+  function groupMembers(mode) {
+    const grouped = new Map();
+
+    currentMembers.forEach((member) => {
+      let key = "";
+
+      if (mode === "class") {
+        key = member.className;
+      } else if (mode === "grade") {
+        key = String(member.grade);
+      } else {
+        key = String(member.level);
+      }
+
+      grouped.set(
+        key,
+        (grouped.get(key) || 0) + 1
+      );
+    });
+
+    return Array.from(grouped.entries())
+      .map(([key, count]) => ({
+        key,
+        count
+      }))
+      .sort((a, b) => {
+        if (mode === "class") {
+          return b.count - a.count ||
+            a.key.localeCompare(b.key, "ko");
+        }
+
+        return Number(b.key) - Number(a.key);
+      })
+      .slice(0, mode === "class" ? 7 : 8);
+  }
+
+  function statLabel(mode, key) {
+    if (mode === "grade") {
+      return `토벌 ${key}`;
+    }
+
+    if (mode === "level") {
+      return `Lv.${key}`;
+    }
+
+    return key;
+  }
+
+  function matchesStat(member, mode, key) {
+    if (mode === "class") {
+      return member.className === key;
+    }
+
+    if (mode === "grade") {
+      return String(member.grade) === String(key);
+    }
+
+    return String(member.level) === String(key);
+  }
+
+  function renderMemberRows(members) {
+    memberBody.innerHTML = "";
+
+    if (!members.length) {
+      const row = document.createElement("tr");
+      const cell = document.createElement("td");
+
+      cell.colSpan = 4;
+      cell.textContent = "해당 조건의 결사원이 없습니다.";
+      cell.style.padding = "28px";
+      cell.style.color = "var(--muted)";
+
+      row.appendChild(cell);
+      memberBody.appendChild(row);
+      return;
+    }
+
+    members.forEach((member) => {
+      const row = document.createElement("tr");
+
+      row.appendChild(
+        createCell(member.nickname)
+      );
+
+      row.appendChild(
+        createCell(
+          member.grade,
+          "guild-member-raid"
+        )
+      );
+
+      row.appendChild(
+        createCell(
+          member.className,
+          "guild-member-job"
+        )
+      );
+
+      row.appendChild(
+        createCell(member.level)
+      );
+
+      memberBody.appendChild(row);
+    });
+  }
+
+  function applyStatFilter(mode, key) {
+    activeStatFilter = {
+      mode,
+      key
+    };
+
+    filteredMembers = currentMembers.filter((member) => {
+      return matchesStat(member, mode, key);
+    });
+
+    document
+      .querySelectorAll(".guild-stat-row")
+      .forEach((row) => {
+        row.classList.toggle(
+          "active",
+          row.dataset.key === String(key) &&
+          row.dataset.mode === mode
+        );
+      });
+
+    renderMemberRows(filteredMembers);
+  }
+
+  function resetMemberFilter() {
+    activeStatFilter = null;
+    filteredMembers = [...currentMembers];
+
+    document
+      .querySelectorAll(".guild-stat-row.active")
+      .forEach((row) => {
+        row.classList.remove("active");
+      });
+
+    renderMemberRows(filteredMembers);
+  }
+
+  function renderGuildStats(mode = currentStatMode) {
+    currentStatMode = mode;
+
+    statTabs.forEach((tab) => {
+      const active =
+        tab.dataset.guildStat === mode;
+
+      tab.classList.toggle("active", active);
+      tab.setAttribute(
+        "aria-selected",
+        String(active)
+      );
+    });
+
+    const grouped = groupMembers(mode);
+    const maximum = Math.max(
+      1,
+      ...grouped.map((item) => item.count)
+    );
+
+    statChart.innerHTML = "";
+
+    grouped.forEach((item) => {
+      const row = document.createElement("button");
+      const width = (item.count / maximum) * 100;
+
+      row.type = "button";
+      row.className = "guild-stat-row";
+      row.dataset.mode = mode;
+      row.dataset.key = item.key;
+
+      row.innerHTML = `
+        <span class="guild-stat-label">
+          ${statLabel(mode, item.key)}
+        </span>
+
+        <span class="guild-stat-track">
+          <span
+            class="guild-stat-bar"
+            style="width: ${width.toFixed(2)}%;"
+          ></span>
+        </span>
+
+        <strong class="guild-stat-value">
+          ${item.count}
+        </strong>
+      `;
+
+      row.addEventListener("click", () => {
+        applyStatFilter(mode, item.key);
+      });
+
+      statChart.appendChild(row);
+    });
+  }
+
   async function openMemberModal(guild) {
     const guildName = getGuildName(guild);
     const serverName = formatServerName(
@@ -415,6 +633,7 @@
       `${serverName} · 멤버 데이터를 불러오는 중`;
 
     memberBody.innerHTML = "";
+    popupStatistics.hidden = true;
     memberTableWrap.hidden = true;
     memberMessage.hidden = false;
     memberMessage.textContent =
@@ -444,6 +663,7 @@
         memberMessage.textContent =
           "랭킹 데이터에서 해당 결사 소속 멤버를 찾지 못했습니다.";
 
+        popupStatistics.hidden = true;
         memberTableWrap.hidden = true;
         return;
       }
@@ -451,34 +671,13 @@
       memberMessage.hidden = true;
       memberTableWrap.hidden = false;
 
-      members.forEach((member) => {
-        const row =
-          document.createElement("tr");
+      currentMembers = members;
+      filteredMembers = [...members];
+      activeStatFilter = null;
 
-        row.appendChild(
-          createCell(member.nickname)
-        );
-
-        row.appendChild(
-          createCell(
-            member.grade,
-            "guild-member-raid"
-          )
-        );
-
-        row.appendChild(
-          createCell(
-            member.className,
-            "guild-member-job"
-          )
-        );
-
-        row.appendChild(
-          createCell(member.level)
-        );
-
-        memberBody.appendChild(row);
-      });
+      popupStatistics.hidden = false;
+      renderGuildStats("class");
+      renderMemberRows(filteredMembers);
     } catch (error) {
       console.error(error);
 
@@ -489,6 +688,7 @@
       memberMessage.textContent =
         "멤버 정보를 불러오지 못했습니다.";
 
+      popupStatistics.hidden = true;
       memberTableWrap.hidden = true;
     }
   }
@@ -622,6 +822,18 @@
       event.preventDefault();
       searchGuilds();
     }
+  );
+
+  statTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      resetMemberFilter();
+      renderGuildStats(tab.dataset.guildStat);
+    });
+  });
+
+  statReset?.addEventListener(
+    "click",
+    resetMemberFilter
   );
 
   memberClose.addEventListener(
