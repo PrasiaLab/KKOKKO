@@ -4,7 +4,7 @@
  */
 
 export const firebaseConfig = {
-  apiKey: "Firebase 콘솔 구성 화면의 실제 API 키",
+  apiKey: "AIzaSyBTo1X0MbgYC-Kh_yqLrakXrBMoRibvwvk",
   authDomain: "prasialab.firebaseapp.com",
   projectId: "prasialab",
   storageBucket: "prasialab.firebasestorage.app",
