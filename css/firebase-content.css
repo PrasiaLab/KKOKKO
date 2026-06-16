@@ -1,0 +1,195 @@
+/* =========================================================
+   Firebase 공개 콘텐츠
+   ========================================================= */
+
+.content-loading-row {
+  padding: 28px 20px;
+  color: #97a2b1;
+  font-size: 14px;
+  text-align: center;
+}
+
+.notice-layout {
+  display: grid;
+  grid-template-columns: minmax(360px, .82fr) minmax(0, 1.18fr);
+  gap: 17px;
+}
+
+.notice-board-panel,
+.notice-detail-panel {
+  min-height: 560px;
+}
+
+.notice-board-list {
+  padding: 7px 13px 13px;
+}
+
+.notice-board-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 9px;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .055);
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.notice-board-item:hover,
+.notice-board-item.active {
+  background: rgba(255, 255, 255, .03);
+}
+
+.notice-board-item.active .notice-board-title {
+  color: var(--gold2);
+}
+
+.notice-board-category {
+  width: fit-content;
+  padding: 5px 8px;
+  border-radius: 8px;
+  background: rgba(225, 184, 62, .1);
+  color: var(--gold2);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.notice-board-title {
+  overflow: hidden;
+  color: #eef1f5;
+  font-size: 15px;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notice-board-date {
+  color: #838e9e;
+  font-size: 12px;
+}
+
+.notice-detail-panel {
+  padding: 28px;
+}
+
+.notice-detail-empty {
+  min-height: 500px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  text-align: center;
+}
+
+.notice-detail-empty > span {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  background: rgba(225, 184, 62, .09);
+  color: var(--gold2);
+}
+
+.notice-detail-empty strong {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.notice-detail-empty p {
+  margin: 9px 0 0;
+  color: #9da8b7;
+  font-size: 14px;
+}
+
+.notice-detail-category {
+  display: inline-flex;
+  padding: 6px 9px;
+  border-radius: 8px;
+  background: rgba(225, 184, 62, .1);
+  color: var(--gold2);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.notice-detail-title {
+  margin: 15px 0 9px;
+  font-size: 29px;
+  font-weight: 800;
+  letter-spacing: -.8px;
+}
+
+.notice-detail-meta {
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+  color: #8994a4;
+  font-size: 13px;
+}
+
+.notice-detail-content {
+  padding-top: 23px;
+  color: #d7dce4;
+  font-size: 16px;
+  line-height: 1.85;
+  white-space: pre-wrap;
+}
+
+.video-board-panel {
+  padding: 4px 4px 20px;
+}
+
+.six-video-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.youtube-more-button {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 4px auto 0;
+  padding: 13px 18px;
+  border: 1px solid rgba(255, 109, 101, .24);
+  border-radius: 12px;
+  background: rgba(255, 109, 101, .07);
+  color: #ffaaa5;
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.youtube-more-button:hover {
+  background: rgba(255, 109, 101, .12);
+}
+
+@media (max-width: 1180px) {
+  .notice-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .six-video-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .notice-board-item {
+    grid-template-columns: 68px minmax(0, 1fr);
+  }
+
+  .notice-board-date {
+    display: none;
+  }
+
+  .notice-detail-panel {
+    padding: 20px;
+  }
+
+  .six-video-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,173 @@
+/* =========================================================
+   방송 일정 달력
+   ========================================================= */
+
+.calendar-panel {
+  overflow: visible;
+}
+
+.calendar-panel-heading {
+  align-items: center;
+}
+
+.calendar-panel-heading h2 {
+  margin: 0;
+}
+
+.calendar-panel-heading p {
+  margin: 5px 0 0;
+  color: #9ea8b7;
+  font-size: 13px;
+}
+
+.calendar-navigation {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.calendar-navigation button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #20262e;
+  color: #dce1e8;
+  cursor: pointer;
+}
+
+.calendar-navigation strong {
+  min-width: 92px;
+  color: #f4f6fa;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.mini-calendar {
+  padding: 15px 17px 10px;
+}
+
+.calendar-weekdays,
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.calendar-weekdays span {
+  padding: 4px 0 7px;
+  color: #8f9aaa;
+  font-size: 11px;
+  text-align: center;
+}
+
+.calendar-weekdays span:first-child {
+  color: #e58b88;
+}
+
+.calendar-weekdays span:last-child {
+  color: #7baae5;
+}
+
+.calendar-day {
+  position: relative;
+  min-height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: #dce2e9;
+  font-size: 13px;
+  cursor: default;
+}
+
+button.calendar-day {
+  cursor: pointer;
+}
+
+.calendar-day.other-month {
+  color: #515a67;
+}
+
+.calendar-day.today {
+  border-color: rgba(225, 184, 62, .42);
+  color: var(--gold2);
+}
+
+.calendar-day.has-event {
+  background: rgba(255, 255, 255, .045);
+}
+
+.calendar-day.has-event::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.calendar-day.type-dayoff {
+  color: #ff9690;
+}
+
+.calendar-day.type-special {
+  color: #8ebcff;
+}
+
+.calendar-day.type-timechange {
+  color: #f3cf68;
+}
+
+.calendar-day.type-collab {
+  color: #b99cff;
+}
+
+.calendar-day.selected {
+  border-color: currentColor;
+  background: rgba(255, 255, 255, .07);
+}
+
+.calendar-loading {
+  min-height: 235px;
+  display: grid;
+  place-items: center;
+  color: #929dac;
+  font-size: 14px;
+}
+
+.calendar-selected-event {
+  min-height: 84px;
+  margin: 0 17px 17px;
+  padding: 14px 15px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: #191e25;
+}
+
+.calendar-selected-event strong {
+  display: block;
+  color: #f2f4f7;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.calendar-selected-event p {
+  margin: 6px 0 0;
+  color: #aab4c2;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+@media (max-width: 560px) {
+  .calendar-panel-heading {
+    align-items: flex-start;
+  }
+
+  .calendar-day {
+    min-height: 38px;
+  }
+}

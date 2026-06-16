@@ -1,0 +1,125 @@
+/* =========================================================
+   결사 팝업 통계
+   ========================================================= */
+
+.guild-popup-statistics {
+  margin-bottom: 18px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: #1b2027;
+}
+
+.guild-stat-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.guild-stat-tab {
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #242a33;
+  color: #cbd2dc;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.guild-stat-tab.active {
+  border-color: rgba(225, 184, 62, .4);
+  background: rgba(225, 184, 62, .1);
+  color: var(--gold2);
+}
+
+.guild-stat-chart {
+  display: grid;
+  gap: 8px;
+}
+
+.guild-stat-row {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) 42px;
+  gap: 10px;
+  align-items: center;
+  min-height: 28px;
+  padding: 3px 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.guild-stat-label {
+  overflow: hidden;
+  color: #d8dde5;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.guild-stat-track {
+  height: 17px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #11161c;
+}
+
+.guild-stat-bar {
+  height: 100%;
+  min-width: 3px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #61a9ee, #6fd1b2);
+  transition: width .25s ease;
+}
+
+.guild-stat-row:nth-child(2n) .guild-stat-bar {
+  background: linear-gradient(90deg, #f1b340, #f2cc62);
+}
+
+.guild-stat-row:nth-child(3n) .guild-stat-bar {
+  background: linear-gradient(90deg, #9b70ed, #bd8cf2);
+}
+
+.guild-stat-value {
+  color: #f3f5f8;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.guild-stat-row:hover .guild-stat-label,
+.guild-stat-row.active .guild-stat-label {
+  color: var(--gold2);
+}
+
+.guild-stat-reset {
+  display: block;
+  margin: 13px 0 0 auto;
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #242a33;
+  color: #aeb8c6;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.guild-member-list-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 4px 0 10px;
+  color: #aeb8c6;
+  font-size: 13px;
+}
+
+@media (max-width: 650px) {
+  .guild-stat-row {
+    grid-template-columns: 74px minmax(0, 1fr) 36px;
+  }
+}
