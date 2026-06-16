@@ -470,44 +470,66 @@
 
       <div class="guild-member-body">
         <section class="guild-popup-statistics" id="guildPopupStatistics" hidden>
-          <div class="guild-stat-tabs" role="tablist" aria-label="결사 통계 구분">
-            <button
-              class="guild-stat-tab active"
-              type="button"
-              data-guild-stat="class"
-              aria-selected="true"
-            >
-              직업 통계
-            </button>
+          <div class="guild-stat-overview">
+            <section class="guild-stat-card">
+              <div class="guild-stat-card-heading">
+                <div>
+                  <span>CLASS</span>
+                  <h3>직업 구성</h3>
+                </div>
+                <strong id="guildClassTotal">0명</strong>
+              </div>
 
-            <button
-              class="guild-stat-tab"
-              type="button"
-              data-guild-stat="grade"
-              aria-selected="false"
-            >
-              토벌 통계
-            </button>
+              <div
+                class="guild-stat-list"
+                id="guildClassStatList"
+              ></div>
+            </section>
 
-            <button
-              class="guild-stat-tab"
-              type="button"
-              data-guild-stat="level"
-              aria-selected="false"
-            >
-              레벨 통계
-            </button>
+            <section class="guild-stat-card">
+              <div class="guild-stat-card-heading">
+                <div>
+                  <span>RAID</span>
+                  <h3>토벌 등급</h3>
+                </div>
+                <strong id="guildGradeTotal">0명</strong>
+              </div>
+
+              <div
+                class="guild-stat-list"
+                id="guildGradeStatList"
+              ></div>
+            </section>
+
+            <section class="guild-stat-card">
+              <div class="guild-stat-card-heading">
+                <div>
+                  <span>LEVEL</span>
+                  <h3>레벨 분포</h3>
+                </div>
+                <strong id="guildLevelTotal">0명</strong>
+              </div>
+
+              <div
+                class="guild-stat-list"
+                id="guildLevelStatList"
+              ></div>
+            </section>
           </div>
 
-          <div class="guild-stat-chart" id="guildStatChart"></div>
+          <div class="guild-stat-filter-bar">
+            <span id="guildStatFilterLabel">
+              전체 결사원 · 0명
+            </span>
 
-          <button
-            class="guild-stat-reset"
-            id="guildStatReset"
-            type="button"
-          >
-            전체 결사원 보기
-          </button>
+            <button
+              class="guild-stat-reset"
+              id="guildStatReset"
+              type="button"
+            >
+              필터 해제
+            </button>
+          </div>
         </section>
 
         <div
