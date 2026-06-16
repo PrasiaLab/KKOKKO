@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>맛나는꼬꼬 | 관리자 센터</title>
+  <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body>
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <a class="admin-brand" href="./index.html">
+        <img src="./images/bi_simbol.png" alt="">
+        <div>
+          <strong>맛나는꼬꼬</strong>
+          <span>ADMIN CENTER</span>
+        </div>
+      </a>
+
+      <nav class="admin-nav">
+        <button class="admin-nav-button active" data-admin-page="notice">
+          안내사항 관리
+        </button>
+        <button class="admin-nav-button" data-admin-page="schedule">
+          방송 일정 관리
+        </button>
+        <button class="admin-nav-button" data-admin-page="video">
+          영상 관리
+        </button>
+      </nav>
+
+      <div class="admin-user-card">
+        <strong id="adminUserName">로그인 확인 중</strong>
+        <span id="adminUserEmail">-</span>
+        <code id="adminUserUid">UID 확인 중</code>
+        <button id="adminLogoutButton" type="button">로그아웃</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-header">
+        <div>
+          <span>KKOKKO PRASIA LAB</span>
+          <h1 id="adminPageTitle">안내사항 관리</h1>
+        </div>
+        <a href="./index.html">홈페이지로 돌아가기</a>
+      </header>
+
+      <div class="admin-access-message" id="adminAccessMessage">
+        관리자 권한을 확인하는 중입니다.
+      </div>
+
+      <section class="admin-page active" id="adminNoticePage">
+        <div class="admin-grid">
+          <form class="admin-form-card" id="noticeForm">
+            <input type="hidden" id="noticeDocumentId">
+
+            <div class="admin-form-heading">
+              <h2>안내사항 작성</h2>
+              <button type="button" class="secondary-button" id="noticeReset">
+                새 글
+              </button>
+            </div>
+
+            <label>
+              <span>말머리</span>
+              <input id="noticeCategory" type="text" value="공지" required>
+            </label>
+
+            <label>
+              <span>제목</span>
+              <input id="noticeTitle" type="text" required>
+            </label>
+
+            <label>
+              <span>내용</span>
+              <textarea id="noticeContent" rows="12" required></textarea>
+            </label>
+
+            <div class="check-row">
+              <label>
+                <input id="noticePinned" type="checkbox">
+                <span>상단 고정</span>
+              </label>
+              <label>
+                <input id="noticeVisible" type="checkbox" checked>
+                <span>공개</span>
+              </label>
+            </div>
+
+            <div class="form-actions">
+              <button class="primary-button" type="submit">저장</button>
+              <button class="danger-button" id="noticeDelete" type="button">
+                삭제
+              </button>
+            </div>
+          </form>
+
+          <section class="admin-list-card">
+            <h2>등록된 안내사항</h2>
+            <div class="admin-item-list" id="noticeAdminList"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="admin-page" id="adminSchedulePage">
+        <div class="admin-grid">
+          <form class="admin-form-card" id="scheduleForm">
+            <input type="hidden" id="scheduleDocumentId">
+
+            <div class="admin-form-heading">
+              <h2>방송 일정 작성</h2>
+              <button type="button" class="secondary-button" id="scheduleReset">
+                새 일정
+              </button>
+            </div>
+
+            <label>
+              <span>날짜</span>
+              <input id="scheduleDate" type="date" required>
+            </label>
+
+            <label>
+              <span>일정 유형</span>
+              <select id="scheduleType" required>
+                <option value="dayoff">휴방</option>
+                <option value="special">특별 방송</option>
+                <option value="timechange">시간 변경</option>
+                <option value="collab">합방</option>
+              </select>
+            </label>
+
+            <label>
+              <span>제목</span>
+              <input id="scheduleTitle" type="text" required>
+            </label>
+
+            <label>
+              <span>설명</span>
+              <textarea id="scheduleDescription" rows="7"></textarea>
+            </label>
+
+            <div class="check-row">
+              <label>
+                <input id="scheduleVisible" type="checkbox" checked>
+                <span>공개</span>
+              </label>
+            </div>
+
+            <div class="form-actions">
+              <button class="primary-button" type="submit">저장</button>
+              <button class="danger-button" id="scheduleDelete" type="button">
+                삭제
+              </button>
+            </div>
+          </form>
+
+          <section class="admin-list-card">
+            <h2>등록된 방송 일정</h2>
+            <div class="admin-item-list" id="scheduleAdminList"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="admin-page" id="adminVideoPage">
+        <div class="admin-grid">
+          <form class="admin-form-card" id="videoForm">
+            <input type="hidden" id="videoDocumentId">
+
+            <div class="admin-form-heading">
+              <h2>영상 작성</h2>
+              <button type="button" class="secondary-button" id="videoReset">
+                새 영상
+              </button>
+            </div>
+
+            <label>
+              <span>노출 위치</span>
+              <select id="videoType" required>
+                <option value="featured">메인 주요 영상</option>
+                <option value="review">리뷰 방송</option>
+                <option value="raid">토벌 공략</option>
+              </select>
+            </label>
+
+            <label>
+              <span>카테고리</span>
+              <input id="videoCategory" type="text" value="영상">
+            </label>
+
+            <label>
+              <span>제목</span>
+              <input id="videoTitle" type="text" required>
+            </label>
+
+            <label>
+              <span>설명</span>
+              <textarea id="videoDescription" rows="5"></textarea>
+            </label>
+
+            <label>
+              <span>YouTube 주소</span>
+              <input
+                id="videoUrl"
+                type="url"
+                placeholder="https://www.youtube.com/watch?v=..."
+                required
+              >
+            </label>
+
+            <label>
+              <span>표시 순서</span>
+              <input id="videoOrder" type="number" min="1" value="1" required>
+            </label>
+
+            <div class="check-row">
+              <label>
+                <input id="videoVisible" type="checkbox" checked>
+                <span>공개</span>
+              </label>
+            </div>
+
+            <div class="form-actions">
+              <button class="primary-button" type="submit">저장</button>
+              <button class="danger-button" id="videoDelete" type="button">
+                삭제
+              </button>
+            </div>
+          </form>
+
+          <section class="admin-list-card">
+            <h2>등록된 영상</h2>
+            <div class="admin-item-list" id="videoAdminList"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="admin-toast" id="adminToast"></div>
+  <script type="module" src="./js/admin.js"></script>
+</body>
+</html>

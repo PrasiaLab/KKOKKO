@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="./css/calendar.css">
   <link rel="stylesheet" href="./css/firebase-content.css">
   <link rel="stylesheet" href="./css/guild-stats.css">
+  <link rel="stylesheet" href="./css/admin-auth.css">
 </head>
 <body>
   <button class="mobile-menu-button" id="mobileMenuButton" aria-label="메뉴 열기">☰</button>
@@ -36,9 +37,43 @@
         <button class="side-menu-item" data-page="guild-search"><span>⌕</span>결사 조회</button>
 
         <p class="menu-section-title">CONTENTS</p>
-        <button class="side-menu-item" data-page="review"><span>▶</span>리뷰 방송</button>
-        <button class="side-menu-item" data-page="raid"><span>◆</span>토벌 공략</button>
-        <button class="side-menu-item" data-page="archive"><span>▣</span>자료실</button>
+        <button class="side-menu-item" data-page="review">
+          <span>▶</span>
+          리뷰 방송
+        </button>
+        <button class="side-menu-item" data-page="raid">
+          <span>◆</span>
+          토벌 공략
+        </button>
+
+        <p class="menu-section-title">OFFICIAL</p>
+        <a
+          class="side-menu-item side-external-link"
+          href="https://wp.nexon.com/news/notice"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>↗</span>
+          패치노트
+        </a>
+        <a
+          class="side-menu-item side-external-link"
+          href="https://wp.nexon.com/news/gm"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>↗</span>
+          소통채널
+        </a>
+
+        <button
+          class="side-menu-item admin-login-button"
+          id="adminLoginButton"
+          type="button"
+        >
+          <span>⚙</span>
+          <span id="adminLoginButtonText">관리자 로그인</span>
+        </button>
       </nav>
 
       <div class="sidebar-character">
@@ -434,8 +469,6 @@
           </a>
         </div>
       </section>
-
-      <section class="page" id="archive"><div class="page-heading simple"><div><p class="eyebrow">ARCHIVE</p><h1>자료실</h1><p class="page-description">프라시아 전기 관련 자료를 정리할 공간입니다.</p></div></div><div class="content-panel"><div class="empty-state"><span class="empty-icon">▣</span><strong>자료실 준비 중</strong><p>이미지, 문서, 링크 등 필요한 자료를 추후 등록할 예정입니다.</p></div></div></section>
     </main>
   </div>
 
@@ -559,6 +592,45 @@
     </div>
   </div>
 
+
+  <div
+    class="admin-login-modal"
+    id="adminLoginModal"
+    aria-hidden="true"
+  >
+    <div
+      class="admin-login-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="adminLoginTitle"
+    >
+      <button
+        class="admin-login-close"
+        id="adminLoginClose"
+        type="button"
+        aria-label="닫기"
+      >
+        ✕
+      </button>
+
+      <span class="admin-login-kicker">ADMIN ACCESS</span>
+      <h2 id="adminLoginTitle">관리자 로그인</h2>
+      <p>
+        등록된 Google 계정으로 로그인하면 관리자 센터로 이동합니다.
+      </p>
+
+      <button
+        class="google-login-button"
+        id="googleAdminLogin"
+        type="button"
+      >
+        Google 계정으로 로그인
+      </button>
+
+      <div class="admin-login-status" id="adminLoginStatus"></div>
+    </div>
+  </div>
+
   <div class="sheet-modal" id="sheetModal" aria-hidden="true">
     <div class="sheet-modal-dialog">
       <div class="sheet-modal-header"><div><span class="modal-kicker">GOOGLE SHEETS VIEWER</span><strong id="sheetModalTitle">토벌 스펙</strong></div><div class="modal-actions"><a id="sheetOpenNew" href="#" target="_blank" rel="noopener noreferrer">새 창</a><button id="sheetModalClose" aria-label="닫기">✕</button></div></div>
@@ -573,5 +645,6 @@
   <script src="./js/guild-search.js"></script>
   <script src="./js/calendar.js"></script>
   <script type="module" src="./js/firebase-content.js"></script>
+  <script type="module" src="./js/admin-auth.js"></script>
 </body>
 </html>
