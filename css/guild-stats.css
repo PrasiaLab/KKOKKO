@@ -251,3 +251,35 @@
     padding: 11px;
   }
 }
+/* 결사 통계 프레임은 유지하고 결사원 목록 영역 확대 */
+.guild-stat-card {
+  padding: 12px 14px;
+}
+
+.guild-stat-card-heading {
+  margin-bottom: 8px;
+}
+
+.guild-stat-list {
+  gap: 3px;
+}
+
+.guild-stat-item {
+  gap: 4px;
+  padding: 4px 7px;
+}
+
+.guild-stat-filter-bar {
+  margin-top: 8px;
+  padding: 8px 12px;
+}
+
+.guild-popup-statistics {
+  margin-bottom: 12px;
+}
+
+/* 남은 공간을 결사원 리스트가 최대한 사용 */
+.guild-member-table-scroll {
+  min-height: 330px;
+  flex: 1 1 auto;
+}
