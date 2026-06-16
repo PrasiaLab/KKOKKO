@@ -1,0 +1,40 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /*
+     * 관리자 쓰기 권한은 마지막 관리자 단계에서
+     * UID 또는 Custom Claims 방식으로 교체합니다.
+     * 현재는 공개 읽기만 허용하고 모든 쓰기를 차단합니다.
+     */
+
+    match /notices/{documentId} {
+      allow read: if resource.data.visible == true;
+      allow write: if false;
+    }
+
+    match /scheduleEvents/{documentId} {
+      allow read: if resource.data.visible == true;
+      allow write: if false;
+    }
+
+    match /videos/{documentId} {
+      allow read: if resource.data.visible == true;
+      allow write: if false;
+    }
+
+    match /siteSettings/{documentId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

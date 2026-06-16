@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="./css/guild-search.css">
   <link rel="stylesheet" href="./css/statistics.css">
   <link rel="stylesheet" href="./css/improvements.css">
+  <link rel="stylesheet" href="./css/calendar.css">
+  <link rel="stylesheet" href="./css/firebase-content.css">
+  <link rel="stylesheet" href="./css/guild-stats.css">
 </head>
 <body>
   <button class="mobile-menu-button" id="mobileMenuButton" aria-label="메뉴 열기">☰</button>
@@ -87,13 +90,61 @@
 
         <div class="dashboard-grid">
           <section class="content-panel">
-            <div class="panel-heading compact"><h2>안내사항</h2><button class="text-button" data-move-page="notice">전체보기</button></div>
-            <div class="notice-list">
-              <button class="notice-row" data-move-page="notice"><span class="notice-type">안내</span><strong>프라시아 랩 홈페이지가 준비 중입니다.</strong><time>2026.06</time></button>
-              <button class="notice-row" data-move-page="notice"><span class="notice-type update">업데이트</span><strong>통계와 결사 조회 기능은 추후 순차적으로 연결됩니다.</strong><time>준비 중</time></button>
-              <button class="notice-row" data-move-page="raid"><span class="notice-type video">영상</span><strong>토벌 공략 영상 게시판을 준비하고 있습니다.</strong><time>준비 중</time></button>
+            <div class="panel-heading compact">
+              <h2>안내사항</h2>
+              <button class="text-button" type="button" data-move-page="notice">
+                전체보기
+              </button>
+            </div>
+
+            <div class="notice-list" id="homeNoticeList">
+              <div class="content-loading-row">
+                안내사항을 불러오는 중입니다.
+              </div>
             </div>
           </section>
+
+          <section class="content-panel calendar-panel">
+            <div class="panel-heading compact calendar-panel-heading">
+              <div>
+                <h2>방송일정 안내</h2>
+                <p>휴방과 특별 일정만 표시합니다.</p>
+              </div>
+
+              <div class="calendar-navigation">
+                <button
+                  id="calendarPrevMonth"
+                  type="button"
+                  aria-label="이전 달"
+                >
+                  ◀
+                </button>
+
+                <strong id="calendarMonthTitle">-</strong>
+
+                <button
+                  id="calendarNextMonth"
+                  type="button"
+                  aria-label="다음 달"
+                >
+                  ▶
+                </button>
+              </div>
+            </div>
+
+            <div class="mini-calendar" id="broadcastCalendar">
+              <div class="calendar-loading">
+                방송 일정을 불러오는 중입니다.
+              </div>
+            </div>
+
+            <div class="calendar-selected-event" id="calendarSelectedEvent">
+              <strong>일정 안내</strong>
+              <p>표시된 날짜를 선택하면 상세 내용을 확인할 수 있습니다.</p>
+            </div>
+          </section>
+        </div>
+      </section>
           <section class="content-panel">
             <div class="panel-heading compact"><h2>방송일정 안내</h2><span class="live-dot">LIVE</span></div>
             <div class="empty-state small"><span class="empty-icon">◷</span><strong>방송 일정 준비 중</strong><p>추후 관리자 페이지 또는 데이터 연동으로 갱신됩니다.</p></div>
@@ -101,7 +152,43 @@
         </div>
       </section>
 
-      <section class="page" id="notice"><div class="page-heading simple"><div><p class="eyebrow">NOTICE</p><h1>안내사항</h1><p class="page-description">홈페이지 주요 공지와 방송 안내를 확인하는 공간입니다.</p></div></div><div class="content-panel"><div class="empty-state"><span class="empty-icon">●</span><strong>안내사항 게시판 준비 중</strong><p>추후 직접 작성 게시판 또는 유튜브 커뮤니티 연동 방식을 검토합니다.</p></div></div></section>
+      <section class="page" id="notice">
+        <div class="page-heading simple">
+          <div>
+            <p class="eyebrow">NOTICE</p>
+            <h1>안내사항</h1>
+            <p class="page-description">
+              홈페이지 주요 공지와 방송 안내를 확인하는 공간입니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="notice-layout">
+          <section class="content-panel notice-board-panel">
+            <div class="panel-heading compact">
+              <h2>전체 안내</h2>
+              <span class="panel-note" id="noticeCountLabel">0개</span>
+            </div>
+
+            <div class="notice-board-list" id="noticeBoardList">
+              <div class="content-loading-row">
+                안내사항을 불러오는 중입니다.
+              </div>
+            </div>
+          </section>
+
+          <article
+            class="content-panel notice-detail-panel"
+            id="noticeDetailPanel"
+          >
+            <div class="notice-detail-empty">
+              <span>●</span>
+              <strong>안내사항을 선택해주세요.</strong>
+              <p>목록에서 제목을 누르면 상세 내용이 표시됩니다.</p>
+            </div>
+          </article>
+        </div>
+      </section>
 
       <section class="page" id="recruit"><div class="page-heading simple"><div><p class="eyebrow">RECRUIT</p><h1>결사원 모집</h1><p class="page-description">맛나는꼬꼬 결사원 모집 안내 이미지입니다.</p></div></div><div class="content-panel image-viewer"><img src="./images/kkokkocm.png" alt="결사원 모집 안내 이미지"></div></section>
 
@@ -302,9 +389,57 @@
         </div>
       </section>
 
-      <section class="page" id="review"><div class="page-heading simple"><div><p class="eyebrow">REVIEW LIVE</p><h1>리뷰 방송</h1><p class="page-description">쟁 리뷰와 콘텐츠 리뷰 방송을 앨범형으로 모아봅니다.</p></div></div><div class="content-panel"><div class="video-grid" id="reviewVideoGrid"></div></div></section>
+      <section class="page" id="review">
+        <div class="page-heading simple">
+          <div>
+            <p class="eyebrow">REVIEW LIVE</p>
+            <h1>리뷰 방송</h1>
+            <p class="page-description">
+              쟁 리뷰와 콘텐츠 리뷰 방송 중 주요 영상 6개를 확인합니다.
+            </p>
+          </div>
+        </div>
 
-      <section class="page" id="raid"><div class="page-heading simple"><div><p class="eyebrow">RAID GUIDE</p><h1>토벌 공략</h1><p class="page-description">토벌 레벨과 콘텐츠별 공략 영상을 앨범형으로 제공합니다.</p></div></div><div class="content-panel"><div class="video-grid" id="raidVideoGrid"></div></div></section>
+        <div class="content-panel video-board-panel">
+          <div class="video-grid six-video-grid" id="reviewVideoGrid"></div>
+
+          <a
+            class="youtube-more-button"
+            href="https://www.youtube.com/@%EB%A7%9B%EB%82%98%EB%8A%94%EA%BC%AC%EA%BC%AC"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            더 많은 리뷰 방송은 유튜브에서 보기
+            <span>↗</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="page" id="raid">
+        <div class="page-heading simple">
+          <div>
+            <p class="eyebrow">RAID GUIDE</p>
+            <h1>토벌 공략</h1>
+            <p class="page-description">
+              토벌 레벨과 콘텐츠별 주요 공략 영상 6개를 확인합니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="content-panel video-board-panel">
+          <div class="video-grid six-video-grid" id="raidVideoGrid"></div>
+
+          <a
+            class="youtube-more-button"
+            href="https://www.youtube.com/@%EB%A7%9B%EB%82%98%EB%8A%94%EA%BC%AC%EA%BC%AC"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            더 많은 토벌 공략은 유튜브에서 보기
+            <span>↗</span>
+          </a>
+        </div>
+      </section>
 
       <section class="page" id="archive"><div class="page-heading simple"><div><p class="eyebrow">ARCHIVE</p><h1>자료실</h1><p class="page-description">프라시아 전기 관련 자료를 정리할 공간입니다.</p></div></div><div class="content-panel"><div class="empty-state"><span class="empty-icon">▣</span><strong>자료실 준비 중</strong><p>이미지, 문서, 링크 등 필요한 자료를 추후 등록할 예정입니다.</p></div></div></section>
     </main>
@@ -340,6 +475,47 @@
       </div>
 
       <div class="guild-member-body">
+        <section class="guild-popup-statistics" id="guildPopupStatistics" hidden>
+          <div class="guild-stat-tabs" role="tablist" aria-label="결사 통계 구분">
+            <button
+              class="guild-stat-tab active"
+              type="button"
+              data-guild-stat="class"
+              aria-selected="true"
+            >
+              직업 통계
+            </button>
+
+            <button
+              class="guild-stat-tab"
+              type="button"
+              data-guild-stat="grade"
+              aria-selected="false"
+            >
+              토벌 통계
+            </button>
+
+            <button
+              class="guild-stat-tab"
+              type="button"
+              data-guild-stat="level"
+              aria-selected="false"
+            >
+              레벨 통계
+            </button>
+          </div>
+
+          <div class="guild-stat-chart" id="guildStatChart"></div>
+
+          <button
+            class="guild-stat-reset"
+            id="guildStatReset"
+            type="button"
+          >
+            전체 결사원 보기
+          </button>
+        </section>
+
         <div
           class="guild-member-message"
           id="guildMemberMessage"
@@ -379,5 +555,7 @@
   <script src="./js/statistics.js"></script>
   <script src="./js/data-status.js"></script>
   <script src="./js/guild-search.js"></script>
+  <script src="./js/calendar.js"></script>
+  <script type="module" src="./js/firebase-content.js"></script>
 </body>
 </html>
