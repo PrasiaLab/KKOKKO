@@ -28,12 +28,29 @@
         <article class="alliance-side alliance-side-a">
           <div class="alliance-side-heading"><div><span>A</span><div><strong>A 진영</strong><small>최대 20개 결사</small></div></div><em id="allianceCountA">0개 결사</em></div>
           <div class="alliance-add-row">
-            <select id="allianceServerA"><option value="">서버 선택</option></select>
-            <div class="alliance-search-wrap"><input id="allianceGuildInputA" type="search" placeholder="결사명 입력" autocomplete="off"><div class="alliance-suggestions" id="allianceSuggestionsA" hidden></div></div>
+            <select id="allianceServerA"><option value="">전체 서버</option></select>
+            <div class="alliance-search-wrap"><input id="allianceGuildInputA" type="search" placeholder="결사명 검색" autocomplete="off"><div class="alliance-suggestions" id="allianceSuggestionsA" hidden></div></div>
             <button type="button" id="allianceAddA">추가</button>
           </div>
+          <div class="alliance-participation" data-side="A">
+            <div class="alliance-participation-head">
+              <strong>예상 참여율</strong>
+              <span>기본 100% · 예상 출전 규모에만 적용</span>
+            </div>
+            <div class="alliance-participation-controls">
+              <input id="allianceParticipationRangeA" type="range" min="10" max="100" step="5" value="100" aria-label="A 진영 참여율">
+              <label><input id="allianceParticipationInputA" type="number" min="10" max="100" step="5" value="100">%</label>
+              <div class="alliance-rate-presets">
+                <button type="button" data-rate-side="A" data-rate="100">100</button>
+                <button type="button" data-rate-side="A" data-rate="90">90</button>
+                <button type="button" data-rate-side="A" data-rate="80">80</button>
+                <button type="button" data-rate-side="A" data-rate="70">70</button>
+              </div>
+            </div>
+          </div>
+
           <div class="alliance-picked-list" id="alliancePickedA"><div class="alliance-picked-empty">선택된 결사가 없습니다.</div></div>
-          <div class="alliance-side-summary" id="allianceSummaryA">총 결사원 0명 · 랭킹 확인 인원 0명</div>
+          <div class="alliance-side-summary" id="allianceSummaryA">총 결사원 0명 · 예상 참여 0명</div>
         </article>
 
         <div class="alliance-vs">VS</div>
@@ -41,12 +58,29 @@
         <article class="alliance-side alliance-side-b">
           <div class="alliance-side-heading"><div><span>B</span><div><strong>B 진영</strong><small>최대 20개 결사</small></div></div><em id="allianceCountB">0개 결사</em></div>
           <div class="alliance-add-row">
-            <select id="allianceServerB"><option value="">서버 선택</option></select>
-            <div class="alliance-search-wrap"><input id="allianceGuildInputB" type="search" placeholder="결사명 입력" autocomplete="off"><div class="alliance-suggestions" id="allianceSuggestionsB" hidden></div></div>
+            <select id="allianceServerB"><option value="">전체 서버</option></select>
+            <div class="alliance-search-wrap"><input id="allianceGuildInputB" type="search" placeholder="결사명 검색" autocomplete="off"><div class="alliance-suggestions" id="allianceSuggestionsB" hidden></div></div>
             <button type="button" id="allianceAddB">추가</button>
           </div>
+          <div class="alliance-participation" data-side="B">
+            <div class="alliance-participation-head">
+              <strong>예상 참여율</strong>
+              <span>기본 100% · 예상 출전 규모에만 적용</span>
+            </div>
+            <div class="alliance-participation-controls">
+              <input id="allianceParticipationRangeB" type="range" min="10" max="100" step="5" value="100" aria-label="B 진영 참여율">
+              <label><input id="allianceParticipationInputB" type="number" min="10" max="100" step="5" value="100">%</label>
+              <div class="alliance-rate-presets">
+                <button type="button" data-rate-side="B" data-rate="100">100</button>
+                <button type="button" data-rate-side="B" data-rate="90">90</button>
+                <button type="button" data-rate-side="B" data-rate="80">80</button>
+                <button type="button" data-rate-side="B" data-rate="70">70</button>
+              </div>
+            </div>
+          </div>
+
           <div class="alliance-picked-list" id="alliancePickedB"><div class="alliance-picked-empty">선택된 결사가 없습니다.</div></div>
-          <div class="alliance-side-summary" id="allianceSummaryB">총 결사원 0명 · 랭킹 확인 인원 0명</div>
+          <div class="alliance-side-summary" id="allianceSummaryB">총 결사원 0명 · 예상 참여 0명</div>
         </article>
       </div>
 
@@ -56,7 +90,7 @@
 
     <section class="alliance-results" id="allianceResults" hidden>
       <section class="content-panel alliance-metric-panel">
-        <div class="alliance-section-heading"><div><p>ALLIANCE SUMMARY</p><h2>진영 핵심 지표</h2></div><span>총량과 인원 대비 지표를 함께 확인합니다.</span></div>
+        <div class="alliance-section-heading"><div><p>ALLIANCE SUMMARY</p><h2>진영 핵심 지표</h2></div><span>기본 전력과 설정한 참여율 기준 예상 출전 규모를 함께 확인합니다.</span></div>
         <div class="alliance-name-row"><strong>A 진영</strong><span>분석 항목</span><strong>B 진영</strong></div>
         <div id="allianceMetricRows"></div>
       </section>
