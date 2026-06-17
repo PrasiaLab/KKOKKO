@@ -125,11 +125,16 @@
       const world = server.value;
       const query = input.value.trim().toLowerCase();
       box.innerHTML = "";
-      if (!world || !query) { box.hidden = true; return; }
+      if (!query) { box.hidden = true; return; }
 
       const list = state.guilds
-        .filter(g => g.world === world && g.name.toLowerCase().includes(query))
-        .slice(0, 12);
+        .filter(g => (!world || g.world === world) && g.name.toLowerCase().includes(query))
+        .sort((a, b) => {
+          const exactA = a.name.toLowerCase() === query ? 0 : 1;
+          const exactB = b.name.toLowerCase() === query ? 0 : 1;
+          return exactA - exactB || a.name.localeCompare(b.name, "ko") || serverLabel(a.world).localeCompare(serverLabel(b.world), "ko");
+        })
+        .slice(0, 20);
 
       if (!list.length) {
         box.innerHTML = '<div class="guild-analysis-empty">일치하는 결사가 없습니다.</div>';
@@ -141,7 +146,7 @@
         const button = document.createElement("button");
         button.type = "button";
         button.className = "guild-analysis-suggestion";
-        button.innerHTML = `<span><strong>${escapeHtml(guild.name)}</strong><small>${escapeHtml(guild.master)} · ${guild.memberCount}명</small></span><em>서버 ${guild.serverRank || "-"}위</em>`;
+        button.innerHTML = `<span><strong>${escapeHtml(guild.name)}</strong><small>${escapeHtml(serverLabel(guild.world))} · 결사장 ${escapeHtml(guild.master)} · ${guild.memberCount}명</small></span><em>서버 ${guild.serverRank || "-"}위</em>`;
         button.addEventListener("click", () => selectGuild(side, guild));
         box.appendChild(button);
       });
@@ -150,10 +155,12 @@
 
     input.addEventListener("input", render);
     server.addEventListener("change", () => {
-      input.value = "";
-      state[`selected${side}`] = null;
-      updateSelected(side);
-      box.hidden = true;
+      const selected = state[`selected${side}`];
+      if (selected && server.value && selected.world !== server.value) {
+        state[`selected${side}`] = null;
+        updateSelected(side);
+      }
+      render();
     });
     input.addEventListener("focus", render);
     document.addEventListener("click", event => {
@@ -291,35 +298,26 @@
     return metrics.map(([value, values]) => percentile(value, values));
   }
 
-  function renderRadar(targetId, labels, valuesA, valuesB, nameA, nameB, options = {}) {
+  function renderRadar(targetId, labels, valuesA, valuesB, nameA, nameB) {
     const size = 430, cx = 215, cy = 205, radius = 145, count = labels.length;
-    const maxValue = Math.max(1, num(options.maxValue) || 100);
-    const suffix = options.suffix || "";
     const point = (index, value) => {
       const angle = -Math.PI / 2 + index * Math.PI * 2 / count;
-      const normalized = Math.max(0, Math.min(100, num(value) / maxValue * 100));
-      const r = radius * normalized / 100;
+      const r = radius * value / 100;
       return [cx + Math.cos(angle) * r, cy + Math.sin(angle) * r];
     };
     const polygon = values => values.map((v,i) => point(i,v).join(",")).join(" ");
     let svg = `<svg viewBox="0 0 ${size} ${size}" role="img" aria-label="레이더 차트">`;
-    [20,40,60,80,100].forEach(level => {
-      svg += `<polygon class="guild-radar-grid" points="${polygon(Array(count).fill(maxValue * level / 100))}"/>`;
-    });
+    [20,40,60,80,100].forEach(level => { svg += `<polygon class="guild-radar-grid" points="${polygon(Array(count).fill(level))}"/>`; });
     labels.forEach((label,i) => {
-      const [x,y] = point(i,maxValue);
-      const angle = -Math.PI / 2 + i * Math.PI * 2 / count;
-      const labelRadius = radius * 1.16;
-      const lx = cx + Math.cos(angle) * labelRadius;
-      const ly = cy + Math.sin(angle) * labelRadius;
+      const [x,y] = point(i,100);
+      const [lx,ly] = point(i,116);
       const anchor = Math.abs(lx-cx) < 10 ? "middle" : lx < cx ? "end" : "start";
       svg += `<line class="guild-radar-axis" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"/><text class="guild-radar-label" x="${lx}" y="${ly}" dominant-baseline="middle" text-anchor="${anchor}">${escapeHtml(label)}</text>`;
     });
     svg += `<polygon class="guild-radar-a" points="${polygon(valuesA)}"/><polygon class="guild-radar-b" points="${polygon(valuesB)}"/>`;
-    valuesA.forEach((v,i) => { const [x,y]=point(i,v); svg += `<circle class="guild-radar-dot-a" cx="${x}" cy="${y}" r="3.5"><title>${escapeHtml(labels[i])}: ${format(v,1)}${escapeHtml(suffix)}</title></circle>`; });
-    valuesB.forEach((v,i) => { const [x,y]=point(i,v); svg += `<circle class="guild-radar-dot-b" cx="${x}" cy="${y}" r="3.5"><title>${escapeHtml(labels[i])}: ${format(v,1)}${escapeHtml(suffix)}</title></circle>`; });
+    valuesA.forEach((v,i) => { const [x,y]=point(i,v); svg += `<circle class="guild-radar-dot-a" cx="${x}" cy="${y}" r="3.5"><title>${escapeHtml(labels[i])}: ${format(v,1)}</title></circle>`; });
+    valuesB.forEach((v,i) => { const [x,y]=point(i,v); svg += `<circle class="guild-radar-dot-b" cx="${x}" cy="${y}" r="3.5"><title>${escapeHtml(labels[i])}: ${format(v,1)}</title></circle>`; });
     svg += `</svg><div class="guild-radar-legend"><span><i></i>${escapeHtml(nameA)}</span><span><i></i>${escapeHtml(nameB)}</span></div>`;
-    if (options.scaleLabel) svg += `<div class="guild-radar-scale">${escapeHtml(options.scaleLabel)}</div>`;
     el(targetId).innerHTML = svg;
   }
 
@@ -394,24 +392,7 @@
 
     const all = allProfiles();
     renderRadar("guildPowerRadar", ["결사 규모","결사 레벨","평균 레벨","평균 토벌","상위 레벨층","고토벌층"], powerValues(a,all), powerValues(b,all), a.guild.name, b.guild.name);
-
-    const classValuesA = classRatios(a);
-    const classValuesB = classRatios(b);
-    const highestClassRatio = Math.max(0, ...classValuesA, ...classValuesB);
-    const classRadarMax = Math.max(20, Math.ceil(highestClassRatio / 5) * 5);
-    renderRadar(
-      "guildClassRadar",
-      classCodes.map(classLabel),
-      classValuesA,
-      classValuesB,
-      a.guild.name,
-      b.guild.name,
-      {
-        maxValue: classRadarMax,
-        suffix: "%",
-        scaleLabel: `직업 구성비 기준 · 외곽선 ${classRadarMax}%`
-      }
-    );
+    renderRadar("guildClassRadar", classCodes.map(classLabel), classRatios(a), classRatios(b), a.guild.name, b.guild.name);
 
     const levelA=countMap(a.members,"level"), levelB=countMap(b.members,"level");
     const gradeA=countMap(a.members,"grade"), gradeB=countMap(b.members,"grade");
@@ -436,7 +417,7 @@
       updateSelected(side);
     });
     results.hidden = true;
-    setStatus("서버와 결사를 선택한 뒤 분석하기 버튼을 눌러주세요.");
+    setStatus("결사명을 검색해 선택한 뒤 분석하기 버튼을 눌러주세요.");
   }
 
   Promise.allSettled([fetchJson(URLS.guild),fetchJson(URLS.score),fetchJson(URLS.members)])
@@ -448,7 +429,7 @@
       if (!state.guilds.length) throw new Error("empty");
       populateServers();
       setupSearch("A"); setupSearch("B");
-      setStatus("서버와 결사를 선택한 뒤 분석하기 버튼을 눌러주세요.");
+      setStatus("결사명을 검색해 선택한 뒤 분석하기 버튼을 눌러주세요.");
     })
     .catch(() => setStatus("결사 데이터를 불러오지 못했습니다. 데이터 파일을 확인해주세요.","error"));
 
