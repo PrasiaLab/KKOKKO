@@ -73,6 +73,21 @@ OUTPUT_GUILD = OUTPUT_DIR / "Who_are_you_guild.json"
 OUTPUT_CLASS = OUTPUT_DIR / "Who_are_you_class.json"
 OUTPUT_STATUS = OUTPUT_DIR / "ranking_update_status.json"
 
+# 신규 추가 파일: 기존 4개 JSON과 독립적으로 생성됩니다.
+OUTPUT_GUILD_SCORE = OUTPUT_DIR / "Who_are_you_guild_score.json"
+
+# 소속 결사원 레벨별 점수
+# 정의되지 않은 레벨은 0점으로 처리합니다.
+GUILD_LEVEL_SCORE = {
+    88: 10,
+    89: 15,
+    90: 55,
+    91: 121,
+    92: 202,
+    93: 253,
+    94: 265,
+}
+
 REQUEST_TIMEOUT = 20
 REQUEST_DELAY = 0.15
 MAX_RETRIES = 3
@@ -215,6 +230,187 @@ def save_json(path: Path, data: dict[str, Any]) -> None:
         json.dump(data, file, ensure_ascii=False, indent=2)
 
     temp_path.replace(path)
+
+
+def normalize_key(value: Any) -> str:
+    return str(value or "").strip().casefold()
+
+
+def load_previous_guild_scores() -> dict[str, dict[str, Any]]:
+    if not OUTPUT_GUILD_SCORE.exists():
+        return {}
+
+    try:
+        with OUTPUT_GUILD_SCORE.open("r", encoding="utf-8") as file:
+            document = json.load(file)
+    except (OSError, json.JSONDecodeError) as error:
+        print(f"  이전 결사 순위 JSON을 읽지 못해 신규 기준으로 생성합니다: {error}")
+        return {}
+
+    rankings = document.get("rankings", [])
+    if not isinstance(rankings, list):
+        return {}
+
+    previous: dict[str, dict[str, Any]] = {}
+
+    for item in rankings:
+        if not isinstance(item, dict):
+            continue
+
+        world = item.get("world")
+        guild_name = item.get("guild_name")
+        key = f"{normalize_key(world)}|{normalize_key(guild_name)}"
+
+        if key != "|":
+            previous[key] = item
+
+    return previous
+
+
+def build_guild_score_document(
+    *,
+    all_class_rankings: list[dict[str, Any]],
+    all_guilds: list[dict[str, Any]],
+    extracted_at: str,
+    extracted_at_text: str,
+) -> dict[str, Any]:
+    previous_scores = load_previous_guild_scores()
+
+    guild_info: dict[str, dict[str, Any]] = {}
+    for guild in all_guilds:
+        world = guild.get("world")
+        guild_name = guild.get("guild_name")
+
+        if not world or not guild_name:
+            continue
+
+        key = f"{normalize_key(world)}|{normalize_key(guild_name)}"
+        guild_info[key] = guild
+
+    grouped: dict[str, dict[str, Any]] = {}
+    seen_members: set[str] = set()
+
+    for member in all_class_rankings:
+        world = member.get("world")
+        guild_name = member.get("guild")
+        member_name = member.get("name")
+
+        if not world or not guild_name or not member_name:
+            continue
+
+        guild_key = f"{normalize_key(world)}|{normalize_key(guild_name)}"
+        member_key = f"{guild_key}|{normalize_key(member_name)}"
+
+        # 클래스별 API 중복 응답이 생기더라도 동일 캐릭터는 한 번만 반영
+        if member_key in seen_members:
+            continue
+
+        seen_members.add(member_key)
+
+        level = safe_int(member.get("level"))
+        score = GUILD_LEVEL_SCORE.get(level, 0)
+
+        bucket = grouped.setdefault(
+            guild_key,
+            {
+                "world": world,
+                "world_group_id": member.get("world_group_id"),
+                "world_id": member.get("world_id"),
+                "guild_name": guild_name,
+                "score": 0,
+                "ranked_member_count": 0,
+                "scored_member_count": 0,
+                "level_counts": {},
+            },
+        )
+
+        bucket["ranked_member_count"] += 1
+        bucket["score"] += score
+
+        level_key = str(level)
+        bucket["level_counts"][level_key] = (
+            bucket["level_counts"].get(level_key, 0) + 1
+        )
+
+        if score > 0:
+            bucket["scored_member_count"] += 1
+
+    ranking_rows: list[dict[str, Any]] = []
+
+    for guild_key, bucket in grouped.items():
+        info = guild_info.get(guild_key, {})
+        previous = previous_scores.get(guild_key)
+
+        row = {
+            **bucket,
+            "guild_master": info.get("guild_master"),
+            "guild_level": safe_int(info.get("guild_level")),
+            "guild_member_count": safe_int(info.get("guild_member_count")),
+            "max_guild_member_count": safe_int(
+                info.get("max_guild_member_count")
+            ),
+            "previous_rank": (
+                safe_int(previous.get("rank"))
+                if previous
+                else None
+            ),
+            "previous_score": (
+                safe_int(previous.get("score"))
+                if previous
+                else None
+            ),
+            "score_change": (
+                bucket["score"] - safe_int(previous.get("score"))
+                if previous
+                else None
+            ),
+            "is_new": previous is None,
+        }
+        ranking_rows.append(row)
+
+    def sort_key(item: dict[str, Any]) -> tuple[Any, ...]:
+        level_counts = item.get("level_counts", {})
+
+        return (
+            -safe_int(item.get("score")),
+            -safe_int(level_counts.get("94")),
+            -safe_int(level_counts.get("93")),
+            -safe_int(level_counts.get("92")),
+            -safe_int(level_counts.get("91")),
+            -safe_int(level_counts.get("90")),
+            -safe_int(item.get("guild_level")),
+            str(item.get("world") or ""),
+            str(item.get("guild_name") or ""),
+        )
+
+    ranking_rows.sort(key=sort_key)
+
+    for rank, item in enumerate(ranking_rows, start=1):
+        item["rank"] = rank
+        previous_rank = item.get("previous_rank")
+        item["rank_change"] = (
+            previous_rank - rank
+            if previous_rank is not None
+            else None
+        )
+
+    return {
+        "metadata": {
+            "data_type": "guild_score_ranking",
+            "extracted_at": extracted_at,
+            "extracted_at_text": extracted_at_text,
+            "timezone": "Asia/Seoul",
+            "world_count": len(WORLDS),
+            "item_count": len(ranking_rows),
+            "version": 1,
+            "comparison_basis": "previous_successful_file",
+        },
+        "level_score_map": {
+            str(level): score
+            for level, score in GUILD_LEVEL_SCORE.items()
+        },
+        "rankings": ranking_rows,
+    }
 
 
 def make_metadata(
@@ -468,6 +664,15 @@ def main() -> None:
     save_json(OUTPUT_GUILD, guild_document)
     save_json(OUTPUT_CLASS, class_document)
 
+    # 기존 JSON 저장이 끝난 뒤 신규 결사 점수 JSON만 별도로 생성합니다.
+    guild_score_document = build_guild_score_document(
+        all_class_rankings=all_class_rankings,
+        all_guilds=all_guilds,
+        extracted_at=extracted_at,
+        extracted_at_text=extracted_at_text,
+    )
+    save_json(OUTPUT_GUILD_SCORE, guild_score_document)
+
     total_failures = (
         len(failed_character_worlds)
         + len(failed_guild_worlds)
@@ -502,6 +707,11 @@ def main() -> None:
     print(f"결사 JSON: {OUTPUT_GUILD.resolve()}")
     print(f"클래스 JSON: {OUTPUT_CLASS.resolve()}")
     print(f"상태 JSON: {OUTPUT_STATUS.resolve()}")
+    print(f"결사 점수 JSON: {OUTPUT_GUILD_SCORE.resolve()}")
+    print(
+        f"결사 점수 순위: "
+        f"{len(guild_score_document.get('rankings', [])):,}개"
+    )
     print(f"전체 랭킹 실패: {len(failed_character_worlds)}건")
     print(f"결사 랭킹 실패: {len(failed_guild_worlds)}건")
     print(f"클래스 요청 실패: {len(failed_class_requests)}건")
