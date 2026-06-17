@@ -1,0 +1,261 @@
+.guild-analysis-notice {
+  margin:-7px 3px 17px;
+  padding:12px 15px;
+  border:1px solid rgba(225,184,62,.18);
+  border-radius:12px;
+  background:rgba(225,184,62,.055);
+  color:#c9c0a3;
+  font-size:13px;
+  line-height:1.55
+}
+
+.guild-analysis-panel {
+  padding:20px;
+  margin-bottom:17px;
+  overflow:visible
+}
+
+.guild-analysis-selector-grid {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 62px minmax(0,1fr);
+  align-items:stretch;
+  gap:14px
+}
+
+.guild-analysis-selector {
+  position:relative;
+  padding:19px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:linear-gradient(145deg,rgba(255,255,255,.035),transparent),#20262f
+}
+
+.guild-analysis-selector.guild-a { border-top:2px solid var(--gold2) }
+.guild-analysis-selector.guild-b { border-top:2px solid var(--blue) }
+
+.guild-analysis-selector-title {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:17px
+}
+
+.guild-analysis-selector-title>span {
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:rgba(225,184,62,.12);
+  color:var(--gold2);
+  font-weight:950
+}
+
+.guild-b .guild-analysis-selector-title>span {
+  background:rgba(106,168,255,.12);
+  color:#8fbeff
+}
+
+.guild-analysis-selector-title strong { display:block;font-size:18px }
+.guild-analysis-selector-title small { display:block;margin-top:4px;color:var(--muted);font-size:12px }
+
+.guild-analysis-selector label {
+  display:grid;
+  grid-template-columns:68px minmax(0,1fr);
+  align-items:center;
+  gap:10px;
+  margin-top:10px
+}
+
+.guild-analysis-selector label>span {
+  color:#aab2bf;
+  font-size:13px;
+  font-weight:900
+}
+
+.guild-analysis-selector select,
+.guild-analysis-selector input {
+  width:100%;
+  height:45px;
+  padding:0 13px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  outline:0;
+  background:#171b21;
+  color:var(--text)
+}
+
+.guild-analysis-selector select:focus,
+.guild-analysis-selector input:focus { border-color:rgba(225,184,62,.45) }
+.guild-b select:focus,.guild-b input:focus { border-color:rgba(106,168,255,.48) }
+
+.guild-analysis-vs {
+  display:grid;
+  place-items:center;
+  color:#7d8795;
+  font-size:18px;
+  font-weight:950
+}
+
+.guild-analysis-suggestions {
+  position:absolute;
+  z-index:25;
+  left:97px;
+  right:19px;
+  top:151px;
+  max-height:230px;
+  overflow:auto;
+  padding:6px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:12px;
+  background:#15191f;
+  box-shadow:0 18px 45px rgba(0,0,0,.38)
+}
+
+.guild-analysis-suggestion {
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:11px 12px;
+  border:0;
+  border-radius:9px;
+  background:transparent;
+  color:inherit;
+  text-align:left;
+  cursor:pointer
+}
+
+.guild-analysis-suggestion:hover { background:rgba(255,255,255,.06) }
+.guild-analysis-suggestion strong { display:block }
+.guild-analysis-suggestion small { color:var(--muted) }
+.guild-analysis-suggestion em { color:var(--gold2);font-style:normal;font-size:12px;font-weight:900 }
+
+.guild-analysis-selected {
+  min-height:39px;
+  margin-top:13px;
+  padding:10px 12px;
+  border-radius:10px;
+  background:rgba(255,255,255,.035);
+  color:#7f8998;
+  font-size:13px
+}
+
+.guild-analysis-selected.ready { color:#e8ebef }
+
+.guild-analysis-actions {
+  display:flex;
+  justify-content:center;
+  gap:9px;
+  margin-top:18px
+}
+
+.guild-analysis-actions button {
+  min-width:122px;
+  height:45px;
+  border-radius:11px;
+  font-weight:950;
+  cursor:pointer
+}
+
+.guild-analysis-primary { border:0;background:linear-gradient(135deg,var(--gold2),#cf9727);color:#19150c }
+.guild-analysis-reset { border:1px solid var(--line);background:#252b34;color:#dce1e8 }
+.guild-analysis-status { margin-top:15px;color:var(--muted);font-size:13px;text-align:center }
+.guild-analysis-status.error { color:#ff958f }
+.guild-analysis-status.success { color:#83dcbf }
+
+.guild-analysis-results { display:grid;gap:17px }
+.guild-analysis-comparison { padding:0 20px 19px }
+.guild-analysis-section-heading {
+  min-height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  border-bottom:1px solid var(--line)
+}
+.guild-analysis-section-heading.compact { min-height:69px;padding:0 18px }
+.guild-analysis-section-heading p { margin:0;color:var(--gold2);font-size:10px;font-weight:950;letter-spacing:.1em }
+.guild-analysis-section-heading h2 { margin:5px 0 0;font-size:21px }
+.guild-analysis-section-heading>span { color:var(--muted);font-size:12px }
+
+.guild-analysis-name-row,
+.guild-analysis-metric-row {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 190px minmax(0,1fr);
+  align-items:center;
+  gap:16px;
+  text-align:center
+}
+
+.guild-analysis-name-row { padding:19px 8px 11px }
+.guild-analysis-name-row strong { font-size:21px }
+.guild-analysis-name-row strong:first-child { color:var(--gold2) }
+.guild-analysis-name-row strong:last-child { color:#8fbeff }
+.guild-analysis-name-row span { color:#707b8a;font-size:11px;font-weight:950;letter-spacing:.08em }
+
+.guild-analysis-metric-row {
+  min-height:49px;
+  padding:8px;
+  border-top:1px solid rgba(255,255,255,.055)
+}
+.guild-analysis-metric-row .metric-label { color:#9da7b5;font-size:13px;font-weight:900 }
+.guild-analysis-metric-row .metric-value { font-size:16px;font-weight:950 }
+.guild-analysis-metric-row .winner { color:var(--gold2) }
+.guild-analysis-metric-row .metric-change { margin-left:6px;font-size:11px }
+.guild-analysis-metric-row .up { color:var(--red) }
+.guild-analysis-metric-row .down { color:var(--blue) }
+.guild-analysis-metric-row .new { color:var(--gold2) }
+.guild-analysis-metric-row .same { color:#7f8998 }
+
+.guild-analysis-chart-grid,
+.guild-analysis-detail-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px }
+.guild-analysis-chart-card,.guild-analysis-detail-card { overflow:hidden }
+.guild-radar-wrap { min-height:430px;padding:16px;display:grid;place-items:center }
+.guild-radar-wrap svg { width:100%;max-width:520px;height:auto;overflow:visible }
+.guild-radar-grid { fill:none;stroke:rgba(255,255,255,.13);stroke-width:1 }
+.guild-radar-axis { stroke:rgba(255,255,255,.1);stroke-width:1 }
+.guild-radar-label { fill:#c5ccd6;font-size:12px;font-weight:800 }
+.guild-radar-a { fill:rgba(225,184,62,.14);stroke:#f1d06b;stroke-width:2.5 }
+.guild-radar-b { fill:rgba(106,168,255,.12);stroke:#6aa8ff;stroke-width:2.5 }
+.guild-radar-dot-a { fill:#f1d06b }
+.guild-radar-dot-b { fill:#6aa8ff }
+.guild-radar-legend { display:flex;justify-content:center;gap:18px;margin-top:-2px;color:#adb5c1;font-size:12px }
+.guild-radar-legend i { width:9px;height:9px;display:inline-block;margin-right:6px;border-radius:50%;background:var(--gold2) }
+.guild-radar-legend span:last-child i { background:var(--blue) }
+.guild-chart-guide { margin:0;padding:0 22px 19px;color:var(--muted);font-size:12px;line-height:1.55;text-align:center }
+
+.guild-analysis-commentary { overflow:hidden }
+.guild-analysis-comment-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:18px }
+.guild-analysis-comment { padding:17px;border:1px solid var(--line);border-radius:14px;background:#20262f }
+.guild-analysis-comment span { color:var(--gold2);font-size:10px;font-weight:950;letter-spacing:.08em }
+.guild-analysis-comment:nth-child(3) span { color:#8fbeff }
+.guild-analysis-comment strong { display:block;margin-top:8px;font-size:16px }
+.guild-analysis-comment p { margin:8px 0 0;color:#a6afbc;font-size:13px;line-height:1.65 }
+
+.guild-analysis-distribution { padding:16px 18px 20px }
+.guild-analysis-bar-row { display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;align-items:center;margin-top:13px }
+.guild-analysis-bar-label { color:#cdd3dc;font-size:13px;font-weight:900;text-align:right }
+.guild-analysis-dual-bars { display:grid;gap:5px }
+.guild-analysis-bar-line { display:grid;grid-template-columns:minmax(0,1fr) 82px;gap:9px;align-items:center }
+.guild-analysis-bar-track { height:8px;overflow:hidden;border-radius:999px;background:rgba(255,255,255,.055) }
+.guild-analysis-bar-fill { height:100%;border-radius:inherit;background:linear-gradient(90deg,#b58e24,var(--gold2)) }
+.guild-analysis-bar-line.b .guild-analysis-bar-fill { background:linear-gradient(90deg,#477fc8,var(--blue)) }
+.guild-analysis-bar-value { color:#8f98a6;font-size:11px }
+
+.guild-class-table-wrap { overflow-x:auto;padding:14px 18px 20px }
+.guild-class-table { width:100%;border-collapse:collapse;min-width:680px }
+.guild-class-table th,.guild-class-table td { padding:13px 12px;border-bottom:1px solid rgba(255,255,255,.06);text-align:center }
+.guild-class-table th { color:#7f8998;font-size:11px }
+.guild-class-table td { font-size:13px }
+.guild-class-table td:first-child { text-align:left;font-weight:900 }
+.guild-class-a { color:var(--gold2);font-weight:900 }
+.guild-class-b { color:#8fbeff;font-weight:900 }
+.guild-analysis-empty { padding:38px 18px;color:var(--muted);text-align:center }
+
+@media(max-width:1180px) {
+  .guild-analysis-selector-grid { grid-template-columns:1fr }
+  .guild-analysis-vs { min-height:20px }
+  .guild-analysis-chart-grid,.guild-analysis-detail-grid { grid-template-columns:1fr }
+  .guild-analysis-comment-grid { grid-template-columns:1fr }
+}
