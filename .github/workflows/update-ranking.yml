@@ -49,7 +49,9 @@ jobs:
           test -f data/Who_are_you.json
           test -f data/Who_are_you_guild.json
           test -f data/Who_are_you_class.json
+          test -f data/Who_are_you_guild_score.json
           test -f data/ranking_update_status.json
+          
 
       - name: Commit updated ranking data
         run: |
@@ -60,6 +62,7 @@ jobs:
             data/Who_are_you.json \
             data/Who_are_you_guild.json \
             data/Who_are_you_class.json \
+            data/Who_are_you_guild_score.json \
             data/ranking_update_status.json
 
           if git diff --cached --quiet; then
