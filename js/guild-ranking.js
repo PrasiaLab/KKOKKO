@@ -921,7 +921,7 @@
       console.error("결사 순위 로드 오류", error);
 
       setStatus(
-        "결사 순위 데이터를 불러오지 못했습니다. Who_are_you_guild_score.json 생성 여부를 확인해주세요.",
+        "결사 순위 데이터를 불러오지 못했습니다.",
         "error"
       );
     }
