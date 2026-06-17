@@ -98,18 +98,17 @@
 }
 
 .guild-analysis-suggestions {
-  position:absolute;
+  position:relative;
   z-index:25;
-  left:97px;
-  right:19px;
-  top:151px;
-  max-height:230px;
+  width:calc(100% - 78px);
+  max-height:210px;
+  margin:8px 0 0 78px;
   overflow:auto;
   padding:6px;
   border:1px solid rgba(255,255,255,.13);
   border-radius:12px;
   background:#15191f;
-  box-shadow:0 18px 45px rgba(0,0,0,.38)
+  box-shadow:0 14px 34px rgba(0,0,0,.28)
 }
 
 .guild-analysis-suggestion {
@@ -223,12 +222,13 @@
 .guild-radar-legend { display:flex;justify-content:center;gap:18px;margin-top:-2px;color:#adb5c1;font-size:12px }
 .guild-radar-legend i { width:9px;height:9px;display:inline-block;margin-right:6px;border-radius:50%;background:var(--gold2) }
 .guild-radar-legend span:last-child i { background:var(--blue) }
+.guild-radar-scale { margin-top:8px;color:#737e8d;font-size:11px;text-align:center }
 .guild-chart-guide { margin:0;padding:0 22px 19px;color:var(--muted);font-size:12px;line-height:1.55;text-align:center }
 
 .guild-analysis-commentary { overflow:hidden }
 .guild-analysis-comment-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:18px }
 .guild-analysis-comment { padding:17px;border:1px solid var(--line);border-radius:14px;background:#20262f }
-.guild-analysis-comment span { color:var(--gold2);font-size:10px;font-weight:950;letter-spacing:.08em }
+.guild-analysis-comment span { color:var(--gold2);font-size:13px;font-weight:950;letter-spacing:.06em }
 .guild-analysis-comment:nth-child(3) span { color:#8fbeff }
 .guild-analysis-comment strong { display:block;margin-top:8px;font-size:16px }
 .guild-analysis-comment p { margin:8px 0 0;color:#a6afbc;font-size:13px;line-height:1.65 }
@@ -246,9 +246,9 @@
 .guild-class-table-wrap { overflow-x:auto;padding:14px 18px 20px }
 .guild-class-table { width:100%;border-collapse:collapse;min-width:680px }
 .guild-class-table th,.guild-class-table td { padding:13px 12px;border-bottom:1px solid rgba(255,255,255,.06);text-align:center }
-.guild-class-table th { color:#7f8998;font-size:11px }
+.guild-class-table th { color:#9aa5b4;font-size:13px;font-weight:950 }
 .guild-class-table td { font-size:13px }
-.guild-class-table td:first-child { text-align:center;font-weight:900 }
+.guild-class-table td:first-child { text-align:left;font-weight:900 }
 .guild-class-a { color:var(--gold2);font-weight:900 }
 .guild-class-b { color:#8fbeff;font-weight:900 }
 .guild-analysis-empty { padding:38px 18px;color:var(--muted);text-align:center }
@@ -258,4 +258,21 @@
   .guild-analysis-vs { min-height:20px }
   .guild-analysis-chart-grid,.guild-analysis-detail-grid { grid-template-columns:1fr }
   .guild-analysis-comment-grid { grid-template-columns:1fr }
+}
+
+/* 2026-06-17 안정화 보정: 검색 결과가 입력창을 덮지 않도록 문서 흐름에 배치 */
+.guild-analysis-suggestions {
+  position: static !important;
+  inset: auto !important;
+  width: calc(100% - 78px) !important;
+  max-height: 210px;
+  margin: 8px 0 0 78px !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* 직업 상세표 첫 번째 열도 나머지 열과 동일하게 중앙 정렬 */
+.guild-class-table th:first-child,
+.guild-class-table td:first-child {
+  text-align: center !important;
 }
