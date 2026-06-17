@@ -89,6 +89,15 @@
     </section>
 
     <section class="alliance-results" id="allianceResults" hidden>
+      <div class="alliance-detail-grid">
+        <section class="content-panel"><div class="alliance-section-heading compact"><div><p>LEVEL</p><h2>레벨 분포</h2></div></div><div class="alliance-distribution" id="allianceLevelDistribution"></div></section>
+        <section class="content-panel"><div class="alliance-section-heading compact"><div><p>RAID</p><h2>토벌 분포</h2></div></div><div class="alliance-distribution" id="allianceGradeDistribution"></div></section>
+      </div>
+
+      <section class="content-panel"><div class="alliance-section-heading compact"><div><p>CLASS DETAIL</p><h2>직업별 구성</h2></div></div><div class="alliance-class-table-wrap"><table class="alliance-class-table"><thead><tr><th>직업</th><th>A 인원</th><th>A 비율</th><th>B 인원</th><th>B 비율</th></tr></thead><tbody id="allianceClassTableBody"></tbody></table></div></section>
+
+      <section class="content-panel alliance-commentary-panel"><div class="alliance-section-heading compact"><div><p>ANALYSIS</p><h2>진영 분석 요약</h2></div></div><div class="alliance-comment-grid" id="allianceComments"></div></section>
+
       <section class="content-panel alliance-metric-panel">
         <div class="alliance-section-heading"><div><p>ALLIANCE SUMMARY</p><h2>진영 핵심 지표</h2></div><span>기본 전력과 설정한 참여율 기준 예상 출전 규모를 함께 확인합니다.</span></div>
         <div class="alliance-name-row"><strong>A 진영</strong><span>분석 항목</span><strong>B 진영</strong></div>
@@ -99,15 +108,6 @@
         <section class="content-panel alliance-chart-card"><div class="alliance-section-heading compact"><div><p>POWER PROFILE</p><h2>종합 전력 지표</h2></div></div><div class="alliance-radar-wrap" id="alliancePowerRadar"></div><p class="alliance-chart-guide">전체 결사 데이터 분포를 기준으로 0~100점으로 환산한 상대 지표입니다.</p></section>
         <section class="content-panel alliance-chart-card"><div class="alliance-section-heading compact"><div><p>CLASS DISTRIBUTION</p><h2>직업 구성 분포</h2></div></div><div class="alliance-radar-wrap" id="allianceClassRadar"></div><p class="alliance-chart-guide" id="allianceClassScale">각 진영의 랭킹 확인 인원을 기준으로 계산한 직업별 비율입니다.</p></section>
       </div>
-
-      <section class="content-panel alliance-commentary-panel"><div class="alliance-section-heading compact"><div><p>ANALYSIS</p><h2>진영 분석 요약</h2></div></div><div class="alliance-comment-grid" id="allianceComments"></div></section>
-
-      <div class="alliance-detail-grid">
-        <section class="content-panel"><div class="alliance-section-heading compact"><div><p>LEVEL</p><h2>레벨 분포</h2></div></div><div class="alliance-distribution" id="allianceLevelDistribution"></div></section>
-        <section class="content-panel"><div class="alliance-section-heading compact"><div><p>RAID</p><h2>토벌 분포</h2></div></div><div class="alliance-distribution" id="allianceGradeDistribution"></div></section>
-      </div>
-
-      <section class="content-panel"><div class="alliance-section-heading compact"><div><p>CLASS DETAIL</p><h2>직업별 구성</h2></div></div><div class="alliance-class-table-wrap"><table class="alliance-class-table"><thead><tr><th>직업</th><th>A 인원</th><th>A 비율</th><th>B 인원</th><th>B 비율</th></tr></thead><tbody id="allianceClassTableBody"></tbody></table></div></section>
 
       <div class="alliance-roster-grid">
         <section class="content-panel"><div class="alliance-section-heading compact"><div><p>A ALLIANCE</p><h2>A 진영 결사 구성</h2></div></div><div class="alliance-roster-table-wrap"><table class="alliance-roster-table"><thead><tr><th>서버</th><th>결사명</th><th>결사원</th><th>확인 인원</th><th>평균 레벨</th><th>평균 토벌</th><th>총점</th></tr></thead><tbody id="allianceRosterA"></tbody></table></div></section>
