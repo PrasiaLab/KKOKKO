@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="프라시아랩 진영 전력 분석 테스트 페이지">
+  <title>진영 전력 분석 | Prasia Lab</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/guild-alliance-analysis.css">
+</head>
+<body class="alliance-page-body">
+  <main class="alliance-page">
+    <header class="alliance-hero">
+      <div>
+        <p class="eyebrow">ALLIANCE POWER ANALYSIS · TEST</p>
+        <h1>진영 전력 분석</h1>
+        <p>여러 결사를 A·B 진영으로 구성해 인원, 성장도, 토벌 및 직업 구성을 분석합니다.</p>
+      </div>
+      <a class="alliance-home-link" href="./index.html">← 프라시아랩으로</a>
+    </header>
+
+    <div class="alliance-notice">
+      랭킹에 확인된 캐릭터와 결사 데이터를 합산한 분석입니다. 실제 전투 참여 인원, 장비, 스킬 세팅 및 연합 관계는 반영되지 않습니다.
+    </div>
+
+    <section class="content-panel alliance-selector-panel">
+      <div class="alliance-selector-grid">
+        <article class="alliance-side alliance-side-a">
+          <div class="alliance-side-heading"><div><span>A</span><div><strong>A 진영</strong><small>최대 20개 결사</small></div></div><em id="allianceCountA">0개 결사</em></div>
+          <div class="alliance-add-row">
+            <select id="allianceServerA"><option value="">서버 선택</option></select>
+            <div class="alliance-search-wrap"><input id="allianceGuildInputA" type="search" placeholder="결사명 입력" autocomplete="off"><div class="alliance-suggestions" id="allianceSuggestionsA" hidden></div></div>
+            <button type="button" id="allianceAddA">추가</button>
+          </div>
+          <div class="alliance-picked-list" id="alliancePickedA"><div class="alliance-picked-empty">선택된 결사가 없습니다.</div></div>
+          <div class="alliance-side-summary" id="allianceSummaryA">총 결사원 0명 · 랭킹 확인 인원 0명</div>
+        </article>
+
+        <div class="alliance-vs">VS</div>
+
+        <article class="alliance-side alliance-side-b">
+          <div class="alliance-side-heading"><div><span>B</span><div><strong>B 진영</strong><small>최대 20개 결사</small></div></div><em id="allianceCountB">0개 결사</em></div>
+          <div class="alliance-add-row">
+            <select id="allianceServerB"><option value="">서버 선택</option></select>
+            <div class="alliance-search-wrap"><input id="allianceGuildInputB" type="search" placeholder="결사명 입력" autocomplete="off"><div class="alliance-suggestions" id="allianceSuggestionsB" hidden></div></div>
+            <button type="button" id="allianceAddB">추가</button>
+          </div>
+          <div class="alliance-picked-list" id="alliancePickedB"><div class="alliance-picked-empty">선택된 결사가 없습니다.</div></div>
+          <div class="alliance-side-summary" id="allianceSummaryB">총 결사원 0명 · 랭킹 확인 인원 0명</div>
+        </article>
+      </div>
+
+      <div class="alliance-actions"><button class="alliance-primary" id="allianceAnalyze" type="button">진영 분석</button><button class="alliance-reset" id="allianceReset" type="button">초기화</button></div>
+      <div class="alliance-status" id="allianceStatus" role="status">데이터를 불러오는 중입니다.</div>
+    </section>
+
+    <section class="alliance-results" id="allianceResults" hidden>
+      <section class="content-panel alliance-metric-panel">
+        <div class="alliance-section-heading"><div><p>ALLIANCE SUMMARY</p><h2>진영 핵심 지표</h2></div><span>총량과 인원 대비 지표를 함께 확인합니다.</span></div>
+        <div class="alliance-name-row"><strong>A 진영</strong><span>분석 항목</span><strong>B 진영</strong></div>
+        <div id="allianceMetricRows"></div>
+      </section>
+
+      <div class="alliance-chart-grid">
+        <section class="content-panel alliance-chart-card"><div class="alliance-section-heading compact"><div><p>POWER PROFILE</p><h2>종합 전력 지표</h2></div></div><div class="alliance-radar-wrap" id="alliancePowerRadar"></div><p class="alliance-chart-guide">전체 결사 데이터 분포를 기준으로 0~100점으로 환산한 상대 지표입니다.</p></section>
+        <section class="content-panel alliance-chart-card"><div class="alliance-section-heading compact"><div><p>CLASS DISTRIBUTION</p><h2>직업 구성 분포</h2></div></div><div class="alliance-radar-wrap" id="allianceClassRadar"></div><p class="alliance-chart-guide" id="allianceClassScale">각 진영의 랭킹 확인 인원을 기준으로 계산한 직업별 비율입니다.</p></section>
+      </div>
+
+      <section class="content-panel alliance-commentary-panel"><div class="alliance-section-heading compact"><div><p>ANALYSIS</p><h2>진영 분석 요약</h2></div></div><div class="alliance-comment-grid" id="allianceComments"></div></section>
+
+      <div class="alliance-detail-grid">
+        <section class="content-panel"><div class="alliance-section-heading compact"><div><p>LEVEL</p><h2>레벨 분포</h2></div></div><div class="alliance-distribution" id="allianceLevelDistribution"></div></section>
+        <section class="content-panel"><div class="alliance-section-heading compact"><div><p>RAID</p><h2>토벌 분포</h2></div></div><div class="alliance-distribution" id="allianceGradeDistribution"></div></section>
+      </div>
+
+      <section class="content-panel"><div class="alliance-section-heading compact"><div><p>CLASS DETAIL</p><h2>직업별 구성</h2></div></div><div class="alliance-class-table-wrap"><table class="alliance-class-table"><thead><tr><th>직업</th><th>A 인원</th><th>A 비율</th><th>B 인원</th><th>B 비율</th></tr></thead><tbody id="allianceClassTableBody"></tbody></table></div></section>
+
+      <div class="alliance-roster-grid">
+        <section class="content-panel"><div class="alliance-section-heading compact"><div><p>A ALLIANCE</p><h2>A 진영 결사 구성</h2></div></div><div class="alliance-roster-table-wrap"><table class="alliance-roster-table"><thead><tr><th>서버</th><th>결사명</th><th>결사원</th><th>확인 인원</th><th>평균 레벨</th><th>평균 토벌</th><th>총점</th></tr></thead><tbody id="allianceRosterA"></tbody></table></div></section>
+        <section class="content-panel"><div class="alliance-section-heading compact"><div><p>B ALLIANCE</p><h2>B 진영 결사 구성</h2></div></div><div class="alliance-roster-table-wrap"><table class="alliance-roster-table"><thead><tr><th>서버</th><th>결사명</th><th>결사원</th><th>확인 인원</th><th>평균 레벨</th><th>평균 토벌</th><th>총점</th></tr></thead><tbody id="allianceRosterB"></tbody></table></div></section>
+      </div>
+    </section>
+  </main>
+  <script src="./js/mappings.js"></script>
+  <script src="./js/guild-alliance-analysis.js"></script>
+</body>
+</html>
