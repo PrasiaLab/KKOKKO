@@ -291,26 +291,35 @@
     return metrics.map(([value, values]) => percentile(value, values));
   }
 
-  function renderRadar(targetId, labels, valuesA, valuesB, nameA, nameB) {
+  function renderRadar(targetId, labels, valuesA, valuesB, nameA, nameB, options = {}) {
     const size = 430, cx = 215, cy = 205, radius = 145, count = labels.length;
+    const maxValue = Math.max(1, num(options.maxValue) || 100);
+    const suffix = options.suffix || "";
     const point = (index, value) => {
       const angle = -Math.PI / 2 + index * Math.PI * 2 / count;
-      const r = radius * value / 100;
+      const normalized = Math.max(0, Math.min(100, num(value) / maxValue * 100));
+      const r = radius * normalized / 100;
       return [cx + Math.cos(angle) * r, cy + Math.sin(angle) * r];
     };
     const polygon = values => values.map((v,i) => point(i,v).join(",")).join(" ");
     let svg = `<svg viewBox="0 0 ${size} ${size}" role="img" aria-label="레이더 차트">`;
-    [20,40,60,80,100].forEach(level => { svg += `<polygon class="guild-radar-grid" points="${polygon(Array(count).fill(level))}"/>`; });
+    [20,40,60,80,100].forEach(level => {
+      svg += `<polygon class="guild-radar-grid" points="${polygon(Array(count).fill(maxValue * level / 100))}"/>`;
+    });
     labels.forEach((label,i) => {
-      const [x,y] = point(i,100);
-      const [lx,ly] = point(i,116);
+      const [x,y] = point(i,maxValue);
+      const angle = -Math.PI / 2 + i * Math.PI * 2 / count;
+      const labelRadius = radius * 1.16;
+      const lx = cx + Math.cos(angle) * labelRadius;
+      const ly = cy + Math.sin(angle) * labelRadius;
       const anchor = Math.abs(lx-cx) < 10 ? "middle" : lx < cx ? "end" : "start";
       svg += `<line class="guild-radar-axis" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"/><text class="guild-radar-label" x="${lx}" y="${ly}" dominant-baseline="middle" text-anchor="${anchor}">${escapeHtml(label)}</text>`;
     });
     svg += `<polygon class="guild-radar-a" points="${polygon(valuesA)}"/><polygon class="guild-radar-b" points="${polygon(valuesB)}"/>`;
-    valuesA.forEach((v,i) => { const [x,y]=point(i,v); svg += `<circle class="guild-radar-dot-a" cx="${x}" cy="${y}" r="3.5"><title>${escapeHtml(labels[i])}: ${format(v,1)}</title></circle>`; });
-    valuesB.forEach((v,i) => { const [x,y]=point(i,v); svg += `<circle class="guild-radar-dot-b" cx="${x}" cy="${y}" r="3.5"><title>${escapeHtml(labels[i])}: ${format(v,1)}</title></circle>`; });
+    valuesA.forEach((v,i) => { const [x,y]=point(i,v); svg += `<circle class="guild-radar-dot-a" cx="${x}" cy="${y}" r="3.5"><title>${escapeHtml(labels[i])}: ${format(v,1)}${escapeHtml(suffix)}</title></circle>`; });
+    valuesB.forEach((v,i) => { const [x,y]=point(i,v); svg += `<circle class="guild-radar-dot-b" cx="${x}" cy="${y}" r="3.5"><title>${escapeHtml(labels[i])}: ${format(v,1)}${escapeHtml(suffix)}</title></circle>`; });
     svg += `</svg><div class="guild-radar-legend"><span><i></i>${escapeHtml(nameA)}</span><span><i></i>${escapeHtml(nameB)}</span></div>`;
+    if (options.scaleLabel) svg += `<div class="guild-radar-scale">${escapeHtml(options.scaleLabel)}</div>`;
     el(targetId).innerHTML = svg;
   }
 
@@ -385,7 +394,24 @@
 
     const all = allProfiles();
     renderRadar("guildPowerRadar", ["결사 규모","결사 레벨","평균 레벨","평균 토벌","상위 레벨층","고토벌층"], powerValues(a,all), powerValues(b,all), a.guild.name, b.guild.name);
-    renderRadar("guildClassRadar", classCodes.map(classLabel), classRatios(a), classRatios(b), a.guild.name, b.guild.name);
+
+    const classValuesA = classRatios(a);
+    const classValuesB = classRatios(b);
+    const highestClassRatio = Math.max(0, ...classValuesA, ...classValuesB);
+    const classRadarMax = Math.max(20, Math.ceil(highestClassRatio / 5) * 5);
+    renderRadar(
+      "guildClassRadar",
+      classCodes.map(classLabel),
+      classValuesA,
+      classValuesB,
+      a.guild.name,
+      b.guild.name,
+      {
+        maxValue: classRadarMax,
+        suffix: "%",
+        scaleLabel: `직업 구성비 기준 · 외곽선 ${classRadarMax}%`
+      }
+    );
 
     const levelA=countMap(a.members,"level"), levelB=countMap(b.members,"level");
     const gradeA=countMap(a.members,"grade"), gradeB=countMap(b.members,"grade");
