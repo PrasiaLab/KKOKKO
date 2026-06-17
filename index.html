@@ -38,6 +38,15 @@
         <button class="side-menu-item" data-page="guild-ranking"><span>♛</span>결사 순위</button>
         <button class="side-menu-item" data-page="guild-search"><span>⌕</span>결사 조회</button>
         <button class="side-menu-item" data-page="guild-analysis"><span>⚔</span>결사 전력 분석</button>
+        <a
+          class="side-menu-item side-external-link"
+          href="./guild-alliance-analysis.html"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>⚔</span>
+          진영 전력 분석
+        </a>
 
         <p class="menu-section-title">CONTENTS</p>
         <button class="side-menu-item" data-page="review">
@@ -449,8 +458,9 @@
                 <span>A</span>
                 <div><strong>결사 A</strong><small>분석할 첫 번째 결사를 선택하세요.</small></div>
               </div>
-              <label><span>서버</span><select id="guildAnalysisServerA"><option value="">서버 선택</option></select></label>
+              <label><span>서버</span><select id="guildAnalysisServerA"><option value="">전체 서버</option></select></label>
               <label><span>결사명</span><input id="guildAnalysisNameA" type="search" placeholder="결사명을 입력하세요" autocomplete="off"></label>
+              <p class="guild-analysis-search-guide">서버는 선택 사항입니다. 결사명만 입력해 전체 서버에서 찾을 수 있습니다.</p>
               <div class="guild-analysis-suggestions" id="guildAnalysisSuggestionsA" hidden></div>
               <div class="guild-analysis-selected" id="guildAnalysisSelectedA">선택된 결사가 없습니다.</div>
             </article>
@@ -462,8 +472,9 @@
                 <span>B</span>
                 <div><strong>결사 B</strong><small>분석할 두 번째 결사를 선택하세요.</small></div>
               </div>
-              <label><span>서버</span><select id="guildAnalysisServerB"><option value="">서버 선택</option></select></label>
+              <label><span>서버</span><select id="guildAnalysisServerB"><option value="">전체 서버</option></select></label>
               <label><span>결사명</span><input id="guildAnalysisNameB" type="search" placeholder="결사명을 입력하세요" autocomplete="off"></label>
+              <p class="guild-analysis-search-guide">서버는 선택 사항입니다. 결사명만 입력해 전체 서버에서 찾을 수 있습니다.</p>
               <div class="guild-analysis-suggestions" id="guildAnalysisSuggestionsB" hidden></div>
               <div class="guild-analysis-selected" id="guildAnalysisSelectedB">선택된 결사가 없습니다.</div>
             </article>
