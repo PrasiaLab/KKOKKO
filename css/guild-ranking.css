@@ -1,0 +1,354 @@
+/* =========================================================
+   결사 점수 순위
+   ========================================================= */
+
+.guild-ranking-heading {
+  align-items: flex-end;
+}
+
+.guild-ranking-updated {
+  min-width: 210px;
+  padding: 13px 16px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: rgba(29, 34, 42, .9);
+  text-align: right;
+}
+
+.guild-ranking-updated span,
+.guild-ranking-updated strong {
+  display: block;
+}
+
+.guild-ranking-updated span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.guild-ranking-updated strong {
+  margin-top: 6px;
+  color: var(--gold2);
+  font-size: 13px;
+}
+
+.guild-ranking-panel {
+  padding: 20px;
+}
+
+.guild-ranking-toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 190px 150px;
+  gap: 11px;
+}
+
+.guild-ranking-search,
+.guild-ranking-select {
+  display: grid;
+  gap: 7px;
+}
+
+.guild-ranking-search span,
+.guild-ranking-select span {
+  color: #aeb8c7;
+  font-size: 12px;
+}
+
+.guild-ranking-search input,
+.guild-ranking-select select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  outline: none;
+  background: #14191f;
+  color: var(--text);
+}
+
+.guild-ranking-search input:focus,
+.guild-ranking-select select:focus {
+  border-color: rgba(225, 184, 62, .45);
+  box-shadow: 0 0 0 3px rgba(225, 184, 62, .07);
+}
+
+.guild-ranking-guide {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin-top: 15px;
+  padding: 12px 13px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: rgba(18, 23, 29, .7);
+}
+
+.guild-ranking-guide small {
+  margin-left: auto;
+  color: #7f8a99;
+  font-size: 11px;
+}
+
+.guild-ranking-legend,
+.guild-ranking-change {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.guild-ranking-legend {
+  min-width: 72px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .045);
+  font-size: 11px;
+}
+
+.guild-ranking-change {
+  min-width: 76px;
+  font-size: 13px;
+}
+
+/* 한국 주식시장 관례 */
+.guild-ranking-legend.up,
+.guild-ranking-change.up {
+  color: #ff6d65;
+}
+
+.guild-ranking-legend.down,
+.guild-ranking-change.down {
+  color: #6aa8ff;
+}
+
+.guild-ranking-legend.new,
+.guild-ranking-change.new {
+  color: #f1d06b;
+}
+
+.guild-ranking-legend.same,
+.guild-ranking-change.same {
+  color: #8d97a6;
+}
+
+.guild-ranking-status {
+  margin-top: 14px;
+  padding: 14px 15px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #14191f;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.guild-ranking-status.success {
+  border-color: rgba(84, 205, 167, .25);
+  color: #9fe5cf;
+}
+
+.guild-ranking-status.error {
+  border-color: rgba(255, 109, 101, .25);
+  color: #ffaaa5;
+}
+
+.guild-ranking-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 17px 0 11px;
+}
+
+.guild-ranking-summary span,
+.guild-ranking-summary strong {
+  display: block;
+}
+
+.guild-ranking-summary span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.guild-ranking-summary strong {
+  margin-top: 3px;
+  color: var(--gold2);
+  font-size: 19px;
+}
+
+.guild-ranking-summary p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.guild-ranking-table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+}
+
+.guild-ranking-table {
+  width: 100%;
+  min-width: 1020px;
+  border-collapse: collapse;
+}
+
+.guild-ranking-table th,
+.guild-ranking-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.guild-ranking-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #171c23;
+  color: #aeb8c7;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.guild-ranking-table td {
+  color: #dce2e9;
+  font-size: 13px;
+}
+
+.guild-ranking-table tbody tr {
+  transition: background .15s ease;
+}
+
+.guild-ranking-table tbody tr:hover {
+  background: rgba(255, 255, 255, .028);
+}
+
+.guild-ranking-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.guild-ranking-table tr.top-1 {
+  background:
+    linear-gradient(90deg, rgba(225, 184, 62, .12), transparent 34%);
+}
+
+.guild-ranking-table tr.top-2 {
+  background:
+    linear-gradient(90deg, rgba(190, 199, 210, .08), transparent 30%);
+}
+
+.guild-ranking-table tr.top-3 {
+  background:
+    linear-gradient(90deg, rgba(191, 126, 72, .08), transparent 30%);
+}
+
+.guild-ranking-rank,
+.guild-ranking-score {
+  color: #f5f7fa !important;
+  font-weight: 800;
+}
+
+.guild-ranking-name {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--gold2);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: rgba(241, 208, 107, .35);
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.guild-ranking-name:hover {
+  color: #fff0a8;
+}
+
+.guild-ranking-table td strong,
+.guild-ranking-table td small {
+  display: block;
+}
+
+.guild-ranking-table td small {
+  margin-top: 3px;
+  color: #788391;
+  font-size: 10px;
+}
+
+.guild-ranking-empty {
+  padding: 34px !important;
+  color: var(--muted) !important;
+  text-align: center !important;
+}
+
+.guild-ranking-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  margin-top: 15px;
+}
+
+.guild-ranking-pagination button {
+  min-width: 90px;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #242a34;
+  color: #dce2e9;
+  cursor: pointer;
+}
+
+.guild-ranking-pagination button:disabled {
+  opacity: .35;
+  cursor: default;
+}
+
+.guild-ranking-pagination span {
+  min-width: 80px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* 순위 상세 팝업은 기존 결사 조회 디자인을 그대로 사용 */
+.guild-ranking-member-modal {
+  z-index: 260;
+}
+
+@media (max-width: 1000px) {
+  .guild-ranking-toolbar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .guild-ranking-search {
+    grid-column: 1 / -1;
+  }
+
+  .guild-ranking-guide small {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .guild-ranking-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .guild-ranking-search {
+    grid-column: auto;
+  }
+
+  .guild-ranking-summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .guild-ranking-updated {
+    width: 100%;
+    text-align: left;
+  }
+}
