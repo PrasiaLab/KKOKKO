@@ -182,8 +182,12 @@
   font-size: 12px;
 }
 
+/* 헤더는 고정하고 순위 행만 내부 스크롤 */
 .guild-ranking-table-scroll {
-  overflow-x: auto;
+  max-height: clamp(360px, 52vh, 620px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
   border: 1px solid var(--line);
   border-radius: 13px;
 }
@@ -191,7 +195,8 @@
 .guild-ranking-table {
   width: 100%;
   min-width: 1020px;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .guild-ranking-table th,
@@ -205,11 +210,12 @@
 .guild-ranking-table th {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 5;
   background: #171c23;
   color: #aeb8c7;
   font-size: 11px;
   font-weight: 700;
+  box-shadow: 0 1px 0 var(--line);
 }
 
 .guild-ranking-table td {
@@ -331,6 +337,10 @@
     width: 100%;
     margin-left: 0;
   }
+
+  .guild-ranking-table-scroll {
+    max-height: 55vh;
+  }
 }
 
 @media (max-width: 700px) {
@@ -350,5 +360,9 @@
   .guild-ranking-updated {
     width: 100%;
     text-align: left;
+  }
+
+  .guild-ranking-table-scroll {
+    max-height: 58vh;
   }
 }
