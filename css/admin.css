@@ -718,3 +718,35 @@ select {
     width: 100%;
   }
 }
+
+/* =========================================================
+   라이브 방송 상태 관리
+   ========================================================= */
+.live-admin-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);gap:17px}
+.live-admin-card{padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+.live-admin-card h2{margin:4px 0 0;font-size:21px}
+.live-admin-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+.live-admin-heading p{margin:9px 0 0;color:var(--muted);font-size:13px;line-height:1.65}
+.live-admin-state{min-width:94px;padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:#14191f;color:#aeb8c6;font-size:11px;font-weight:800;text-align:center}
+.live-admin-state.on{border-color:rgba(255,94,94,.34);background:rgba(255,94,94,.1);color:#ffaaa5}
+.live-admin-url-field{display:grid;gap:8px;margin-top:24px}
+.live-admin-url-field>span{color:#bcc5d1;font-size:13px}
+.live-admin-url-field input{width:100%;min-height:46px;padding:0 13px;border:1px solid var(--line);border-radius:10px;outline:none;background:#12171d;color:var(--text)}
+.live-admin-url-field input:focus{border-color:rgba(225,184,62,.42)}
+.live-admin-url-field small{color:#778393;font-size:11px}
+.live-admin-actions{display:flex;gap:10px;margin-top:18px}
+.live-admin-actions button{min-height:46px;padding:0 18px;border-radius:10px;font-weight:800;cursor:pointer}
+.live-on-button{flex:1;border:1px solid rgba(255,94,94,.28);background:rgba(255,94,94,.11);color:#ffaaa5}
+.live-off-button{min-width:130px;border:1px solid var(--line);background:#29313b;color:#dbe1e8}
+.live-admin-actions button:disabled{cursor:wait;opacity:.58}
+.live-admin-message{margin-top:14px;padding:13px 14px;border:1px solid var(--line);border-radius:11px;background:#14191f;color:#aeb8c6;font-size:12px;line-height:1.6}
+.live-admin-message.success{border-color:rgba(92,205,165,.25);color:#9ee2ca}
+.live-admin-message.error{border-color:rgba(255,119,112,.25);color:#ffaaa5}
+.live-admin-guide ol{display:grid;gap:10px;margin:18px 0 0;padding:0;list-style:none}
+.live-admin-guide li{padding:13px;border:1px solid var(--line);border-radius:11px;background:#14191f}
+.live-admin-guide li strong,.live-admin-guide li span{display:block}
+.live-admin-guide li strong{color:#e2e7ed;font-size:13px}
+.live-admin-guide li span{margin-top:5px;color:var(--muted);font-size:11px;line-height:1.55}
+.live-admin-guide>p{margin:15px 0 0;color:#7f8a99;font-size:11px;line-height:1.6}
+.live-admin-guide code{color:#e6cb75}
+@media(max-width:1000px){.live-admin-layout{grid-template-columns:1fr}}
