@@ -7,30 +7,33 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    /*
-     * 관리자 쓰기 권한은 마지막 관리자 단계에서
-     * UID 또는 Custom Claims 방식으로 교체합니다.
-     * 현재는 공개 읽기만 허용하고 모든 쓰기를 차단합니다.
-     */
+    function isAdmin() {
+      return isSignedIn() &&
+        request.auth.uid in [
+          "kgb0KhPYWLZYXt5YdAA7iuHMxYT2",
+          "rkT0L6EK6Yd2IFNHBIQ8dVgqdHX2",
+          "KhK0yllx62f20RU6YkUbxcDC3W53"
+        ];
+    }
 
     match /notices/{documentId} {
-      allow read: if resource.data.visible == true;
-      allow write: if false;
+      allow read: if isAdmin() || resource.data.visible == true;
+      allow create, update, delete: if isAdmin();
     }
 
     match /scheduleEvents/{documentId} {
-      allow read: if resource.data.visible == true;
-      allow write: if false;
+      allow read: if isAdmin() || resource.data.visible == true;
+      allow create, update, delete: if isAdmin();
     }
 
     match /videos/{documentId} {
-      allow read: if resource.data.visible == true;
-      allow write: if false;
+      allow read: if isAdmin() || resource.data.visible == true;
+      allow create, update, delete: if isAdmin();
     }
 
     match /siteSettings/{documentId} {
       allow read: if true;
-      allow write: if false;
+      allow create, update, delete: if isAdmin();
     }
 
     match /{document=**} {
