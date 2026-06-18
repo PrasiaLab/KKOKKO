@@ -98,12 +98,11 @@
 }
 
 .guild-analysis-suggestions {
-  position:absolute;
+  position:relative;
   z-index:25;
-  left:97px;
-  right:19px;
-  top:151px;
+  width:calc(100% - 78px);
   max-height:230px;
+  margin:10px 0 0 78px;
   overflow:auto;
   padding:6px;
   border:1px solid rgba(255,255,255,.13);
@@ -282,4 +281,12 @@
   font-size:12px;
   text-overflow:ellipsis;
   white-space:nowrap;
+}
+
+
+@media(max-width:1180px) {
+  .guild-analysis-suggestions {
+    width:100%;
+    margin-left:0;
+  }
 }
