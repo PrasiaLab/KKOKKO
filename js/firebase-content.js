@@ -3,6 +3,12 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
+  getAnalytics,
+  isSupported as isAnalyticsSupported,
+  logEvent
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
+
+import {
   firebaseConfig
 } from "./firebase-config.js";
 
@@ -21,11 +27,76 @@ import {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+let analytics = null;
+
+async function initializeAnalyticsTracking() {
+  try {
+    const supported = await isAnalyticsSupported();
+
+    if (!supported) {
+      console.info("Google Analytics를 지원하지 않는 환경입니다.");
+      return;
+    }
+
+    analytics = getAnalytics(app);
+    trackVirtualPageView(getCurrentPageId());
+    bindVirtualPageTracking();
+  } catch (error) {
+    console.warn("Google Analytics 초기화 오류", error);
+  }
+}
+
+function getCurrentPageId() {
+  const activePage = document.querySelector(".page.active");
+  return activePage?.id || "home";
+}
+
+function pageTitleFromId(pageId) {
+  const pageTitles = {
+    home: "메인화면",
+    notice: "안내사항",
+    recruit: "결사원 모집",
+    statistics: "전체 서버 통계",
+    "guild-ranking": "결사 순위",
+    "guild-search": "결사 조회",
+    "guild-analysis": "결사 전력 분석",
+    review: "리뷰 방송",
+    raid: "토벌 공략"
+  };
+
+  return pageTitles[pageId] || pageId || "메인화면";
+}
+
+function trackVirtualPageView(pageId) {
+  if (!analytics || !pageId) {
+    return;
+  }
+
+  logEvent(analytics, "page_view", {
+    page_title: pageTitleFromId(pageId),
+    page_location: `${window.location.origin}${window.location.pathname}?page=${encodeURIComponent(pageId)}`,
+    page_path: `/${pageId}`
+  });
+}
+
+function bindVirtualPageTracking() {
+  document
+    .querySelectorAll('.side-menu-item[data-page]')
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        const pageId = button.dataset.page;
+
+        window.setTimeout(() => {
+          trackVirtualPageView(pageId);
+        }, 0);
+      });
+    });
+}
+
 const youtubeChannel =
   "https://www.youtube.com/@%EB%A7%9B%EB%82%98%EB%8A%94%EA%BC%AC%EA%BC%AC";
 
 let notices = [];
-let rollingNotices=[];let rollingNoticeIndex=0;let rollingNoticeTimer=null;
 
 function timestampToDate(value) {
   if (!value) {
@@ -275,7 +346,7 @@ function renderLiveStatus(data = {}) {
   badge.classList.toggle("on", isLive);
   badge.classList.toggle("off", !isLive);
   badge.href = data.url || youtubeChannel;
-  text.textContent = isLive ? "맛나는꼬꼬 LIVE ON" : "맛나는꼬꼬 방송 대기 중";
+  text.textContent = isLive ? "맛나는꼬꼬 LIVE 중.." : "맛나는꼬꼬 방송 대기 중";
 }
 
 function subscribeLiveStatus() {
@@ -290,13 +361,6 @@ function subscribeLiveStatus() {
     }
   );
 }
-
-
-function stopRollingNoticeTimer(){if(rollingNoticeTimer){clearInterval(rollingNoticeTimer);rollingNoticeTimer=null}}
-function showRollingNotice(index,animate=true){const bar=document.getElementById("rollingNoticeBar"),link=document.getElementById("rollingNoticeLink"),text=document.getElementById("rollingNoticeText");if(!bar||!link||!text||!rollingNotices.length)return;rollingNoticeIndex=(index+rollingNotices.length)%rollingNotices.length;const item=rollingNotices[rollingNoticeIndex];const apply=()=>{text.textContent=item.text||"";if(item.url){link.href=item.url;link.target="_blank";link.rel="noopener noreferrer";link.classList.add("is-clickable")}else{link.removeAttribute("href");link.removeAttribute("target");link.removeAttribute("rel");link.classList.remove("is-clickable")}bar.classList.remove("is-changing")};if(animate){bar.classList.add("is-changing");setTimeout(apply,230)}else apply()}
-function startRollingNoticeTimer(){stopRollingNoticeTimer();if(rollingNotices.length<=1)return;rollingNoticeTimer=setInterval(()=>showRollingNotice(rollingNoticeIndex+1,true),6000)}
-function renderRollingNotices(items=[]){const bar=document.getElementById("rollingNoticeBar");if(!bar)return;rollingNotices=items.filter(item=>item.visible!==false&&String(item.text||"").trim()).sort((a,b)=>Number(a.order||0)-Number(b.order||0));stopRollingNoticeTimer();if(!rollingNotices.length){bar.hidden=true;return}bar.hidden=false;rollingNoticeIndex=0;showRollingNotice(0,false);startRollingNoticeTimer();if(!bar.dataset.eventsBound){bar.addEventListener("mouseenter",stopRollingNoticeTimer);bar.addEventListener("mouseleave",startRollingNoticeTimer);bar.dataset.eventsBound="true"}}
-async function loadRollingNotices(){try{const q=query(collection(db,"rollingNotices"),where("visible","==",true),orderBy("order","asc"),limit(30));const snapshot=await getDocs(q);renderRollingNotices(snapshot.docs.map(document=>({id:document.id,...document.data()})))}catch(error){console.warn("한줄 공지 로드 오류",error);renderRollingNotices([])}}
 
 async function loadNotices() {
   try {
@@ -403,11 +467,11 @@ async function loadVideos() {
   }
 }
 
+initializeAnalyticsTracking();
 subscribeLiveStatus();
 
 Promise.all([
   loadNotices(),
-  loadRollingNotices(),
   loadSchedule(),
   loadVideos()
 ]);
