@@ -19,6 +19,8 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  getDoc,
+  setDoc,
   serverTimestamp,
   query,
   orderBy
@@ -56,6 +58,7 @@ const getRankingUpdateStatusCall = httpsCallable(
 const pageTitles = {
   notice: "안내사항 관리",
   schedule: "방송 일정 관리",
+  live: "라이브 방송 관리",
   video: "영상 관리",
   data: "데이터 갱신"
 };
@@ -67,6 +70,11 @@ let activeVideoFilter = "all";
 let rankingStatusTimer = null;
 let activeRankingRunId = null;
 let rankingRequestedAt = null;
+let currentAdminUser = null;
+
+const LIVE_STATUS_DOC = ["siteSettings", "liveStatus"];
+const DEFAULT_LIVE_URL =
+  "https://www.youtube.com/@%EB%A7%9B%EB%82%98%EB%8A%94%EA%BC%AC%EA%BC%AC";
 
 const $ = (id) => document.getElementById(id);
 
@@ -511,6 +519,103 @@ async function startRankingUpdate() {
   }
 }
 
+
+
+function setLiveAdminMessage(message, type = "") {
+  const target = $("liveAdminMessage");
+  if (!target) return;
+  target.textContent = message;
+  target.className = "live-admin-message";
+  if (type) target.classList.add(type);
+}
+
+function renderLiveAdminState(data = {}) {
+  const isLive = Boolean(data.isLive);
+  const stateBadge = $("liveAdminState");
+  const urlInput = $("liveAdminUrl");
+  if (stateBadge) {
+    stateBadge.textContent = isLive ? "LIVE ON" : "방송 대기 중";
+    stateBadge.className = `live-admin-state ${isLive ? "on" : "off"}`;
+  }
+  if (urlInput && document.activeElement !== urlInput) {
+    urlInput.value = data.url || DEFAULT_LIVE_URL;
+  }
+}
+
+async function loadLiveStatus() {
+  try {
+    const snapshot = await getDoc(doc(db, ...LIVE_STATUS_DOC));
+    const data = snapshot.exists()
+      ? snapshot.data()
+      : { isLive: false, url: DEFAULT_LIVE_URL };
+    renderLiveAdminState(data);
+    setLiveAdminMessage(
+      data.isLive
+        ? "현재 홈페이지에 LIVE 상태가 표시되고 있습니다."
+        : "현재 홈페이지에는 방송 대기 상태가 표시되고 있습니다.",
+      "success"
+    );
+    return data;
+  } catch (error) {
+    console.error("라이브 상태 로드 오류", error);
+    setLiveAdminMessage(
+      "라이브 방송 상태를 불러오지 못했습니다. Firestore 규칙을 확인해주세요.",
+      "error"
+    );
+    return null;
+  }
+}
+
+async function saveLiveStatus(isLive) {
+  const urlInput = $("liveAdminUrl");
+  const onButton = $("liveOnButton");
+  const offButton = $("liveOffButton");
+  const url = urlInput?.value.trim() || DEFAULT_LIVE_URL;
+
+  if (isLive && !/^https?:\/\//i.test(url)) {
+    setLiveAdminMessage("라이브 연결 주소를 확인해주세요.", "error");
+    urlInput?.focus();
+    return;
+  }
+
+  if (!isLive && !window.confirm("홈페이지의 라이브 상태를 OFF로 변경할까요?")) {
+    return;
+  }
+
+  onButton.disabled = true;
+  offButton.disabled = true;
+  setLiveAdminMessage(isLive ? "라이브 상태를 켜는 중입니다." : "방송 종료 상태를 저장하는 중입니다.");
+
+  try {
+    await setDoc(
+      doc(db, ...LIVE_STATUS_DOC),
+      {
+        isLive,
+        url,
+        updatedAt: serverTimestamp(),
+        updatedByUid: currentAdminUser?.uid || "",
+        updatedByEmail: currentAdminUser?.email || ""
+      },
+      { merge: true }
+    );
+    renderLiveAdminState({ isLive, url });
+    setLiveAdminMessage(
+      isLive ? "라이브 상태를 ON으로 변경했습니다." : "방송 상태를 OFF로 변경했습니다.",
+      "success"
+    );
+    showToast(isLive ? "라이브 상태를 켰습니다." : "방송 상태를 종료했습니다.");
+  } catch (error) {
+    console.error("라이브 상태 저장 오류", error);
+    setLiveAdminMessage(
+      "라이브 상태를 저장하지 못했습니다. Firestore 권한을 확인해주세요.",
+      "error"
+    );
+  } finally {
+    onButton.disabled = false;
+    offButton.disabled = false;
+  }
+}
+
 function clearForm(prefix) {
   if (prefix === "notice") {
     $("noticeForm").reset();
@@ -569,6 +674,7 @@ async function loadAll() {
     loadNotices(),
     loadSchedules(),
     loadVideos(),
+    loadLiveStatus(),
     loadRankingDataStatus()
   ]);
 }
@@ -801,6 +907,9 @@ $("noticeReset").addEventListener("click", () => clearForm("notice"));
 $("scheduleReset").addEventListener("click", () => clearForm("schedule"));
 $("videoReset").addEventListener("click", () => clearForm("video"));
 
+$("liveOnButton")?.addEventListener("click", () => { saveLiveStatus(true); });
+$("liveOffButton")?.addEventListener("click", () => { saveLiveStatus(false); });
+
 $("rankingUpdateButton").addEventListener(
   "click",
   startRankingUpdate
@@ -866,6 +975,7 @@ $("adminLogoutButton").addEventListener("click", async () => {
 });
 
 async function requireAdmin(user) {
+  currentAdminUser = user;
   $("adminUserName").textContent = user.displayName || "관리자";
   $("adminUserEmail").textContent = user.email || "-";
   $("adminUserUid").textContent = user.uid;

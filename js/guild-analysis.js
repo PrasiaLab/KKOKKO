@@ -15,7 +15,7 @@
   const classNames = mappings.classes || {};
   const classCodes = Object.keys(classNames);
 
-  const state = { guilds: [], scores: [], members: [], selectedA: null, selectedB: null };
+  const state = { guilds: [], scores: [], members: [], selectedA: null, selectedB: null, lastAnalysis: null };
   const el = id => document.getElementById(id);
   const status = el("guildAnalysisStatus");
   const results = el("guildAnalysisResults");
@@ -379,6 +379,87 @@
     el("guildAnalysisComments").innerHTML = comments.map(([tag,title,body]) => `<article class="guild-analysis-comment"><span>${escapeHtml(tag)}</span><strong>${escapeHtml(title)}</strong><p>${escapeHtml(body)}</p></article>`).join("");
   }
 
+
+
+  function safeFileName(value) {
+    return String(value || "analysis").replace(/[\\/:*?"<>|]+/g, "_").replace(/\s+/g, "_");
+  }
+
+  function ensureCaptureLibrary() {
+    if (window.html2canvas) return true;
+    setStatus("이미지 저장 기능을 불러오지 못했습니다. 페이지를 새로고침해주세요.", "error");
+    return false;
+  }
+
+  function downloadCanvas(canvas, fileName) {
+    return new Promise(resolve => {
+      canvas.toBlob(blob => {
+        if (!blob) { resolve(false); return; }
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 600);
+        resolve(true);
+      }, "image/png");
+    });
+  }
+
+  function buildGuildSummaryCard() {
+    const data = state.lastAnalysis;
+    const stage = el("guildAnalysisCaptureStage");
+    if (!data || !stage) return null;
+    const dominantA = dominantClass(data.a);
+    const dominantB = dominantClass(data.b);
+    const metrics = [
+      ["연구소 순위", data.a.score.labRank ? `${data.a.score.labRank}위` : "-", data.b.score.labRank ? `${data.b.score.labRank}위` : "-"],
+      ["총점", data.a.score.score ? `${format(data.a.score.score)}점` : "-", data.b.score.score ? `${format(data.b.score.score)}점` : "-"],
+      ["랭킹 확인 인원", `${format(data.a.confirmed)}명`, `${format(data.b.confirmed)}명`],
+      ["평균 레벨", format(data.a.avgLevel, 2), format(data.b.avgLevel, 2)],
+      ["평균 토벌", format(data.a.avgGrade, 2), format(data.b.avgGrade, 2)],
+      ["대표 직업", dominantA.count ? classLabel(dominantA.code) : "-", dominantB.count ? classLabel(dominantB.code) : "-"]
+    ];
+    const notes = Array.from(document.querySelectorAll("#guildAnalysisComments .guild-analysis-comment")).slice(0, 3);
+    stage.innerHTML = `<section class="analysis-summary-card"><div class="analysis-summary-kicker">PRASIA LAB · GUILD POWER ANALYSIS</div><div class="analysis-summary-head"><h2>결사 전력 분석 요약</h2><time>${escapeHtml(data.updatedText)}</time></div><div class="analysis-summary-vs"><div class="analysis-summary-side"><span>A 결사</span><strong>${escapeHtml(data.a.guild.name)}</strong><small>${escapeHtml(serverLabel(data.a.guild.world))}</small></div><div class="analysis-summary-vs-mark">VS</div><div class="analysis-summary-side"><span>B 결사</span><strong>${escapeHtml(data.b.guild.name)}</strong><small>${escapeHtml(serverLabel(data.b.guild.world))}</small></div></div><div class="analysis-summary-grid">${metrics.map(([label,av,bv])=>`<div class="analysis-summary-metric"><span>${escapeHtml(label)}</span><div class="analysis-summary-values"><strong>${escapeHtml(av)}</strong><strong>${escapeHtml(bv)}</strong></div></div>`).join("")}</div><div class="analysis-summary-notes">${notes.map(note=>`<div class="analysis-summary-note"><span>${escapeHtml(note.querySelector("span")?.textContent||"분석")}</span><p>${escapeHtml(note.querySelector("p")?.textContent||"")}</p></div>`).join("")}</div></section>`;
+    return stage.firstElementChild;
+  }
+
+  async function saveGuildSummaryImage() {
+    if (!state.lastAnalysis) return setStatus("먼저 결사 전력 분석을 실행해주세요.", "error");
+    if (!ensureCaptureLibrary()) return;
+    const button = el("guildAnalysisSaveSummary");
+    button.disabled = true;
+    setStatus("공유용 요약 이미지를 생성하고 있습니다.");
+    try {
+      const canvas = await window.html2canvas(buildGuildSummaryCard(), { backgroundColor: "#10141a", scale: 2, useCORS: true });
+      await downloadCanvas(canvas, `${safeFileName(state.lastAnalysis.a.guild.name)}_vs_${safeFileName(state.lastAnalysis.b.guild.name)}_요약.png`);
+      setStatus("요약 이미지를 저장했습니다.", "success");
+    } catch (error) {
+      console.error(error);
+      setStatus("요약 이미지를 만들지 못했습니다.", "error");
+    } finally { button.disabled = false; }
+  }
+
+  async function saveGuildFullImage() {
+    if (!state.lastAnalysis) return setStatus("먼저 결사 전력 분석을 실행해주세요.", "error");
+    if (!ensureCaptureLibrary()) return;
+    const button = el("guildAnalysisSaveFull");
+    button.disabled = true;
+    setStatus("전체 분석 결과 이미지를 생성하고 있습니다.");
+    try {
+      const scale = results.scrollHeight > 9000 ? 1 : 1.5;
+      const canvas = await window.html2canvas(results, { backgroundColor: "#14171c", scale, useCORS: true, windowWidth: Math.max(1120, results.scrollWidth) });
+      await downloadCanvas(canvas, `${safeFileName(state.lastAnalysis.a.guild.name)}_vs_${safeFileName(state.lastAnalysis.b.guild.name)}_전체.png`);
+      setStatus("전체 분석 결과 이미지를 저장했습니다.", "success");
+    } catch (error) {
+      console.error(error);
+      setStatus("전체 이미지가 너무 길어 저장하지 못했습니다. 요약 이미지 저장을 이용해주세요.", "error");
+    } finally { button.disabled = false; }
+  }
+
   function runAnalysis() {
     if (!state.selectedA || !state.selectedB) { setStatus("A와 B 결사를 모두 선택해주세요.", "error"); return; }
     if (state.selectedA.key === state.selectedB.key) { setStatus("서로 다른 결사를 선택해주세요.", "error"); return; }
@@ -402,7 +483,9 @@
     buildComments(a,b);
 
     const updated = new Date();
-    el("guildAnalysisUpdatedAt").textContent = `분석 시각 ${updated.toLocaleString("ko-KR")}`;
+    const updatedText = `분석 시각 ${updated.toLocaleString("ko-KR")}`;
+    el("guildAnalysisUpdatedAt").textContent = updatedText;
+    state.lastAnalysis = { a, b, updatedText };
     results.hidden = false;
     setStatus("결사 전력 분석이 완료되었습니다.", "success");
     results.scrollIntoView({ behavior:"smooth", block:"start" });
@@ -435,4 +518,6 @@
 
   el("guildAnalysisRun").addEventListener("click",runAnalysis);
   el("guildAnalysisReset").addEventListener("click",resetAll);
+  el("guildAnalysisSaveSummary")?.addEventListener("click", saveGuildSummaryImage);
+  el("guildAnalysisSaveFull")?.addEventListener("click", saveGuildFullImage);
 })();

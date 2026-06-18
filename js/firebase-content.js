@@ -9,11 +9,13 @@ import {
 import {
   getFirestore,
   collection,
+  doc,
   getDocs,
   query,
   where,
   orderBy,
-  limit
+  limit,
+  onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const app = initializeApp(firebaseConfig);
@@ -262,6 +264,32 @@ function renderFirebaseVideos(videos) {
   });
 }
 
+
+
+function renderLiveStatus(data = {}) {
+  const badge = document.getElementById("homeLiveStatus");
+  const text = document.getElementById("homeLiveStatusText");
+  if (!badge || !text) return;
+  const isLive = Boolean(data.isLive);
+  badge.classList.toggle("on", isLive);
+  badge.classList.toggle("off", !isLive);
+  badge.href = data.url || youtubeChannel;
+  text.textContent = isLive ? "맛나는꼬꼬 LIVE 중.." : "맛나는꼬꼬 방송 대기 중";
+}
+
+function subscribeLiveStatus() {
+  return onSnapshot(
+    doc(db, "siteSettings", "liveStatus"),
+    (snapshot) => {
+      renderLiveStatus(snapshot.exists() ? snapshot.data() : { isLive: false, url: youtubeChannel });
+    },
+    (error) => {
+      console.warn("라이브 상태 구독 오류", error);
+      renderLiveStatus({ isLive: false, url: youtubeChannel });
+    }
+  );
+}
+
 async function loadNotices() {
   try {
     const noticeQuery = query(
@@ -366,6 +394,8 @@ async function loadVideos() {
     console.warn("Firebase 영상 데이터를 사용하지 못했습니다.", error);
   }
 }
+
+subscribeLiveStatus();
 
 Promise.all([
   loadNotices(),
