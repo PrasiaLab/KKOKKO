@@ -57,6 +57,7 @@ const getRankingUpdateStatusCall = httpsCallable(
 
 const pageTitles = {
   notice: "안내사항 관리",
+  rolling: "한줄 공지 관리",
   schedule: "방송 일정 관리",
   live: "라이브 방송 관리",
   video: "영상 관리",
@@ -64,6 +65,7 @@ const pageTitles = {
 };
 
 let noticeItems = [];
+let rollingNoticeItems = [];
 let scheduleItems = [];
 let videoItems = [];
 let activeVideoFilter = "all";
@@ -717,6 +719,8 @@ function clearForm(prefix) {
     $("noticeVisible").checked = true;
   }
 
+  if(prefix==="rollingNotice"){$("rollingNoticeForm").reset();$("rollingNoticeDocumentId").value="";$("rollingNoticeOrder").value="1";$("rollingNoticeVisible").checked=true}
+
   if (prefix === "schedule") {
     $("scheduleForm").reset();
     $("scheduleDocumentId").value = "";
@@ -765,6 +769,7 @@ function renderList(targetId, items, formatter, onClick) {
 async function loadAll() {
   await Promise.all([
     loadNotices(),
+    loadRollingNotices(),
     loadSchedules(),
     loadVideos(),
     loadLiveStatus(),
@@ -795,6 +800,8 @@ async function loadNotices() {
     editNotice
   );
 }
+
+async function loadRollingNotices(){const snapshot=await getDocs(query(collection(db,"rollingNotices"),orderBy("order","asc")));rollingNoticeItems=snapshot.docs.map(item=>({id:item.id,...item.data()}));renderList("rollingNoticeAdminList",rollingNoticeItems,item=>({title:`${item.order??"-"} · ${item.text||"내용 없음"}`,meta:`${item.visible?"공개":"비공개"}${item.url?" · 링크 있음":""}`}),editRollingNotice)}
 
 async function loadSchedules() {
   const snapshot = await getDocs(
@@ -844,6 +851,8 @@ function editNotice(item) {
   $("noticePinned").checked = Boolean(item.pinned);
   $("noticeVisible").checked = item.visible !== false;
 }
+
+function editRollingNotice(item){$("rollingNoticeDocumentId").value=item.id;$("rollingNoticeTextInput").value=item.text||"";$("rollingNoticeUrl").value=item.url||"";$("rollingNoticeOrder").value=item.order??1;$("rollingNoticeVisible").checked=item.visible!==false}
 
 function editSchedule(item) {
   $("scheduleDocumentId").value = item.id;
@@ -923,6 +932,8 @@ $("noticeForm").addEventListener("submit", async (event) => {
   showToast("안내사항을 저장했습니다.");
 });
 
+$("rollingNoticeForm").addEventListener("submit",async event=>{event.preventDefault();const url=$("rollingNoticeUrl").value.trim();if(url&&!/^https?:\/\//i.test(url)){showToast("연결 링크는 http:// 또는 https://로 시작해야 합니다.");return}await saveDocument("rollingNotices",$("rollingNoticeDocumentId").value,{text:$("rollingNoticeTextInput").value.trim(),url,order:Number($("rollingNoticeOrder").value),visible:$("rollingNoticeVisible").checked});clearForm("rollingNotice");await loadRollingNotices();showToast("한줄 공지를 저장했습니다.")});
+
 $("scheduleForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -982,6 +993,8 @@ $("noticeDelete").addEventListener("click", async () => {
   }
 });
 
+$("rollingNoticeDelete").addEventListener("click",async()=>{if(await removeDocument("rollingNotices",$("rollingNoticeDocumentId").value)){clearForm("rollingNotice");await loadRollingNotices();showToast("한줄 공지를 삭제했습니다.")}});
+
 $("scheduleDelete").addEventListener("click", async () => {
   if (await removeDocument("scheduleEvents", $("scheduleDocumentId").value)) {
     clearForm("schedule");
@@ -999,6 +1012,7 @@ $("videoDelete").addEventListener("click", async () => {
 });
 
 $("noticeReset").addEventListener("click", () => clearForm("notice"));
+$("rollingNoticeReset").addEventListener("click",()=>clearForm("rollingNotice"));
 $("scheduleReset").addEventListener("click", () => clearForm("schedule"));
 $("videoReset").addEventListener("click", () => clearForm("video"));
 
