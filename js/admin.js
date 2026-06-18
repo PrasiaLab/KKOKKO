@@ -78,6 +78,97 @@ const DEFAULT_LIVE_URL =
 
 const $ = (id) => document.getElementById(id);
 
+
+let adminAuthorized = false;
+let authCheckFinished = false;
+
+function setGateState({ icon = "⌛", title, message, mode = "checking" }) {
+  const gateIcon = $("adminAccessGateIcon");
+  const gateTitle = $("adminAccessGateTitle");
+  const gateMessage = $("adminAccessGateMessage");
+  const loginButton = $("adminGateLoginButton");
+  const retryButton = $("adminGateRetryButton");
+
+  if (gateIcon) {
+    gateIcon.textContent = icon;
+    gateIcon.className = "admin-access-gate-icon";
+    if (mode === "denied") gateIcon.classList.add("denied");
+    if (mode === "allowed") gateIcon.classList.add("allowed");
+  }
+
+  if (gateTitle) gateTitle.textContent = title;
+  if (gateMessage) gateMessage.textContent = message;
+  if (loginButton) loginButton.hidden = mode !== "login";
+  if (retryButton) retryButton.hidden = mode !== "denied";
+}
+
+function lockAdminApp() {
+  adminAuthorized = false;
+  currentAdminUser = null;
+  document.body.classList.add("admin-auth-pending");
+  $("adminApp")?.setAttribute("hidden", "");
+  $("adminAccessGate")?.removeAttribute("hidden");
+}
+
+function unlockAdminApp() {
+  adminAuthorized = true;
+  document.body.classList.remove("admin-auth-pending");
+  $("adminAccessGate")?.setAttribute("hidden", "");
+  $("adminApp")?.removeAttribute("hidden");
+}
+
+function assertClientAdmin() {
+  if (
+    !adminAuthorized ||
+    !currentAdminUser ||
+    !isConfiguredAdmin(currentAdminUser.uid)
+  ) {
+    lockAdminApp();
+    setGateState({
+      icon: "🔒",
+      title: "관리자 권한이 필요합니다",
+      message: "등록된 관리자 계정으로 다시 로그인해주세요.",
+      mode: "denied"
+    });
+    throw new Error("ADMIN_PERMISSION_REQUIRED");
+  }
+}
+
+async function openAdminLogin(forceAccountSelect = false) {
+  setGateState({
+    icon: "⌛",
+    title: "Google 로그인 진행 중",
+    message: "관리자 계정을 선택해주세요.",
+    mode: "checking"
+  });
+
+  try {
+    if (forceAccountSelect && auth.currentUser) {
+      await signOut(auth);
+    }
+    provider.setCustomParameters({ prompt: "select_account" });
+    const result = await signInWithPopup(auth, provider);
+    await requireAdmin(result.user);
+  } catch (error) {
+    console.error("관리자 로그인 오류", error);
+    if (error?.code === "auth/popup-closed-by-user") {
+      setGateState({
+        icon: "🔒",
+        title: "관리자 로그인이 필요합니다",
+        message: "로그인 창이 닫혔습니다. 등록된 관리자 계정으로 로그인해주세요.",
+        mode: "login"
+      });
+      return;
+    }
+    setGateState({
+      icon: "!",
+      title: "로그인을 완료하지 못했습니다",
+      message: "잠시 후 다시 시도하거나 홈페이지로 돌아가주세요.",
+      mode: "login"
+    });
+  }
+}
+
 function showToast(message) {
   const toast = $("adminToast");
 
@@ -442,6 +533,7 @@ async function pollRankingRunStatus(runId, pollCount = 0) {
 }
 
 async function startRankingUpdate() {
+  assertClientAdmin();
   if (activeRankingRunId) {
     showToast("이미 데이터 갱신 작업을 확인하고 있습니다.");
     return;
@@ -567,6 +659,7 @@ async function loadLiveStatus() {
 }
 
 async function saveLiveStatus(isLive) {
+  assertClientAdmin();
   const urlInput = $("liveAdminUrl");
   const onButton = $("liveOnButton");
   const offButton = $("liveOffButton");
@@ -773,6 +866,7 @@ function editVideo(item) {
 }
 
 async function saveDocument(collectionName, id, data) {
+  assertClientAdmin();
   if (id) {
     await updateDoc(
       doc(db, collectionName, id),
@@ -795,6 +889,7 @@ async function saveDocument(collectionName, id, data) {
 }
 
 async function removeDocument(collectionName, id) {
+  assertClientAdmin();
   if (!id) {
     showToast("삭제할 항목을 먼저 선택해주세요.");
     return false;
@@ -970,50 +1065,89 @@ document.querySelectorAll("[data-admin-page]").forEach((button) => {
 });
 
 $("adminLogoutButton").addEventListener("click", async () => {
+  lockAdminApp();
   await signOut(auth);
   window.location.href = "./index.html";
 });
 
 async function requireAdmin(user) {
+  lockAdminApp();
+
+  if (!user || !isConfiguredAdmin(user.uid)) {
+    if (user) {
+      $("adminUserName").textContent = "접근 권한 없음";
+      $("adminUserEmail").textContent = user.email || "-";
+      $("adminUserUid").textContent = "비관리자 계정";
+    }
+
+    setGateState({
+      icon: "🔒",
+      title: "접근 권한이 없는 계정입니다",
+      message: "이 Google 계정은 프라시아랩 관리자 UID에 등록되어 있지 않습니다.",
+      mode: "denied"
+    });
+    return false;
+  }
+
   currentAdminUser = user;
   $("adminUserName").textContent = user.displayName || "관리자";
   $("adminUserEmail").textContent = user.email || "-";
   $("adminUserUid").textContent = user.uid;
-
-  if (!isConfiguredAdmin(user.uid)) {
-    setAccess(
-      `이 계정은 아직 관리자 UID에 등록되지 않았습니다. UID: ${user.uid}`,
-      "error"
-    );
-    return;
-  }
-
   setAccess("관리자 권한이 확인되었습니다.", "success");
+
+  setGateState({
+    icon: "✓",
+    title: "관리자 권한 확인 완료",
+    message: "관리자 센터 데이터를 불러오고 있습니다.",
+    mode: "allowed"
+  });
 
   try {
     await loadAll();
+    unlockAdminApp();
+    return true;
   } catch (error) {
     console.error(error);
-    setAccess(
-      "데이터를 불러오지 못했습니다. Firestore 규칙과 관리자 UID를 확인해주세요.",
-      "error"
-    );
+    lockAdminApp();
+    setGateState({
+      icon: "!",
+      title: "관리자 데이터를 불러오지 못했습니다",
+      message: "Firestore 규칙과 관리자 UID 설정을 확인해주세요.",
+      mode: "denied"
+    });
+    return false;
   }
 }
 
+$("adminGateLoginButton")?.addEventListener("click", () => {
+  openAdminLogin(false);
+});
+
+$("adminGateRetryButton")?.addEventListener("click", () => {
+  openAdminLogin(true);
+});
+
+lockAdminApp();
+setGateState({
+  icon: "⌛",
+  title: "관리자 권한 확인 중",
+  message: "로그인 상태와 관리자 권한을 확인하고 있습니다.",
+  mode: "checking"
+});
+
 onAuthStateChanged(auth, async (user) => {
+  authCheckFinished = true;
+
   if (user) {
     await requireAdmin(user);
     return;
   }
 
-  setAccess("Google 관리자 계정으로 로그인해주세요.", "error");
-
-  try {
-    const result = await signInWithPopup(auth, provider);
-    await requireAdmin(result.user);
-  } catch (error) {
-    console.error(error);
-    window.location.href = "./index.html";
-  }
+  lockAdminApp();
+  setGateState({
+    icon: "🔒",
+    title: "관리자 로그인이 필요합니다",
+    message: "등록된 Google 관리자 계정으로 로그인해야 관리자 센터를 사용할 수 있습니다.",
+    mode: "login"
+  });
 });
