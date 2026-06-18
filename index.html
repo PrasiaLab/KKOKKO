@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="./css/guild-stats.css">
   <link rel="stylesheet" href="./css/guild-ranking.css">
   <link rel="stylesheet" href="./css/guild-analysis.css">
+  <link rel="stylesheet" href="./css/class-analysis.css">
   <link rel="stylesheet" href="./css/admin-auth.css">
 </head>
 <body>
@@ -35,6 +36,7 @@
 
         <p class="menu-section-title">DATA</p>
         <button class="side-menu-item" data-page="statistics"><span>▥</span>전체 서버 통계</button>
+        <button class="side-menu-item" data-page="class-analysis"><span>◇</span>클래스 분석</button>
         <button class="side-menu-item" data-page="guild-ranking"><span>♛</span>결사 순위</button>
         <button class="side-menu-item" data-page="guild-search"><span>⌕</span>결사 조회</button>
         <button class="side-menu-item" data-page="guild-analysis"><span>⚔</span>결사 전력 분석</button>
@@ -380,6 +382,46 @@
             </section>
           </div>
         </div>
+      </section>
+
+      <section class="page" id="class-analysis">
+        <div class="page-heading simple">
+          <div><p class="eyebrow">CLASS META ANALYSIS</p><h1>클래스 분석</h1><p class="page-description">직업별 랭킹 분포와 서버 상위 100위 데이터를 바탕으로, 시즌마다 달라지는 클래스 메타와 상위권 구성 변화를 분석합니다.</p></div>
+          <div class="statistics-updated"><span>자료 갱신 시간</span><strong id="classUpdatedAt">불러오는 중</strong></div>
+        </div>
+        <div class="class-analysis-notice">랭킹에서 확인된 캐릭터 분포를 기준으로 하며, 클래스의 실제 전투 성능이나 밸런스를 직접 의미하지 않습니다.</div>
+        <section class="content-panel class-filter-panel">
+          <div class="section-heading compact"><div><p>CLASS SELECT</p><h2>분석 클래스 선택</h2></div><span>전체 비교 후 원하는 클래스를 선택하면 상세 분석이 열립니다.</span></div>
+          <div class="class-tabs" id="classTabs" role="tablist" aria-label="클래스 선택"></div>
+          <div class="class-status" id="classStatus" role="status">클래스 데이터를 불러오는 중입니다.</div>
+        </section>
+        <section id="classAnalysisContent" hidden>
+          <section class="summary-grid" id="classSummaryGrid"></section>
+          <div class="analysis-grid two-column top-analysis-grid">
+            <section class="content-panel chart-card"><div class="section-heading compact"><div><p>TOP 100 POPULATION</p><h2 id="populationChartTitle">상위 100위 포함 인원</h2></div></div><div class="chart-wrap chart-wrap-wide"><canvas id="populationChart"></canvas></div></section>
+            <section class="content-panel chart-card"><div class="section-heading compact"><div><p>TOP 100 SHARE</p><h2 id="shareChartTitle">상위 100위 직업 점유율</h2></div></div><div class="chart-wrap chart-wrap-donut"><canvas id="shareChart"></canvas></div></section>
+          </div>
+          <section class="content-panel comparison-panel" id="overallComparisonPanel">
+            <div class="section-heading"><div><p>OVERALL COMPARISON</p><h2>전체 직업 비교</h2></div><span>동일한 서버 상위 100위 모집단을 기준으로 비교합니다.</span></div>
+            <div class="class-comparison-table-wrap"><table class="class-comparison-table"><thead><tr><th>직업</th><th>상위 100위 포함 인원</th><th>상위 100위 점유율</th><th>상위 100위 평균 레벨</th><th>상위 100위 평균 토벌</th></tr></thead><tbody id="classComparisonBody"></tbody></table></div>
+          </section>
+          <section class="selected-class-section" id="selectedClassSection" hidden>
+            <section class="content-panel selected-class-hero"><div><p>SELECTED CLASS</p><h2 id="selectedClassName">-</h2><span id="selectedClassDescription">선택한 클래스의 상세 분석입니다.</span></div><div class="selected-class-badge" id="selectedClassBadge">CLASS</div></section>
+            <div class="analysis-grid two-column">
+              <section class="content-panel chart-card"><div class="section-heading compact"><div><p>PROFILE</p><h2>클래스 상대 프로필</h2></div></div><div class="chart-wrap chart-wrap-radar"><canvas id="profileChart"></canvas></div><p class="chart-profile-note">7개 클래스의 상대 순위를 시각화한 지표입니다. 실제 인원수나 전투 성능 점수를 의미하지 않습니다.</p></section>
+              <section class="content-panel report-card"><div class="section-heading compact"><div><p>LAB REPORT</p><h2>데이터 분석 요약</h2></div></div><div class="class-report-list" id="classReportList"></div></section>
+            </div>
+            <div class="analysis-grid two-column">
+              <section class="content-panel chart-card"><div class="section-heading compact"><div><p>LEVEL · 86+</p><h2>레벨 분포</h2></div><span>86레벨 이상 기준</span></div><div class="chart-wrap"><canvas id="levelChart"></canvas></div></section>
+              <section class="content-panel chart-card"><div class="section-heading compact"><div><p>RAID · 21+</p><h2>토벌 분포</h2></div><span>토벌 21레벨 이상 기준</span></div><div class="chart-wrap"><canvas id="gradeChart"></canvas></div></section>
+            </div>
+            <section class="content-panel server-panel"><div class="section-heading"><div><p>WORLD DISTRIBUTION</p><h2>월드별 상위 100위 클래스 점유율</h2></div><span>론도01~05처럼 같은 월드 서버를 합산합니다.</span></div><div class="chart-wrap server-chart-wrap"><canvas id="serverChart"></canvas></div></section>
+            <section class="content-panel guild-panel">
+              <div class="section-heading"><div><p>GUILD DISTRIBUTION</p><h2>클래스 보유 결사</h2></div><div class="class-sort-tools"><span>정렬</span><button class="class-sort-button active" type="button" data-guild-sort="count">클래스 인원순</button><button class="class-sort-button" type="button" data-guild-sort="serverRank">서버 결사순위</button><button class="class-sort-button" type="button" data-guild-sort="labRank">연구소 결사순위</button><button class="class-sort-button" type="button" data-guild-sort="share">결사 내 비율순</button></div></div>
+              <div class="guild-table-wrap"><table class="guild-table"><thead><tr><th>목록</th><th>서버</th><th>결사명</th><th>결사순위</th><th>클래스 인원</th><th>결사 내 비율</th><th>상세</th></tr></thead><tbody id="guildTableBody"></tbody></table></div>
+            </section>
+          </section>
+        </section>
       </section>
 
       <section class="page" id="guild-ranking"><div class="page-heading simple"><div><p class="eyebrow">GUILD RANKING</p><h1>결사 순위</h1><p class="page-description">전체 순위와 레벨·토벌 기준 순위를 구분해 제공할 예정입니다.</p></div></div><div class="content-panel"><div class="empty-state"><span class="empty-icon">♛</span><strong>결사 순위 기능 준비 중</strong><p>결사 랭킹 추출값과 별도 계산 기준을 결합해 표시합니다.</p></div></div></section>
@@ -787,6 +829,8 @@
 
   <script src="./js/app.js"></script>
   <script src="./js/mappings.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="./js/class-analysis.js"></script>
   <script src="./js/statistics.js"></script>
   <script src="./js/data-status.js"></script>
   <script src="./js/guild-data-compat.js"></script>
