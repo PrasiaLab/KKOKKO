@@ -6,8 +6,35 @@
   <title>맛나는꼬꼬 | 관리자 센터</title>
   <link rel="stylesheet" href="./css/admin.css">
 </head>
-<body>
-  <div class="admin-shell">
+<body class="admin-auth-pending">
+  <section class="admin-access-gate" id="adminAccessGate" aria-live="polite">
+    <div class="admin-access-gate-card">
+      <a class="admin-access-gate-brand" href="./index.html">
+        <img src="./images/bi_simbol.png" alt="">
+        <div>
+          <strong>맛나는꼬꼬</strong>
+          <span>ADMIN CENTER</span>
+        </div>
+      </a>
+
+      <div class="admin-access-gate-icon" id="adminAccessGateIcon">⌛</div>
+      <span class="admin-access-gate-kicker">SECURE ADMIN ACCESS</span>
+      <h1 id="adminAccessGateTitle">관리자 권한 확인 중</h1>
+      <p id="adminAccessGateMessage">로그인 상태와 관리자 권한을 확인하고 있습니다.</p>
+
+      <div class="admin-access-gate-actions">
+        <button class="admin-access-login" id="adminGateLoginButton" type="button" hidden>
+          Google 관리자 로그인
+        </button>
+        <button class="admin-access-retry" id="adminGateRetryButton" type="button" hidden>
+          다른 계정으로 로그인
+        </button>
+        <a href="./index.html">홈페이지로 돌아가기</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="admin-shell" id="adminApp" hidden>
     <aside class="admin-sidebar">
       <a class="admin-brand" href="./index.html">
         <img src="./images/bi_simbol.png" alt="">

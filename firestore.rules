@@ -8,29 +8,29 @@ service cloud.firestore {
     }
 
     function isAdmin() {
-      return isSignedIn() &&
-        request.auth.uid in [
-          "kgb0KhPYWLZYXt5YdAA7iuHMxYT2",
-          "rkT0L6EK6Yd2IFNHBIQ8dVgqdHX2",
-          "KhK0yllx62f20RU6YkUbxcDC3W53"
-        ];
+      return isSignedIn() && (
+        request.auth.uid == "kgb0KhPYWLZYXt5YdAA7iuHMxYT2" ||
+        request.auth.uid == "rkT0L6EK6Yd2IFNHBIQ8dVgqdHX2" ||
+        request.auth.uid == "KhK0yllx62f20RU6YkUbxcDC3W53"
+      );
     }
 
     match /notices/{documentId} {
-      allow read: if isAdmin() || resource.data.visible == true;
+      allow get, list: if isAdmin() || resource.data.visible == true;
       allow create, update, delete: if isAdmin();
     }
 
     match /scheduleEvents/{documentId} {
-      allow read: if isAdmin() || resource.data.visible == true;
+      allow get, list: if isAdmin() || resource.data.visible == true;
       allow create, update, delete: if isAdmin();
     }
 
     match /videos/{documentId} {
-      allow read: if isAdmin() || resource.data.visible == true;
+      allow get, list: if isAdmin() || resource.data.visible == true;
       allow create, update, delete: if isAdmin();
     }
 
+    // 메인 홈페이지에 표시되는 공개 설정만 저장합니다.
     match /siteSettings/{documentId} {
       allow read: if true;
       allow create, update, delete: if isAdmin();
