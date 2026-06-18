@@ -42,12 +42,12 @@
 
         <div class="analysis-grid two-column top-analysis-grid">
           <section class="content-panel chart-card">
-            <div class="section-heading compact"><div><p>POPULATION</p><h2 id="populationChartTitle">직업별 확인 인원</h2></div></div>
+            <div class="section-heading compact"><div><p>TOP 100 POPULATION</p><h2 id="populationChartTitle">상위 100위 포함 인원</h2></div></div>
             <div class="chart-wrap chart-wrap-wide"><canvas id="populationChart"></canvas></div>
           </section>
 
           <section class="content-panel chart-card">
-            <div class="section-heading compact"><div><p>SHARE</p><h2 id="shareChartTitle">전체 직업 점유율</h2></div></div>
+            <div class="section-heading compact"><div><p>TOP 100 SHARE</p><h2 id="shareChartTitle">상위 100위 직업 점유율</h2></div></div>
             <div class="chart-wrap chart-wrap-donut"><canvas id="shareChart"></canvas></div>
           </section>
         </div>
@@ -62,13 +62,10 @@
               <thead>
                 <tr>
                   <th>직업</th>
-                  <th>확인 인원</th>
-                  <th>전체 점유율</th>
-                  <th>평균 레벨</th>
-                  <th>평균 토벌</th>
-                  <th>상위 100 포함</th>
-                  <th>상위권 점유율</th>
-                  <th>상위권 대표성</th>
+                  <th>상위 100위 포함 인원</th>
+                  <th>상위 100위 점유율</th>
+                  <th>상위 100위 평균 레벨</th>
+                  <th>상위 100위 평균 토벌</th>
                 </tr>
               </thead>
               <tbody id="classComparisonBody"></tbody>
@@ -101,22 +98,19 @@
 
           <div class="analysis-grid two-column">
             <section class="content-panel chart-card">
-              <div class="section-heading compact"><div><p>LEVEL</p><h2>레벨 분포</h2></div></div>
+              <div class="section-heading compact"><div><p>LEVEL · 86+</p><h2>레벨 분포</h2></div><span>86레벨 이상 기준</span></div>
               <div class="chart-wrap"><canvas id="levelChart"></canvas></div>
             </section>
             <section class="content-panel chart-card">
-              <div class="section-heading compact"><div><p>RAID</p><h2>토벌 분포</h2></div></div>
+              <div class="section-heading compact"><div><p>RAID · 21+</p><h2>토벌 분포</h2></div><span>토벌 21레벨 이상 기준</span></div>
               <div class="chart-wrap"><canvas id="gradeChart"></canvas></div>
             </section>
           </div>
 
           <section class="content-panel server-panel">
             <div class="section-heading">
-              <div><p>SERVER DISTRIBUTION</p><h2>서버별 클래스 분포</h2></div>
-              <div class="metric-switch" id="serverMetricSwitch">
-                <button class="active" type="button" data-server-metric="population">전체 인원</button>
-                <button type="button" data-server-metric="top100">상위 100 포함</button>
-              </div>
+              <div><p>WORLD DISTRIBUTION</p><h2>월드별 상위 100위 클래스 점유율</h2></div>
+              <span>론도01~05처럼 같은 월드 서버를 합산해 비교합니다.</span>
             </div>
             <div class="chart-wrap server-chart-wrap"><canvas id="serverChart"></canvas></div>
           </section>
@@ -128,7 +122,7 @@
             </div>
             <div class="guild-table-wrap">
               <table class="guild-table">
-                <thead><tr><th>순위</th><th>서버</th><th>결사명</th><th>클래스 인원</th><th>결사 내 비율</th></tr></thead>
+                <thead><tr><th>순위</th><th>서버</th><th>결사명</th><th>클래스 인원</th><th>결사 내 비율</th><th>상세</th></tr></thead>
                 <tbody id="guildTableBody"></tbody>
               </table>
             </div>
@@ -136,6 +130,27 @@
         </section>
       </section>
     </main>
+  </div>
+
+  <div class="class-guild-modal" id="classGuildModal" aria-hidden="true">
+    <div class="class-guild-dialog" role="dialog" aria-modal="true" aria-labelledby="classGuildModalTitle">
+      <header class="class-guild-modal-header">
+        <div>
+          <span>RANKED GUILD MEMBERS</span>
+          <h2 id="classGuildModalTitle">결사명</h2>
+          <p id="classGuildModalSub"></p>
+        </div>
+        <button id="classGuildModalClose" type="button" aria-label="닫기">✕</button>
+      </header>
+      <div class="class-guild-modal-body">
+        <div class="class-guild-table-wrap">
+          <table class="class-guild-member-table">
+            <thead><tr><th>닉네임</th><th>직업</th><th>레벨</th><th>토벌</th></tr></thead>
+            <tbody id="classGuildMemberBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
