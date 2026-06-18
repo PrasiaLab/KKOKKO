@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="프라시아 전기 클래스별 랭킹 데이터 분석">
+  <title>클래스 분석 | 맛나는꼬꼬 Prasia Lab</title>
+  <link rel="stylesheet" href="./css/class-analysis.css">
+</head>
+<body>
+  <div class="class-page-shell">
+    <header class="class-page-header">
+      <a class="class-back" href="./index.html">← 프라시아랩으로 돌아가기</a>
+      <div class="class-page-heading">
+        <div>
+          <p class="eyebrow">CLASS META ANALYSIS</p>
+          <h1>클래스 분석</h1>
+          <p>직업별 랭킹 분포와 각 서버 상위 100위 포함 현황을 함께 분석합니다.</p>
+        </div>
+        <div class="class-updated-card">
+          <span>자료 갱신 시간</span>
+          <strong id="classUpdatedAt">불러오는 중</strong>
+        </div>
+      </div>
+      <div class="class-analysis-notice">
+        랭킹에서 확인된 캐릭터 분포를 기준으로 하며, 클래스의 실제 전투 성능이나 밸런스를 직접 의미하지 않습니다.
+      </div>
+    </header>
+
+    <main>
+      <section class="content-panel class-filter-panel">
+        <div class="section-heading compact">
+          <div><p>CLASS SELECT</p><h2>분석 클래스 선택</h2></div>
+          <span>전체 비교 후 원하는 클래스를 선택하면 상세 분석이 열립니다.</span>
+        </div>
+        <div class="class-tabs" id="classTabs" role="tablist" aria-label="클래스 선택"></div>
+        <div class="class-status" id="classStatus" role="status">클래스 데이터를 불러오는 중입니다.</div>
+      </section>
+
+      <section id="classAnalysisContent" hidden>
+        <section class="summary-grid" id="classSummaryGrid"></section>
+
+        <div class="analysis-grid two-column top-analysis-grid">
+          <section class="content-panel chart-card">
+            <div class="section-heading compact"><div><p>POPULATION</p><h2 id="populationChartTitle">직업별 확인 인원</h2></div></div>
+            <div class="chart-wrap chart-wrap-wide"><canvas id="populationChart"></canvas></div>
+          </section>
+
+          <section class="content-panel chart-card">
+            <div class="section-heading compact"><div><p>SHARE</p><h2 id="shareChartTitle">전체 직업 점유율</h2></div></div>
+            <div class="chart-wrap chart-wrap-donut"><canvas id="shareChart"></canvas></div>
+          </section>
+        </div>
+
+        <section class="content-panel comparison-panel" id="overallComparisonPanel">
+          <div class="section-heading">
+            <div><p>OVERALL COMPARISON</p><h2>전체 직업 비교</h2></div>
+            <span>직업별 랭킹 데이터와 서버 상위 100위 데이터를 함께 비교합니다.</span>
+          </div>
+          <div class="class-comparison-table-wrap">
+            <table class="class-comparison-table">
+              <thead>
+                <tr>
+                  <th>직업</th>
+                  <th>확인 인원</th>
+                  <th>전체 점유율</th>
+                  <th>평균 레벨</th>
+                  <th>평균 토벌</th>
+                  <th>상위 100 포함</th>
+                  <th>상위권 점유율</th>
+                  <th>상위권 대표성</th>
+                </tr>
+              </thead>
+              <tbody id="classComparisonBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="selected-class-section" id="selectedClassSection" hidden>
+          <section class="content-panel selected-class-hero">
+            <div>
+              <p>SELECTED CLASS</p>
+              <h2 id="selectedClassName">-</h2>
+              <span id="selectedClassDescription">선택한 클래스의 상세 분석입니다.</span>
+            </div>
+            <div class="selected-class-badge" id="selectedClassBadge">CLASS</div>
+          </section>
+
+          <div class="analysis-grid two-column">
+            <section class="content-panel chart-card">
+              <div class="section-heading compact"><div><p>PROFILE</p><h2>상대 지표</h2></div></div>
+              <div class="chart-wrap chart-wrap-radar"><canvas id="profileChart"></canvas></div>
+              <p class="chart-guide">전체 7개 직업 분포를 기준으로 각 항목을 0~100점으로 환산한 상대 지표입니다.</p>
+            </section>
+
+            <section class="content-panel report-card">
+              <div class="section-heading compact"><div><p>LAB REPORT</p><h2>데이터 분석 요약</h2></div></div>
+              <div class="class-report-list" id="classReportList"></div>
+            </section>
+          </div>
+
+          <div class="analysis-grid two-column">
+            <section class="content-panel chart-card">
+              <div class="section-heading compact"><div><p>LEVEL</p><h2>레벨 분포</h2></div></div>
+              <div class="chart-wrap"><canvas id="levelChart"></canvas></div>
+            </section>
+            <section class="content-panel chart-card">
+              <div class="section-heading compact"><div><p>RAID</p><h2>토벌 분포</h2></div></div>
+              <div class="chart-wrap"><canvas id="gradeChart"></canvas></div>
+            </section>
+          </div>
+
+          <section class="content-panel server-panel">
+            <div class="section-heading">
+              <div><p>SERVER DISTRIBUTION</p><h2>서버별 클래스 분포</h2></div>
+              <div class="metric-switch" id="serverMetricSwitch">
+                <button class="active" type="button" data-server-metric="population">전체 인원</button>
+                <button type="button" data-server-metric="top100">상위 100 포함</button>
+              </div>
+            </div>
+            <div class="chart-wrap server-chart-wrap"><canvas id="serverChart"></canvas></div>
+          </section>
+
+          <section class="content-panel guild-panel">
+            <div class="section-heading">
+              <div><p>GUILD DISTRIBUTION</p><h2>클래스 보유 결사</h2></div>
+              <span>해당 클래스 확인 인원이 많은 결사 상위 20개입니다.</span>
+            </div>
+            <div class="guild-table-wrap">
+              <table class="guild-table">
+                <thead><tr><th>순위</th><th>서버</th><th>결사명</th><th>클래스 인원</th><th>결사 내 비율</th></tr></thead>
+                <tbody id="guildTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="./js/mappings.js"></script>
+  <script src="./js/class-analysis.js"></script>
+</body>
+</html>
