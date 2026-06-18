@@ -48,6 +48,9 @@
         <button class="admin-nav-button active" data-admin-page="notice">
           안내사항 관리
         </button>
+        <button class="admin-nav-button" data-admin-page="rolling">
+          한줄 공지 관리
+        </button>
         <button class="admin-nav-button" data-admin-page="schedule">
           방송 일정 관리
         </button>
@@ -133,6 +136,21 @@
             <h2>등록된 안내사항</h2>
             <div class="admin-item-list" id="noticeAdminList"></div>
           </section>
+        </div>
+      </section>
+
+      <section class="admin-page" id="adminRollingPage">
+        <div class="admin-grid">
+          <form class="admin-form-card" id="rollingNoticeForm">
+            <input type="hidden" id="rollingNoticeDocumentId">
+            <div class="admin-form-heading"><h2>한줄 공지 작성</h2><button type="button" class="secondary-button" id="rollingNoticeReset">새 공지</button></div>
+            <label><span>공지 내용</span><input id="rollingNoticeTextInput" type="text" maxlength="140" placeholder="한 줄로 표시할 공지 내용을 입력하세요" required></label>
+            <label><span>연결 링크 <small>(선택)</small></span><input id="rollingNoticeUrl" type="url" placeholder="https://..."></label>
+            <label><span>표시 순서</span><input id="rollingNoticeOrder" type="number" min="1" value="1" required></label>
+            <div class="check-row"><label><input id="rollingNoticeVisible" type="checkbox" checked><span>공개</span></label></div>
+            <div class="form-actions"><button class="primary-button" type="submit">저장</button><button class="danger-button" id="rollingNoticeDelete" type="button">삭제</button></div>
+          </form>
+          <section class="admin-list-card"><div class="admin-list-heading"><div><span class="admin-list-kicker">ROLLING NOTICE</span><h2>등록된 한줄 공지</h2></div></div><p class="rolling-admin-guide">공개된 공지는 표시 순서대로 6초마다 한 줄씩 전환됩니다.</p><div class="admin-item-list" id="rollingNoticeAdminList"></div></section>
         </div>
       </section>
 

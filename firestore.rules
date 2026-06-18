@@ -30,6 +30,11 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    match /rollingNotices/{documentId} {
+      allow get, list: if isAdmin() || resource.data.visible == true;
+      allow create, update, delete: if isAdmin();
+    }
+
     // 메인 홈페이지에 표시되는 공개 설정만 저장합니다.
     match /siteSettings/{documentId} {
       allow read: if true;
