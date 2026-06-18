@@ -1066,3 +1066,59 @@ button {
     );
 }
 
+/* ===== 좌측 하단 캐릭터 중앙 정렬 최종 보정 =====
+   absolute/translate 방식 대신 flex 중앙 정렬을 사용합니다.
+*/
+.sidebar-character.secret-lab-entry {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.sidebar-character.secret-lab-entry img {
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0 auto !important;
+  transform: none !important;
+}
+
+/* 이미지 중앙 정렬을 깨지 않는 미세 떨림 */
+.secret-lab-entry:hover img,
+.secret-lab-entry:focus-visible img {
+  animation: secretLabTrembleCentered 1.75s ease-in-out infinite;
+}
+
+@keyframes secretLabTrembleCentered {
+  0%, 68%, 100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  73% {
+    translate: -0.7px 0.3px;
+    rotate: -0.1deg;
+  }
+  78% {
+    translate: 0.8px -0.35px;
+    rotate: 0.11deg;
+  }
+  83% {
+    translate: -0.4px 0.2px;
+    rotate: -0.05deg;
+  }
+  88% {
+    translate: 0.3px -0.15px;
+    rotate: 0.04deg;
+  }
+}
+
