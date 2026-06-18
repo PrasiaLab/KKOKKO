@@ -837,3 +837,180 @@ button {
 .rolling-notice-link{min-width:0;flex:1;display:block;color:#e7ebf1;text-decoration:none;cursor:default}.rolling-notice-link.is-clickable{cursor:pointer}.rolling-notice-link.is-clickable:hover .rolling-notice-text{color:var(--gold2)}
 .rolling-notice-text{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:14px;font-weight:800;line-height:1.4;transition:opacity .24s ease,transform .24s ease,color .18s ease}.rolling-notice-bar.is-changing .rolling-notice-text{opacity:0;transform:translateY(5px)}
 @media(max-width:900px){.rolling-notice-bar{min-height:48px;padding:0 14px;gap:11px}.rolling-notice-text{font-size:13px}}
+
+/* 숨겨진 연구소 입구
+   기존 sidebar-character 배치와 크기는 유지하며 hover 연출만 추가합니다. */
+.secret-lab-entry {
+  display:block;
+  color:inherit;
+  text-decoration:none;
+  cursor:pointer;
+  isolation:isolate;
+}
+
+.secret-lab-entry::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  opacity:0;
+  border-radius:inherit;
+  background:
+    linear-gradient(
+      115deg,
+      transparent 24%,
+      rgba(145,205,255,.16) 48%,
+      transparent 72%
+    );
+  transform:translateX(-125%);
+}
+
+.secret-lab-entry::after {
+  content:"";
+  position:absolute;
+  inset:4px;
+  z-index:1;
+  pointer-events:none;
+  opacity:0;
+  border-radius:14px;
+  box-shadow:
+    inset 0 0 17px rgba(120,190,255,.08),
+    0 0 11px rgba(120,190,255,.12),
+    0 0 28px rgba(120,190,255,.07);
+}
+
+.secret-lab-entry img {
+  z-index:1;
+  transform-origin:50% 80%;
+  will-change:transform,filter;
+}
+
+.secret-lab-entry:hover img,
+.secret-lab-entry:focus-visible img {
+  animation:secretLabTremble 1.75s ease-in-out infinite;
+  filter:
+    brightness(1.035)
+    drop-shadow(0 0 5px rgba(135,198,255,.2));
+}
+
+.secret-lab-entry:hover::before,
+.secret-lab-entry:focus-visible::before {
+  animation:secretLabSweep 2.8s ease-in-out infinite;
+}
+
+.secret-lab-entry:hover::after,
+.secret-lab-entry:focus-visible::after {
+  animation:secretLabGlow 2.4s ease-in-out infinite;
+}
+
+.secret-lab-entry:focus-visible {
+  outline:1px solid rgba(145,205,255,.42);
+  outline-offset:3px;
+}
+
+@keyframes secretLabTremble {
+  0%,68%,100% {
+    transform:translateX(-50%) translate(0,0) rotate(0);
+  }
+  73% {
+    transform:translateX(-50%) translate(-.65px,.3px) rotate(-.1deg);
+  }
+  78% {
+    transform:translateX(-50%) translate(.75px,-.35px) rotate(.11deg);
+  }
+  83% {
+    transform:translateX(-50%) translate(-.35px,.2px) rotate(-.05deg);
+  }
+  88% {
+    transform:translateX(-50%) translate(.25px,-.15px) rotate(.04deg);
+  }
+}
+
+@keyframes secretLabSweep {
+  0%,58% {
+    opacity:0;
+    transform:translateX(-125%);
+  }
+  66% {
+    opacity:.78;
+  }
+  82% {
+    opacity:0;
+    transform:translateX(125%);
+  }
+  100% {
+    opacity:0;
+    transform:translateX(125%);
+  }
+}
+
+@keyframes secretLabGlow {
+  0%,60%,100% {
+    opacity:0;
+  }
+  72% {
+    opacity:.72;
+  }
+  86% {
+    opacity:.13;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .secret-lab-entry:hover img,
+  .secret-lab-entry:focus-visible img,
+  .secret-lab-entry:hover::before,
+  .secret-lab-entry:focus-visible::before,
+  .secret-lab-entry:hover::after,
+  .secret-lab-entry:focus-visible::after {
+    animation:none;
+  }
+
+  .secret-lab-entry:hover::after,
+  .secret-lab-entry:focus-visible::after {
+    opacity:.48;
+  }
+}
+
+/* ===== 요청 반영 오버라이드 =====
+   기존 스타일은 변경하지 않고, 아래 규칙만 마지막에 추가합니다.
+*/
+
+/* 관리자 로그인 문구를 한 줄로 유지 */
+.admin-login-button {
+  white-space: nowrap;
+}
+
+.admin-login-button .admin-menu-label {
+  width: auto;
+  white-space: nowrap;
+  text-align: left;
+}
+
+/* 좌측 하단 캐릭터의 외곽선과 배경 제거 */
+.sidebar-character {
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* 그림만 자연스럽게 표시 */
+.sidebar-character img {
+  bottom: 0;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* 숨겨진 입구의 박스형 외곽 광원 제거 */
+.secret-lab-entry::after {
+  display: none;
+}
+
+/* 빛 스침 효과가 영역 밖으로 번지지 않도록 이미지 주변만 은은하게 유지 */
+.secret-lab-entry::before {
+  inset: 12px 22px;
+  border-radius: 50%;
+}
+
