@@ -97,6 +97,9 @@ const youtubeChannel =
   "https://www.youtube.com/@%EB%A7%9B%EB%82%98%EB%8A%94%EA%BC%AC%EA%BC%AC";
 
 let notices = [];
+let rollingNotices = [];
+let rollingNoticeIndex = 0;
+let rollingNoticeTimer = null;
 
 function timestampToDate(value) {
   if (!value) {
@@ -362,6 +365,125 @@ function subscribeLiveStatus() {
   );
 }
 
+function stopRollingNoticeTimer() {
+  if (rollingNoticeTimer) {
+    window.clearInterval(rollingNoticeTimer);
+    rollingNoticeTimer = null;
+  }
+}
+
+function showRollingNotice(index, animate = true) {
+  const bar = document.getElementById("rollingNoticeBar");
+  const link = document.getElementById("rollingNoticeLink");
+  const text = document.getElementById("rollingNoticeText");
+
+  if (!bar || !link || !text || !rollingNotices.length) {
+    return;
+  }
+
+  rollingNoticeIndex =
+    (index + rollingNotices.length) % rollingNotices.length;
+
+  const item = rollingNotices[rollingNoticeIndex];
+
+  const apply = () => {
+    text.textContent = item.text || "";
+
+    if (item.url) {
+      link.href = item.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.classList.add("is-clickable");
+    } else {
+      link.removeAttribute("href");
+      link.removeAttribute("target");
+      link.removeAttribute("rel");
+      link.classList.remove("is-clickable");
+    }
+
+    bar.classList.remove("is-changing");
+  };
+
+  if (animate) {
+    bar.classList.add("is-changing");
+    window.setTimeout(apply, 230);
+  } else {
+    apply();
+  }
+}
+
+function startRollingNoticeTimer() {
+  stopRollingNoticeTimer();
+
+  if (rollingNotices.length <= 1) {
+    return;
+  }
+
+  rollingNoticeTimer = window.setInterval(() => {
+    showRollingNotice(rollingNoticeIndex + 1, true);
+  }, 6000);
+}
+
+function renderRollingNotices(items = []) {
+  const bar = document.getElementById("rollingNoticeBar");
+
+  if (!bar) {
+    return;
+  }
+
+  rollingNotices = items
+    .filter(
+      (item) =>
+        item.visible !== false &&
+        String(item.text || "").trim()
+    )
+    .sort(
+      (a, b) =>
+        Number(a.order || 0) - Number(b.order || 0)
+    );
+
+  stopRollingNoticeTimer();
+
+  if (!rollingNotices.length) {
+    bar.hidden = true;
+    return;
+  }
+
+  bar.hidden = false;
+  rollingNoticeIndex = 0;
+  showRollingNotice(0, false);
+  startRollingNoticeTimer();
+
+  if (!bar.dataset.eventsBound) {
+    bar.addEventListener("mouseenter", stopRollingNoticeTimer);
+    bar.addEventListener("mouseleave", startRollingNoticeTimer);
+    bar.dataset.eventsBound = "true";
+  }
+}
+
+async function loadRollingNotices() {
+  try {
+    const rollingNoticeQuery = query(
+      collection(db, "rollingNotices"),
+      where("visible", "==", true),
+      orderBy("order", "asc"),
+      limit(30)
+    );
+
+    const snapshot = await getDocs(rollingNoticeQuery);
+
+    renderRollingNotices(
+      snapshot.docs.map((document) => ({
+        id: document.id,
+        ...document.data()
+      }))
+    );
+  } catch (error) {
+    console.warn("한줄 공지 로드 오류", error);
+    renderRollingNotices([]);
+  }
+}
+
 async function loadNotices() {
   try {
     const noticeQuery = query(
@@ -473,5 +595,6 @@ subscribeLiveStatus();
 Promise.all([
   loadNotices(),
   loadSchedule(),
-  loadVideos()
+  loadVideos(),
+  loadRollingNotices()
 ]);
