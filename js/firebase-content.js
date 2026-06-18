@@ -349,7 +349,7 @@ function renderLiveStatus(data = {}) {
   badge.classList.toggle("on", isLive);
   badge.classList.toggle("off", !isLive);
   badge.href = data.url || youtubeChannel;
-  text.textContent = isLive ? "맛나는꼬꼬 LIVE 중.." : "맛나는꼬꼬 방송 대기 중";
+  text.textContent = isLive ? "맛나는꼬꼬 LIVE ON" : "맛나는꼬꼬 방송 대기 중";
 }
 
 function subscribeLiveStatus() {
