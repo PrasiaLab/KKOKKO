@@ -978,4 +978,6 @@
       }
     }
   );
+  document.addEventListener("kkokko:open-guild-members", async (event)=>{const detail=event.detail||{};const world=String(detail.world||"");const guildName=String(detail.guild||detail.guild_name||"");if(!world||!guildName)return;try{await loadGuildData();const match=guildData.find((guild)=>String(getGuildWorld(guild))===world&&String(getGuildName(guild))===guildName);await openMemberModal(match||{world,guild_name:guildName});}catch(error){console.error("클래스 분석 결사 팝업 연결 오류",error);}});
+
 })();

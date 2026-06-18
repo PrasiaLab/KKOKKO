@@ -57,6 +57,7 @@ function pageTitleFromId(pageId) {
     notice: "안내사항",
     recruit: "결사원 모집",
     statistics: "전체 서버 통계",
+    "class-analysis": "클래스 분석",
     "guild-ranking": "결사 순위",
     "guild-search": "결사 조회",
     "guild-analysis": "결사 전력 분석",

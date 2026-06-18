@@ -3,6 +3,8 @@
 
   const CLASS_URLS = ["./data/Who_are_you_class.json", "./Who_are_you_class.json"];
   const OVERALL_URLS = ["./data/Who_are_you.json", "./Who_are_you.json"];
+  const GUILD_URLS = ["./data/Who_are_you_guild.json", "./Who_are_you_guild.json"];
+  const GUILD_SCORE_URLS = ["./data/Who_are_you_guild_score.json", "./Who_are_you_guild_score.json"];
   const CLASS_ORDER = ["AbyssRevenant","Enforcer","SolarSentinel","RuneScribe","MirageBlade","WildWarrior","IncenseArcher"];
   const LEVEL_MIN = 86;
   const GRADE_MIN = 21;
@@ -16,7 +18,8 @@
     metrics: [],
     selected: "all",
     charts: {},
-    metadata: null
+    metadata: null,
+    guildRows: [], guildScoreRows: [], guildSort: "count", activeMetric: null
   };
 
   const $ = (id) => document.getElementById(id);
@@ -73,12 +76,13 @@
     return whole ? part / whole * 100 : 0;
   }
 
-  function minMaxScore(value, values) {
-    const safeValues = values.filter(Number.isFinite);
-    const min = Math.min(...safeValues);
-    const maxValue = Math.max(...safeValues);
-    if (maxValue === min) return 50;
-    return Math.round((value - min) / (maxValue - min) * 100);
+  function relativeRankScore(value, values) {
+    const sorted = [...values].filter(Number.isFinite).sort((a,b)=>a-b);
+    if (!sorted.length) return 60;
+    const lower = sorted.filter((item)=>item < value).length;
+    const equal = sorted.filter((item)=>item === value).length;
+    const percentile = sorted.length === 1 ? 0.5 : (lower + Math.max(0,equal-1)/2) / (sorted.length-1);
+    return Math.round(20 + percentile * 80);
   }
 
   function worldGroupLabel(worldCode) {
@@ -279,11 +283,11 @@
 
   function renderProfile(metric) {
     const values = {
-      topCount: minMaxScore(metric.topCount, state.metrics.map((item) => item.topCount)),
-      topAvgLevel: minMaxScore(metric.topAvgLevel, state.metrics.map((item) => item.topAvgLevel)),
-      topAvgGrade: minMaxScore(metric.topAvgGrade, state.metrics.map((item) => item.topAvgGrade)),
-      highLevel: minMaxScore(metric.highLevelRatio, state.metrics.map((item) => item.highLevelRatio)),
-      highGrade: minMaxScore(metric.highGradeRatio, state.metrics.map((item) => item.highGradeRatio))
+      topCount: relativeRankScore(metric.topCount, state.metrics.map((item) => item.topCount)),
+      topAvgLevel: relativeRankScore(metric.topAvgLevel, state.metrics.map((item) => item.topAvgLevel)),
+      topAvgGrade: relativeRankScore(metric.topAvgGrade, state.metrics.map((item) => item.topAvgGrade)),
+      highLevel: relativeRankScore(metric.highLevelRatio, state.metrics.map((item) => item.highLevelRatio)),
+      highGrade: relativeRankScore(metric.highGradeRatio, state.metrics.map((item) => item.highGradeRatio))
     };
 
     createChart("profile", "profileChart", {
@@ -428,104 +432,29 @@
     });
   }
 
+  function normalizeGuild(item) { return {world:String(item.world||item.server||""),guild:String(item.guild_name||item.guildName||item.guild||"-").trim()||"-",serverRank:safeNumber(item.ranking||item.rank),memberCount:safeNumber(item.guild_member_count||item.guildMemberCount)}; }
+  function normalizeGuildScore(item) { return {world:String(item.world||item.server||""),guild:String(item.guild_name||item.guildName||item.guild||"-").trim()||"-",labRank:safeNumber(item.rank),score:safeNumber(item.score)}; }
+  function guildKey(world,guild){return `${world}|||${guild}`;}
+  function findGuildRecord(world,guild){return state.guildRows.find((item)=>item.world===world&&item.guild===guild)||null;}
+
   function guildRows(metric) {
-    const totals = new Map();
-    const selected = new Map();
-
-    state.classRows.forEach((row) => {
-      if (row.guild !== "-") {
-        const key = `${row.world}|||${row.guild}`;
-        totals.set(key, (totals.get(key) || 0) + 1);
-      }
-    });
-
-    metric.rows.forEach((row) => {
-      if (row.guild !== "-") {
-        const key = `${row.world}|||${row.guild}`;
-        selected.set(key, (selected.get(key) || 0) + 1);
-      }
-    });
-
-    return [...selected.entries()]
-      .map(([key, count]) => {
-        const [world, guild] = key.split("|||");
-        const total = totals.get(key) || count;
-        return {world, guild, count, total, share: ratio(count, total)};
-      })
-      .sort((a, b) => b.count - a.count || b.share - a.share)
-      .slice(0, 20);
+    const totals=new Map(), selected=new Map();
+    const rankMap=new Map(state.guildRows.map((r)=>[guildKey(r.world,r.guild),r]));
+    const scoreMap=new Map(state.guildScoreRows.map((r)=>[guildKey(r.world,r.guild),r]));
+    state.classRows.forEach((r)=>{if(r.guild!=="-"){const k=guildKey(r.world,r.guild);totals.set(k,(totals.get(k)||0)+1);}});
+    metric.rows.forEach((r)=>{if(r.guild!=="-"){const k=guildKey(r.world,r.guild);selected.set(k,(selected.get(k)||0)+1);}});
+    const rows=[...selected.entries()].map(([k,count])=>{const [world,guild]=k.split("|||");const ri=rankMap.get(k)||{},si=scoreMap.get(k)||{};const total=ri.memberCount||totals.get(k)||count;return {world,guild,count,total,share:ratio(count,total),serverRank:ri.serverRank||0,labRank:si.labRank||0};});
+    const sorters={count:(a,b)=>b.count-a.count||b.share-a.share,share:(a,b)=>b.share-a.share||b.count-a.count,serverRank:(a,b)=>(a.serverRank||9999)-(b.serverRank||9999)||b.count-a.count,labRank:(a,b)=>(a.labRank||999999)-(b.labRank||999999)||b.count-a.count};
+    return rows.sort(sorters[state.guildSort]||sorters.count).slice(0,20);
   }
 
   function renderGuildTable(metric) {
-    const rows = guildRows(metric);
-    const body = $("guildTableBody");
-
-    body.innerHTML = rows.length ? rows.map((row, index) => `
-      <tr>
-        <td>${index + 1}</td>
-        <td>${escapeHtml(serverLabel(row.world))}</td>
-        <td>
-          <button
-            class="guild-detail-link"
-            type="button"
-            data-world="${escapeHtml(row.world)}"
-            data-guild="${escapeHtml(row.guild)}"
-          >${escapeHtml(row.guild)}</button>
-        </td>
-        <td>${fmt(row.count)}명</td>
-        <td>${pct(row.share)}</td>
-        <td>
-          <button
-            class="guild-view-button"
-            type="button"
-            data-world="${escapeHtml(row.world)}"
-            data-guild="${escapeHtml(row.guild)}"
-          >보기</button>
-        </td>
-      </tr>
-    `).join("") : '<tr><td class="empty-row" colspan="6">표시할 결사 데이터가 없습니다.</td></tr>';
-
-    body.querySelectorAll("[data-world][data-guild]").forEach((button) => {
-      button.addEventListener("click", () => openGuildModal(
-        button.dataset.world,
-        button.dataset.guild,
-        metric.code
-      ));
-    });
+    state.activeMetric=metric; const rows=guildRows(metric), body=$("guildTableBody");
+    body.innerHTML=rows.length?rows.map((row,index)=>`<tr><td>${index+1}</td><td>${escapeHtml(serverLabel(row.world))}</td><td><button class="guild-detail-link" type="button" data-world="${escapeHtml(row.world)}" data-guild="${escapeHtml(row.guild)}">${escapeHtml(row.guild)}</button></td><td class="guild-rank-cell">${row.serverRank?`${fmt(row.serverRank)}위`:"-"}<small>${row.labRank?`연구소 ${fmt(row.labRank)}위`:"연구소 -"}</small></td><td>${fmt(row.count)}명</td><td>${pct(row.share)}</td><td><button class="guild-view-button" type="button" data-world="${escapeHtml(row.world)}" data-guild="${escapeHtml(row.guild)}">보기</button></td></tr>`).join(""):'<tr><td class="empty-row" colspan="7">표시할 결사 데이터가 없습니다.</td></tr>';
+    body.querySelectorAll("[data-world][data-guild]").forEach((button)=>button.addEventListener("click",()=>openGuildModal(button.dataset.world,button.dataset.guild)));
   }
 
-  function openGuildModal(world, guild, selectedClassCode) {
-    const rows = state.classRows
-      .filter((row) => row.world === world && row.guild === guild)
-      .sort((a, b) => {
-        const selectedDiff = Number(b.classCode === selectedClassCode) - Number(a.classCode === selectedClassCode);
-        return selectedDiff || b.level - a.level || b.grade - a.grade || a.name.localeCompare(b.name, "ko");
-      });
-
-    const selectedCount = rows.filter((row) => row.classCode === selectedClassCode).length;
-    $("classGuildModalTitle").textContent = guild;
-    $("classGuildModalSub").textContent = `${serverLabel(world)} · 랭킹 확인 ${fmt(rows.length)}명 · ${classLabel(selectedClassCode)} ${fmt(selectedCount)}명`;
-    $("classGuildMemberBody").innerHTML = rows.length ? rows.map((row) => `
-      <tr class="${row.classCode === selectedClassCode ? "selected-class-member" : ""}">
-        <td>${escapeHtml(row.name)}</td>
-        <td>${escapeHtml(classLabel(row.classCode))}</td>
-        <td>${fmt(row.level)}</td>
-        <td>${fmt(row.grade)}</td>
-      </tr>
-    `).join("") : '<tr><td class="empty-row" colspan="4">확인 가능한 결사원이 없습니다.</td></tr>';
-
-    const modal = $("classGuildModal");
-    modal.classList.add("open");
-    modal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("modal-open");
-  }
-
-  function closeGuildModal() {
-    const modal = $("classGuildModal");
-    modal.classList.remove("open");
-    modal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("modal-open");
-  }
+  function openGuildModal(world,guild){const record=findGuildRecord(world,guild)||{world,guild};document.dispatchEvent(new CustomEvent("kkokko:open-guild-members",{detail:record}));}
 
   function rankText(value, values, highText, midText, lowText) {
     const sorted = [...values].sort((a, b) => b - a);
@@ -599,23 +528,14 @@
     }
   }
 
-  function bindModal() {
-    $("classGuildModalClose")?.addEventListener("click", closeGuildModal);
-    $("classGuildModal")?.addEventListener("click", (event) => {
-      if (event.target === $("classGuildModal")) closeGuildModal();
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeGuildModal();
-    });
-  }
+  function bindGuildSort(){document.querySelectorAll("[data-guild-sort]").forEach((button)=>button.addEventListener("click",()=>{state.guildSort=button.dataset.guildSort||"count";document.querySelectorAll("[data-guild-sort]").forEach((item)=>item.classList.toggle("active",item===button));if(state.activeMetric)renderGuildTable(state.activeMetric);}));}
 
   async function init() {
     try {
       chartDefaults();
-      bindModal();
-      const [classData, overallData] = await Promise.all([
-        fetchFirst(CLASS_URLS),
-        fetchFirst(OVERALL_URLS)
+      bindGuildSort();
+      const [classData, overallData, guildData, guildScoreData] = await Promise.all([
+        fetchFirst(CLASS_URLS), fetchFirst(OVERALL_URLS), fetchFirst(GUILD_URLS), fetchFirst(GUILD_SCORE_URLS)
       ]);
 
       state.classRows = (classData.rankings || classData.data || [])
@@ -624,6 +544,8 @@
       state.overallRows = (overallData.rankings || overallData.data || [])
         .map(normalize)
         .filter((row) => CLASS_ORDER.includes(row.classCode));
+      state.guildRows=(guildData.rankings||guildData.data||[]).map(normalizeGuild);
+      state.guildScoreRows=(guildScoreData.rankings||guildScoreData.data||[]).map(normalizeGuildScore);
       state.metadata = classData.metadata || overallData.metadata || {};
 
       buildMetrics();
@@ -643,5 +565,5 @@
     }
   }
 
-  init();
+  if ($("classTabs")) init();
 })();
