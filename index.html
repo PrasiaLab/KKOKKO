@@ -13,18 +13,36 @@
   <link rel="stylesheet" href="./css/firebase-content.css">
   <link rel="stylesheet" href="./css/guild-stats.css">
   <link rel="stylesheet" href="./css/guild-ranking.css">
-  <link rel="stylesheet" href="./css/guild-analysis.css">
   <link rel="stylesheet" href="./css/admin-auth.css">
 </head>
 <body>
-  <button class="mobile-menu-button" id="mobileMenuButton" aria-label="메뉴 열기">☰</button>
-  <div class="mobile-dim" id="mobileDim"></div>
+  <button
+    class="mobile-menu-button"
+    id="mobileMenuButton"
+    type="button"
+    aria-label="메뉴 열기"
+    aria-controls="sidebar"
+    aria-expanded="false"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="mobile-dim" id="mobileDim" aria-hidden="true"></div>
 
   <div class="app-shell">
     <aside class="sidebar" id="sidebar">
       <div class="brand">
         <img class="brand-symbol" src="./images/bi_simbol.png" alt="맛나는꼬꼬 심볼" onerror="this.style.display='none'">
         <div class="brand-copy"><strong>맛나는꼬꼬</strong><span>WARS OF PRASIA LAB</span></div>
+        <button
+          class="mobile-menu-close"
+          id="mobileMenuClose"
+          type="button"
+          aria-label="메뉴 닫기"
+        >
+          ✕
+        </button>
       </div>
 
       <nav class="side-menu" aria-label="주 메뉴">
@@ -37,16 +55,6 @@
         <button class="side-menu-item" data-page="statistics"><span>▥</span>전체 서버 통계</button>
         <button class="side-menu-item" data-page="guild-ranking"><span>♛</span>결사 순위</button>
         <button class="side-menu-item" data-page="guild-search"><span>⌕</span>결사 조회</button>
-        <button class="side-menu-item" data-page="guild-analysis"><span>⚔</span>결사 전력 분석</button>
-        <a
-          class="side-menu-item side-external-link"
-          href="./guild-alliance-analysis.html"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span>⚔</span>
-          진영 전력 분석
-        </a>
 
         <p class="menu-section-title">CONTENTS</p>
         <button class="side-menu-item" data-page="review">
@@ -118,10 +126,16 @@
             <h1>맛나는꼬꼬 프라시아 연구소</h1>
             <p class="page-description">프라시아 전기의 주요 정보와 공략, 방송 콘텐츠를 한곳에서 확인하세요.</p>
           </div>
-          <span class="site-badge data-status-badge loading" id="mainDataStatus">
-            <span class="data-status-dot"></span>
-            <span id="mainDataStatusText">데이터 확인 중</span>
-          </span>
+          <div class="home-status-stack">
+            <span class="site-badge data-status-badge loading" id="mainDataStatus">
+              <span class="data-status-dot"></span>
+              <span id="mainDataStatusText">데이터 확인 중</span>
+            </span>
+            <a class="live-status-badge off" id="homeLiveStatus" href="https://www.youtube.com/@%EB%A7%9B%EB%82%98%EB%8A%94%EA%BC%AC%EA%BC%AC" target="_blank" rel="noopener noreferrer">
+              <span class="live-status-dot"></span>
+              <span id="homeLiveStatusText">맛나는꼬꼬 방송 대기 중</span>
+            </a>
+          </div>
         </div>
 
         <section class="quick-links">
@@ -436,95 +450,6 @@
         </div>
       </section>
 
-      <section class="page" id="guild-analysis">
-        <div class="page-heading simple">
-          <div>
-            <p class="eyebrow">GUILD POWER ANALYSIS</p>
-            <h1>결사 전력 분석</h1>
-            <p class="page-description">
-              서버와 결사를 선택해 두 결사의 랭킹 및 구성 데이터를 분석합니다.
-            </p>
-          </div>
-        </div>
-
-        <div class="guild-analysis-notice">
-          랭킹에 확인된 캐릭터 정보를 기준으로 분석하며, 실제 결사 전체 전력 및 전투 결과와는 차이가 있을 수 있습니다.
-        </div>
-
-        <section class="content-panel guild-analysis-panel">
-          <div class="guild-analysis-selector-grid">
-            <article class="guild-analysis-selector guild-a">
-              <div class="guild-analysis-selector-title">
-                <span>A</span>
-                <div><strong>결사 A</strong><small>분석할 첫 번째 결사를 선택하세요.</small></div>
-              </div>
-              <label><span>서버</span><select id="guildAnalysisServerA"><option value="">전체 서버</option></select></label>
-              <label><span>결사명</span><input id="guildAnalysisNameA" type="search" placeholder="결사명을 입력하세요" autocomplete="off"></label>
-              <p class="guild-analysis-search-guide">서버는 선택 사항입니다. 결사명만 입력해 전체 서버에서 찾을 수 있습니다.</p>
-              <div class="guild-analysis-suggestions" id="guildAnalysisSuggestionsA" hidden></div>
-              <div class="guild-analysis-selected" id="guildAnalysisSelectedA">선택된 결사가 없습니다.</div>
-            </article>
-
-            <div class="guild-analysis-vs">VS</div>
-
-            <article class="guild-analysis-selector guild-b">
-              <div class="guild-analysis-selector-title">
-                <span>B</span>
-                <div><strong>결사 B</strong><small>분석할 두 번째 결사를 선택하세요.</small></div>
-              </div>
-              <label><span>서버</span><select id="guildAnalysisServerB"><option value="">전체 서버</option></select></label>
-              <label><span>결사명</span><input id="guildAnalysisNameB" type="search" placeholder="결사명을 입력하세요" autocomplete="off"></label>
-              <p class="guild-analysis-search-guide">서버는 선택 사항입니다. 결사명만 입력해 전체 서버에서 찾을 수 있습니다.</p>
-              <div class="guild-analysis-suggestions" id="guildAnalysisSuggestionsB" hidden></div>
-              <div class="guild-analysis-selected" id="guildAnalysisSelectedB">선택된 결사가 없습니다.</div>
-            </article>
-          </div>
-
-          <div class="guild-analysis-actions">
-            <button class="guild-analysis-primary" id="guildAnalysisRun" type="button">분석하기</button>
-            <button class="guild-analysis-reset" id="guildAnalysisReset" type="button">초기화</button>
-          </div>
-
-          <div class="guild-analysis-status" id="guildAnalysisStatus" role="status">결사 데이터를 불러오는 중입니다.</div>
-        </section>
-
-        <div class="guild-analysis-results" id="guildAnalysisResults" hidden>
-          <section class="content-panel guild-analysis-comparison">
-            <div class="guild-analysis-section-heading"><div><p>CORE DATA</p><h2>핵심 지표 비교</h2></div><span id="guildAnalysisUpdatedAt"></span></div>
-            <div class="guild-analysis-name-row"><strong id="guildAnalysisTitleA">결사 A</strong><span>비교 항목</span><strong id="guildAnalysisTitleB">결사 B</strong></div>
-            <div class="guild-analysis-metric-list" id="guildAnalysisMetricList"></div>
-          </section>
-
-          <div class="guild-analysis-chart-grid">
-            <section class="content-panel guild-analysis-chart-card">
-              <div class="guild-analysis-section-heading compact"><div><p>POWER INDEX</p><h2>종합 전력 지표</h2></div></div>
-              <div class="guild-radar-wrap" id="guildPowerRadar"></div>
-              <p class="guild-chart-guide">전체 결사 데이터 분포를 기준으로 각 항목을 0~100점으로 환산합니다.</p>
-            </section>
-            <section class="content-panel guild-analysis-chart-card">
-              <div class="guild-analysis-section-heading compact"><div><p>CLASS COMPOSITION</p><h2>직업 구성 분포</h2></div></div>
-              <div class="guild-radar-wrap" id="guildClassRadar"></div>
-              <p class="guild-chart-guide">랭킹에 확인된 결사원 중 각 직업이 차지하는 비율입니다.</p>
-            </section>
-          </div>
-
-          <section class="content-panel guild-analysis-commentary">
-            <div class="guild-analysis-section-heading compact"><div><p>LAB REPORT</p><h2>분석 한줄평</h2></div></div>
-            <div class="guild-analysis-comment-grid" id="guildAnalysisComments"></div>
-          </section>
-
-          <div class="guild-analysis-detail-grid">
-            <section class="content-panel guild-analysis-detail-card"><div class="guild-analysis-section-heading compact"><div><p>LEVEL</p><h2>레벨 분포</h2></div></div><div id="guildLevelDistribution"></div></section>
-            <section class="content-panel guild-analysis-detail-card"><div class="guild-analysis-section-heading compact"><div><p>RAID</p><h2>토벌 분포</h2></div></div><div id="guildGradeDistribution"></div></section>
-          </div>
-
-          <section class="content-panel guild-analysis-detail-card">
-            <div class="guild-analysis-section-heading compact"><div><p>CLASS DETAIL</p><h2>직업별 인원 및 비율</h2></div></div>
-            <div id="guildClassDistribution"></div>
-          </section>
-        </div>
-      </section>
-
       <section class="page" id="review">
         <div class="page-heading simple">
           <div>
@@ -752,7 +677,6 @@
   <script src="./js/guild-data-compat.js"></script>
   <script src="./js/guild-search.js"></script>
   <script src="./js/guild-ranking.js"></script>
-  <script src="./js/guild-analysis.js"></script>
   <script src="./js/calendar.js"></script>
   <script type="module" src="./js/firebase-content.js"></script>
   <script src="./js/admin-modal.js"></script>

@@ -24,6 +24,9 @@
         <button class="admin-nav-button" data-admin-page="schedule">
           방송 일정 관리
         </button>
+        <button class="admin-nav-button" data-admin-page="live">
+          라이브 방송 관리
+        </button>
         <button class="admin-nav-button" data-admin-page="video">
           영상 관리
         </button>
@@ -161,6 +164,42 @@
           <section class="admin-list-card">
             <h2>등록된 방송 일정</h2>
             <div class="admin-item-list" id="scheduleAdminList"></div>
+          </section>
+        </div>
+      </section>
+
+
+      <section class="admin-page" id="adminLivePage">
+        <div class="live-admin-layout">
+          <section class="live-admin-card">
+            <div class="live-admin-heading">
+              <div>
+                <span class="admin-list-kicker">BROADCAST STATUS</span>
+                <h2>라이브 방송 상태</h2>
+                <p>메인 화면 우측 상단의 맛나는꼬꼬 방송 상태를 수동으로 변경합니다.</p>
+              </div>
+              <span class="live-admin-state off" id="liveAdminState">방송 대기 중</span>
+            </div>
+            <label class="live-admin-url-field">
+              <span>라이브 연결 주소</span>
+              <input id="liveAdminUrl" type="url" placeholder="https://www.youtube.com/...">
+              <small>LIVE 상태 배지를 누르면 이 주소를 새 창으로 엽니다.</small>
+            </label>
+            <div class="live-admin-actions">
+              <button class="live-on-button" id="liveOnButton" type="button">● 라이브 켜기</button>
+              <button class="live-off-button" id="liveOffButton" type="button">방송 종료</button>
+            </div>
+            <div class="live-admin-message" id="liveAdminMessage">현재 방송 상태를 확인하고 있습니다.</div>
+          </section>
+          <section class="live-admin-card live-admin-guide">
+            <span class="admin-list-kicker">HOW TO USE</span>
+            <h2>사용 방법</h2>
+            <ol>
+              <li><strong>방송 시작 전</strong><span>라이브 주소를 확인하고 ‘라이브 켜기’를 누릅니다.</span></li>
+              <li><strong>방송 중</strong><span>메인 화면에 붉은 LIVE 상태가 표시됩니다.</span></li>
+              <li><strong>방송 종료 후</strong><span>‘방송 종료’를 눌러 회색 대기 상태로 돌립니다.</span></li>
+            </ol>
+            <p>상태는 Firestore의 <code>siteSettings/liveStatus</code> 문서에 저장됩니다.</p>
           </section>
         </div>
       </section>
