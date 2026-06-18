@@ -410,8 +410,15 @@
 
   function buildGuildSummaryCard() {
     const data = state.lastAnalysis;
-    const stage = el("guildAnalysisCaptureStage");
-    if (!data || !stage) return null;
+    if (!data) return null;
+    let stage = el("guildAnalysisCaptureStage");
+    if (!stage) {
+      stage = document.createElement("div");
+      stage.id = "guildAnalysisCaptureStage";
+      stage.className = "analysis-capture-stage";
+      stage.setAttribute("aria-hidden", "true");
+      document.body.appendChild(stage);
+    }
     const dominantA = dominantClass(data.a);
     const dominantB = dominantClass(data.b);
     const metrics = [
@@ -434,7 +441,9 @@
     button.disabled = true;
     setStatus("공유용 요약 이미지를 생성하고 있습니다.");
     try {
-      const canvas = await window.html2canvas(buildGuildSummaryCard(), { backgroundColor: "#10141a", scale: 2, useCORS: true });
+      const card = buildGuildSummaryCard();
+      if (!card) throw new Error("summary-card-build-failed");
+      const canvas = await window.html2canvas(card, { backgroundColor: "#10141a", scale: 2, useCORS: true });
       await downloadCanvas(canvas, `${safeFileName(state.lastAnalysis.a.guild.name)}_vs_${safeFileName(state.lastAnalysis.b.guild.name)}_요약.png`);
       setStatus("요약 이미지를 저장했습니다.", "success");
     } catch (error) {
