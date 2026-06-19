@@ -1,0 +1,1465 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>주문석 연구 · 로컬 초안</title>
+<style>
+:root{
+  --bg:#050b13;
+  --panel:#0c1622;
+  --panel-2:#111e2b;
+  --line:rgba(255,255,255,.09);
+  --soft:rgba(255,255,255,.05);
+  --text:#ecf2f8;
+  --muted:#9cb0c2;
+  --gold:#d6b86b;
+  --accent:#9ad6ff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#08111a;color:var(--text);font-family:Pretendard,"Noto Sans KR","Segoe UI",sans-serif}
+body{
+  background:
+    radial-gradient(circle at 25% 15%, rgba(106,153,206,.12), transparent 24%),
+    radial-gradient(circle at 85% 85%, rgba(255,144,93,.06), transparent 22%),
+    linear-gradient(180deg, rgba(2,6,11,.4), rgba(2,6,11,.72)),
+    url("./assets/bg/blue_mist.jpg") center/cover fixed no-repeat;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.016), rgba(255,255,255,0)),
+    repeating-linear-gradient(180deg, rgba(255,255,255,.018) 0 1px, transparent 1px 4px);
+  opacity:.5;
+}
+.shell{
+  width:min(1400px, calc(100% - 24px));
+  margin:0 auto;
+  padding:20px 0 34px;
+}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:16px;
+  font-size:12px;
+  color:#afc1d0;
+}
+.brand strong{
+  display:block;
+  font-size:28px;
+  letter-spacing:-.04em;
+}
+.brand small{
+  display:block;
+  margin-bottom:5px;
+  color:#7f95aa;
+  letter-spacing:.18em;
+  font-weight:800;
+}
+.top-stats{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.stat{
+  min-width:112px;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  background:rgba(8,14,22,.78);
+  border-radius:14px;
+}
+.stat b{
+  display:block;
+  font-size:18px;
+  color:#fff;
+}
+.stat span{
+  display:block;
+  font-size:11px;
+  color:#93a7b9;
+}
+.layout{
+  display:grid;
+  grid-template-columns: 420px minmax(360px, 1fr) 350px;
+  gap:16px;
+}
+.panel{
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:linear-gradient(180deg, rgba(14,24,36,.96), rgba(8,14,22,.98));
+  box-shadow:0 20px 60px rgba(0,0,0,.28);
+  overflow:hidden;
+}
+.panel-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  padding:18px 18px 14px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.panel-head h2,
+.panel-head h3{
+  margin:0;
+  font-size:18px;
+  letter-spacing:-.03em;
+}
+.panel-head small{
+  display:block;
+  margin-bottom:5px;
+  color:#7e94a7;
+  font-size:10px;
+  letter-spacing:.16em;
+  font-weight:900;
+}
+.panel-body{
+  padding:16px 16px 18px;
+}
+.sub{
+  color:#94a8bb;
+  font-size:12px;
+  line-height:1.6;
+}
+.board-frame{
+  position:relative;
+  margin-top:10px;
+  padding:18px;
+  border-radius:22px;
+  background:
+    linear-gradient(180deg, rgba(6,10,15,.15), rgba(6,10,15,.4)),
+    radial-gradient(circle at center, rgba(182,204,229,.12), transparent 52%),
+    linear-gradient(180deg, rgba(7,13,20,.75), rgba(8,15,24,.94)),
+    url("./assets/bg/lava_glow.jpg") center/cover no-repeat;
+  border:1px solid rgba(255,255,255,.07);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+}
+.board-frame::before{
+  content:"";
+  position:absolute;
+  inset:14px;
+  border:1px solid rgba(221,232,242,.36);
+  border-radius:18px;
+  pointer-events:none;
+}
+.magic-ring{
+  position:absolute;
+  inset:20px;
+  border:2px solid rgba(229,237,246,.26);
+  border-radius:50%;
+  opacity:.65;
+  pointer-events:none;
+  filter:blur(.2px);
+}
+.magic-ring::before{
+  content:"";
+  position:absolute;
+  inset:8%;
+  border:1px solid rgba(229,237,246,.3);
+  border-radius:50%;
+}
+.ring-text{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:rgba(219,229,239,.24);
+  font-size:11px;
+  letter-spacing:.32em;
+  pointer-events:none;
+}
+.grid4{
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  grid-template-rows:repeat(4, 1fr);
+  gap:6px;
+  aspect-ratio:1;
+  width:min(100%, 330px);
+  margin:10px auto;
+}
+.cell{
+  position:relative;
+  overflow:hidden;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.09);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.1)),
+    rgba(4,9,16,.55);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.03),
+    inset 0 -8px 14px rgba(0,0,0,.18);
+}
+.cell.active{
+  border-color:rgba(255,255,255,.18);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.08),
+    inset 0 0 0 1px rgba(255,255,255,.05),
+    inset 0 -10px 16px rgba(0,0,0,.24),
+    0 10px 14px rgba(0,0,0,.14);
+}
+.cell.target{
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.08),
+    inset 0 0 0 1px rgba(255,255,255,.05),
+    inset 0 0 0 2px rgba(255,255,255,.04),
+    0 10px 14px rgba(0,0,0,.14);
+}
+.cell.target::before{
+  content:"";
+  position:absolute;
+  inset:3px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.22);
+  opacity:.42;
+}
+.cell.preview{
+  outline:2px dashed rgba(154,214,255,.75);
+  outline-offset:-4px;
+}
+.cell.invalid{
+  outline:2px dashed rgba(255,133,133,.82);
+  outline-offset:-4px;
+}
+.color-brown{
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.22), rgba(255,255,255,0) 34%),
+    linear-gradient(320deg, rgba(0,0,0,.26), rgba(0,0,0,0) 52%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 2px, rgba(0,0,0,.03) 2px 4px),
+    #8f6d55;
+}
+.color-gray{
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.26), rgba(255,255,255,0) 34%),
+    linear-gradient(320deg, rgba(0,0,0,.26), rgba(0,0,0,0) 52%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.04) 0 2px, rgba(0,0,0,.03) 2px 4px),
+    #9da9b6;
+}
+.color-yellow{
+  background:
+    linear-gradient(145deg, rgba(255,248,205,.26), rgba(255,255,255,0) 34%),
+    linear-gradient(320deg, rgba(0,0,0,.22), rgba(0,0,0,0) 52%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.035) 0 2px, rgba(0,0,0,.03) 2px 4px),
+    #c79d43;
+}
+.color-red{
+  background:
+    linear-gradient(145deg, rgba(255,224,224,.24), rgba(255,255,255,0) 34%),
+    linear-gradient(320deg, rgba(0,0,0,.26), rgba(0,0,0,0) 52%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 2px, rgba(0,0,0,.03) 2px 4px),
+    #a65156;
+}
+.color-green{
+  background:
+    linear-gradient(145deg, rgba(230,255,245,.24), rgba(255,255,255,0) 34%),
+    linear-gradient(320deg, rgba(0,0,0,.26), rgba(0,0,0,0) 52%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 2px, rgba(0,0,0,.03) 2px 4px),
+    #77b39b;
+}
+
+.color-brown::before,
+.color-gray::before,
+.color-yellow::before,
+.color-red::before,
+.color-green::before{
+  content:"";
+  position:absolute;
+  inset:4px;
+  border-radius:9px;
+  border:1px solid rgba(255,255,255,.24);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.14),
+    inset 0 -1px 0 rgba(0,0,0,.18);
+  opacity:.55;
+}
+.cell[data-rune]:not([data-rune=""])::after{
+  content:attr(data-rune);
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:rgba(255,255,255,.38);
+  text-shadow:
+    0 0 8px rgba(255,255,255,.08),
+    0 1px 0 rgba(0,0,0,.2);
+  font-weight:900;
+  font-size:clamp(12px, 1.8vw, 18px);
+  letter-spacing:.04em;
+  opacity:.72;
+  mix-blend-mode:screen;
+  pointer-events:none;
+}
+.thumb .cell[data-rune]:not([data-rune=""])::after{
+  font-size:10px;
+}
+.piece-preview .cell[data-rune]:not([data-rune=""])::after{
+  font-size:18px;
+}
+
+.color-brown.active{ box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), inset 0 -10px 16px rgba(0,0,0,.25), 0 0 12px rgba(143,109,85,.18); }
+.color-gray.active{ box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), inset 0 -10px 16px rgba(0,0,0,.25), 0 0 12px rgba(157,169,182,.2); }
+.color-yellow.active{ box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), inset 0 -10px 16px rgba(0,0,0,.25), 0 0 14px rgba(199,157,67,.24); }
+.color-red.active{ box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), inset 0 -10px 16px rgba(0,0,0,.25), 0 0 14px rgba(166,81,86,.24); }
+.color-green.active{ box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), inset 0 -10px 16px rgba(0,0,0,.25), 0 0 14px rgba(119,179,155,.22); }
+
+.board-tip{
+  margin-top:10px;
+  color:#90a4b8;
+  text-align:center;
+  font-size:12px;
+}
+.objective{
+  margin-top:14px;
+  padding:12px 14px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:16px;
+  background:rgba(255,255,255,.025);
+  color:#cad5de;
+  font-size:12px;
+  line-height:1.7;
+}
+.objective b{color:var(--gold)}
+.score-box{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:10px;
+  margin-top:14px;
+}
+.mini{
+  padding:12px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;
+  background:rgba(255,255,255,.025);
+}
+.mini b{display:block;font-size:18px}
+.mini span{font-size:11px;color:#90a6b7}
+.notice{
+  margin-top:12px;
+  min-height:44px;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.025);
+  color:#b7c8d6;
+  font-size:13px;
+  line-height:1.6;
+}
+.notice.good{
+  border-color:rgba(152,240,186,.35);
+  color:#d4f6df;
+  background:rgba(31,86,56,.18);
+}
+.notice.bad{
+  border-color:rgba(255,133,133,.35);
+  color:#ffd1d1;
+  background:rgba(97,29,36,.18);
+}
+.current-wrap{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+}
+.current-card{
+  padding:14px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px;
+  background:rgba(255,255,255,.025);
+}
+.current-card h4{
+  margin:0 0 10px;
+  font-size:14px;
+  color:#dce6ef;
+}
+.piece-preview{
+  display:grid;
+  grid-template-columns:repeat(4, 54px);
+  grid-template-rows:repeat(4, 54px);
+  gap:6px;
+  justify-content:center;
+  min-height:246px;
+}
+.piece-preview .cell{
+  border-radius:10px;
+}
+.control-pad{
+  display:grid;
+  grid-template-columns:56px 56px 56px;
+  grid-template-rows:56px 56px 56px;
+  gap:10px;
+  justify-content:center;
+  align-items:center;
+}
+.pad-btn, .action-btn, .tray-btn, .top-btn{
+  appearance:none;
+  border:1px solid rgba(255,255,255,.1);
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  color:#fff;
+  border-radius:14px;
+  cursor:pointer;
+  font:inherit;
+  transition:.16s;
+}
+.pad-btn:hover, .action-btn:hover, .tray-btn:hover, .top-btn:hover{
+  transform:translateY(-1px);
+  border-color:rgba(255,255,255,.18);
+}
+.pad-btn{
+  width:56px;height:56px;font-size:22px;font-weight:900;
+}
+.pad-btn.center{
+  background:linear-gradient(180deg, rgba(214,184,107,.22), rgba(255,255,255,.04));
+}
+.pad-placeholder{width:56px;height:56px}
+.actions{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.action-btn{
+  min-height:52px;
+  padding:12px 14px;
+  font-weight:900;
+}
+.action-btn.primary{
+  background:linear-gradient(180deg, rgba(214,184,107,.25), rgba(255,255,255,.03));
+  border-color:rgba(214,184,107,.26);
+  color:#ffe9ba;
+}
+.action-btn.good{
+  background:linear-gradient(180deg, rgba(81,163,118,.25), rgba(255,255,255,.03));
+  border-color:rgba(120,222,164,.24);
+  color:#d8fbe7;
+}
+.action-btn.warn{
+  background:linear-gradient(180deg, rgba(161,96,96,.25), rgba(255,255,255,.03));
+  border-color:rgba(255,133,133,.23);
+  color:#ffe0e0;
+}
+.action-btn:disabled, .pad-btn:disabled, .tray-btn:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+  transform:none;
+}
+.tray-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+.tray{
+  display:grid;
+  gap:10px;
+  max-height:690px;
+  overflow:auto;
+  padding-right:4px;
+}
+.tray-item{
+  display:grid;
+  grid-template-columns:88px 1fr auto;
+  gap:12px;
+  align-items:center;
+  padding:10px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px;
+  background:rgba(255,255,255,.025);
+}
+.tray-item.selected{
+  border-color:rgba(154,214,255,.45);
+  box-shadow:0 0 0 1px rgba(154,214,255,.18);
+}
+.tray-item.placed{
+  opacity:.55;
+}
+.thumb{
+  display:grid;
+  grid-template-columns:repeat(4, 16px);
+  grid-template-rows:repeat(4, 16px);
+  gap:4px;
+  justify-content:center;
+}
+.thumb .cell{
+  border-radius:5px;
+}
+.tray-meta b{
+  display:block;
+  font-size:14px;
+}
+.tray-meta span{
+  display:block;
+  margin-top:4px;
+  color:#8ea4b7;
+  font-size:11px;
+}
+.tray-btn{
+  padding:9px 12px;
+  font-size:12px;
+  font-weight:900;
+}
+.legend{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+.legend span{
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.02);
+  font-size:11px;
+  color:#cbd6df;
+}
+.footer-help{
+  margin-top:10px;
+  color:#90a5b7;
+  font-size:12px;
+  line-height:1.7;
+}
+kbd{
+  display:inline-block;
+  padding:2px 6px;
+  border-radius:6px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.05);
+  color:#fff;
+  font-size:11px;
+}
+.modal{
+  position:fixed;
+  inset:0;
+  display:none;
+  place-items:center;
+  padding:16px;
+  background:rgba(3,7,12,.78);
+  backdrop-filter:blur(8px);
+  z-index:99;
+}
+.modal.open{display:grid}
+.modal-card{
+  width:min(460px, 100%);
+  padding:18px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg, rgba(16,24,34,.98), rgba(10,17,24,.99));
+  box-shadow:0 28px 70px rgba(0,0,0,.42);
+}
+.modal-card h3{
+  margin:0 0 10px;
+  font-size:22px;
+}
+.modal-card p{
+  margin:0;
+  color:#b2c3d1;
+  line-height:1.7;
+}
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:18px;
+}
+@media (max-width:1180px){
+  .layout{grid-template-columns:1fr}
+  .tray{max-height:none}
+}
+@media (max-width:640px){
+  .shell{width:min(100% - 16px, 100%)}
+  .grid4{width:min(100%, 280px)}
+  .piece-preview{grid-template-columns:repeat(4, 46px);grid-template-rows:repeat(4, 46px);min-height:214px}
+  .layout{gap:12px}
+  .tray-item{grid-template-columns:76px 1fr}
+  .tray-item .tray-btn{grid-column:1 / -1}
+}
+
+.notice.bad{
+  animation:blockedNotice .22s ease-in-out 2;
+}
+@keyframes blockedNotice{
+  0%,100%{transform:translateX(0)}
+  50%{transform:translateX(3px)}
+}
+
+
+.cell.invalid{
+  outline:2px solid rgba(255,105,105,.95);
+  outline-offset:-4px;
+  box-shadow:
+    inset 0 0 18px rgba(255,70,70,.34),
+    0 0 12px rgba(255,70,70,.18);
+  animation:overlapPulse .7s ease-in-out infinite alternate;
+}
+
+@keyframes overlapPulse{
+  from{filter:brightness(.95)}
+  to{filter:brightness(1.16)}
+}
+
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="topbar">
+    <div class="brand">
+      <small>LOCAL DRAFT · RUNESTONE RESEARCH</small>
+      <strong>주문석 연구</strong>
+    </div>
+    <div class="top-stats">
+      <div class="stat"><b id="stageValue">1</b><span>현재 단계</span></div>
+      <div class="stat"><b id="timeValue">0.0초</b><span>경과 시간</span></div>
+      <div class="stat"><b id="bestValue">0</b><span>최고 점수</span></div>
+      <div class="stat"><b id="drawValue">2</b><span>블럭뽑기 남은 횟수</span></div>
+    </div>
+  </div>
+
+  <section class="layout">
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <small>TARGET ARRAY</small>
+          <h2>목표 배열</h2>
+        </div>
+        <button class="top-btn" id="newStageBtn" type="button" style="padding:10px 14px;font-weight:900">새 실험</button>
+      </div>
+      <div class="panel-body">
+        <p class="sub">제시된 색상 배열을 4×4 공간에 동일하게 복원하세요. 블록 경계는 정답 판정에 포함되지 않으며, 최종 색상 배열만 일치하면 됩니다.</p>
+
+        <div class="board-frame">
+          <div class="magic-ring"></div>
+          <div class="ring-text">RUNESTONE RESEARCH · TARGET ARRAY · RUNESTONE RESEARCH</div>
+          <div class="grid4" id="targetGrid"></div>
+        </div>
+
+        <div class="objective" id="objectiveText">
+          <b>실험 목표</b><br>
+          제공된 주문석 블록을 이동·회전해 예시와 동일한 문양을 완성하세요. 블럭뽑기는 최대 2회까지 사용할 수 있습니다.
+        </div>
+
+        <div class="score-box">
+          <div class="mini"><b id="baseScore">1000</b><span>기본 점수</span></div>
+          <div class="mini"><b id="timeBonus">0</b><span>예상 시간 보너스</span></div>
+        </div>
+
+        <div class="notice" id="noticeBox">블록을 하나 선택하면 중앙 배치판에 미리보기와 조작 버튼이 활성화됩니다.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <small>ASSEMBLY FIELD</small>
+          <h2>배치판</h2>
+        </div>
+        <div class="sub" id="selectedInfo">선택된 블록 없음</div>
+      </div>
+      <div class="panel-body current-wrap">
+        <div class="board-frame">
+          <div class="magic-ring"></div>
+          <div class="ring-text">RUNESTONE RESEARCH · ASSEMBLY FIELD · RUNESTONE RESEARCH</div>
+          <div class="grid4" id="boardGrid"></div>
+          <div class="board-tip">판 위의 배치된 블록을 눌러 다시 이동하거나 제거할 수 있습니다.</div>
+        </div>
+
+        <div class="current-card">
+          <h4>현재 선택 블록</h4>
+          <div class="piece-preview" id="piecePreview"></div>
+          <div class="legend">
+            <span>방향키/WASD 이동</span>
+            <span>R 또는 Space 회전</span>
+            <span>Enter 배치</span>
+            <span>Esc 취소</span>
+          </div>
+        </div>
+
+        <div class="current-card">
+          <h4>이동 / 회전</h4>
+          <div class="control-pad">
+            <div class="pad-placeholder"></div>
+            <button class="pad-btn" id="moveUpBtn" type="button">▲</button>
+            <div class="pad-placeholder"></div>
+
+            <button class="pad-btn" id="moveLeftBtn" type="button">◀</button>
+            <button class="pad-btn center" id="rotateBtn" type="button">↻</button>
+            <button class="pad-btn" id="moveRightBtn" type="button">▶</button>
+
+            <div class="pad-placeholder"></div>
+            <button class="pad-btn" id="moveDownBtn" type="button">▼</button>
+            <div class="pad-placeholder"></div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="action-btn primary" id="placeBtn" type="button">배치</button>
+          <button class="action-btn" id="cancelBtn" type="button">취소</button>
+          <button class="action-btn warn" id="removeBtn" type="button">제거</button>
+          <button class="action-btn" id="resetBtn" type="button">초기화</button>
+          <button class="action-btn good" id="drawBtn" type="button" style="grid-column:1 / -1">블럭뽑기 (+1)</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <small>AVAILABLE RUNESTONES</small>
+          <h3>제공 블록</h3>
+        </div>
+        <div class="sub"><span id="trayCount">0</span>개 준비됨</div>
+      </div>
+      <div class="panel-body">
+        <div class="tray-head">
+          <div class="sub">모양과 색이 같은 블록이라도 별개의 주문석으로 취급됩니다.</div>
+        </div>
+        <div class="tray" id="trayList"></div>
+        <div class="footer-help">
+          · 블록은 선택 후 이동/회전 후 <b>배치</b>합니다.<br>
+          · 이미 놓인 블록을 누르면 수정 모드로 들어갑니다.<br>
+          · <b>초기화</b>는 안전장치 확인창이 뜹니다.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="confirmModal" aria-hidden="true">
+  <div class="modal-card">
+    <h3>주문석 배열을 초기화할까요?</h3>
+    <p>현재 배치된 모든 주문석이 제거되고, 선택 상태도 초기화됩니다. 블럭뽑기로 받은 추가 블록은 유지됩니다.</p>
+    <div class="modal-actions">
+      <button class="action-btn" id="modalCloseBtn" type="button">돌아가기</button>
+      <button class="action-btn warn" id="modalConfirmBtn" type="button">전체 초기화</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const COLORS = {
+  brown:{name:"갈색", className:"color-brown"},
+  gray:{name:"회색", className:"color-gray"},
+  yellow:{name:"황색", className:"color-yellow"},
+  red:{name:"적색", className:"color-red"},
+  green:{name:"녹색", className:"color-green"},
+};
+
+const RUNES = {
+  brown:"ᚱ",
+  gray:"ᛞ",
+  yellow:"ᛇ",
+  red:"ᚲ",
+  green:"ᛉ",
+};
+
+const SHAPES = {
+  I4:[[0,0],[1,0],[2,0],[3,0]],
+  O:[[0,0],[1,0],[0,1],[1,1]],
+  T:[[0,0],[1,0],[2,0],[1,1]],
+  S:[[1,0],[2,0],[0,1],[1,1]],
+  Z:[[0,0],[1,0],[1,1],[2,1]],
+  J:[[0,0],[0,1],[1,1],[2,1]],
+  L:[[2,0],[0,1],[1,1],[2,1]],
+  I3:[[0,0],[1,0],[2,0]],
+  I2:[[0,0],[1,0]],
+  DOT:[[0,0]],
+  L3:[[0,0],[0,1],[1,1]],
+  J3:[[1,0],[0,1],[1,1]],
+};
+
+const SHAPE_INFO = {
+  I4:{name:"4칸 막대", size:4},
+  O:{name:"정사각형", size:4},
+  T:{name:"T 블록", size:4},
+  S:{name:"S 블록", size:4},
+  Z:{name:"Z 블록", size:4},
+  J:{name:"J 블록", size:4},
+  L:{name:"L 블록", size:4},
+  I3:{name:"3칸 막대", size:3},
+  I2:{name:"2칸 막대", size:2},
+  DOT:{name:"1칸 블록", size:1},
+  L3:{name:"ㄱ 블록", size:3},
+  J3:{name:"ㄴ 블록", size:3},
+};
+
+const boardSize = 4;
+
+const el = {
+  targetGrid: document.getElementById("targetGrid"),
+  boardGrid: document.getElementById("boardGrid"),
+  piecePreview: document.getElementById("piecePreview"),
+  trayList: document.getElementById("trayList"),
+  stageValue: document.getElementById("stageValue"),
+  timeValue: document.getElementById("timeValue"),
+  bestValue: document.getElementById("bestValue"),
+  drawValue: document.getElementById("drawValue"),
+  baseScore: document.getElementById("baseScore"),
+  timeBonus: document.getElementById("timeBonus"),
+  noticeBox: document.getElementById("noticeBox"),
+  selectedInfo: document.getElementById("selectedInfo"),
+  trayCount: document.getElementById("trayCount"),
+  objectiveText: document.getElementById("objectiveText"),
+  moveUpBtn: document.getElementById("moveUpBtn"),
+  moveDownBtn: document.getElementById("moveDownBtn"),
+  moveLeftBtn: document.getElementById("moveLeftBtn"),
+  moveRightBtn: document.getElementById("moveRightBtn"),
+  rotateBtn: document.getElementById("rotateBtn"),
+  placeBtn: document.getElementById("placeBtn"),
+  cancelBtn: document.getElementById("cancelBtn"),
+  removeBtn: document.getElementById("removeBtn"),
+  resetBtn: document.getElementById("resetBtn"),
+  drawBtn: document.getElementById("drawBtn"),
+  newStageBtn: document.getElementById("newStageBtn"),
+  confirmModal: document.getElementById("confirmModal"),
+  modalCloseBtn: document.getElementById("modalCloseBtn"),
+  modalConfirmBtn: document.getElementById("modalConfirmBtn"),
+};
+
+const state = {
+  stage:1,
+  drawLeft:2,
+  drawUsed:0,
+  blocks:[],
+  reserveBlocks:[],
+  board:createMatrix(boardSize, boardSize, null),
+  target:createMatrix(boardSize, boardSize, null),
+  selectedId:null,
+  selectedPiece:null,
+  selectedOrigin:null,
+  selectedMode:"new",
+  startTime:0,
+  solved:false,
+  bestScore:Number(localStorage.getItem("runestoneLabBest") || 0),
+};
+
+function createMatrix(w,h,fill=null){
+  return Array.from({length:h},()=>Array.from({length:w},()=>fill));
+}
+function clone(value){ return JSON.parse(JSON.stringify(value)); }
+function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function sample(list){ return list[Math.floor(Math.random()*list.length)]; }
+
+function normalize(coords){
+  const minX = Math.min(...coords.map(([x])=>x));
+  const minY = Math.min(...coords.map(([,y])=>y));
+  return coords.map(([x,y])=>[x-minX, y-minY]).sort((a,b)=>a[1]-b[1] || a[0]-b[0]);
+}
+function rotateCoords(coords){ return normalize(coords.map(([x,y])=>[-y, x])); }
+function orientedCoords(shapeKey, rotation){
+  let coords = SHAPES[shapeKey].map(c=>[...c]);
+  for(let i=0;i<rotation;i++) coords = rotateCoords(coords);
+  return normalize(coords);
+}
+function bounds(coords){
+  return {
+    width: Math.max(...coords.map(([x])=>x))+1,
+    height: Math.max(...coords.map(([,y])=>y))+1
+  };
+}
+function allCellsFilledEqual(){
+  for(let y=0;y<boardSize;y++){
+    for(let x=0;x<boardSize;x++){
+      const target = state.target[y][x];
+      const current = state.board[y][x]?.color || null;
+      if(target !== current) return false;
+    }
+  }
+  return true;
+}
+function setNotice(message, mode=""){
+  el.noticeBox.className = `notice ${mode}`.trim();
+  el.noticeBox.textContent = message;
+}
+function updateBest(value){
+  if(value > state.bestScore){
+    state.bestScore = value;
+    localStorage.setItem("runestoneLabBest", String(value));
+  }
+  el.bestValue.textContent = state.bestScore.toLocaleString();
+}
+function getElapsedMs(){ return performance.now() - state.startTime; }
+function getElapsedSec(){ return getElapsedMs() / 1000; }
+function currentTimeBonus(){ return Math.max(0, Math.round(1800 - getElapsedSec() * 20)); }
+
+function renderStats(){
+  el.stageValue.textContent = String(state.stage);
+  el.timeValue.textContent = `${getElapsedSec().toFixed(1)}초`;
+  el.drawValue.textContent = String(state.drawLeft);
+  el.baseScore.textContent = "1000";
+  el.timeBonus.textContent = currentTimeBonus().toLocaleString();
+  el.bestValue.textContent = state.bestScore.toLocaleString();
+  el.trayCount.textContent = String(state.blocks.length);
+}
+function buildGrid(container, className=""){
+  container.innerHTML = "";
+  for(let i=0;i<boardSize*boardSize;i++){
+    const cell = document.createElement("button");
+    cell.type = "button";
+    cell.className = `cell ${className}`.trim();
+    cell.dataset.index = String(i);
+    container.appendChild(cell);
+  }
+}
+
+function decorateCell(cell, color){
+  if(color){
+    cell.dataset.rune = RUNES[color] || "✦";
+  }else{
+    cell.dataset.rune = "";
+  }
+}
+function renderTarget(){
+  [...el.targetGrid.children].forEach((cell, index) => {
+    const x = index % boardSize;
+    const y = Math.floor(index / boardSize);
+    const color = state.target[y][x];
+    cell.className = "cell target";
+    decorateCell(cell, color);
+    if(color) cell.classList.add(COLORS[color].className, "active");
+  });
+}
+function canPlace(piece){
+  const coords = orientedCoords(piece.shape, piece.rotation);
+  const cells = coords.map(([dx,dy])=>({x:piece.x+dx, y:piece.y+dy}));
+  for(const {x,y} of cells){
+    if(x < 0 || y < 0 || x >= boardSize || y >= boardSize) return false;
+    const occupant = state.board[y][x];
+    if(occupant && occupant.id !== piece.id) return false;
+  }
+  return true;
+}
+
+function isInsideBoard(piece){
+  return getPieceCells(piece).every(({x,y}) =>
+    x >= 0 && y >= 0 && x < boardSize && y < boardSize
+  );
+}
+
+function hasOverlap(piece){
+  return getPieceCells(piece).some(({x,y}) => {
+    if(x < 0 || y < 0 || x >= boardSize || y >= boardSize){
+      return false;
+    }
+    const occupant = state.board[y][x];
+    return occupant && occupant.id !== piece.id;
+  });
+}
+function getPieceCells(piece){
+  return orientedCoords(piece.shape, piece.rotation).map(([dx,dy])=>({x:piece.x+dx, y:piece.y+dy}));
+}
+
+function findFirstValidPosition(piece){
+  const originalX = piece.x;
+  const originalY = piece.y;
+
+  for(let y=0;y<boardSize;y++){
+    for(let x=0;x<boardSize;x++){
+      piece.x = x;
+      piece.y = y;
+      if(canPlace(piece)){
+        return {x,y};
+      }
+    }
+  }
+
+  piece.x = originalX;
+  piece.y = originalY;
+  return null;
+}
+
+function tryApplyTransform(nextPiece, failMessage){
+  if(!state.selectedPiece) return false;
+
+  if(isInsideBoard(nextPiece)){
+    state.selectedPiece = nextPiece;
+
+    if(hasOverlap(nextPiece)){
+      setNotice(
+        "다른 주문석 위를 지나가는 중입니다. 겹친 상태에서는 배치할 수 없습니다.",
+        "bad"
+      );
+    }else{
+      setNotice("현재 위치에 배치할 수 있습니다.");
+    }
+
+    renderAll();
+    return true;
+  }
+
+  setNotice(failMessage, "bad");
+  return false;
+}
+function renderBoard(){
+  [...el.boardGrid.children].forEach((cell, index) => {
+    const x = index % boardSize;
+    const y = Math.floor(index / boardSize);
+    const slot = state.board[y][x];
+    cell.className = "cell";
+    cell.dataset.x = String(x);
+    cell.dataset.y = String(y);
+    if(slot){
+      cell.classList.add(COLORS[slot.color].className, "active");
+      cell.dataset.pid = slot.id;
+      decorateCell(cell, slot.color);
+    }else{
+      cell.dataset.pid = "";
+      decorateCell(cell, null);
+    }
+  });
+
+  if(state.selectedPiece){
+    const overlapping = hasOverlap(state.selectedPiece);
+
+    getPieceCells(state.selectedPiece).forEach(({x,y}) => {
+      if(x < 0 || y < 0 || x >= boardSize || y >= boardSize) return;
+
+      const idx = y * boardSize + x;
+      const cell = el.boardGrid.children[idx];
+
+      cell.classList.add(overlapping ? "invalid" : "preview");
+
+      if(!state.board[y][x]){
+        cell.classList.add(COLORS[state.selectedPiece.color].className);
+        decorateCell(cell, state.selectedPiece.color);
+      }
+    });
+  }
+}
+function renderPiecePreview(){
+  el.piecePreview.innerHTML = "";
+  for(let i=0;i<16;i++){
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    decorateCell(cell, null);
+    el.piecePreview.appendChild(cell);
+  }
+  if(!state.selectedPiece){
+    el.selectedInfo.textContent = "선택된 블록 없음";
+    return;
+  }
+  const coords = orientedCoords(state.selectedPiece.shape, state.selectedPiece.rotation);
+  coords.forEach(([x,y]) => {
+    const idx = y * 4 + x;
+    const cell = el.piecePreview.children[idx];
+    if(cell){
+      cell.classList.add(COLORS[state.selectedPiece.color].className, "active");
+      decorateCell(cell, state.selectedPiece.color);
+    }
+  });
+  el.selectedInfo.textContent = `${SHAPE_INFO[state.selectedPiece.shape].name} · ${COLORS[state.selectedPiece.color].name} · (${state.selectedPiece.x+1}, ${state.selectedPiece.y+1})`;
+}
+function renderTray(){
+  el.trayList.innerHTML = "";
+  state.blocks.forEach(block => {
+    const item = document.createElement("div");
+    item.className = "tray-item";
+    if(state.selectedId === block.id) item.classList.add("selected");
+    if(block.placed) item.classList.add("placed");
+
+    const thumb = document.createElement("div");
+    thumb.className = "thumb";
+    for(let i=0;i<16;i++){
+      const c = document.createElement("div");
+      c.className = "cell";
+      decorateCell(c, null);
+      thumb.appendChild(c);
+    }
+    orientedCoords(block.shape, 0).forEach(([x,y]) => {
+      const idx = y*4 + x;
+      const c = thumb.children[idx];
+      c.classList.add(COLORS[block.color].className, "active");
+      decorateCell(c, block.color);
+    });
+
+    const meta = document.createElement("div");
+    meta.className = "tray-meta";
+    meta.innerHTML = `<b>${SHAPE_INFO[block.shape].name}</b><span>${COLORS[block.color].name} · ${block.placed ? "배치됨" : "미배치"}</span>`;
+
+    const btn = document.createElement("button");
+    btn.className = "tray-btn";
+    btn.type = "button";
+    btn.textContent = block.placed ? "수정" : "선택";
+    btn.addEventListener("click", () => selectBlock(block.id));
+
+    item.appendChild(thumb);
+    item.appendChild(meta);
+    item.appendChild(btn);
+    el.trayList.appendChild(item);
+  });
+}
+function updateButtons(){
+  const hasSel = !!state.selectedPiece;
+  const isEditing = hasSel && state.selectedMode === "edit";
+  [el.moveUpBtn, el.moveDownBtn, el.moveLeftBtn, el.moveRightBtn, el.rotateBtn, el.placeBtn, el.cancelBtn].forEach(btn => btn.disabled = !hasSel);
+  el.removeBtn.disabled = !hasSel;
+  el.drawBtn.disabled = state.drawLeft <= 0 || state.solved;
+  if(hasSel){
+    el.placeBtn.textContent = isEditing ? "배치(수정)" : "배치";
+    el.cancelBtn.textContent = isEditing ? "취소(복구)" : "취소";
+  } else {
+    el.placeBtn.textContent = "배치";
+    el.cancelBtn.textContent = "취소";
+  }
+}
+function clearSelection(resetOrigin=true){
+  state.selectedId = null;
+  state.selectedPiece = null;
+  if(resetOrigin) state.selectedOrigin = null;
+  state.selectedMode = "new";
+  renderAll();
+}
+function removeBlockFromBoard(id){
+  for(let y=0;y<boardSize;y++){
+    for(let x=0;x<boardSize;x++){
+      if(state.board[y][x]?.id === id) state.board[y][x] = null;
+    }
+  }
+}
+function selectBlock(id){
+  const block = state.blocks.find(b => b.id === id);
+  if(!block) return;
+
+  if(block.placed){
+    state.selectedId = id;
+    state.selectedPiece = { id:block.id, shape:block.shape, color:block.color, rotation:block.rotation ?? 0, x:block.x ?? 0, y:block.y ?? 0 };
+    state.selectedOrigin = clone(state.selectedPiece);
+    state.selectedMode = "edit";
+    removeBlockFromBoard(block.id);
+  } else {
+    state.selectedId = id;
+    state.selectedPiece = { id:block.id, shape:block.shape, color:block.color, rotation:block.rotation ?? 0, x:0, y:0 };
+    const coords = orientedCoords(state.selectedPiece.shape, state.selectedPiece.rotation);
+    const {width,height} = bounds(coords);
+    state.selectedPiece.x = Math.max(0, Math.floor((boardSize - width) / 2));
+    state.selectedPiece.y = Math.max(0, Math.floor((boardSize - height) / 2));
+    state.selectedOrigin = null;
+    state.selectedMode = "new";
+
+    const validPosition = findFirstValidPosition(state.selectedPiece);
+    if(validPosition){
+      state.selectedPiece.x = validPosition.x;
+      state.selectedPiece.y = validPosition.y;
+    }else{
+      state.selectedId = null;
+      state.selectedPiece = null;
+      setNotice("현재 판에는 이 블록을 배치할 수 있는 공간이 없습니다.", "bad");
+      renderAll();
+      return;
+    }
+  }
+
+  setNotice("방향키 또는 컨트롤 버튼으로 빈 공간 안에서 위치를 조정한 뒤 배치하세요.");
+  renderAll();
+}
+function placeCurrent(){
+  if(!state.selectedPiece) return;
+  if(!canPlace(state.selectedPiece)){
+    setNotice("현재 위치에는 블록을 배치할 수 없습니다.", "bad");
+    return;
+  }
+  const block = state.blocks.find(b => b.id === state.selectedId);
+  if(!block) return;
+  removeBlockFromBoard(block.id);
+  getPieceCells(state.selectedPiece).forEach(({x,y}) => state.board[y][x] = {id:block.id, color:block.color});
+  block.placed = true;
+  block.x = state.selectedPiece.x;
+  block.y = state.selectedPiece.y;
+  block.rotation = state.selectedPiece.rotation;
+  clearSelection();
+  setNotice("주문석을 배치했습니다. 목표 배열과 동일해졌는지 확인해보세요.");
+  checkSolved();
+}
+function cancelSelection(){
+  if(!state.selectedPiece) return;
+  if(state.selectedMode === "edit" && state.selectedOrigin){
+    const block = state.blocks.find(b => b.id === state.selectedId);
+    if(block){
+      state.selectedPiece = clone(state.selectedOrigin);
+      getPieceCells(state.selectedPiece).forEach(({x,y}) => state.board[y][x] = {id:block.id, color:block.color});
+      block.placed = true;
+      block.x = state.selectedOrigin.x;
+      block.y = state.selectedOrigin.y;
+      block.rotation = state.selectedOrigin.rotation;
+    }
+    setNotice("선택한 블록을 원래 상태로 되돌렸습니다.");
+  }
+  clearSelection();
+}
+function removeSelected(){
+  if(!state.selectedPiece) return;
+  const block = state.blocks.find(b => b.id === state.selectedId);
+  if(!block) return;
+  removeBlockFromBoard(block.id);
+  block.placed = false;
+  delete block.x;
+  delete block.y;
+  block.rotation = 0;
+  const wasEdit = state.selectedMode === "edit";
+  clearSelection();
+  setNotice(wasEdit ? "배치된 주문석을 제거했습니다." : "선택한 주문석을 배치 대기 상태로 두었습니다.");
+}
+function moveCurrent(dx,dy){
+  if(!state.selectedPiece) return;
+
+  const nextPiece = {
+    ...state.selectedPiece,
+    x: state.selectedPiece.x + dx,
+    y: state.selectedPiece.y + dy,
+  };
+
+  tryApplyTransform(
+    nextPiece,
+    "4×4 판 바깥으로는 이동할 수 없습니다."
+  );
+}
+
+function rotateCurrent(){
+  if(!state.selectedPiece) return;
+
+  const rotatedPiece = {
+    ...state.selectedPiece,
+    rotation: (state.selectedPiece.rotation + 1) % 4,
+  };
+
+  if(isInsideBoard(rotatedPiece)){
+    state.selectedPiece = rotatedPiece;
+
+    if(hasOverlap(rotatedPiece)){
+      setNotice(
+        "회전은 가능하지만 다른 주문석과 겹쳐 있습니다. 빈 공간으로 이동한 뒤 배치하세요.",
+        "bad"
+      );
+    }else{
+      setNotice("블록을 회전했습니다.");
+    }
+
+    renderAll();
+    return;
+  }
+
+  // 판 바깥으로 나가는 경우에만 주변 위치 자동 보정
+  const offsets = [
+    [-1,0],[1,0],[0,-1],[0,1],
+    [-1,-1],[1,-1],[-1,1],[1,1],
+  ];
+
+  for(const [dx,dy] of offsets){
+    const adjusted = {
+      ...rotatedPiece,
+      x: rotatedPiece.x + dx,
+      y: rotatedPiece.y + dy,
+    };
+
+    if(isInsideBoard(adjusted)){
+      state.selectedPiece = adjusted;
+
+      setNotice(
+        hasOverlap(adjusted)
+          ? "회전 위치가 자동 보정되었지만 다른 주문석과 겹쳐 있습니다."
+          : "회전 공간 확보를 위해 위치가 한 칸 자동 보정되었습니다.",
+        hasOverlap(adjusted) ? "bad" : ""
+      );
+
+      renderAll();
+      return;
+    }
+  }
+
+  setNotice("판 바깥으로 나가게 되어 현재 위치에서는 회전할 수 없습니다.", "bad");
+}
+
+function boardCellClick(event){
+  const button = event.target.closest(".cell");
+  if(!button) return;
+  const pid = button.dataset.pid;
+  const x = Number(button.dataset.x);
+  const y = Number(button.dataset.y);
+
+  if(pid){ selectBlock(pid); return; }
+  if(state.selectedPiece){
+    const coords = orientedCoords(state.selectedPiece.shape, state.selectedPiece.rotation);
+    const minX = Math.min(...coords.map(([cx])=>cx));
+    const minY = Math.min(...coords.map(([,cy])=>cy));
+
+    const nextPiece = {
+      ...state.selectedPiece,
+      x: x - minX,
+      y: y - minY,
+    };
+
+    tryApplyTransform(
+      nextPiece,
+      "4×4 판 바깥으로는 이동할 수 없습니다."
+    );
+  }
+}
+function openResetConfirm(){
+  el.confirmModal.classList.add("open");
+  el.confirmModal.setAttribute("aria-hidden","false");
+}
+function closeResetConfirm(){
+  el.confirmModal.classList.remove("open");
+  el.confirmModal.setAttribute("aria-hidden","true");
+}
+function resetBoard(){
+  state.board = createMatrix(boardSize, boardSize, null);
+  state.blocks.forEach(block => {
+    block.placed = false;
+    delete block.x;
+    delete block.y;
+    block.rotation = 0;
+  });
+  clearSelection();
+  setNotice("현재 판을 초기화했습니다. 추가로 받은 블록은 그대로 유지됩니다.");
+  closeResetConfirm();
+  renderAll();
+}
+function makeRandomBlock(id){
+  return { id, shape: sample(Object.keys(SHAPES)), color: sample(Object.keys(COLORS)), rotation:0, placed:false };
+}
+function drawExtraBlock(){
+  if(state.drawLeft <= 0 || state.solved) return;
+  const newBlock = state.reserveBlocks.length ? state.reserveBlocks.shift() : makeRandomBlock(`extra-${Date.now()}-${Math.random().toString(16).slice(2,6)}`);
+  state.blocks.push(newBlock);
+  state.drawLeft -= 1;
+  state.drawUsed += 1;
+  setNotice(`블럭뽑기로 ${COLORS[newBlock.color].name} ${SHAPE_INFO[newBlock.shape].name}이(가) 추가되었습니다.`);
+  renderAll();
+}
+function generateStage(){
+  state.drawLeft = 2;
+  state.drawUsed = 0;
+  state.solved = false;
+  state.board = createMatrix(boardSize, boardSize, null);
+  state.target = createMatrix(boardSize, boardSize, null);
+  state.blocks = [];
+  state.reserveBlocks = [];
+  clearSelection();
+
+  const targetPieces = [];
+  const targetBoard = createMatrix(boardSize, boardSize, null);
+  const desiredPieces = rand(4, 6);
+  let safety = 0;
+
+  while(targetPieces.length < desiredPieces && safety < 300){
+    safety += 1;
+    const shape = sample(Object.keys(SHAPES));
+    const color = sample(Object.keys(COLORS));
+    const rotation = rand(0, 3);
+    const coords = orientedCoords(shape, rotation);
+    const {width, height} = bounds(coords);
+    if(width > boardSize || height > boardSize) continue;
+    const x = rand(0, boardSize - width);
+    const y = rand(0, boardSize - height);
+    const piece = {shape, color, rotation, x, y};
+
+    const cells = getPieceCells(piece);
+    let ok = true;
+    for(const c of cells){
+      if(targetBoard[c.y][c.x]) { ok = false; break; }
+    }
+    if(!ok) continue;
+
+    let fillCount = 0;
+    for(const row of targetBoard){ for(const c of row){ if(c) fillCount += 1; } }
+    const size = SHAPE_INFO[shape].size;
+    if(fillCount + size > 14) continue;
+
+    cells.forEach(c => targetBoard[c.y][c.x] = color);
+    targetPieces.push({
+      id:`b-${targetPieces.length+1}`,
+      shape, color, rotation:0, placed:false
+    });
+  }
+
+  let filled = 0;
+  for(const row of targetBoard){ for(const c of row){ if(c) filled += 1; } }
+  if(filled < 7){ generateStage(); return; }
+
+  state.target = targetBoard;
+  state.blocks = targetPieces;
+  for(let i=0;i<2;i++){
+    state.reserveBlocks.push(makeRandomBlock(`reserve-${i+1}-${Date.now()}-${Math.random().toString(16).slice(2,6)}`));
+  }
+  state.startTime = performance.now();
+  el.objectiveText.innerHTML = `<b>실험 목표</b><br>이번 단계는 <b>${filled}칸</b>의 주문석이 사용됩니다. 목표와 같은 <b>색상 배열</b>을 만들면 성공입니다. 블럭뽑기는 최대 2회까지 사용 가능합니다.`;
+  setNotice("새 실험이 시작되었습니다. 우측 제공 블록에서 하나를 선택하세요.");
+  renderAll();
+}
+function checkSolved(){
+  if(state.solved) return;
+  if(allCellsFilledEqual()){
+    state.solved = true;
+    const score = 1000 + currentTimeBonus() + Math.max(0, 600 - state.drawUsed * 250);
+    updateBest(score);
+    setNotice(`복원 성공! 최종 점수 ${score.toLocaleString()}점 · 경과 시간 ${getElapsedSec().toFixed(1)}초`, "good");
+  }
+  renderAll();
+}
+function renderAll(){
+  renderStats();
+  renderTarget();
+  renderBoard();
+  renderPiecePreview();
+  renderTray();
+  updateButtons();
+}
+
+buildGrid(el.targetGrid, "target");
+buildGrid(el.boardGrid, "");
+el.boardGrid.addEventListener("click", boardCellClick);
+
+el.moveUpBtn.addEventListener("click", ()=>moveCurrent(0,-1));
+el.moveDownBtn.addEventListener("click", ()=>moveCurrent(0,1));
+el.moveLeftBtn.addEventListener("click", ()=>moveCurrent(-1,0));
+el.moveRightBtn.addEventListener("click", ()=>moveCurrent(1,0));
+el.rotateBtn.addEventListener("click", rotateCurrent);
+el.placeBtn.addEventListener("click", placeCurrent);
+el.cancelBtn.addEventListener("click", cancelSelection);
+el.removeBtn.addEventListener("click", removeSelected);
+el.resetBtn.addEventListener("click", openResetConfirm);
+el.drawBtn.addEventListener("click", drawExtraBlock);
+el.newStageBtn.addEventListener("click", () => { state.stage += 1; generateStage(); });
+
+el.modalCloseBtn.addEventListener("click", closeResetConfirm);
+el.modalConfirmBtn.addEventListener("click", resetBoard);
+el.confirmModal.addEventListener("click", (event) => {
+  if(event.target === el.confirmModal) closeResetConfirm();
+});
+
+document.addEventListener("keydown", (event) => {
+  if(el.confirmModal.classList.contains("open")){
+    if(event.key === "Escape") closeResetConfirm();
+    return;
+  }
+  switch(event.key){
+    case "ArrowUp": case "w": case "W":
+      event.preventDefault(); moveCurrent(0,-1); break;
+    case "ArrowDown": case "s": case "S":
+      event.preventDefault(); moveCurrent(0,1); break;
+    case "ArrowLeft": case "a": case "A":
+      event.preventDefault(); moveCurrent(-1,0); break;
+    case "ArrowRight": case "d": case "D":
+      event.preventDefault(); moveCurrent(1,0); break;
+    case " ": case "r": case "R":
+      event.preventDefault(); rotateCurrent(); break;
+    case "Enter":
+      event.preventDefault(); placeCurrent(); break;
+    case "Escape":
+      event.preventDefault(); cancelSelection(); break;
+    case "Delete": case "Backspace":
+      removeSelected(); break;
+  }
+});
+
+setInterval(() => {
+  if(!state.solved && state.startTime) renderStats();
+}, 100);
+
+generateStage();
+</script>
+</body>
+</html>
