@@ -373,6 +373,70 @@ body::after{
   filter:invert(1) drop-shadow(0 0 8px rgba(0,239,255,.22));
   opacity:.9;
 }
+
+.runestone{
+  display:grid;
+  place-items:center;
+  padding:14px;
+  background:
+    radial-gradient(circle at center,rgba(168,94,255,.14),transparent 50%),
+    linear-gradient(145deg,#0a1019,#18101d);
+}
+.runestone img{
+  width:min(100%,210px);
+  max-height:160px;
+  object-fit:contain;
+  border-radius:12px;
+  filter:
+    saturate(.96)
+    contrast(1.08)
+    drop-shadow(0 10px 18px rgba(0,0,0,.5));
+  transition:transform .24s ease,filter .24s ease;
+}
+.project:hover .runestone img{
+  transform:scale(1.035);
+  filter:
+    saturate(1.13)
+    contrast(1.1)
+    drop-shadow(0 12px 24px rgba(156,72,224,.26));
+}
+.legal-notice{
+  margin-top:28px;
+  padding:18px;
+  border:1px solid rgba(0,239,255,.10);
+  background:
+    linear-gradient(180deg,rgba(8,15,23,.74),rgba(4,8,13,.78));
+  color:#718596;
+  font-size:11px;
+  line-height:1.8;
+}
+.legal-notice strong{
+  color:#a8bdcc;
+}
+.contact-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+.contact-btn{
+  appearance:none;
+  padding:7px 10px;
+  border:1px solid rgba(0,239,255,.18);
+  background:rgba(0,239,255,.045);
+  color:#a8eaf0;
+  cursor:pointer;
+  font:inherit;
+  font-size:11px;
+  font-weight:900;
+}
+.contact-btn:hover{
+  border-color:rgba(0,239,255,.4);
+  color:#e3fcff;
+  box-shadow:0 0 14px rgba(0,239,255,.08);
+}
+
 .locked{
   cursor:not-allowed;
   border-color:rgba(255,85,119,.22);
@@ -658,20 +722,40 @@ iframe{
       </div>
     </button>
 
-    <button class="project locked" type="button" id="lockedCard">
-      <div class="project-meta"><span>LAB-003</span><span class="tag">CLASSIFIED</span></div>
-      <div class="visual">
-        <span class="lock">⌾</span>
-        <span class="redacted"></span>
+    <button class="project" type="button"
+      data-game="./games/runestone-research/index.html"
+      data-title="주문석 연구"
+      data-code="LAB-003 · PROJECT C">
+      <div class="project-meta"><span>LAB-003</span><span class="tag">ACTIVE</span></div>
+      <div class="visual runestone">
+        <img src="./images/runestone-research.png" alt="주문석 배열 예시">
       </div>
       <div class="project-copy">
-        <h3 class="project-title">Project C</h3>
-        <span class="project-eng">RESTRICTED ACCESS</span>
-        <p>식별 정보가 손상되었으며 현재 접근 권한이 없습니다.</p>
-        <div class="action"><span>LOCKED</span><span>×</span></div>
+        <h3 class="project-title">주문석 연구</h3>
+        <span class="project-eng">PROJECT C · RUNESTONE RESEARCH</span>
+        <p>여러 색의 주문석을 이동하고 회전해 제시된 4×4 배열을 복원합니다.</p>
+        <div class="action"><span>연구 시작</span><span>→</span></div>
       </div>
     </button>
   </section>
+
+  <aside class="legal-notice">
+    <strong>비공식 팬 콘텐츠 안내</strong><br>
+    본 사이트는 프라시아 전기 공략 사이트이며, 넥슨의 공식 서비스가 아닙니다.<br>
+    게임 관련 이미지 및 명칭, 일부 리소스의 권리는 ㈜넥슨코리아에 있습니다.<br>
+    미니게임은 팬 콘텐츠로 비상업적으로 제작되었습니다.
+
+    <div class="contact-row">
+      <span>관련 문의: noru [at] noruzip.org</span>
+      <button
+        class="contact-btn"
+        id="contactMailButton"
+        type="button"
+        data-user="noru"
+        data-domain="noruzip.org"
+      >메일 보내기</button>
+    </div>
+  </aside>
 
   <footer class="footer">
     연구 기록은 예고 없이 변경·중단·폐기될 수 있습니다.<br>
@@ -722,14 +806,16 @@ modal.addEventListener("click", event => {
   if(event.target === modal) closeGame();
 });
 
-document.getElementById("lockedCard").addEventListener("click", () => {
-  clearTimeout(toastTimer);
-  toast.classList.add("show");
-  toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
-});
-
 document.addEventListener("keydown", event => {
   if(event.key === "Escape" && modal.classList.contains("open")) closeGame();
+});
+
+const contactMailButton = document.getElementById("contactMailButton");
+contactMailButton?.addEventListener("click", () => {
+  const user = contactMailButton.dataset.user;
+  const domain = contactMailButton.dataset.domain;
+  const subject = encodeURIComponent("[노루 프라시아 연구소 문의]");
+  window.location.href = `mailto:${user}@${domain}?subject=${subject}`;
 });
 </script>
 </body>
