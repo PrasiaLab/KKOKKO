@@ -238,6 +238,51 @@
     .vault-coin.two { left:41%; top:22px; transform:rotate(8deg); }
     .vault-coin.three { right:17%; top:50px; transform:rotate(15deg); }
 
+
+    .rune-visual {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      background:
+        linear-gradient(rgba(10,14,20,.18),rgba(10,14,20,.48)),
+        url("./games/project-n/assets/bg/ruins_bg.jpg") center/cover no-repeat;
+    }
+
+    .rune-visual::before {
+      content:"";
+      position:absolute;
+      inset:14px 18px;
+      border:1px solid rgba(228,203,145,.16);
+      border-radius:15px;
+      background:
+        url("./games/project-n/assets/bg/parchment_board.png") center/100% 100% no-repeat;
+      opacity:.78;
+      filter:drop-shadow(0 8px 16px rgba(0,0,0,.28));
+    }
+
+    .rune-symbol {
+      position:relative;
+      z-index:2;
+      width:66px;
+      height:66px;
+      object-fit:contain;
+      filter:drop-shadow(0 5px 10px rgba(0,0,0,.28));
+      transition:transform .25s ease;
+    }
+
+    .project-card.active:hover .rune-symbol:nth-child(1) {
+      transform:translateY(-3px) rotate(-3deg);
+    }
+
+    .project-card.active:hover .rune-symbol:nth-child(2) {
+      transform:translateY(-5px);
+    }
+
+    .project-card.active:hover .rune-symbol:nth-child(3) {
+      transform:translateY(-3px) rotate(3deg);
+    }
+
     .classified-visual {
       display:grid;
       place-items:center;
@@ -457,7 +502,7 @@
       <h1>숨겨진 연구소</h1>
       <p class="lab-story">
         <strong>이곳을 찾아내셨군요.</strong><br>
-        이곳은 본 연구소에 정식 등록되기 전의 기능을 시험하거나,<br>
+        이곳은 본 연구소에 정식 등록되기 전의 기능을 시험하거나,
         점검 시간 동안 잠시 즐길 수 있는 미니게임을 연구하는 공간입니다.<br>
         연구 중인 기능은 예고 없이 변경되거나 어느 날 갑자기 사라질 수도 있습니다.
       </p>
@@ -474,7 +519,14 @@
       </div>
 
       <div class="project-grid">
-        <button class="project-card active" id="memoryVaultCard" type="button">
+        <button
+          class="project-card active"
+          id="memoryVaultCard"
+          type="button"
+          data-game-src="./games/memory-vault/index.html"
+          data-game-title="기억의 금고"
+          data-game-code="LAB-001 · ACTIVE EXPERIMENT"
+        >
           <div class="project-meta">
             <span>LAB-001</span>
             <span class="status active">ACTIVE</span>
@@ -493,20 +545,28 @@
           </div>
         </button>
 
-        <button class="project-card locked" type="button" data-locked-project="Project N">
+        <button
+          class="project-card active"
+          id="projectNCard"
+          type="button"
+          data-game-src="./games/project-n/index.html"
+          data-game-title="고대문자 해독실험"
+          data-game-code="LAB-002 · PROJECT N"
+        >
           <div class="project-meta">
             <span>LAB-002</span>
-            <span class="status classified">CLASSIFIED</span>
+            <span class="status active">ACTIVE</span>
           </div>
-          <div class="project-visual classified-visual">
-            <span class="classified-symbol">N</span>
-            <span class="redacted"></span>
+          <div class="project-visual rune-visual">
+            <img class="rune-symbol" src="./games/project-n/assets/letters/N.png" alt="">
+            <img class="rune-symbol" src="./games/project-n/assets/letters/O.png" alt="">
+            <img class="rune-symbol" src="./games/project-n/assets/letters/R.png" alt="">
           </div>
           <div class="project-copy">
-            <h3>Project N</h3>
-            <span class="eng">CONFIDENTIAL DEVELOPMENT</span>
-            <p>식별 정보가 제거된 비공개 실험 기록입니다.</p>
-            <div class="project-action"><span>비공개 개발 중</span><span>⌁</span></div>
+            <h3>고대문자 해독실험</h3>
+            <span class="eng">PROJECT N · LETTER DECODING</span>
+            <p>목표 영문에 대응하는 프라시아 문자를 찾아 기록을 복원하십시오.</p>
+            <div class="project-action"><span>실험 시작</span><span>→</span></div>
           </div>
         </button>
 
@@ -539,7 +599,7 @@
     <div class="game-dialog" role="dialog" aria-modal="true" aria-labelledby="gameModalTitle">
       <div class="game-header">
         <div class="game-title">
-          <small>LAB-001 · ACTIVE EXPERIMENT</small>
+          <small id="gameModalCode">LAB-001 · ACTIVE EXPERIMENT</small>
           <strong id="gameModalTitle">기억의 금고</strong>
         </div>
         <button class="game-close" id="gameClose" type="button" aria-label="실험 종료">✕</button>
@@ -556,8 +616,18 @@
     const toast = document.getElementById("labToast");
     let toastTimer = 0;
 
-    function openGame() {
-      frame.src = "./games/memory-vault/index.html";
+    const gameModalTitle = document.getElementById("gameModalTitle");
+    const gameModalCode = document.getElementById("gameModalCode");
+
+    function openGame(card) {
+      const src = card.dataset.gameSrc;
+      if (!src) {
+        return;
+      }
+
+      frame.src = src;
+      gameModalTitle.textContent = card.dataset.gameTitle || "실험";
+      gameModalCode.textContent = card.dataset.gameCode || "ACTIVE EXPERIMENT";
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
@@ -579,7 +649,9 @@
       }, 2200);
     }
 
-    document.getElementById("memoryVaultCard").addEventListener("click", openGame);
+    document.querySelectorAll("[data-game-src]").forEach((card) => {
+      card.addEventListener("click", () => openGame(card));
+    });
     document.getElementById("gameClose").addEventListener("click", closeGame);
 
     modal.addEventListener("click", (event) => {
