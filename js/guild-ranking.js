@@ -3,6 +3,7 @@
 
   const SCORE_URL = "./data/Who_are_you_guild_score.json";
   const MEMBER_URL = "./data/Who_are_you_class.json";
+  const GUILD_URL = "./data/Who_are_you_guild.json";
   const DEFAULT_PAGE_SIZE = 50;
 
   const CLASS_ORDER = [
@@ -17,6 +18,9 @@
 
   const state = {
     rankings: [],
+    levelRankings: [],
+    raidRankings: [],
+    guildRankings: [],
     members: [],
     classMap: {},
     filtered: [],
@@ -24,6 +28,8 @@
     pageSize: DEFAULT_PAGE_SIZE,
     query: "",
     server: "all",
+    criterion: "level",
+    maxGrade: 0,
     activeMembers: [],
     activeFilter: null
   };
@@ -107,7 +113,7 @@
         <div>
           <p class="eyebrow">GUILD RANKING</p>
           <h1>결사 순위</h1>
-          <p class="page-description">
+          <p class="page-description" id="guildRankingDescription">
             결사원 레벨별 점수를 합산해 전체 서버 결사 순위를 제공합니다.
           </p>
         </div>
@@ -139,6 +145,14 @@
           </label>
 
           <label class="guild-ranking-select">
+            <span>기준</span>
+            <select id="guildRankingCriterion">
+              <option value="level" selected>소속 결사원 레벨</option>
+              <option value="raid">최고 토벌레벨 달성 인원</option>
+            </select>
+          </label>
+
+          <label class="guild-ranking-select">
             <span>표시 개수</span>
             <select id="guildRankingPageSize">
               <option value="25">25개</option>
@@ -149,7 +163,7 @@
           </label>
         </div>
 
-        <div class="guild-ranking-guide">
+        <div class="guild-ranking-guide" id="guildRankingGuide">
           <span class="guild-ranking-legend up">▲ 상승</span>
           <span class="guild-ranking-legend down">▼ 하락</span>
           <span class="guild-ranking-legend new">NEW 신규</span>
@@ -179,18 +193,7 @@
 
           <div class="guild-ranking-table-scroll">
             <table class="guild-ranking-table">
-              <thead>
-                <tr>
-                  <th>순위</th>
-                  <th>결사명</th>
-                  <th>결사장</th>
-                  <th>인원</th>
-                  <th>서버명</th>
-                  <th>총점</th>
-                  <th>점수 변동폭</th>
-                  <th>순위 변동</th>
-                </tr>
-              </thead>
+              <thead id="guildRankingHead"></thead>
               <tbody id="guildRankingBody"></tbody>
             </table>
           </div>
@@ -349,10 +352,106 @@
     }
   }
 
+  function guildKey(world, guildName) {
+    return `${normalize(world)}|${normalize(guildName)}`;
+  }
+
+  function buildRaidRankings() {
+    const guildMeta = new Map();
+    state.guildRankings.forEach((item) => {
+      guildMeta.set(guildKey(item.world, item.guild_name), item);
+    });
+
+    const scoreMeta = new Map();
+    state.levelRankings.forEach((item) => {
+      scoreMeta.set(guildKey(item.world, item.guild_name), item);
+    });
+
+    state.maxGrade = Math.max(0, ...state.members.map((item) => number(item.grade)));
+    const grouped = new Map();
+
+    state.members.forEach((member) => {
+      const guildName = String(member.guild || "").trim();
+      if (!guildName || guildName === "-") return;
+      const key = guildKey(member.world, guildName);
+      if (!grouped.has(key)) {
+        grouped.set(key, {
+          world: member.world,
+          guild_name: guildName,
+          members: []
+        });
+      }
+      grouped.get(key).members.push(member);
+    });
+
+    const gradeLevels = [...new Set(state.members.map((item) => number(item.grade)).filter((value) => value > 0))].sort((a,b)=>b-a);
+
+    const rows = [...grouped.values()].map((group) => {
+      const meta = guildMeta.get(guildKey(group.world, group.guild_name)) || {};
+      const score = scoreMeta.get(guildKey(group.world, group.guild_name)) || {};
+      const gradeCounts = {};
+      group.members.forEach((member) => {
+        const grade = number(member.grade);
+        gradeCounts[grade] = (gradeCounts[grade] || 0) + 1;
+      });
+      const averageGrade = group.members.length
+        ? group.members.reduce((sum, member) => sum + number(member.grade), 0) / group.members.length
+        : 0;
+      const averageLevel = group.members.length
+        ? group.members.reduce((sum, member) => sum + number(member.level), 0) / group.members.length
+        : 0;
+      return {
+        world: group.world,
+        guild_name: group.guild_name,
+        guild_master: meta.guild_master || score.guild_master || "-",
+        guild_member_count: number(meta.guild_member_count || score.guild_member_count || group.members.length),
+        ranked_member_count: group.members.length,
+        grade_counts: gradeCounts,
+        max_grade_count: gradeCounts[state.maxGrade] || 0,
+        next_grade_count: gradeCounts[state.maxGrade - 1] || 0,
+        average_grade: averageGrade,
+        average_level: averageLevel
+      };
+    });
+
+    rows.sort((a, b) => {
+      for (const grade of gradeLevels) {
+        const diff = number(b.grade_counts[grade]) - number(a.grade_counts[grade]);
+        if (diff) return diff;
+      }
+      if (b.average_grade !== a.average_grade) return b.average_grade - a.average_grade;
+      if (b.average_level !== a.average_level) return b.average_level - a.average_level;
+      return a.guild_name.localeCompare(b.guild_name, "ko");
+    });
+
+    return rows.map((item, index) => ({ ...item, rank: index + 1 }));
+  }
+
+  function currentSource() {
+    return state.criterion === "raid" ? state.raidRankings : state.levelRankings;
+  }
+
+  function updateCriterionUi() {
+    const raid = state.criterion === "raid";
+    $("guildRankingDescription").textContent = raid
+      ? `소속 결사원 중 현재 최고 토벌레벨 ${state.maxGrade} 달성 인원이 많은 순으로 결사 순위를 제공합니다.`
+      : "결사원 레벨별 점수를 합산해 전체 서버 결사 순위를 제공합니다.";
+
+    const guide = $("guildRankingGuide");
+    guide.innerHTML = raid
+      ? `<strong class="guild-ranking-raid-guide">토벌 ${state.maxGrade} 달성 인원을 우선하며, 동률은 다음 토벌레벨 인원과 평균 토벌 순으로 정렬합니다.</strong>`
+      : `<span class="guild-ranking-legend up">▲ 상승</span><span class="guild-ranking-legend down">▼ 하락</span><span class="guild-ranking-legend new">NEW 신규</span><span class="guild-ranking-legend same">- 변동 없음</span><small>주식시장 색상 기준: 상승은 붉은색, 하락은 파란색입니다.</small>`;
+
+    $("guildRankingHead").innerHTML = raid
+      ? `<tr><th>순위</th><th>결사명</th><th>결사장</th><th>서버명</th><th>토벌 ${state.maxGrade} 달성</th><th>토벌 ${Math.max(0,state.maxGrade-1)} 달성</th><th>평균 토벌</th><th>확인 인원</th></tr>`
+      : `<tr><th>순위</th><th>결사명</th><th>결사장</th><th>인원</th><th>서버명</th><th>총점</th><th>점수 변동폭</th><th>순위 변동</th></tr>`;
+  }
+
   function buildServerOptions() {
     const select = $("guildRankingServerSelect");
+    select.innerHTML = '<option value="all">전체 서버</option>';
     const worlds = [...new Set(
-      state.rankings
+      [...state.levelRankings, ...state.raidRankings]
         .map((item) => String(item.world || ""))
         .filter(Boolean)
     )].sort((a, b) => a.localeCompare(b, "ko", { numeric: true }));
@@ -368,6 +467,7 @@
   function applyFilters() {
     const query = normalize(state.query);
 
+    state.rankings = currentSource();
     state.filtered = state.rankings.filter((item) => {
       const matchesQuery =
         !query ||
@@ -388,97 +488,60 @@
   function renderTable() {
     const body = $("guildRankingBody");
     const total = state.filtered.length;
-    const size =
-      state.pageSize === "all"
-        ? Math.max(total, 1)
-        : number(state.pageSize) || DEFAULT_PAGE_SIZE;
-
+    const size = state.pageSize === "all" ? Math.max(total, 1) : number(state.pageSize) || DEFAULT_PAGE_SIZE;
     const totalPages = Math.max(1, Math.ceil(total / size));
     state.page = Math.min(state.page, totalPages);
-
     const start = (state.page - 1) * size;
     const visible = state.filtered.slice(start, start + size);
 
+    updateCriterionUi();
     body.innerHTML = "";
 
     if (!visible.length) {
       const row = document.createElement("tr");
-      row.innerHTML = `
-        <td colspan="8" class="guild-ranking-empty">
-          조건에 맞는 결사가 없습니다.
-        </td>
-      `;
+      row.innerHTML = `<td colspan="8" class="guild-ranking-empty">조건에 맞는 결사가 없습니다.</td>`;
       body.appendChild(row);
     }
 
     visible.forEach((item) => {
-      const scoreChange = changeInfo(
-        item.score_change,
-        Boolean(item.is_new)
-      );
-
-      const rankChange = changeInfo(
-        item.rank_change,
-        Boolean(item.is_new)
-      );
-
       const row = document.createElement("tr");
+      if (number(item.rank) <= 3) row.classList.add(`top-${number(item.rank)}`);
 
-      if (number(item.rank) <= 3) {
-        row.classList.add(`top-${number(item.rank)}`);
+      if (state.criterion === "raid") {
+        row.innerHTML = `
+          <td class="guild-ranking-rank">${formatNumber(item.rank)}</td>
+          <td><button class="guild-ranking-name" type="button">${escapeHtml(item.guild_name || "-")}</button></td>
+          <td>${escapeHtml(item.guild_master || "-")}</td>
+          <td>${escapeHtml(serverName(item.world))}</td>
+          <td class="guild-ranking-raid-count"><strong>${formatNumber(item.max_grade_count)}명</strong></td>
+          <td>${formatNumber(item.next_grade_count)}명</td>
+          <td>${number(item.average_grade).toFixed(2)}</td>
+          <td><strong>${formatNumber(item.ranked_member_count)}명</strong><small>결사원 ${formatNumber(item.guild_member_count)}명</small></td>
+        `;
+      } else {
+        const scoreChange = changeInfo(item.score_change, Boolean(item.is_new));
+        const rankChange = changeInfo(item.rank_change, Boolean(item.is_new));
+        row.innerHTML = `
+          <td class="guild-ranking-rank">${formatNumber(item.rank)}</td>
+          <td><button class="guild-ranking-name" type="button">${escapeHtml(item.guild_name || "-")}</button></td>
+          <td>${escapeHtml(item.guild_master || "-")}</td>
+          <td><strong>${formatNumber(item.guild_member_count)}명</strong><small>반영 ${formatNumber(item.ranked_member_count)}명</small></td>
+          <td>${escapeHtml(serverName(item.world))}</td>
+          <td class="guild-ranking-score">${formatNumber(item.score)}</td>
+          <td><span class="guild-ranking-change ${scoreChange.className}">${scoreChange.text}</span></td>
+          <td><span class="guild-ranking-change ${rankChange.className}">${rankChange.text}</span></td>
+        `;
       }
 
-      row.innerHTML = `
-        <td class="guild-ranking-rank">
-          ${formatNumber(item.rank)}
-        </td>
-        <td>
-          <button
-            class="guild-ranking-name"
-            type="button"
-          >
-            ${escapeHtml(item.guild_name || "-")}
-          </button>
-        </td>
-        <td>${escapeHtml(item.guild_master || "-")}</td>
-        <td>
-          <strong>${formatNumber(item.guild_member_count)}명</strong>
-          <small>반영 ${formatNumber(item.ranked_member_count)}명</small>
-        </td>
-        <td>${escapeHtml(serverName(item.world))}</td>
-        <td class="guild-ranking-score">
-          ${formatNumber(item.score)}
-        </td>
-        <td>
-          <span class="guild-ranking-change ${scoreChange.className}">
-            ${scoreChange.text}
-          </span>
-        </td>
-        <td>
-          <span class="guild-ranking-change ${rankChange.className}">
-            ${rankChange.text}
-          </span>
-        </td>
-      `;
-
-      row
-        .querySelector(".guild-ranking-name")
-        .addEventListener("click", () => {
-          openMemberModal(item);
-        });
-
+      row.querySelector(".guild-ranking-name").addEventListener("click", () => openMemberModal(item));
       body.appendChild(row);
     });
 
     $("guildRankingCount").textContent = `${formatNumber(total)}개`;
-    $("guildRankingPageInfo").textContent =
-      `${state.page} / ${totalPages}`;
-
+    $("guildRankingPageInfo").textContent = `${state.page} / ${totalPages}`;
     $("guildRankingPrev").disabled = state.page <= 1;
     $("guildRankingNext").disabled = state.page >= totalPages;
-
-    $("guildRankingPagination").hidden =
-      state.pageSize === "all" || totalPages <= 1;
+    $("guildRankingPagination").hidden = state.pageSize === "all" || totalPages <= 1;
   }
 
   function escapeHtml(value) {
@@ -809,6 +872,18 @@
       applyFilters();
     });
 
+    $("guildRankingCriterion").addEventListener("change", (event) => {
+      state.criterion = event.target.value;
+      state.page = 1;
+      applyFilters();
+      setStatus(
+        state.criterion === "raid"
+          ? `토벌 ${state.maxGrade} 달성 인원 기준 결사 순위입니다.`
+          : `전체 ${formatNumber(state.levelRankings.length)}개 결사 레벨 점수 순위입니다.`,
+        "success"
+      );
+    });
+
     $("guildRankingPageSize").addEventListener("change", (event) => {
       state.pageSize = event.target.value;
       state.page = 1;
@@ -880,12 +955,13 @@
     bindEvents();
 
     try {
-      const [scoreDocument, memberDocument] = await Promise.all([
+      const [scoreDocument, memberDocument, guildDocument] = await Promise.all([
         fetchJson(SCORE_URL),
-        fetchJson(MEMBER_URL)
+        fetchJson(MEMBER_URL),
+        fetchJson(GUILD_URL)
       ]);
 
-      state.rankings = Array.isArray(scoreDocument?.rankings)
+      state.levelRankings = Array.isArray(scoreDocument?.rankings)
         ? scoreDocument.rankings
         : [];
 
@@ -893,7 +969,13 @@
         ? memberDocument.rankings
         : [];
 
+      state.guildRankings = Array.isArray(guildDocument?.rankings)
+        ? guildDocument.rankings
+        : [];
+
       state.classMap = memberDocument?.class_map || {};
+      state.raidRankings = buildRaidRankings();
+      state.rankings = currentSource();
       state.filtered = [...state.rankings];
 
       $("guildRankingUpdatedAt").textContent =
@@ -901,7 +983,7 @@
         scoreDocument?.metadata?.extracted_at ||
         "-";
 
-      if (!state.rankings.length) {
+      if (!state.levelRankings.length) {
         setStatus(
           "표시할 결사 순위 데이터가 없습니다. 먼저 전체 데이터 갱신을 실행해주세요.",
           "error"
@@ -914,7 +996,7 @@
 
       $("guildRankingContent").hidden = false;
       setStatus(
-        `전체 ${formatNumber(state.rankings.length)}개 결사 순위를 불러왔습니다.`,
+        `전체 ${formatNumber(state.levelRankings.length)}개 결사 순위를 불러왔습니다.`,
         "success"
       );
     } catch (error) {

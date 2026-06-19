@@ -21,6 +21,16 @@
   const classNames =
     mappings.classes || {};
 
+  const CLASS_ORDER = [
+    "심연추방자",
+    "집행관",
+    "태양감시자",
+    "주문각인사",
+    "환영검사",
+    "야만투사",
+    "향사수"
+  ];
+
   const tabs = Array.from(
     document.querySelectorAll(
       "[data-stat-mode]"
@@ -96,6 +106,8 @@
   let currentMode = "level";
   let currentList = [];
   let currentPage = 1;
+  let currentSelectedValue = null;
+  let gradeClassPanel = null;
 
   function setStatus(
     message,
@@ -416,6 +428,86 @@
     });
   }
 
+  function ensureGradeClassPanel() {
+    if (gradeClassPanel) {
+      return gradeClassPanel;
+    }
+
+    const detail = document.querySelector(".statistics-detail");
+    if (!detail) {
+      return null;
+    }
+
+    const panel = document.createElement("section");
+    panel.className = "statistics-grade-class-panel";
+    panel.id = "statisticsGradeClassPanel";
+    panel.hidden = true;
+    panel.innerHTML = `
+      <div class="statistics-grade-class-heading">
+        <div>
+          <span class="statistics-detail-kicker">CLASS ACHIEVEMENT</span>
+          <h2 id="statisticsGradeClassTitle">직업별 달성 현황</h2>
+          <p>선택한 토벌레벨을 달성한 인원을 직업별로 비교합니다.</p>
+        </div>
+        <div class="statistics-grade-class-summary">
+          <article><span>총 달성 인원</span><strong id="statisticsGradeClassTotal">0명</strong></article>
+          <article><span>최다 직업</span><strong id="statisticsGradeClassMax">-</strong></article>
+          <article><span>최소 직업</span><strong id="statisticsGradeClassMin">-</strong></article>
+        </div>
+      </div>
+      <div class="statistics-grade-class-bars" id="statisticsGradeClassBars"></div>
+    `;
+
+    detail.parentNode.insertBefore(panel, detail);
+    gradeClassPanel = panel;
+    return panel;
+  }
+
+  function renderGradeClassBreakdown(value, people) {
+    const panel = ensureGradeClassPanel();
+    if (!panel) return;
+
+    if (currentMode !== "grade") {
+      panel.hidden = true;
+      return;
+    }
+
+    const counts = new Map(CLASS_ORDER.map((name) => [name, 0]));
+    people.forEach((item) => {
+      const name = item.className || formatClassName(item.classCode);
+      counts.set(name, (counts.get(name) || 0) + 1);
+    });
+
+    const rows = [...counts.entries()]
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count || CLASS_ORDER.indexOf(a.name) - CLASS_ORDER.indexOf(b.name));
+
+    const maximum = Math.max(1, ...rows.map((item) => item.count));
+    const top = rows[0];
+    const minimum = [...rows].sort((a, b) => a.count - b.count || CLASS_ORDER.indexOf(a.name) - CLASS_ORDER.indexOf(b.name))[0];
+
+    document.getElementById("statisticsGradeClassTitle").textContent = `토벌 ${value} 직업별 달성 현황`;
+    document.getElementById("statisticsGradeClassTotal").textContent = `${people.length.toLocaleString("ko-KR")}명`;
+    document.getElementById("statisticsGradeClassMax").textContent = `${top?.name || "-"} ${top ? top.count.toLocaleString("ko-KR") : 0}명`;
+    document.getElementById("statisticsGradeClassMin").textContent = `${minimum?.name || "-"} ${minimum ? minimum.count.toLocaleString("ko-KR") : 0}명`;
+
+    const bars = document.getElementById("statisticsGradeClassBars");
+    bars.innerHTML = rows.map((item) => {
+      const ratio = people.length ? (item.count / people.length) * 100 : 0;
+      const width = item.count ? Math.max(3, (item.count / maximum) * 100) : 0;
+      return `
+        <div class="statistics-grade-class-row">
+          <strong>${item.name}</strong>
+          <div class="statistics-grade-class-track"><span style="width:${width.toFixed(2)}%"></span></div>
+          <span>${item.count.toLocaleString("ko-KR")}명</span>
+          <small>${ratio.toFixed(1)}%</small>
+        </div>
+      `;
+    }).join("");
+
+    panel.hidden = false;
+  }
+
   function createCell(
     text,
     className = ""
@@ -549,13 +641,16 @@
 
   function selectValue(value) {
     currentPage = 1;
+    currentSelectedValue = value;
 
-    currentList = sortPeople(
+    const fullList = sortPeople(
       filterByValue(
         currentMode,
         value
       )
-    ).slice(0, MAX_ITEMS);
+    );
+
+    currentList = fullList.slice(0, MAX_ITEMS);
 
     document
       .querySelectorAll(
@@ -578,6 +673,7 @@
     detailCount.textContent =
       `${currentList.length.toLocaleString()}명`;
 
+    renderGradeClassBreakdown(value, fullList);
     renderTable();
   }
 
@@ -687,6 +783,11 @@
 
   function changeMode(mode) {
     currentMode = mode;
+    currentSelectedValue = null;
+
+    if (gradeClassPanel && mode !== "grade") {
+      gradeClassPanel.hidden = true;
+    }
 
     tabs.forEach((tab) => {
       const isActive =
