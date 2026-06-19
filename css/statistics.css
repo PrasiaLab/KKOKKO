@@ -416,3 +416,26 @@
   font-size: 15px;
   font-weight: 650;
 }
+
+
+/* =========================================================
+   토벌 통계 · 직업별 달성 현황
+   ========================================================= */
+.statistics-grade-class-panel{margin-top:22px;padding:20px;border:1px solid var(--line);border-radius:16px;background:#181d24}
+.statistics-grade-class-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:18px}
+.statistics-grade-class-heading h2{margin:5px 0 0;font-size:23px}
+.statistics-grade-class-heading p{margin:8px 0 0;color:var(--muted);font-size:12px}
+.statistics-grade-class-summary{display:grid;grid-template-columns:repeat(3,minmax(145px,1fr));gap:9px}
+.statistics-grade-class-summary article{padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:#20262f;text-align:right}
+.statistics-grade-class-summary span,.statistics-grade-class-summary strong{display:block}
+.statistics-grade-class-summary span{color:var(--muted);font-size:10px}
+.statistics-grade-class-summary strong{margin-top:6px;color:#eef2f7;font-size:13px}
+.statistics-grade-class-bars{display:grid;gap:10px}
+.statistics-grade-class-row{display:grid;grid-template-columns:112px minmax(0,1fr) 72px 58px;align-items:center;gap:12px}
+.statistics-grade-class-row>strong{color:#dfe5ed;font-size:13px;text-align:right}
+.statistics-grade-class-row>span{color:var(--gold2);font-size:13px;font-weight:900;text-align:right}
+.statistics-grade-class-row>small{color:var(--muted);font-size:11px;text-align:right}
+.statistics-grade-class-track{height:13px;overflow:hidden;border-radius:999px;background:#272e38}
+.statistics-grade-class-track span{height:100%;display:block;border-radius:inherit;background:linear-gradient(90deg,var(--gold),var(--gold2));box-shadow:0 0 18px rgba(225,184,62,.16)}
+@media(max-width:1000px){.statistics-grade-class-heading{flex-direction:column}.statistics-grade-class-summary{width:100%;grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.statistics-grade-class-summary{grid-template-columns:1fr}.statistics-grade-class-row{grid-template-columns:88px minmax(0,1fr) 58px}.statistics-grade-class-row>small{display:none}}

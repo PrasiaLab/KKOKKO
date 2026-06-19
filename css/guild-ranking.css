@@ -37,7 +37,7 @@
 
 .guild-ranking-toolbar {
   display: grid;
-  grid-template-columns: minmax(260px, 1fr) 190px 150px;
+  grid-template-columns: minmax(250px, 1fr) 180px 220px 150px;
   gap: 11px;
 }
 
@@ -366,3 +366,11 @@
     max-height: 58vh;
   }
 }
+
+
+/* 토벌 달성 인원 기준 */
+.guild-ranking-raid-guide{color:#f0cf65;font-size:12px;line-height:1.6}
+.guild-ranking-raid-count strong{color:var(--gold2);font-size:15px}
+.guild-ranking-table td small{display:block;margin-top:4px;color:var(--muted);font-size:10px}
+@media(max-width:1180px){.guild-ranking-toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.guild-ranking-toolbar{grid-template-columns:1fr}}
