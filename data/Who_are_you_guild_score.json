@@ -1,11 +1,11 @@
 {
   "metadata": {
     "data_type": "guild_score_ranking",
-    "extracted_at": "2026-06-20T12:18:20+09:00",
-    "extracted_at_text": "2026-06-20 12:18:20",
+    "extracted_at": "2026-06-20T12:50:04+09:00",
+    "extracted_at_text": "2026-06-20 12:50:04",
     "timezone": "Asia/Seoul",
     "world_count": 50,
-    "item_count": 3599,
+    "item_count": 3600,
     "version": 1,
     "comparison_basis": "previous_successful_file"
   },
@@ -122,8 +122,8 @@
       "guild_member_count": 49,
       "max_guild_member_count": 50,
       "previous_rank": 4,
-      "previous_score": 4774,
-      "score_change": 10,
+      "previous_score": 4784,
+      "score_change": 0,
       "is_new": false,
       "rank": 4,
       "rank_change": 0
@@ -411,8 +411,8 @@
       "guild_member_count": 48,
       "max_guild_member_count": 50,
       "previous_rank": 14,
-      "previous_score": 3350,
-      "score_change": 5,
+      "previous_score": 3355,
+      "score_change": 0,
       "is_new": false,
       "rank": 14,
       "rank_change": 0
@@ -469,12 +469,12 @@
       "guild_level": 70,
       "guild_member_count": 50,
       "max_guild_member_count": 50,
-      "previous_rank": 17,
-      "previous_score": 3123,
-      "score_change": 50,
+      "previous_rank": 16,
+      "previous_score": 3173,
+      "score_change": 0,
       "is_new": false,
       "rank": 16,
-      "rank_change": 1
+      "rank_change": 0
     },
     {
       "world": "5-1",
@@ -500,12 +500,12 @@
       "guild_level": 69,
       "guild_member_count": 46,
       "max_guild_member_count": 50,
-      "previous_rank": 16,
+      "previous_rank": 17,
       "previous_score": 3153,
       "score_change": 0,
       "is_new": false,
       "rank": 17,
-      "rank_change": -1
+      "rank_change": 0
     },
     {
       "world": "3-2",
@@ -1528,12 +1528,12 @@
       "guild_level": 70,
       "guild_member_count": 50,
       "max_guild_member_count": 50,
-      "previous_rank": 50,
-      "previous_score": 702,
-      "score_change": 40,
+      "previous_rank": 49,
+      "previous_score": 742,
+      "score_change": 0,
       "is_new": false,
       "rank": 49,
-      "rank_change": 1
+      "rank_change": 0
     },
     {
       "world": "27-2",
@@ -1560,12 +1560,12 @@
       "guild_level": 63,
       "guild_member_count": 50,
       "max_guild_member_count": 50,
-      "previous_rank": 49,
+      "previous_rank": 50,
       "previous_score": 726,
       "score_change": 0,
       "is_new": false,
       "rank": 50,
-      "rank_change": -1
+      "rank_change": 0
     },
     {
       "world": "5-3",
@@ -1646,7 +1646,7 @@
         "87": 6,
         "86": 2,
         "85": 3,
-        "84": 1,
+        "84": 2,
         "81": 4,
         "79": 2,
         "63": 1,
@@ -1654,7 +1654,6 @@
         "78": 1,
         "68": 1,
         "67": 1,
-        "83": 1,
         "82": 1,
         "77": 1
       },
@@ -1806,6 +1805,46 @@
       "rank_change": 0
     },
     {
+      "world": "14-4",
+      "world_group_id": "LIVE_W14",
+      "world_id": "LIVE_W14_R4",
+      "guild_name": "골드문",
+      "score": 523,
+      "ranked_member_count": 47,
+      "scored_member_count": 11,
+      "level_counts": {
+        "92": 1,
+        "90": 2,
+        "89": 4,
+        "88": 3,
+        "87": 6,
+        "84": 5,
+        "81": 3,
+        "77": 2,
+        "76": 2,
+        "70": 1,
+        "78": 1,
+        "68": 1,
+        "86": 4,
+        "85": 5,
+        "83": 3,
+        "82": 1,
+        "73": 1,
+        "60": 1,
+        "91": 1
+      },
+      "guild_master": "지오시니",
+      "guild_level": 67,
+      "guild_member_count": 48,
+      "max_guild_member_count": 50,
+      "previous_rank": 59,
+      "previous_score": 518,
+      "score_change": 5,
+      "is_new": false,
+      "rank": 58,
+      "rank_change": 1
+    },
+    {
       "world": "12-4",
       "world_group_id": "LIVE_W12",
       "world_id": "LIVE_W12_R4",
@@ -1832,48 +1871,8 @@
       "previous_score": 520,
       "score_change": 0,
       "is_new": false,
-      "rank": 58,
-      "rank_change": 0
-    },
-    {
-      "world": "14-4",
-      "world_group_id": "LIVE_W14",
-      "world_id": "LIVE_W14_R4",
-      "guild_name": "골드문",
-      "score": 518,
-      "ranked_member_count": 47,
-      "scored_member_count": 11,
-      "level_counts": {
-        "92": 1,
-        "90": 2,
-        "89": 3,
-        "88": 4,
-        "87": 6,
-        "84": 5,
-        "81": 3,
-        "77": 2,
-        "76": 2,
-        "70": 1,
-        "78": 1,
-        "68": 1,
-        "86": 4,
-        "85": 5,
-        "83": 3,
-        "82": 1,
-        "73": 1,
-        "60": 1,
-        "91": 1
-      },
-      "guild_master": "지오시니",
-      "guild_level": 67,
-      "guild_member_count": 48,
-      "max_guild_member_count": 50,
-      "previous_rank": 59,
-      "previous_score": 518,
-      "score_change": 0,
-      "is_new": false,
       "rank": 59,
-      "rank_change": 0
+      "rank_change": -1
     },
     {
       "world": "11-4",
@@ -2990,8 +2989,8 @@
         "86": 4,
         "85": 1,
         "83": 4,
-        "82": 3,
-        "81": 5,
+        "82": 4,
+        "81": 4,
         "78": 1,
         "77": 1,
         "88": 2,
@@ -3327,12 +3326,12 @@
       "world_id": "LIVE_W03_R4",
       "guild_name": "콜드",
       "score": 65,
-      "ranked_member_count": 20,
+      "ranked_member_count": 21,
       "scored_member_count": 2,
       "level_counts": {
         "69": 1,
         "66": 2,
-        "65": 2,
+        "65": 3,
         "88": 1,
         "87": 1,
         "86": 2,
@@ -3347,7 +3346,7 @@
       },
       "guild_master": "메르비스에있는당근이",
       "guild_level": 68,
-      "guild_member_count": 49,
+      "guild_member_count": 50,
       "max_guild_member_count": 50,
       "previous_rank": 102,
       "previous_score": 65,
@@ -4666,7 +4665,8 @@
         "85": 1,
         "79": 1,
         "78": 1,
-        "76": 2,
+        "77": 1,
+        "76": 1,
         "75": 1
       },
       "guild_master": "드라이버",
@@ -5285,11 +5285,11 @@
         "76": 2,
         "88": 1,
         "85": 3,
-        "83": 7,
+        "83": 6,
         "81": 2,
         "77": 2,
         "84": 4,
-        "82": 1,
+        "82": 2,
         "79": 2,
         "59": 1,
         "87": 1
@@ -6461,14 +6461,14 @@
       "scored_member_count": 0,
       "level_counts": {
         "84": 5,
-        "80": 1,
+        "80": 2,
         "66": 1,
         "86": 1,
         "85": 5,
         "83": 6,
         "82": 1,
         "81": 3,
-        "79": 4,
+        "79": 3,
         "77": 2,
         "75": 1,
         "60": 1,
@@ -10587,7 +10587,7 @@
       },
       "guild_master": "돌파",
       "guild_level": 59,
-      "guild_member_count": 29,
+      "guild_member_count": 30,
       "max_guild_member_count": 50,
       "previous_rank": 341,
       "previous_score": 0,
@@ -10636,10 +10636,10 @@
         "65": 6,
         "85": 1,
         "81": 2,
-        "79": 3,
+        "80": 2,
         "74": 2,
         "82": 1,
-        "80": 1
+        "79": 2
       },
       "guild_master": "이르이르",
       "guild_level": 59,
@@ -11483,8 +11483,8 @@
       "ranked_member_count": 15,
       "scored_member_count": 0,
       "level_counts": {
-        "82": 2,
-        "81": 2,
+        "82": 3,
+        "81": 1,
         "79": 3,
         "72": 1,
         "83": 2,
@@ -12152,7 +12152,7 @@
         "80": 3,
         "77": 2,
         "84": 1,
-        "69": 1,
+        "70": 1,
         "73": 1,
         "85": 1,
         "76": 1
@@ -12661,8 +12661,7 @@
         "71": 3,
         "81": 1,
         "77": 1,
-        "74": 1,
-        "75": 1,
+        "75": 2,
         "72": 1
       },
       "guild_master": "소서",
@@ -13664,11 +13663,11 @@
         "65": 10,
         "66": 1,
         "80": 3,
-        "69": 2,
+        "70": 3,
         "83": 1,
         "79": 1,
         "77": 1,
-        "70": 2
+        "69": 1
       },
       "guild_master": "불타는자전거",
       "guild_level": 58,
@@ -14455,7 +14454,7 @@
       "ranked_member_count": 23,
       "scored_member_count": 0,
       "level_counts": {
-        "82": 3,
+        "82": 4,
         "79": 1,
         "74": 3,
         "69": 2,
@@ -14464,7 +14463,7 @@
         "65": 4,
         "83": 1,
         "80": 2,
-        "81": 2,
+        "81": 1,
         "78": 2,
         "77": 1
       },
@@ -16726,9 +16725,8 @@
         "65": 1,
         "85": 2,
         "72": 1,
-        "82": 1,
-        "79": 1,
-        "83": 1
+        "83": 2,
+        "79": 1
       },
       "guild_master": "진라면",
       "guild_level": 53,
@@ -16900,10 +16898,10 @@
       "world_id": "LIVE_W03_R4",
       "guild_name": "콩",
       "score": 0,
-      "ranked_member_count": 7,
+      "ranked_member_count": 6,
       "scored_member_count": 0,
       "level_counts": {
-        "65": 4,
+        "65": 3,
         "81": 1,
         "56": 1,
         "79": 1
@@ -17059,7 +17057,7 @@
       "ranked_member_count": 19,
       "scored_member_count": 0,
       "level_counts": {
-        "82": 1,
+        "83": 1,
         "81": 2,
         "79": 3,
         "70": 2,
@@ -27708,7 +27706,7 @@
       },
       "guild_master": "기억회복",
       "guild_level": 42,
-      "guild_member_count": 35,
+      "guild_member_count": 36,
       "max_guild_member_count": 47,
       "previous_rank": 978,
       "previous_score": 0,
@@ -28605,7 +28603,7 @@
       },
       "guild_master": "마기형님",
       "guild_level": 41,
-      "guild_member_count": 38,
+      "guild_member_count": 39,
       "max_guild_member_count": 45,
       "previous_rank": 1014,
       "previous_score": 0,
@@ -30236,6 +30234,31 @@
       "world": "5-1",
       "world_group_id": "LIVE_W05",
       "world_id": "LIVE_W05_R1",
+      "guild_name": "결사",
+      "score": 0,
+      "ranked_member_count": 4,
+      "scored_member_count": 0,
+      "level_counts": {
+        "65": 1,
+        "79": 1,
+        "67": 1,
+        "77": 1
+      },
+      "guild_master": "무적호야",
+      "guild_level": 40,
+      "guild_member_count": 9,
+      "max_guild_member_count": 45,
+      "previous_rank": 1127,
+      "previous_score": 0,
+      "score_change": 0,
+      "is_new": false,
+      "rank": 1081,
+      "rank_change": 46
+    },
+    {
+      "world": "5-1",
+      "world_group_id": "LIVE_W05",
+      "world_id": "LIVE_W05_R1",
       "guild_name": "요거트",
       "score": 0,
       "ranked_member_count": 3,
@@ -30253,8 +30276,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1081,
-      "rank_change": 0
+      "rank": 1082,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -30272,12 +30295,12 @@
       "guild_level": 40,
       "guild_member_count": 13,
       "max_guild_member_count": 41,
-      "previous_rank": 1128,
+      "previous_rank": 1082,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1082,
-      "rank_change": 46
+      "rank": 1083,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -30295,11 +30318,11 @@
       "guild_level": 40,
       "guild_member_count": 3,
       "max_guild_member_count": 45,
-      "previous_rank": 1082,
+      "previous_rank": 1083,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1083,
+      "rank": 1084,
       "rank_change": -1
     },
     {
@@ -30322,11 +30345,11 @@
       "guild_level": 40,
       "guild_member_count": 37,
       "max_guild_member_count": 50,
-      "previous_rank": 1083,
+      "previous_rank": 1084,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1084,
+      "rank": 1085,
       "rank_change": -1
     },
     {
@@ -30344,11 +30367,11 @@
       "guild_level": 40,
       "guild_member_count": 50,
       "max_guild_member_count": 50,
-      "previous_rank": 1084,
+      "previous_rank": 1085,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1085,
+      "rank": 1086,
       "rank_change": -1
     },
     {
@@ -30367,11 +30390,11 @@
       "guild_level": 40,
       "guild_member_count": 12,
       "max_guild_member_count": 48,
-      "previous_rank": 1085,
+      "previous_rank": 1086,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1086,
+      "rank": 1087,
       "rank_change": -1
     },
     {
@@ -30389,11 +30412,11 @@
       "guild_level": 39,
       "guild_member_count": 45,
       "max_guild_member_count": 45,
-      "previous_rank": 1086,
+      "previous_rank": 1087,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1087,
+      "rank": 1088,
       "rank_change": -1
     },
     {
@@ -30412,11 +30435,11 @@
       "guild_level": 39,
       "guild_member_count": 48,
       "max_guild_member_count": 50,
-      "previous_rank": 1087,
+      "previous_rank": 1088,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1088,
+      "rank": 1089,
       "rank_change": -1
     },
     {
@@ -30438,11 +30461,11 @@
       "guild_level": 39,
       "guild_member_count": 23,
       "max_guild_member_count": 45,
-      "previous_rank": 1088,
+      "previous_rank": 1089,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1089,
+      "rank": 1090,
       "rank_change": -1
     },
     {
@@ -30460,11 +30483,11 @@
       "guild_level": 39,
       "guild_member_count": 39,
       "max_guild_member_count": 40,
-      "previous_rank": 1089,
+      "previous_rank": 1090,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1090,
+      "rank": 1091,
       "rank_change": -1
     },
     {
@@ -30485,11 +30508,11 @@
       "guild_level": 39,
       "guild_member_count": 22,
       "max_guild_member_count": 47,
-      "previous_rank": 1090,
+      "previous_rank": 1091,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1091,
+      "rank": 1092,
       "rank_change": -1
     },
     {
@@ -30507,11 +30530,11 @@
       "guild_level": 39,
       "guild_member_count": 1,
       "max_guild_member_count": 48,
-      "previous_rank": 1091,
+      "previous_rank": 1092,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1092,
+      "rank": 1093,
       "rank_change": -1
     },
     {
@@ -30531,11 +30554,11 @@
       "guild_level": 39,
       "guild_member_count": 6,
       "max_guild_member_count": 34,
-      "previous_rank": 1092,
+      "previous_rank": 1093,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1093,
+      "rank": 1094,
       "rank_change": -1
     },
     {
@@ -30553,11 +30576,11 @@
       "guild_level": 39,
       "guild_member_count": 19,
       "max_guild_member_count": 50,
-      "previous_rank": 1093,
+      "previous_rank": 1094,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1094,
+      "rank": 1095,
       "rank_change": -1
     },
     {
@@ -30575,11 +30598,11 @@
       "guild_level": 39,
       "guild_member_count": 34,
       "max_guild_member_count": 43,
-      "previous_rank": 1094,
+      "previous_rank": 1095,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1095,
+      "rank": 1096,
       "rank_change": -1
     },
     {
@@ -30598,11 +30621,11 @@
       "guild_level": 39,
       "guild_member_count": 38,
       "max_guild_member_count": 41,
-      "previous_rank": 1095,
+      "previous_rank": 1096,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1096,
+      "rank": 1097,
       "rank_change": -1
     },
     {
@@ -30621,11 +30644,11 @@
       "guild_level": 39,
       "guild_member_count": 5,
       "max_guild_member_count": 34,
-      "previous_rank": 1096,
+      "previous_rank": 1097,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1097,
+      "rank": 1098,
       "rank_change": -1
     },
     {
@@ -30645,11 +30668,11 @@
       "guild_level": 39,
       "guild_member_count": 16,
       "max_guild_member_count": 41,
-      "previous_rank": 1097,
+      "previous_rank": 1098,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1098,
+      "rank": 1099,
       "rank_change": -1
     },
     {
@@ -30667,11 +30690,11 @@
       "guild_level": 39,
       "guild_member_count": 1,
       "max_guild_member_count": 45,
-      "previous_rank": 1098,
+      "previous_rank": 1099,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1099,
+      "rank": 1100,
       "rank_change": -1
     },
     {
@@ -30689,11 +30712,11 @@
       "guild_level": 39,
       "guild_member_count": 14,
       "max_guild_member_count": 45,
-      "previous_rank": 1099,
+      "previous_rank": 1100,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1100,
+      "rank": 1101,
       "rank_change": -1
     },
     {
@@ -30716,11 +30739,11 @@
       "guild_level": 39,
       "guild_member_count": 10,
       "max_guild_member_count": 43,
-      "previous_rank": 1100,
+      "previous_rank": 1101,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1101,
+      "rank": 1102,
       "rank_change": -1
     },
     {
@@ -30741,11 +30764,11 @@
       "guild_level": 39,
       "guild_member_count": 11,
       "max_guild_member_count": 50,
-      "previous_rank": 1101,
+      "previous_rank": 1102,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1102,
+      "rank": 1103,
       "rank_change": -1
     },
     {
@@ -30766,11 +30789,11 @@
       "guild_level": 39,
       "guild_member_count": 6,
       "max_guild_member_count": 42,
-      "previous_rank": 1102,
+      "previous_rank": 1103,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1103,
+      "rank": 1104,
       "rank_change": -1
     },
     {
@@ -30789,11 +30812,11 @@
       "guild_level": 39,
       "guild_member_count": 27,
       "max_guild_member_count": 40,
-      "previous_rank": 1103,
+      "previous_rank": 1104,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1104,
+      "rank": 1105,
       "rank_change": -1
     },
     {
@@ -30811,11 +30834,11 @@
       "guild_level": 39,
       "guild_member_count": 12,
       "max_guild_member_count": 45,
-      "previous_rank": 1104,
+      "previous_rank": 1105,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1105,
+      "rank": 1106,
       "rank_change": -1
     },
     {
@@ -30834,11 +30857,11 @@
       "guild_level": 39,
       "guild_member_count": 11,
       "max_guild_member_count": 45,
-      "previous_rank": 1105,
+      "previous_rank": 1106,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1106,
+      "rank": 1107,
       "rank_change": -1
     },
     {
@@ -30858,11 +30881,11 @@
       "guild_level": 39,
       "guild_member_count": 7,
       "max_guild_member_count": 50,
-      "previous_rank": 1106,
+      "previous_rank": 1107,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1107,
+      "rank": 1108,
       "rank_change": -1
     },
     {
@@ -30882,11 +30905,11 @@
       "guild_level": 39,
       "guild_member_count": 21,
       "max_guild_member_count": 46,
-      "previous_rank": 1107,
+      "previous_rank": 1108,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1108,
+      "rank": 1109,
       "rank_change": -1
     },
     {
@@ -30913,11 +30936,11 @@
       "guild_level": 39,
       "guild_member_count": 34,
       "max_guild_member_count": 38,
-      "previous_rank": 1108,
+      "previous_rank": 1109,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1109,
+      "rank": 1110,
       "rank_change": -1
     },
     {
@@ -30942,11 +30965,11 @@
       "guild_level": 39,
       "guild_member_count": 26,
       "max_guild_member_count": 42,
-      "previous_rank": 1109,
+      "previous_rank": 1110,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1110,
+      "rank": 1111,
       "rank_change": -1
     },
     {
@@ -30966,11 +30989,11 @@
       "guild_level": 39,
       "guild_member_count": 3,
       "max_guild_member_count": 41,
-      "previous_rank": 1110,
+      "previous_rank": 1111,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1111,
+      "rank": 1112,
       "rank_change": -1
     },
     {
@@ -30997,11 +31020,11 @@
       "guild_level": 39,
       "guild_member_count": 43,
       "max_guild_member_count": 45,
-      "previous_rank": 1111,
+      "previous_rank": 1112,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1112,
+      "rank": 1113,
       "rank_change": -1
     },
     {
@@ -31025,11 +31048,11 @@
       "guild_level": 39,
       "guild_member_count": 34,
       "max_guild_member_count": 42,
-      "previous_rank": 1112,
+      "previous_rank": 1113,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1113,
+      "rank": 1114,
       "rank_change": -1
     },
     {
@@ -31048,11 +31071,11 @@
       "guild_level": 39,
       "guild_member_count": 42,
       "max_guild_member_count": 42,
-      "previous_rank": 1113,
+      "previous_rank": 1114,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1114,
+      "rank": 1115,
       "rank_change": -1
     },
     {
@@ -31079,11 +31102,11 @@
       "guild_level": 39,
       "guild_member_count": 42,
       "max_guild_member_count": 42,
-      "previous_rank": 1114,
+      "previous_rank": 1115,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1115,
+      "rank": 1116,
       "rank_change": -1
     },
     {
@@ -31108,11 +31131,11 @@
       "guild_level": 39,
       "guild_member_count": 42,
       "max_guild_member_count": 42,
-      "previous_rank": 1115,
+      "previous_rank": 1116,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1116,
+      "rank": 1117,
       "rank_change": -1
     },
     {
@@ -31139,11 +31162,11 @@
       "guild_level": 39,
       "guild_member_count": 40,
       "max_guild_member_count": 42,
-      "previous_rank": 1116,
+      "previous_rank": 1117,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1117,
+      "rank": 1118,
       "rank_change": -1
     },
     {
@@ -31161,11 +31184,11 @@
       "guild_level": 39,
       "guild_member_count": 6,
       "max_guild_member_count": 50,
-      "previous_rank": 1117,
+      "previous_rank": 1118,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1118,
+      "rank": 1119,
       "rank_change": -1
     },
     {
@@ -31192,11 +31215,11 @@
       "guild_level": 39,
       "guild_member_count": 42,
       "max_guild_member_count": 42,
-      "previous_rank": 1118,
+      "previous_rank": 1119,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1119,
+      "rank": 1120,
       "rank_change": -1
     },
     {
@@ -31219,11 +31242,11 @@
       "guild_level": 39,
       "guild_member_count": 22,
       "max_guild_member_count": 43,
-      "previous_rank": 1119,
+      "previous_rank": 1120,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1120,
+      "rank": 1121,
       "rank_change": -1
     },
     {
@@ -31249,11 +31272,11 @@
       "guild_level": 39,
       "guild_member_count": 32,
       "max_guild_member_count": 41,
-      "previous_rank": 1120,
+      "previous_rank": 1121,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1121,
+      "rank": 1122,
       "rank_change": -1
     },
     {
@@ -31274,11 +31297,11 @@
       "guild_level": 39,
       "guild_member_count": 6,
       "max_guild_member_count": 46,
-      "previous_rank": 1121,
+      "previous_rank": 1122,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1122,
+      "rank": 1123,
       "rank_change": -1
     },
     {
@@ -31296,11 +31319,11 @@
       "guild_level": 39,
       "guild_member_count": 3,
       "max_guild_member_count": 45,
-      "previous_rank": 1122,
+      "previous_rank": 1123,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1123,
+      "rank": 1124,
       "rank_change": -1
     },
     {
@@ -31318,11 +31341,11 @@
       "guild_level": 39,
       "guild_member_count": 45,
       "max_guild_member_count": 45,
-      "previous_rank": 1123,
+      "previous_rank": 1124,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1124,
+      "rank": 1125,
       "rank_change": -1
     },
     {
@@ -31340,11 +31363,11 @@
       "guild_level": 39,
       "guild_member_count": 19,
       "max_guild_member_count": 45,
-      "previous_rank": 1124,
+      "previous_rank": 1125,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 1125,
+      "rank": 1126,
       "rank_change": -1
     },
     {
@@ -31362,31 +31385,6 @@
       "guild_master": "뽀미씨",
       "guild_level": 39,
       "guild_member_count": 6,
-      "max_guild_member_count": 45,
-      "previous_rank": 1125,
-      "previous_score": 0,
-      "score_change": 0,
-      "is_new": false,
-      "rank": 1126,
-      "rank_change": -1
-    },
-    {
-      "world": "5-1",
-      "world_group_id": "LIVE_W05",
-      "world_id": "LIVE_W05_R1",
-      "guild_name": "결사",
-      "score": 0,
-      "ranked_member_count": 4,
-      "scored_member_count": 0,
-      "level_counts": {
-        "65": 1,
-        "79": 1,
-        "67": 1,
-        "77": 1
-      },
-      "guild_master": "무적호야",
-      "guild_level": 39,
-      "guild_member_count": 9,
       "max_guild_member_count": 45,
       "previous_rank": 1126,
       "previous_score": 0,
@@ -31415,12 +31413,12 @@
       "guild_level": 39,
       "guild_member_count": 16,
       "max_guild_member_count": 40,
-      "previous_rank": 1127,
+      "previous_rank": 1128,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
       "rank": 1128,
-      "rank_change": -1
+      "rank_change": 0
     },
     {
       "world": "5-3",
@@ -35572,11 +35570,12 @@
         "70": 1,
         "74": 1,
         "72": 1,
-        "76": 2,
+        "77": 1,
         "75": 1,
         "67": 1,
         "66": 1,
-        "65": 1
+        "65": 1,
+        "76": 1
       },
       "guild_master": "도니",
       "guild_level": 35,
@@ -56510,9 +56509,10 @@
       "world_id": "LIVE_W11_R5",
       "guild_name": "좋은날",
       "score": 0,
-      "ranked_member_count": 1,
+      "ranked_member_count": 2,
       "scored_member_count": 0,
       "level_counts": {
+        "80": 1,
         "66": 1
       },
       "guild_master": null,
@@ -61528,12 +61528,11 @@
       "world_id": "LIVE_W14_R2",
       "guild_name": "전진하는상어사자",
       "score": 0,
-      "ranked_member_count": 11,
+      "ranked_member_count": 10,
       "scored_member_count": 0,
       "level_counts": {
         "65": 5,
         "83": 1,
-        "70": 1,
         "67": 1,
         "87": 1,
         "73": 1,
@@ -76564,8 +76563,8 @@
         "70": 1,
         "75": 1,
         "71": 1,
-        "65": 2,
-        "66": 1
+        "66": 2,
+        "65": 1
       },
       "guild_master": null,
       "guild_level": 0,
@@ -78580,7 +78579,7 @@
       "ranked_member_count": 1,
       "scored_member_count": 0,
       "level_counts": {
-        "40": 1
+        "41": 1
       },
       "guild_master": null,
       "guild_level": 0,
@@ -78890,7 +78889,8 @@
       "ranked_member_count": 2,
       "scored_member_count": 0,
       "level_counts": {
-        "50": 2
+        "51": 1,
+        "50": 1
       },
       "guild_master": null,
       "guild_level": 0,
@@ -79585,11 +79585,10 @@
       "world_id": "LIVE_W03_R4",
       "guild_name": "타이",
       "score": 0,
-      "ranked_member_count": 2,
+      "ranked_member_count": 1,
       "scored_member_count": 0,
       "level_counts": {
-        "65": 1,
-        "64": 1
+        "65": 1
       },
       "guild_master": null,
       "guild_level": 0,
@@ -81397,6 +81396,28 @@
       "world": "5-2",
       "world_group_id": "LIVE_W05",
       "world_id": "LIVE_W05_R2",
+      "guild_name": "난장패",
+      "score": 0,
+      "ranked_member_count": 1,
+      "scored_member_count": 0,
+      "level_counts": {
+        "34": 1
+      },
+      "guild_master": null,
+      "guild_level": 0,
+      "guild_member_count": 0,
+      "max_guild_member_count": 0,
+      "previous_rank": null,
+      "previous_score": null,
+      "score_change": null,
+      "is_new": true,
+      "rank": 3321,
+      "rank_change": null
+    },
+    {
+      "world": "5-2",
+      "world_group_id": "LIVE_W05",
+      "world_id": "LIVE_W05_R2",
       "guild_name": "대동",
       "score": 0,
       "ranked_member_count": 1,
@@ -81412,8 +81433,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3321,
-      "rank_change": 0
+      "rank": 3322,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81434,8 +81455,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3322,
-      "rank_change": 0
+      "rank": 3323,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81456,8 +81477,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3323,
-      "rank_change": 0
+      "rank": 3324,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81479,8 +81500,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3324,
-      "rank_change": 0
+      "rank": 3325,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81502,8 +81523,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3325,
-      "rank_change": 0
+      "rank": 3326,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81524,8 +81545,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3326,
-      "rank_change": 0
+      "rank": 3327,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81546,8 +81567,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3327,
-      "rank_change": 0
+      "rank": 3328,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81570,8 +81591,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3328,
-      "rank_change": 0
+      "rank": 3329,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81594,8 +81615,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3329,
-      "rank_change": 0
+      "rank": 3330,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81617,8 +81638,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3330,
-      "rank_change": 0
+      "rank": 3331,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81639,8 +81660,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3331,
-      "rank_change": 0
+      "rank": 3332,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81661,8 +81682,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3332,
-      "rank_change": 0
+      "rank": 3333,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81683,8 +81704,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3333,
-      "rank_change": 0
+      "rank": 3334,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81705,8 +81726,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3334,
-      "rank_change": 0
+      "rank": 3335,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81728,8 +81749,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3335,
-      "rank_change": 0
+      "rank": 3336,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81750,8 +81771,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3336,
-      "rank_change": 0
+      "rank": 3337,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81772,8 +81793,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3337,
-      "rank_change": 0
+      "rank": 3338,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81794,8 +81815,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3338,
-      "rank_change": 0
+      "rank": 3339,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81816,8 +81837,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3339,
-      "rank_change": 0
+      "rank": 3340,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81841,8 +81862,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3340,
-      "rank_change": 0
+      "rank": 3341,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81864,8 +81885,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3341,
-      "rank_change": 0
+      "rank": 3342,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81886,8 +81907,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3342,
-      "rank_change": 0
+      "rank": 3343,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81911,8 +81932,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3343,
-      "rank_change": 0
+      "rank": 3344,
+      "rank_change": -1
     },
     {
       "world": "5-2",
@@ -81933,8 +81954,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3344,
-      "rank_change": 0
+      "rank": 3345,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -81955,8 +81976,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3345,
-      "rank_change": 0
+      "rank": 3346,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -81977,8 +81998,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3346,
-      "rank_change": 0
+      "rank": 3347,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82000,8 +82021,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3347,
-      "rank_change": 0
+      "rank": 3348,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82023,8 +82044,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3348,
-      "rank_change": 0
+      "rank": 3349,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82045,8 +82066,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3349,
-      "rank_change": 0
+      "rank": 3350,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82068,8 +82089,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3350,
-      "rank_change": 0
+      "rank": 3351,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82090,8 +82111,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3351,
-      "rank_change": 0
+      "rank": 3352,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82112,8 +82133,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3352,
-      "rank_change": 0
+      "rank": 3353,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82134,8 +82155,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3353,
-      "rank_change": 0
+      "rank": 3354,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82156,8 +82177,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3354,
-      "rank_change": 0
+      "rank": 3355,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82179,8 +82200,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3355,
-      "rank_change": 0
+      "rank": 3356,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82201,8 +82222,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3356,
-      "rank_change": 0
+      "rank": 3357,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82223,8 +82244,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3357,
-      "rank_change": 0
+      "rank": 3358,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82250,8 +82271,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3358,
-      "rank_change": 0
+      "rank": 3359,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82273,8 +82294,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3359,
-      "rank_change": 0
+      "rank": 3360,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82295,8 +82316,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3360,
-      "rank_change": 0
+      "rank": 3361,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82317,8 +82338,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3361,
-      "rank_change": 0
+      "rank": 3362,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82342,8 +82363,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3362,
-      "rank_change": 0
+      "rank": 3363,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82364,8 +82385,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3363,
-      "rank_change": 0
+      "rank": 3364,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82386,8 +82407,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3364,
-      "rank_change": 0
+      "rank": 3365,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82408,8 +82429,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3365,
-      "rank_change": 0
+      "rank": 3366,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82430,8 +82451,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3366,
-      "rank_change": 0
+      "rank": 3367,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82452,8 +82473,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3367,
-      "rank_change": 0
+      "rank": 3368,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82474,8 +82495,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3368,
-      "rank_change": 0
+      "rank": 3369,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82496,8 +82517,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3369,
-      "rank_change": 0
+      "rank": 3370,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82518,8 +82539,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3370,
-      "rank_change": 0
+      "rank": 3371,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82541,8 +82562,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3371,
-      "rank_change": 0
+      "rank": 3372,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82563,8 +82584,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3372,
-      "rank_change": 0
+      "rank": 3373,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82585,8 +82606,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3373,
-      "rank_change": 0
+      "rank": 3374,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82608,8 +82629,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3374,
-      "rank_change": 0
+      "rank": 3375,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82631,8 +82652,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3375,
-      "rank_change": 0
+      "rank": 3376,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82653,8 +82674,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3376,
-      "rank_change": 0
+      "rank": 3377,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82675,8 +82696,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3377,
-      "rank_change": 0
+      "rank": 3378,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82697,8 +82718,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3378,
-      "rank_change": 0
+      "rank": 3379,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82719,8 +82740,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3379,
-      "rank_change": 0
+      "rank": 3380,
+      "rank_change": -1
     },
     {
       "world": "5-3",
@@ -82742,8 +82763,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3380,
-      "rank_change": 0
+      "rank": 3381,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -82764,8 +82785,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3381,
-      "rank_change": 0
+      "rank": 3382,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -82788,8 +82809,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3382,
-      "rank_change": 0
+      "rank": 3383,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -82810,8 +82831,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3383,
-      "rank_change": 0
+      "rank": 3384,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -82832,8 +82853,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3384,
-      "rank_change": 0
+      "rank": 3385,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -82855,8 +82876,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3385,
-      "rank_change": 0
+      "rank": 3386,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -82877,8 +82898,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3386,
-      "rank_change": 0
+      "rank": 3387,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -82899,8 +82920,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3387,
-      "rank_change": 0
+      "rank": 3388,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -82921,8 +82942,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3388,
-      "rank_change": 0
+      "rank": 3389,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -82943,8 +82964,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3389,
-      "rank_change": 0
+      "rank": 3390,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -82965,8 +82986,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3390,
-      "rank_change": 0
+      "rank": 3391,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -82987,8 +83008,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3391,
-      "rank_change": 0
+      "rank": 3392,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83009,8 +83030,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3392,
-      "rank_change": 0
+      "rank": 3393,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83033,8 +83054,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3393,
-      "rank_change": 0
+      "rank": 3394,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83058,8 +83079,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3394,
-      "rank_change": 0
+      "rank": 3395,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83080,8 +83101,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3395,
-      "rank_change": 0
+      "rank": 3396,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83102,8 +83123,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3396,
-      "rank_change": 0
+      "rank": 3397,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83124,8 +83145,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3397,
-      "rank_change": 0
+      "rank": 3398,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83146,8 +83167,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3398,
-      "rank_change": 0
+      "rank": 3399,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83168,8 +83189,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3399,
-      "rank_change": 0
+      "rank": 3400,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83190,8 +83211,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3400,
-      "rank_change": 0
+      "rank": 3401,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83212,8 +83233,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3401,
-      "rank_change": 0
+      "rank": 3402,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83234,8 +83255,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3402,
-      "rank_change": 0
+      "rank": 3403,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83256,8 +83277,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3403,
-      "rank_change": 0
+      "rank": 3404,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83278,8 +83299,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3404,
-      "rank_change": 0
+      "rank": 3405,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83300,8 +83321,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3405,
-      "rank_change": 0
+      "rank": 3406,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83322,8 +83343,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3406,
-      "rank_change": 0
+      "rank": 3407,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83344,8 +83365,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3407,
-      "rank_change": 0
+      "rank": 3408,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83366,8 +83387,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3408,
-      "rank_change": 0
+      "rank": 3409,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83389,8 +83410,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3409,
-      "rank_change": 0
+      "rank": 3410,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83411,8 +83432,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3410,
-      "rank_change": 0
+      "rank": 3411,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83433,8 +83454,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3411,
-      "rank_change": 0
+      "rank": 3412,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83455,8 +83476,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3412,
-      "rank_change": 0
+      "rank": 3413,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83477,8 +83498,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3413,
-      "rank_change": 0
+      "rank": 3414,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83499,8 +83520,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3414,
-      "rank_change": 0
+      "rank": 3415,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83521,8 +83542,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3415,
-      "rank_change": 0
+      "rank": 3416,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83543,8 +83564,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3416,
-      "rank_change": 0
+      "rank": 3417,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83565,8 +83586,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3417,
-      "rank_change": 0
+      "rank": 3418,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83587,8 +83608,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3418,
-      "rank_change": 0
+      "rank": 3419,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83610,8 +83631,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3419,
-      "rank_change": 0
+      "rank": 3420,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83632,8 +83653,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3420,
-      "rank_change": 0
+      "rank": 3421,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83656,8 +83677,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3421,
-      "rank_change": 0
+      "rank": 3422,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83678,8 +83699,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3422,
-      "rank_change": 0
+      "rank": 3423,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83700,8 +83721,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3423,
-      "rank_change": 0
+      "rank": 3424,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83722,8 +83743,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3424,
-      "rank_change": 0
+      "rank": 3425,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83744,8 +83765,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3425,
-      "rank_change": 0
+      "rank": 3426,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83766,8 +83787,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3426,
-      "rank_change": 0
+      "rank": 3427,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83788,8 +83809,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3427,
-      "rank_change": 0
+      "rank": 3428,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83810,8 +83831,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3428,
-      "rank_change": 0
+      "rank": 3429,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83832,8 +83853,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3429,
-      "rank_change": 0
+      "rank": 3430,
+      "rank_change": -1
     },
     {
       "world": "5-4",
@@ -83855,8 +83876,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3430,
-      "rank_change": 0
+      "rank": 3431,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -83877,8 +83898,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3431,
-      "rank_change": 0
+      "rank": 3432,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -83899,8 +83920,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3432,
-      "rank_change": 0
+      "rank": 3433,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -83921,8 +83942,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3433,
-      "rank_change": 0
+      "rank": 3434,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -83943,8 +83964,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3434,
-      "rank_change": 0
+      "rank": 3435,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -83967,8 +83988,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3435,
-      "rank_change": 0
+      "rank": 3436,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -83991,8 +84012,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3436,
-      "rank_change": 0
+      "rank": 3437,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84016,8 +84037,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3437,
-      "rank_change": 0
+      "rank": 3438,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84040,8 +84061,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3438,
-      "rank_change": 0
+      "rank": 3439,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84062,8 +84083,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3439,
-      "rank_change": 0
+      "rank": 3440,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84084,8 +84105,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3440,
-      "rank_change": 0
+      "rank": 3441,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84110,8 +84131,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3441,
-      "rank_change": 0
+      "rank": 3442,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84133,8 +84154,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3442,
-      "rank_change": 0
+      "rank": 3443,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84155,8 +84176,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3443,
-      "rank_change": 0
+      "rank": 3444,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84177,8 +84198,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3444,
-      "rank_change": 0
+      "rank": 3445,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84199,8 +84220,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3445,
-      "rank_change": 0
+      "rank": 3446,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84221,8 +84242,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3446,
-      "rank_change": 0
+      "rank": 3447,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84243,8 +84264,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3447,
-      "rank_change": 0
+      "rank": 3448,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84265,8 +84286,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3448,
-      "rank_change": 0
+      "rank": 3449,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84288,8 +84309,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3449,
-      "rank_change": 0
+      "rank": 3450,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84310,8 +84331,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3450,
-      "rank_change": 0
+      "rank": 3451,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84332,8 +84353,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3451,
-      "rank_change": 0
+      "rank": 3452,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84354,8 +84375,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3452,
-      "rank_change": 0
+      "rank": 3453,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84376,8 +84397,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3453,
-      "rank_change": 0
+      "rank": 3454,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84398,8 +84419,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3454,
-      "rank_change": 0
+      "rank": 3455,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84420,8 +84441,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3455,
-      "rank_change": 0
+      "rank": 3456,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84442,8 +84463,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3456,
-      "rank_change": 0
+      "rank": 3457,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84465,8 +84486,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3457,
-      "rank_change": 0
+      "rank": 3458,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84487,8 +84508,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3458,
-      "rank_change": 0
+      "rank": 3459,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84509,8 +84530,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3459,
-      "rank_change": 0
+      "rank": 3460,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84531,8 +84552,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3460,
-      "rank_change": 0
+      "rank": 3461,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84553,8 +84574,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3461,
-      "rank_change": 0
+      "rank": 3462,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84578,8 +84599,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3462,
-      "rank_change": 0
+      "rank": 3463,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84602,8 +84623,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3463,
-      "rank_change": 0
+      "rank": 3464,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84624,8 +84645,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3464,
-      "rank_change": 0
+      "rank": 3465,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84646,8 +84667,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3465,
-      "rank_change": 0
+      "rank": 3466,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84670,8 +84691,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3466,
-      "rank_change": 0
+      "rank": 3467,
+      "rank_change": -1
     },
     {
       "world": "5-5",
@@ -84693,8 +84714,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3467,
-      "rank_change": 0
+      "rank": 3468,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -84715,8 +84736,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3468,
-      "rank_change": 0
+      "rank": 3469,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -84738,8 +84759,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3469,
-      "rank_change": 0
+      "rank": 3470,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -84760,8 +84781,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3470,
-      "rank_change": 0
+      "rank": 3471,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -84783,8 +84804,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3471,
-      "rank_change": 0
+      "rank": 3472,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -84806,8 +84827,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3472,
-      "rank_change": 0
+      "rank": 3473,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -84830,8 +84851,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3473,
-      "rank_change": 0
+      "rank": 3474,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -84852,8 +84873,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3474,
-      "rank_change": 0
+      "rank": 3475,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -84874,8 +84895,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3475,
-      "rank_change": 0
+      "rank": 3476,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -84896,8 +84917,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3476,
-      "rank_change": 0
+      "rank": 3477,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -84918,8 +84939,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3477,
-      "rank_change": 0
+      "rank": 3478,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -84940,8 +84961,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3478,
-      "rank_change": 0
+      "rank": 3479,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -84962,8 +84983,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3479,
-      "rank_change": 0
+      "rank": 3480,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -84984,8 +85005,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3480,
-      "rank_change": 0
+      "rank": 3481,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85007,8 +85028,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3481,
-      "rank_change": 0
+      "rank": 3482,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85029,8 +85050,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3482,
-      "rank_change": 0
+      "rank": 3483,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85052,8 +85073,8 @@
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3483,
-      "rank_change": 0
+      "rank": 3484,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85070,12 +85091,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3485,
+      "previous_rank": 3484,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3484,
-      "rank_change": 1
+      "rank": 3485,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85092,12 +85113,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3486,
+      "previous_rank": 3485,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3485,
-      "rank_change": 1
+      "rank": 3486,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85116,12 +85137,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3487,
+      "previous_rank": 3486,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3486,
-      "rank_change": 1
+      "rank": 3487,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85138,12 +85159,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3488,
+      "previous_rank": 3487,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3487,
-      "rank_change": 1
+      "rank": 3488,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85160,12 +85181,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3489,
+      "previous_rank": 3488,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3488,
-      "rank_change": 1
+      "rank": 3489,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85182,12 +85203,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3490,
+      "previous_rank": 3489,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3489,
-      "rank_change": 1
+      "rank": 3490,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85205,12 +85226,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3491,
+      "previous_rank": 3490,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3490,
-      "rank_change": 1
+      "rank": 3491,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85227,12 +85248,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3492,
+      "previous_rank": 3491,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3491,
-      "rank_change": 1
+      "rank": 3492,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85252,12 +85273,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3493,
+      "previous_rank": 3492,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3492,
-      "rank_change": 1
+      "rank": 3493,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85274,12 +85295,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3494,
+      "previous_rank": 3493,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3493,
-      "rank_change": 1
+      "rank": 3494,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85297,12 +85318,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3495,
+      "previous_rank": 3494,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3494,
-      "rank_change": 1
+      "rank": 3495,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85319,12 +85340,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3496,
+      "previous_rank": 3495,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3495,
-      "rank_change": 1
+      "rank": 3496,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85341,12 +85362,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3497,
+      "previous_rank": 3496,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3496,
-      "rank_change": 1
+      "rank": 3497,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85364,12 +85385,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3498,
+      "previous_rank": 3497,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3497,
-      "rank_change": 1
+      "rank": 3498,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85386,12 +85407,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3499,
+      "previous_rank": 3498,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3498,
-      "rank_change": 1
+      "rank": 3499,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85409,12 +85430,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3500,
+      "previous_rank": 3499,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3499,
-      "rank_change": 1
+      "rank": 3500,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85431,12 +85452,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3501,
+      "previous_rank": 3500,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3500,
-      "rank_change": 1
+      "rank": 3501,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85453,12 +85474,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3502,
+      "previous_rank": 3501,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3501,
-      "rank_change": 1
+      "rank": 3502,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85475,12 +85496,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3503,
+      "previous_rank": 3502,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3502,
-      "rank_change": 1
+      "rank": 3503,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85497,12 +85518,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3504,
+      "previous_rank": 3503,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3503,
-      "rank_change": 1
+      "rank": 3504,
+      "rank_change": -1
     },
     {
       "world": "8-1",
@@ -85519,12 +85540,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3505,
+      "previous_rank": 3504,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3504,
-      "rank_change": 1
+      "rank": 3505,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85541,12 +85562,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3506,
+      "previous_rank": 3505,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3505,
-      "rank_change": 1
+      "rank": 3506,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85563,12 +85584,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3507,
+      "previous_rank": 3506,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3506,
-      "rank_change": 1
+      "rank": 3507,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85585,12 +85606,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3508,
+      "previous_rank": 3507,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3507,
-      "rank_change": 1
+      "rank": 3508,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85607,12 +85628,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3509,
+      "previous_rank": 3508,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3508,
-      "rank_change": 1
+      "rank": 3509,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85629,12 +85650,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3510,
+      "previous_rank": 3509,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3509,
-      "rank_change": 1
+      "rank": 3510,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85654,12 +85675,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3511,
+      "previous_rank": 3510,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3510,
-      "rank_change": 1
+      "rank": 3511,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85676,12 +85697,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3512,
+      "previous_rank": 3511,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3511,
-      "rank_change": 1
+      "rank": 3512,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85698,12 +85719,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3513,
+      "previous_rank": 3512,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3512,
-      "rank_change": 1
+      "rank": 3513,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85722,12 +85743,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3514,
+      "previous_rank": 3513,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3513,
-      "rank_change": 1
+      "rank": 3514,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85746,12 +85767,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3515,
+      "previous_rank": 3514,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3514,
-      "rank_change": 1
+      "rank": 3515,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85768,12 +85789,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3516,
+      "previous_rank": 3515,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3515,
-      "rank_change": 1
+      "rank": 3516,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85792,12 +85813,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3517,
+      "previous_rank": 3516,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3516,
-      "rank_change": 1
+      "rank": 3517,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85814,12 +85835,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3518,
+      "previous_rank": 3517,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3517,
-      "rank_change": 1
+      "rank": 3518,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85836,12 +85857,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3519,
+      "previous_rank": 3518,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3518,
-      "rank_change": 1
+      "rank": 3519,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85858,12 +85879,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3520,
+      "previous_rank": 3519,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3519,
-      "rank_change": 1
+      "rank": 3520,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85880,12 +85901,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3521,
+      "previous_rank": 3520,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3520,
-      "rank_change": 1
+      "rank": 3521,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85902,12 +85923,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3522,
+      "previous_rank": 3521,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3521,
-      "rank_change": 1
+      "rank": 3522,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85924,12 +85945,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3523,
+      "previous_rank": 3522,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3522,
-      "rank_change": 1
+      "rank": 3523,
+      "rank_change": -1
     },
     {
       "world": "8-2",
@@ -85947,12 +85968,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3524,
+      "previous_rank": 3523,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3523,
-      "rank_change": 1
+      "rank": 3524,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -85969,12 +85990,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3525,
+      "previous_rank": 3524,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3524,
-      "rank_change": 1
+      "rank": 3525,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -85995,12 +86016,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3526,
+      "previous_rank": 3525,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3525,
-      "rank_change": 1
+      "rank": 3526,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86017,12 +86038,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3527,
+      "previous_rank": 3526,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3526,
-      "rank_change": 1
+      "rank": 3527,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86040,12 +86061,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3528,
+      "previous_rank": 3527,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3527,
-      "rank_change": 1
+      "rank": 3528,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86067,12 +86088,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3529,
+      "previous_rank": 3528,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3528,
-      "rank_change": 1
+      "rank": 3529,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86089,12 +86110,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3530,
+      "previous_rank": 3529,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3529,
-      "rank_change": 1
+      "rank": 3530,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86111,12 +86132,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3531,
+      "previous_rank": 3530,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3530,
-      "rank_change": 1
+      "rank": 3531,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86133,12 +86154,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3532,
+      "previous_rank": 3531,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3531,
-      "rank_change": 1
+      "rank": 3532,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86155,12 +86176,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3533,
+      "previous_rank": 3532,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3532,
-      "rank_change": 1
+      "rank": 3533,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86177,12 +86198,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3534,
+      "previous_rank": 3533,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3533,
-      "rank_change": 1
+      "rank": 3534,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86200,12 +86221,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3535,
+      "previous_rank": 3534,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3534,
-      "rank_change": 1
+      "rank": 3535,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86222,12 +86243,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3536,
+      "previous_rank": 3535,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3535,
-      "rank_change": 1
+      "rank": 3536,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86244,12 +86265,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3537,
+      "previous_rank": 3536,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3536,
-      "rank_change": 1
+      "rank": 3537,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86266,12 +86287,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3538,
+      "previous_rank": 3537,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3537,
-      "rank_change": 1
+      "rank": 3538,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86288,12 +86309,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3539,
+      "previous_rank": 3538,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3538,
-      "rank_change": 1
+      "rank": 3539,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86310,12 +86331,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3540,
+      "previous_rank": 3539,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3539,
-      "rank_change": 1
+      "rank": 3540,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86332,12 +86353,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3541,
+      "previous_rank": 3540,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3540,
-      "rank_change": 1
+      "rank": 3541,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86355,12 +86376,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3542,
+      "previous_rank": 3541,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3541,
-      "rank_change": 1
+      "rank": 3542,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86377,12 +86398,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3543,
+      "previous_rank": 3542,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3542,
-      "rank_change": 1
+      "rank": 3543,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86399,12 +86420,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3544,
+      "previous_rank": 3543,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3543,
-      "rank_change": 1
+      "rank": 3544,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86421,12 +86442,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3545,
+      "previous_rank": 3544,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3544,
-      "rank_change": 1
+      "rank": 3545,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86443,12 +86464,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3546,
+      "previous_rank": 3545,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3545,
-      "rank_change": 1
+      "rank": 3546,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86465,12 +86486,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3547,
+      "previous_rank": 3546,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3546,
-      "rank_change": 1
+      "rank": 3547,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86491,12 +86512,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3548,
+      "previous_rank": 3547,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3547,
-      "rank_change": 1
+      "rank": 3548,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86513,12 +86534,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3549,
+      "previous_rank": 3548,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3548,
-      "rank_change": 1
+      "rank": 3549,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86535,12 +86556,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3550,
+      "previous_rank": 3549,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3549,
-      "rank_change": 1
+      "rank": 3550,
+      "rank_change": -1
     },
     {
       "world": "8-3",
@@ -86558,12 +86579,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3551,
+      "previous_rank": 3550,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3550,
-      "rank_change": 1
+      "rank": 3551,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86580,12 +86601,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3552,
+      "previous_rank": 3551,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3551,
-      "rank_change": 1
+      "rank": 3552,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86602,12 +86623,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3553,
+      "previous_rank": 3552,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3552,
-      "rank_change": 1
+      "rank": 3553,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86625,12 +86646,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3554,
+      "previous_rank": 3553,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3553,
-      "rank_change": 1
+      "rank": 3554,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86647,12 +86668,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3555,
+      "previous_rank": 3554,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3554,
-      "rank_change": 1
+      "rank": 3555,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86670,12 +86691,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3556,
+      "previous_rank": 3555,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3555,
-      "rank_change": 1
+      "rank": 3556,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86693,12 +86714,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3557,
+      "previous_rank": 3556,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3556,
-      "rank_change": 1
+      "rank": 3557,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86715,12 +86736,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3558,
+      "previous_rank": 3557,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3557,
-      "rank_change": 1
+      "rank": 3558,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86737,12 +86758,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3559,
+      "previous_rank": 3558,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3558,
-      "rank_change": 1
+      "rank": 3559,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86759,12 +86780,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3560,
+      "previous_rank": 3559,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3559,
-      "rank_change": 1
+      "rank": 3560,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86781,12 +86802,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3561,
+      "previous_rank": 3560,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3560,
-      "rank_change": 1
+      "rank": 3561,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86803,12 +86824,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3562,
+      "previous_rank": 3561,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3561,
-      "rank_change": 1
+      "rank": 3562,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86826,12 +86847,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3563,
+      "previous_rank": 3562,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3562,
-      "rank_change": 1
+      "rank": 3563,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86850,12 +86871,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3564,
+      "previous_rank": 3563,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3563,
-      "rank_change": 1
+      "rank": 3564,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86872,12 +86893,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3565,
+      "previous_rank": 3564,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3564,
-      "rank_change": 1
+      "rank": 3565,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86894,12 +86915,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3566,
+      "previous_rank": 3565,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3565,
-      "rank_change": 1
+      "rank": 3566,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86916,12 +86937,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3567,
+      "previous_rank": 3566,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3566,
-      "rank_change": 1
+      "rank": 3567,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86939,12 +86960,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3568,
+      "previous_rank": 3567,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3567,
-      "rank_change": 1
+      "rank": 3568,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86961,12 +86982,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3569,
+      "previous_rank": 3568,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3568,
-      "rank_change": 1
+      "rank": 3569,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -86985,12 +87006,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3570,
+      "previous_rank": 3569,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3569,
-      "rank_change": 1
+      "rank": 3570,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -87007,12 +87028,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3571,
+      "previous_rank": 3570,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3570,
-      "rank_change": 1
+      "rank": 3571,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -87029,12 +87050,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3572,
+      "previous_rank": 3571,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3571,
-      "rank_change": 1
+      "rank": 3572,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -87051,12 +87072,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3573,
+      "previous_rank": 3572,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3572,
-      "rank_change": 1
+      "rank": 3573,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -87073,12 +87094,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3574,
+      "previous_rank": 3573,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3573,
-      "rank_change": 1
+      "rank": 3574,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -87095,12 +87116,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3575,
+      "previous_rank": 3574,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3574,
-      "rank_change": 1
+      "rank": 3575,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -87117,12 +87138,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3576,
+      "previous_rank": 3575,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3575,
-      "rank_change": 1
+      "rank": 3576,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -87139,12 +87160,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3577,
+      "previous_rank": 3576,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3576,
-      "rank_change": 1
+      "rank": 3577,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -87161,12 +87182,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3578,
+      "previous_rank": 3577,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3577,
-      "rank_change": 1
+      "rank": 3578,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -87183,12 +87204,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3579,
+      "previous_rank": 3578,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3578,
-      "rank_change": 1
+      "rank": 3579,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -87205,12 +87226,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3580,
+      "previous_rank": 3579,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3579,
-      "rank_change": 1
+      "rank": 3580,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -87227,12 +87248,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3581,
+      "previous_rank": 3580,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3580,
-      "rank_change": 1
+      "rank": 3581,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -87249,12 +87270,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3582,
+      "previous_rank": 3581,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3581,
-      "rank_change": 1
+      "rank": 3582,
+      "rank_change": -1
     },
     {
       "world": "8-4",
@@ -87271,12 +87292,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3583,
+      "previous_rank": 3582,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3582,
-      "rank_change": 1
+      "rank": 3583,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87295,12 +87316,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3584,
+      "previous_rank": 3583,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3583,
-      "rank_change": 1
+      "rank": 3584,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87318,12 +87339,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3585,
+      "previous_rank": 3584,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3584,
-      "rank_change": 1
+      "rank": 3585,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87340,12 +87361,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3586,
+      "previous_rank": 3585,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3585,
-      "rank_change": 1
+      "rank": 3586,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87362,12 +87383,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3587,
+      "previous_rank": 3586,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3586,
-      "rank_change": 1
+      "rank": 3587,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87384,12 +87405,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3588,
+      "previous_rank": 3587,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3587,
-      "rank_change": 1
+      "rank": 3588,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87408,12 +87429,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3589,
+      "previous_rank": 3588,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3588,
-      "rank_change": 1
+      "rank": 3589,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87430,12 +87451,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3590,
+      "previous_rank": 3589,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3589,
-      "rank_change": 1
+      "rank": 3590,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87452,12 +87473,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3591,
+      "previous_rank": 3590,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3590,
-      "rank_change": 1
+      "rank": 3591,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87474,12 +87495,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3592,
+      "previous_rank": 3591,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3591,
-      "rank_change": 1
+      "rank": 3592,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87496,12 +87517,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3593,
+      "previous_rank": 3592,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3592,
-      "rank_change": 1
+      "rank": 3593,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87519,12 +87540,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3594,
+      "previous_rank": 3593,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3593,
-      "rank_change": 1
+      "rank": 3594,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87541,12 +87562,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3595,
+      "previous_rank": 3594,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3594,
-      "rank_change": 1
+      "rank": 3595,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87564,12 +87585,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3596,
+      "previous_rank": 3595,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3595,
-      "rank_change": 1
+      "rank": 3596,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87586,12 +87607,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3597,
+      "previous_rank": 3596,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3596,
-      "rank_change": 1
+      "rank": 3597,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87608,12 +87629,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3598,
+      "previous_rank": 3597,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3597,
-      "rank_change": 1
+      "rank": 3598,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87630,12 +87651,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3599,
+      "previous_rank": 3598,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3598,
-      "rank_change": 1
+      "rank": 3599,
+      "rank_change": -1
     },
     {
       "world": "8-5",
@@ -87652,12 +87673,12 @@
       "guild_level": 0,
       "guild_member_count": 0,
       "max_guild_member_count": 0,
-      "previous_rank": 3600,
+      "previous_rank": 3599,
       "previous_score": 0,
       "score_change": 0,
       "is_new": false,
-      "rank": 3599,
-      "rank_change": 1
+      "rank": 3600,
+      "rank_change": -1
     }
   ]
 }
