@@ -6,7 +6,90 @@
   <meta name="description" content="맛나는꼬꼬 프라시아 연구소 메인화면 개선 미리보기">
   <title>메인화면 개선 미리보기 V4 | 맛나는꼬꼬</title>
   <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="./home-preview-v4.css">
+  <link rel="stylesheet" href="./home-preview-v4.css?v=20260620-4">
+
+<style id="raid-card-v4-hotfix">
+/* V4 HOTFIX: 안내사항 영역 내부 4개 카드 1x4 고정 */
+#home .preview-dashboard-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 360px!important;
+  gap:12px!important;
+  align-items:stretch!important;
+}
+#home .raid-video-panel{min-width:0!important;overflow:hidden!important;}
+#home .raid-video-grid{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:10px!important;
+  padding:12px 14px 14px!important;
+  width:100%!important;
+  overflow:hidden!important;
+}
+#home .raid-video-grid .raid-poster-card{
+  position:relative!important;
+  display:block!important;
+  min-width:0!important;
+  width:100%!important;
+  height:250px!important;
+  min-height:250px!important;
+  max-height:250px!important;
+  overflow:hidden!important;
+  border-radius:14px!important;
+  background:#151920!important;
+  color:inherit!important;
+  text-decoration:none!important;
+}
+#home .raid-video-grid .raid-poster-card::before{inset:6px!important;z-index:5!important;}
+#home .raid-video-grid .raid-poster-content{
+  position:absolute!important;
+  inset:0!important;
+  z-index:4!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  width:auto!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:15px 13px 13px!important;
+}
+#home .raid-video-grid .raid-poster-boss{
+  position:absolute!important;
+  z-index:1!important;
+  display:block!important;
+  left:auto!important;
+  top:auto!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:right bottom!important;
+  margin:0!important;
+  transform:none!important;
+  pointer-events:none!important;
+}
+#home .raid-video-grid .raid-poster-shade{
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+  display:block!important;
+  background:linear-gradient(180deg,rgba(10,13,18,.88) 0%,rgba(10,13,18,.42) 42%,rgba(10,13,18,.08) 67%,rgba(10,13,18,.82) 100%)!important;
+}
+#home .raid-video-grid .raid-23 .raid-poster-boss{width:104%!important;height:72%!important;right:-22%!important;bottom:-1%!important;}
+#home .raid-video-grid .raid-24 .raid-poster-boss{width:112%!important;height:67%!important;right:-27%!important;bottom:3%!important;}
+#home .raid-video-grid .raid-25 .raid-poster-boss{width:94%!important;height:72%!important;right:-10%!important;bottom:0!important;}
+#home .raid-video-grid .raid-26 .raid-poster-boss{width:100%!important;height:72%!important;right:-18%!important;bottom:0!important;}
+#home .raid-poster-level{font-size:20px!important;line-height:1!important;}
+#home .raid-poster-name{margin-top:5px!important;font-size:11px!important;}
+#home .raid-poster-stats{display:grid!important;gap:4px!important;margin-top:14px!important;}
+#home .raid-poster-stats span{font-size:12px!important;}
+#home .raid-poster-stats b{margin-left:5px!important;font-size:16px!important;}
+#home .raid-poster-link{margin-top:auto!important;padding:8px 10px!important;font-size:10px!important;}
+@media(max-width:1180px){
+  #home .preview-dashboard-grid{grid-template-columns:1fr!important;}
+  #home .raid-video-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+}
+@media(max-width:900px){#home .raid-video-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
+@media(max-width:560px){#home .raid-video-grid{grid-template-columns:1fr!important;}}
+</style>
 </head>
 <body class="preview-body">
   <button class="mobile-menu-button" id="previewMenuButton" aria-label="메뉴 열기">☰</button>
