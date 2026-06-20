@@ -1326,6 +1326,12 @@ button {
 }
 
 
+
+/* Keep the external alliance menu visually consistent with button items. */
+.side-menu a.side-external-link {
+  text-decoration:none
+}
+
 /* Nickname status modal: isolated styles to avoid affecting existing UI */
 .nickname-status-modal {
   position:fixed;
@@ -1435,13 +1441,19 @@ button {
   background:rgba(255,255,255,.025);
   color:#dfe4ea;
   text-align:center;
-  font-size:15px;
+  font-size:16px;
   font-weight:750;
   line-height:1.65
 }
 
 .nickname-status-result strong {
   color:var(--gold)
+}
+
+.nickname-status-result .nickname-status-count {
+  color:var(--gold);
+  font-size:1.08em;
+  font-weight:950
 }
 
 .nickname-status-result.error {
