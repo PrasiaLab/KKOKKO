@@ -1145,17 +1145,17 @@ button {
 .raid-video-grid {
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:8px;
+  gap:6px;
   width:100%;
-  padding:12px 14px 14px;
+  padding:12px 12px 14px;
   overflow:hidden;
 }
 
 .raid-poster-card {
   position:relative;
   width:100%;
-  max-width:282px;
-  height:250px;
+  max-width:296px;
+  height:268px;
   min-width:0;
   justify-self:center;
   overflow:hidden;
