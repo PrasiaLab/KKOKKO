@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="맛나는꼬꼬 프라시아 연구소 메인화면 개선 미리보기">
+  <title>메인화면 개선 미리보기 | 맛나는꼬꼬</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./home-preview.css">
+</head>
+<body class="preview-body">
+  <button class="mobile-menu-button" id="previewMenuButton" aria-label="메뉴 열기">☰</button>
+  <div class="mobile-dim" id="previewDim"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="previewSidebar">
+      <div class="brand">
+        <img class="brand-symbol" src="./images/bi_simbol.png" alt="맛나는꼬꼬 심볼" onerror="this.style.display='none'">
+        <div class="brand-copy">
+          <strong>맛나는꼬꼬</strong>
+          <span>WARS OF PRASIA LAB</span>
+        </div>
+      </div>
+
+      <nav class="side-menu" aria-label="미리보기 메뉴">
+        <p class="menu-section-title">PREVIEW</p>
+        <button class="side-menu-item active" type="button"><span>⌂</span>메인화면</button>
+        <button class="side-menu-item" type="button"><span>●</span>안내사항</button>
+        <button class="side-menu-item" type="button"><span>♟</span>결사원 모집</button>
+
+        <p class="menu-section-title">DATA</p>
+        <button class="side-menu-item" type="button"><span>▥</span>전체 서버 통계</button>
+        <button class="side-menu-item" type="button"><span>◇</span>클래스 분석</button>
+        <button class="side-menu-item" type="button"><span>♛</span>결사 순위</button>
+        <button class="side-menu-item" type="button"><span>⌕</span>결사 조회</button>
+        <button class="side-menu-item" type="button"><span>⚔</span>결사 전력 분석</button>
+
+        <p class="menu-section-title">CONTENTS</p>
+        <button class="side-menu-item" type="button"><span>▶</span>리뷰 방송</button>
+        <button class="side-menu-item" type="button"><span>◆</span>토벌 공략</button>
+      </nav>
+
+      <a class="sidebar-character secret-lab-entry" href="#" aria-label="숨겨진 연구소 미리보기">
+        <img src="./images/kkokkoChar.png" alt="맛나는꼬꼬 캐릭터" onerror="this.style.opacity='.12'">
+      </a>
+    </aside>
+
+    <main class="main-area preview-main">
+      <header class="sheet-navigation" aria-label="구글 시트 바로가기">
+        <button class="sheet-button preview-sheet-button" data-preview-sheet="토벌 스펙">토벌 스펙</button>
+        <button class="sheet-button preview-sheet-button" data-preview-sheet="마법 부여">마법 부여</button>
+        <button class="sheet-button preview-sheet-button" data-preview-sheet="심연 증폭">심연 증폭</button>
+        <button class="sheet-button preview-sheet-button" data-preview-sheet="클래스 주문석">클래스 주문석</button>
+        <button class="sheet-button preview-sheet-button" data-preview-sheet="아퀴 채화">아퀴 채화</button>
+        <button class="sheet-button preview-sheet-button" data-preview-sheet="클래스 체인지">클래스 체인지</button>
+        <button class="sheet-button preview-sheet-button" data-preview-sheet="클래스 전승">클래스 전승</button>
+        <button class="sheet-button preview-sheet-button" data-preview-sheet="몬스터 도감">몬스터 도감</button>
+      </header>
+
+      <section class="page active preview-home">
+        <div class="preview-ribbon">LOCAL PREVIEW · 공개 페이지에는 영향이 없습니다.</div>
+
+        <div class="page-heading preview-page-heading">
+          <div>
+            <p class="eyebrow">MATTNANEUN KKOKKO · WARS OF PRASIA</p>
+            <h1>맛나는꼬꼬 프라시아 연구소</h1>
+            <p class="page-description">프라시아 전기의 주요 정보와 공략, 방송 콘텐츠를 한곳에서 확인하세요.</p>
+          </div>
+
+          <div class="home-status-stack">
+            <span class="site-badge"><span class="preview-status-dot"></span>데이터 정상</span>
+            <a class="live-status-badge off" href="#"><span class="live-status-dot"></span>맛나는꼬꼬 방송 대기 중</a>
+          </div>
+        </div>
+
+        <section class="quick-links preview-quick-links">
+          <a class="quick-link youtube" href="#">
+            <span class="quick-icon">▶</span>
+            <span class="quick-copy"><strong>맛나는꼬꼬 유튜브</strong><small>생방송 및 TIP 영상 보러가기</small></span>
+            <span class="quick-arrow">↗</span>
+          </a>
+          <a class="quick-link kakao" href="#">
+            <span class="quick-icon">◈</span>
+            <span class="quick-copy"><strong>맛나는꼬꼬 단톡방</strong><small>토벌 질문과 정보 공유</small></span>
+            <span class="quick-arrow">↗</span>
+          </a>
+          <a class="quick-link support" href="#">
+            <span class="quick-icon">♥</span>
+            <span class="quick-copy"><strong>맛나는꼬꼬 후원하기</strong><small>크리에이터 후원 등록하기</small></span>
+            <span class="quick-arrow">↗</span>
+          </a>
+        </section>
+
+        <section class="rolling-notice-bar preview-rolling-notice" aria-live="polite">
+          <span class="rolling-notice-dot" aria-hidden="true"></span>
+          <span class="preview-notice-label">알림</span>
+          <span class="rolling-notice-text" id="previewRollingText">23~26 토벌 레벨별 명중 정보를 메인에서 빠르게 확인해보세요.</span>
+        </section>
+
+        <section class="content-panel raid-accuracy-panel">
+          <div class="panel-heading raid-panel-heading">
+            <div>
+              <p class="panel-kicker">RAID ACCURACY GUIDE</p>
+              <h2>토벌 레벨별 명중 정보</h2>
+            </div>
+            <div class="raid-heading-side">
+              <span class="panel-note">카드를 선택하면 기준과 계산 안내를 확인할 수 있습니다.</span>
+              <button class="text-button" id="openRaidSpec" type="button">토벌 스펙 전체보기 →</button>
+            </div>
+          </div>
+
+          <div class="raid-accuracy-grid" id="raidAccuracyGrid"></div>
+        </section>
+
+        <section class="content-panel featured-panel preview-featured-panel">
+          <div class="panel-heading preview-featured-heading">
+            <div>
+              <p class="panel-kicker">FEATURED VIDEO</p>
+              <h2>주요 영상 바로가기</h2>
+            </div>
+            <span class="panel-note">카드를 선택하면 유튜브로 이동합니다.</span>
+          </div>
+
+          <div class="video-grid featured-video-grid preview-video-grid">
+            <a class="video-card preview-video-card" href="#">
+              <div class="video-thumb"><img src="https://i.ytimg.com/vi/L1mT1bWT5Qg/hqdefault.jpg" alt="전승노드 꿀팁"><span class="play-mark">▶</span></div>
+              <div class="video-info"><span class="video-category">주요 영상</span><strong>전승노드 꿀팁</strong><p>클래스 전승과 노드 세팅에 도움이 되는 주요 팁입니다.</p></div>
+            </a>
+            <a class="video-card preview-video-card" href="#">
+              <div class="video-thumb"><img src="https://i.ytimg.com/vi/8TokefIDsrg/hqdefault.jpg" alt="업데이트 소식"><span class="play-mark">▶</span></div>
+              <div class="video-info"><span class="video-category">업데이트</span><strong>업데이트 소식</strong><p>프라시아 전기의 최신 업데이트 내용을 빠르게 확인하세요.</p></div>
+            </a>
+            <a class="video-card preview-video-card" href="#">
+              <div class="video-thumb"><img src="https://i.ytimg.com/vi/DZ6j7Ofsrbg/hqdefault.jpg" alt="토벌 기적의 세팅법"><span class="play-mark">▶</span></div>
+              <div class="video-info"><span class="video-category">토벌 공략</span><strong>토벌 기적의 세팅법</strong><p>토벌 진행에 도움이 되는 세팅 방법을 소개합니다.</p></div>
+            </a>
+          </div>
+        </section>
+
+        <div class="dashboard-grid preview-dashboard-grid">
+          <section class="content-panel preview-notice-panel">
+            <div class="panel-heading compact">
+              <div>
+                <p class="panel-kicker">LAB UPDATE</p>
+                <h2>안내사항</h2>
+              </div>
+              <button class="text-button" type="button">전체보기</button>
+            </div>
+            <div class="notice-list preview-notice-list">
+              <button class="notice-row" type="button"><span class="notice-type update">업데이트</span><strong>23~26 토벌 명중 정보 미리보기 추가</strong><time>06.20</time></button>
+              <button class="notice-row" type="button"><span class="notice-type video">영상</span><strong>최신 토벌 공략 영상이 등록되었습니다.</strong><time>06.19</time></button>
+              <button class="notice-row" type="button"><span class="notice-type">공지</span><strong>프라시아 연구소 이용 안내</strong><time>06.18</time></button>
+            </div>
+          </section>
+
+          <section class="content-panel preview-calendar-panel">
+            <div class="panel-heading compact preview-calendar-heading">
+              <div><p class="panel-kicker">BROADCAST</p><h2>방송일정 안내</h2></div>
+              <strong>2026. 06</strong>
+            </div>
+            <div class="preview-calendar">
+              <div class="preview-weekdays"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+              <div class="preview-days" id="previewDays"></div>
+            </div>
+            <div class="preview-calendar-note"><strong>일정 안내</strong><span>휴방과 특별 일정만 표시합니다.</span></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="raid-detail-modal" id="raidDetailModal" aria-hidden="true">
+    <div class="raid-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="raidDetailTitle">
+      <button class="raid-detail-close" id="raidDetailClose" type="button" aria-label="닫기">✕</button>
+      <span class="modal-kicker">RAID ACCURACY DETAIL</span>
+      <h2 id="raidDetailTitle">23토벌 명중 정보</h2>
+      <p class="raid-detail-lead" id="raidDetailLead">표기된 수치는 미리보기용 임시 값입니다.</p>
+
+      <div class="raid-detail-values">
+        <article><span>최소 기준</span><strong id="raidDetailMin">확인 중</strong><small>도전 가능 여부를 판단하는 참고선</small></article>
+        <article><span>권장 기준</span><strong id="raidDetailRecommended">확인 중</strong><small>조금 더 안정적인 진행을 위한 참고선</small></article>
+      </div>
+
+      <section class="raid-detail-section">
+        <h3>명중 확인 방법</h3>
+        <p>실제 전투에 적용되는 캐릭터 명중을 확인하고, 음식·버프·스킬·파티 효과가 반영되는지 함께 확인해주세요.</p>
+      </section>
+
+      <section class="raid-detail-section formula-section">
+        <h3>간단 계산 예시</h3>
+        <div class="raid-formula"><span>현재 명중</span><b>+</b><span>추가 효과</span><b>=</b><span>실전 명중</span></div>
+        <p>게임 내 수치에 이미 반영된 효과는 다시 더하지 않도록 주의해주세요.</p>
+      </section>
+
+      <div class="raid-detail-warning">명중 수치만으로 토벌 가능 여부가 결정되지는 않습니다. 피해량·방어·파티 구성 등 상세 기준은 상단 <strong>‘토벌 스펙’</strong>을 확인해주세요.</div>
+
+      <div class="raid-detail-actions">
+        <button class="raid-detail-primary" id="raidSpecButton" type="button">토벌 스펙 확인하기</button>
+        <button class="raid-detail-secondary" id="raidDetailCancel" type="button">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-toast" id="previewToast" role="status"></div>
+  <script src="./home-preview.js"></script>
+</body>
+</html>
