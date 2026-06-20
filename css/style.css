@@ -1324,3 +1324,176 @@ button {
     max-width:320px;
   }
 }
+
+
+/* Nickname status modal: isolated styles to avoid affecting existing UI */
+.nickname-status-modal {
+  position:fixed;
+  inset:0;
+  z-index:230;
+  display:none;
+  place-items:center;
+  padding:22px;
+  background:rgba(5,7,10,.76);
+  backdrop-filter:blur(10px)
+}
+
+.nickname-status-modal.open {
+  display:grid
+}
+
+.nickname-status-dialog {
+  width:min(620px,94vw);
+  max-height:min(760px,92vh);
+  overflow:auto;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:19px;
+  background:#171b21;
+  box-shadow:0 32px 100px rgba(0,0,0,.5)
+}
+
+.nickname-status-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:72px;
+  padding:14px 16px 14px 22px;
+  border-bottom:1px solid var(--line);
+  background:#20252d
+}
+
+.nickname-status-header h2 {
+  margin:3px 0 0;
+  font-size:20px
+}
+
+.nickname-status-close {
+  width:40px;
+  height:40px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:rgba(255,255,255,.05);
+  color:#e8ebf0;
+  cursor:pointer
+}
+
+.nickname-status-body {
+  padding:24px
+}
+
+.nickname-status-intro {
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.65
+}
+
+.nickname-status-search {
+  display:flex;
+  gap:10px
+}
+
+.nickname-status-search input {
+  min-width:0;
+  flex:1;
+  height:48px;
+  padding:0 15px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  outline:none;
+  background:#11151a;
+  color:var(--text);
+  font:inherit
+}
+
+.nickname-status-search input:focus {
+  border-color:rgba(211,171,85,.72);
+  box-shadow:0 0 0 3px rgba(211,171,85,.11)
+}
+
+.nickname-status-search button {
+  min-width:86px;
+  height:48px;
+  padding:0 20px;
+  border:0;
+  border-radius:12px;
+  background:var(--gold);
+  color:#19150c;
+  font-weight:950;
+  cursor:pointer
+}
+
+.nickname-status-result {
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:16px;
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:rgba(255,255,255,.025);
+  color:#dfe4ea;
+  text-align:center;
+  font-size:15px;
+  font-weight:750;
+  line-height:1.65
+}
+
+.nickname-status-result strong {
+  color:var(--gold)
+}
+
+.nickname-status-result.error {
+  border-color:rgba(223,105,105,.35);
+  color:#f0b5b5
+}
+
+.nickname-status-notes {
+  margin-top:20px;
+  padding-top:17px;
+  border-top:1px solid var(--line)
+}
+
+.nickname-status-notes p {
+  margin:7px 0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.65
+}
+
+.sr-only {
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0
+}
+
+@media(max-width:640px) {
+  .nickname-status-modal {
+    padding:14px
+  }
+
+  .nickname-status-dialog {
+    width:100%;
+    max-height:90vh
+  }
+
+  .nickname-status-body {
+    padding:20px 18px
+  }
+
+  .nickname-status-search {
+    gap:8px
+  }
+
+  .nickname-status-search button {
+    min-width:76px;
+    padding:0 15px
+  }
+}
