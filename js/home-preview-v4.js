@@ -53,35 +53,8 @@ function showToast(message) {
   toastTimer = window.setTimeout(() => toast.classList.remove("show"), 2100);
 }
 
-function renderRaidVideoCards() {
-  const grid = document.getElementById("raidVideoGrid");
+// 토벌 카드는 HTML에 정적으로 포함되어 로컬에서도 항상 표시됩니다.
 
-  grid.innerHTML = raidVideoData.map((raid) => `
-    <a
-      class="raid-video-card level-${raid.level}"
-      href="${raid.videoUrl}"
-      target="_blank"
-      rel="noopener noreferrer"
-      data-raid-level="${raid.level}"
-      aria-label="${raid.level}토벌 ${raid.bossName} 공략 영상 보기"
-    >
-      <span class="raid-card-ornament" aria-hidden="true"></span>
-      <img class="raid-video-image" src="${raid.image}" alt="${raid.level}토벌 ${raid.bossName}">
-      <span class="raid-video-content">
-        <span class="raid-video-level"><strong>${raid.level}</strong><span>토벌</span></span>
-        <span class="raid-video-boss">${raid.bossName}</span>
-        <span class="raid-video-type">${raid.bossType}</span>
-        <span class="raid-video-stats">
-          <span>명중 <b>${raid.accuracy}</b></span>
-          <span>스킬명중 <b>${raid.skillAccuracy}</b></span>
-        </span>
-        <span class="raid-video-link">공략 영상 보기</span>
-      </span>
-    </a>
-  `).join("");
-}
-
-renderRaidVideoCards();
 
 document.querySelectorAll("a[href='#']").forEach((link) => {
   link.addEventListener("click", (event) => {
