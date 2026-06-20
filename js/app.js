@@ -338,7 +338,8 @@ fetch("./data/videos.json", {
       name.textContent = `‘${nickname}’`;
       countValue.className = "nickname-status-count";
       countValue.textContent = String(count);
-      result.append(name, " 닉네임은 현재 랭킹 데이터에서", " ", countValue, "건 확인됩니다.");
+      countValue.style.marginLeft = "4px";
+      result.append(name, " 닉네임은 현재 랭킹 데이터에서", countValue, "건 확인됩니다.");
       return;
     }
 
