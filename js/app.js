@@ -334,8 +334,11 @@ fetch("./data/videos.json", {
 
     if (nickname && Number.isInteger(count)) {
       const name = document.createElement("strong");
+      const countValue = document.createElement("span");
       name.textContent = `‘${nickname}’`;
-      result.append(name, ` 닉네임은 현재 랭킹 데이터에서 ${count}건 확인됩니다.`);
+      countValue.className = "nickname-status-count";
+      countValue.textContent = String(count);
+      result.append(name, " 닉네임은 현재 랭킹 데이터에서 ", countValue, "건 확인됩니다.");
       return;
     }
 
