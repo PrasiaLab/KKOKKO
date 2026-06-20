@@ -687,3 +687,189 @@
 @media(max-width:1450px){.raid-video-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.raid-poster-card,.raid-poster-content{min-height:270px}}
 @media(max-width:900px){.raid-video-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.raid-video-grid{grid-template-columns:1fr}.raid-poster-card,.raid-poster-content{min-height:300px}}
+
+/* ===== V6: 안내사항 자리 안에 토벌 카드 4개 고정 배치 ===== */
+.preview-dashboard-grid{
+  grid-template-columns:minmax(0,1.55fr) minmax(300px,.45fr) !important;
+  align-items:stretch;
+}
+
+.raid-video-panel{
+  min-width:0;
+}
+
+.raid-video-grid{
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  gap:10px !important;
+  padding:12px 14px 14px !important;
+}
+
+.raid-poster-card{
+  position:relative;
+  min-width:0;
+  min-height:238px !important;
+  height:238px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:14px;
+  background:
+    linear-gradient(180deg,rgba(10,13,18,.12) 0%,rgba(10,13,18,.42) 38%,rgba(10,13,18,.94) 100%),
+    #171b21;
+}
+
+.raid-poster-content{
+  position:relative;
+  z-index:3;
+  width:100%;
+  min-height:238px !important;
+  height:238px;
+  padding:15px 14px 13px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+.raid-poster-level{
+  font-size:20px;
+}
+
+.raid-poster-name{
+  margin-top:5px;
+  font-size:11px;
+}
+
+.raid-poster-stats{
+  gap:4px;
+  margin-top:15px;
+}
+
+.raid-poster-stats span{
+  font-size:12px;
+}
+
+.raid-poster-stats b{
+  margin-left:5px;
+  font-size:16px;
+}
+
+.raid-poster-link{
+  margin-top:auto;
+  padding:8px 10px;
+  font-size:10px;
+}
+
+.raid-poster-boss{
+  position:absolute;
+  z-index:1;
+  object-fit:contain;
+  object-position:right bottom;
+  pointer-events:none;
+  filter:drop-shadow(0 12px 18px rgba(0,0,0,.72));
+}
+
+.raid-poster-shade{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  background:linear-gradient(180deg,rgba(15,18,24,.78) 0%,rgba(15,18,24,.35) 39%,rgba(15,18,24,.12) 60%,rgba(15,18,24,.76) 100%);
+  pointer-events:none;
+}
+
+.raid-23 .raid-poster-boss{width:96%;height:70%;right:-15%;bottom:1%}
+.raid-24 .raid-poster-boss{width:106%;height:65%;right:-22%;bottom:4%}
+.raid-25 .raid-poster-boss{width:90%;height:69%;right:-7%;bottom:1%}
+.raid-26 .raid-poster-boss{width:96%;height:69%;right:-14%;bottom:0}
+
+@media(max-width:1180px){
+  .preview-dashboard-grid{grid-template-columns:1fr !important}
+  .raid-video-grid{grid-template-columns:repeat(4,minmax(0,1fr)) !important}
+}
+
+@media(max-width:900px){
+  .raid-video-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  .raid-poster-card,.raid-poster-content{height:250px;min-height:250px !important}
+}
+
+@media(max-width:560px){
+  .raid-video-grid{grid-template-columns:1fr !important}
+}
+
+/* ===== V4 FINAL: 안내사항 영역 내부 1×4 카드 고정 ===== */
+#home .preview-dashboard-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 360px !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+}
+
+#home .raid-video-panel {
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+#home .raid-video-grid {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  padding: 12px 14px 14px !important;
+  overflow: hidden !important;
+}
+
+#home .raid-video-grid > .raid-poster-card {
+  position: relative !important;
+  display: block !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 250px !important;
+  min-height: 250px !important;
+  overflow: hidden !important;
+  border-radius: 14px !important;
+}
+
+#home .raid-video-grid > .raid-poster-card .raid-poster-content {
+  position: relative !important;
+  z-index: 3 !important;
+  width: 100% !important;
+  height: 250px !important;
+  min-height: 250px !important;
+  padding: 15px 13px 13px !important;
+}
+
+#home .raid-video-grid > .raid-poster-card .raid-poster-boss {
+  position: absolute !important;
+  z-index: 1 !important;
+  display: block !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: right bottom !important;
+  pointer-events: none !important;
+}
+
+#home .raid-video-grid > .raid-23 .raid-poster-boss { width: 100% !important; height: 69% !important; right: -18% !important; bottom: 0 !important; }
+#home .raid-video-grid > .raid-24 .raid-poster-boss { width: 112% !important; height: 64% !important; right: -25% !important; bottom: 4% !important; }
+#home .raid-video-grid > .raid-25 .raid-poster-boss { width: 92% !important; height: 70% !important; right: -8% !important; bottom: 0 !important; }
+#home .raid-video-grid > .raid-26 .raid-poster-boss { width: 98% !important; height: 70% !important; right: -16% !important; bottom: 0 !important; }
+
+#home .raid-poster-level { font-size: 20px !important; }
+#home .raid-poster-name { margin-top: 5px !important; font-size: 11px !important; }
+#home .raid-poster-stats { gap: 4px !important; margin-top: 14px !important; }
+#home .raid-poster-stats span { font-size: 12px !important; }
+#home .raid-poster-stats b { margin-left: 5px !important; font-size: 16px !important; }
+#home .raid-poster-link { margin-top: auto !important; padding: 8px 10px !important; font-size: 10px !important; }
+
+@media (max-width: 1180px) {
+  #home .preview-dashboard-grid { grid-template-columns: 1fr !important; }
+  #home .raid-video-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+}
+
+@media (max-width: 900px) {
+  #home .raid-video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+
+@media (max-width: 560px) {
+  #home .raid-video-grid { grid-template-columns: 1fr !important; }
+}
