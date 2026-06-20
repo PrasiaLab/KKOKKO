@@ -6,7 +6,7 @@
   <meta name="description" content="맛나는꼬꼬 프라시아 연구소 메인화면 개선 미리보기">
   <title>메인화면 개선 미리보기 | 맛나는꼬꼬</title>
   <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="./home-preview.css">
+  <link rel="stylesheet" href="./home-preview-v2.css">
 </head>
 <body class="preview-body">
   <button class="mobile-menu-button" id="previewMenuButton" aria-label="메뉴 열기">☰</button>
@@ -109,7 +109,20 @@
             </div>
           </div>
 
-          <div class="raid-accuracy-grid" id="raidAccuracyGrid"></div>
+          <div class="raid-accuracy-grid" id="raidAccuracyGrid">
+            <button class="raid-accuracy-card" type="button" data-raid-level="23">
+              <span class="raid-card-index">23</span><span class="raid-card-copy"><strong>23토벌</strong><small>최소·권장 명중 기준</small></span><span class="raid-card-value">확인 중</span><span class="raid-card-arrow">›</span>
+            </button>
+            <button class="raid-accuracy-card" type="button" data-raid-level="24">
+              <span class="raid-card-index">24</span><span class="raid-card-copy"><strong>24토벌</strong><small>최소·권장 명중 기준</small></span><span class="raid-card-value">확인 중</span><span class="raid-card-arrow">›</span>
+            </button>
+            <button class="raid-accuracy-card" type="button" data-raid-level="25">
+              <span class="raid-card-index">25</span><span class="raid-card-copy"><strong>25토벌</strong><small>최소·권장 명중 기준</small></span><span class="raid-card-value">확인 중</span><span class="raid-card-arrow">›</span>
+            </button>
+            <button class="raid-accuracy-card" type="button" data-raid-level="26">
+              <span class="raid-card-index">26</span><span class="raid-card-copy"><strong>26토벌</strong><small>최소·권장 명중 기준</small></span><span class="raid-card-value">확인 중</span><span class="raid-card-arrow">›</span>
+            </button>
+          </div>
         </section>
 
         <section class="content-panel featured-panel preview-featured-panel">
@@ -202,6 +215,6 @@
   </div>
 
   <div class="preview-toast" id="previewToast" role="status"></div>
-  <script src="./home-preview.js"></script>
+  <script src="./home-preview-v2.js"></script>
 </body>
 </html>
