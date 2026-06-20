@@ -308,3 +308,157 @@ fetch("./data/videos.json", {
   .catch(() => {
     renderVideos(fallbackVideos);
   });
+
+
+/* Nickname status popup: loads class ranking data only when first opened. */
+(() => {
+  const openButton = document.getElementById("nicknameStatusButton");
+  const nicknameModal = document.getElementById("nicknameStatusModal");
+  const closeButton = document.getElementById("nicknameStatusClose");
+  const form = document.getElementById("nicknameStatusForm");
+  const input = document.getElementById("nicknameStatusInput");
+  const result = document.getElementById("nicknameStatusResult");
+
+  if (!openButton || !nicknameModal || !closeButton || !form || !input || !result) {
+    return;
+  }
+
+  const dataUrl = "./data/Who_are_you_class.json";
+  let nicknameCountPromise = null;
+
+  function setResult(message, options = {}) {
+    const { error = false, nickname = "", count = null } = options;
+
+    result.classList.toggle("error", error);
+    result.replaceChildren();
+
+    if (nickname && Number.isInteger(count)) {
+      const name = document.createElement("strong");
+      name.textContent = `‘${nickname}’`;
+      result.append(name, ` 닉네임은 현재 랭킹 데이터에서 ${count}건 확인됩니다.`);
+      return;
+    }
+
+    result.textContent = message;
+  }
+
+  function loadNicknameCounts() {
+    if (nicknameCountPromise) {
+      return nicknameCountPromise;
+    }
+
+    nicknameCountPromise = fetch(dataUrl, { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (!data || !Array.isArray(data.rankings)) {
+          throw new Error("Invalid ranking data");
+        }
+
+        const counts = new Map();
+
+        data.rankings.forEach((character) => {
+          const name = typeof character?.name === "string"
+            ? character.name.trim()
+            : "";
+
+          if (name) {
+            counts.set(name, (counts.get(name) || 0) + 1);
+          }
+        });
+
+        return counts;
+      })
+      .catch((error) => {
+        nicknameCountPromise = null;
+        throw error;
+      });
+
+    return nicknameCountPromise;
+  }
+
+  function isValidNickname(value) {
+    return /^[가-힣]{1,10}$/.test(value) || /^[A-Za-z]{1,10}$/.test(value);
+  }
+
+  function openNicknameStatus() {
+    nicknameModal.classList.add("open");
+    nicknameModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    closeMenu();
+
+    window.setTimeout(() => {
+      input.focus();
+    }, 0);
+  }
+
+  function closeNicknameStatus() {
+    nicknameModal.classList.remove("open");
+    nicknameModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    openButton.focus();
+  }
+
+  openButton.addEventListener("click", openNicknameStatus);
+  closeButton.addEventListener("click", closeNicknameStatus);
+
+  nicknameModal.addEventListener("click", (event) => {
+    if (event.target === nicknameModal) {
+      closeNicknameStatus();
+    }
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const nickname = input.value.trim();
+
+    if (!nickname) {
+      setResult("닉네임을 입력해 주세요.", { error: true });
+      input.focus();
+      return;
+    }
+
+    if (!isValidNickname(nickname)) {
+      setResult(
+        "정확한 닉네임을 입력해 주세요. 한글 또는 영문으로 최대 10자까지 입력할 수 있으며, 한글과 영문은 함께 사용할 수 없습니다.",
+        { error: true }
+      );
+      input.focus();
+      return;
+    }
+
+    setResult("랭킹 데이터를 확인하고 있습니다.");
+
+    try {
+      const counts = await loadNicknameCounts();
+      const count = counts.get(nickname) || 0;
+
+      if (count === 0) {
+        setResult(
+          `검색한 닉네임 ‘${nickname}’은 현재 랭킹 데이터에서 확인되지 않습니다.`,
+          { error: false }
+        );
+        return;
+      }
+
+      setResult("", { nickname, count });
+    } catch (error) {
+      console.error("닉네임 현황 데이터를 불러오지 못했습니다.", error);
+      setResult(
+        "랭킹 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
+        { error: true }
+      );
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && nicknameModal.classList.contains("open")) {
+      closeNicknameStatus();
+    }
+  });
+})();
