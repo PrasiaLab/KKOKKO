@@ -71,7 +71,9 @@ function openRaidSpecPreview() {
   showToast("실제 적용 시 상단 ‘토벌 스펙’ 시트가 열립니다.");
 }
 
-renderRaidCards();
+document.querySelectorAll(".raid-accuracy-card").forEach((card) => {
+  card.addEventListener("click", () => openRaidDetail(Number(card.dataset.raidLevel)));
+});
 
 document.getElementById("raidDetailClose").addEventListener("click", closeRaidDetail);
 document.getElementById("raidDetailCancel").addEventListener("click", closeRaidDetail);
