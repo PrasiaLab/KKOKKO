@@ -49,6 +49,15 @@
           <span>⚔</span>
           진영 전력 분석
         </a>
+        <button
+          class="side-menu-item"
+          id="nicknameStatusButton"
+          type="button"
+          aria-haspopup="dialog"
+          aria-controls="nicknameStatusModal"
+        >
+          <span>⌕</span>닉네임 현황
+        </button>
 
         <p class="menu-section-title">CONTENTS</p>
         <button class="side-menu-item" data-page="review">
@@ -866,6 +875,68 @@
       </button>
 
       <div class="admin-login-status" id="adminLoginStatus"></div>
+    </div>
+  </div>
+
+  <div
+    class="nickname-status-modal"
+    id="nicknameStatusModal"
+    aria-hidden="true"
+  >
+    <div
+      class="nickname-status-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="nicknameStatusTitle"
+    >
+      <div class="nickname-status-header">
+        <div>
+          <span class="modal-kicker">NICKNAME STATUS</span>
+          <h2 id="nicknameStatusTitle">닉네임 현황</h2>
+        </div>
+
+        <button
+          class="nickname-status-close"
+          id="nicknameStatusClose"
+          type="button"
+          aria-label="닫기"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="nickname-status-body">
+        <p class="nickname-status-intro">
+          공식 홈페이지 랭킹 데이터를 기준으로 동일한 닉네임이 몇 건 확인되는지 조회합니다.
+        </p>
+
+        <form class="nickname-status-search" id="nicknameStatusForm">
+          <label class="sr-only" for="nicknameStatusInput">닉네임 입력</label>
+          <input
+            id="nicknameStatusInput"
+            type="text"
+            maxlength="10"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="닉네임 입력"
+          >
+          <button type="submit">검색</button>
+        </form>
+
+        <div
+          class="nickname-status-result"
+          id="nicknameStatusResult"
+          aria-live="polite"
+        >
+          닉네임을 입력한 후 검색해 주세요.
+        </div>
+
+        <div class="nickname-status-notes">
+          <p>※ 닉네임 현황은 프라시아 전기 공식 홈페이지의 랭킹 데이터를 참고합니다.</p>
+          <p>※ 특정 캐릭터를 식별하거나 추적하는 용도로 이용되지 않도록 서버, 결사, 레벨, 토벌 등 캐릭터 상세 정보는 제공하지 않으며 동일 닉네임의 확인 건수만 안내합니다.</p>
+          <p>※ 게임 내 닉네임 생성 기준: 한글 또는 영문 최대 10자 / 한·영 혼합 불가 / 띄어쓰기·특수문자·비속어 사용 불가</p>
+        </div>
+      </div>
     </div>
   </div>
 
