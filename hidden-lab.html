@@ -631,6 +631,239 @@ iframe{
 @keyframes bootOut{
   to{opacity:0;visibility:hidden}
 }
+
+/* ===== 얽힘의 속삭임 / 비공개 연구 슬롯 ===== */
+.whisper-visual{
+  display:grid;
+  place-items:center;
+  padding:18px;
+  background:
+    radial-gradient(circle at center,rgba(0,239,255,.18),transparent 48%),
+    radial-gradient(circle at 72% 24%,rgba(255,46,200,.08),transparent 34%),
+    linear-gradient(145deg,#06101a,#090813 72%,#120915);
+}
+.whisper-visual img{
+  width:min(100%,184px);
+  max-height:170px;
+  object-fit:contain;
+  filter:
+    saturate(1.15)
+    contrast(1.08)
+    drop-shadow(0 0 22px rgba(0,239,255,.24))
+    drop-shadow(0 18px 26px rgba(0,0,0,.55));
+  transition:transform .24s ease,filter .24s ease;
+}
+.project:hover .whisper-visual img{
+  transform:scale(1.045) rotate(-1deg);
+  filter:
+    saturate(1.35)
+    contrast(1.1)
+    drop-shadow(0 0 32px rgba(0,239,255,.36))
+    drop-shadow(0 20px 30px rgba(0,0,0,.58));
+}
+.whisper-visual::before{
+  content:"";
+  position:absolute;
+  inset:28px;
+  border:1px solid rgba(0,239,255,.12);
+  border-radius:50%;
+  box-shadow:0 0 28px rgba(0,239,255,.04);
+  animation:whisperPulse 4.8s ease-in-out infinite;
+}
+@keyframes whisperPulse{
+  0%,100%{opacity:.28;transform:scale(.98)}
+  50%{opacity:.72;transform:scale(1.03)}
+}
+.project.whisper-card{
+  border-color:rgba(0,239,255,.28);
+  box-shadow:
+    0 18px 46px rgba(0,0,0,.38),
+    0 0 32px rgba(0,239,255,.04);
+}
+.project.whisper-card .tag{
+  color:#e2feff;
+  border-color:rgba(0,239,255,.34);
+  background:rgba(0,239,255,.08);
+}
+.lab-slot .visual{
+  display:grid;
+  place-items:center;
+  padding:18px;
+  background:
+    radial-gradient(circle at center,rgba(255,46,200,.08),transparent 45%),
+    linear-gradient(145deg,#071019,#090c12);
+}
+.slot-mark{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:112px;
+  height:112px;
+  border:1px solid rgba(0,239,255,.15);
+  border-radius:28px;
+  background:rgba(0,0,0,.26);
+  color:rgba(222,247,255,.36);
+  font-size:42px;
+  font-weight:1000;
+  letter-spacing:-.04em;
+  text-shadow:2px 0 rgba(0,239,255,.35),-2px 0 rgba(255,46,200,.24);
+  transform:rotate(-2deg);
+}
+.slot-mark::before,
+.slot-mark::after{
+  content:"";
+  position:absolute;
+  inset:-13px;
+  border:1px solid rgba(255,255,255,.035);
+  border-radius:32px;
+  transform:rotate(12deg);
+}
+.slot-mark::after{
+  inset:14px;
+  border-color:rgba(255,46,200,.08);
+  transform:rotate(-20deg);
+}
+.project.lab-slot .project-title{
+  color:#d7e3ee;
+}
+.project.lab-slot .project-copy p{
+  color:#748699;
+}
+.fortune-modal{
+  position:fixed;
+  inset:0;
+  z-index:140;
+  display:none;
+  place-items:center;
+  padding:16px;
+  background:rgba(1,3,6,.88);
+  backdrop-filter:blur(13px);
+}
+.fortune-modal.open{display:grid}
+.fortune-dialog{
+  position:relative;
+  width:min(720px,96vw);
+  overflow:hidden;
+  border:1px solid rgba(0,239,255,.32);
+  background:
+    radial-gradient(circle at 50% 0%,rgba(0,239,255,.12),transparent 38%),
+    linear-gradient(180deg,#08111a,#04070b);
+  box-shadow:
+    0 0 0 1px rgba(255,46,200,.10),
+    0 32px 110px rgba(0,0,0,.78),
+    0 0 52px rgba(0,239,255,.06);
+}
+.fortune-dialog::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(180deg,transparent 0 7px,rgba(255,255,255,.018) 8px),
+    linear-gradient(90deg,transparent,rgba(0,239,255,.07),transparent);
+  opacity:.9;
+}
+.fortune-head{
+  position:relative;
+  z-index:1;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  min-height:58px;
+  padding:13px 14px 13px 18px;
+  border-bottom:1px solid rgba(0,239,255,.13);
+  background:rgba(4,10,16,.78);
+}
+.fortune-head small{
+  display:block;
+  color:#7a92a5;
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:.18em;
+}
+.fortune-head strong{
+  display:block;
+  margin-top:3px;
+  font-size:16px;
+}
+.fortune-body{
+  position:relative;
+  z-index:1;
+  padding:24px;
+}
+.fortune-orb{
+  width:86px;
+  height:86px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 18px;
+  border:1px solid rgba(0,239,255,.20);
+  border-radius:50%;
+  background:radial-gradient(circle,#dffcff 0 8%,#37dfff 9% 20%,rgba(0,239,255,.08) 48%,transparent 70%);
+  box-shadow:0 0 45px rgba(0,239,255,.16);
+}
+.fortune-orb::after{
+  content:"";
+  width:122px;
+  height:42px;
+  border-top:1px solid rgba(194,249,255,.38);
+  border-bottom:1px solid rgba(0,239,255,.13);
+  border-radius:50%;
+  transform:rotate(-18deg);
+}
+.fortune-result{text-align:center}
+.fortune-grade{
+  color:var(--cyan);
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.13em;
+  text-shadow:1px 0 rgba(255,46,200,.22);
+}
+.fortune-title{
+  margin:10px 0 0;
+  font-size:28px;
+  letter-spacing:-.055em;
+}
+.fortune-message{
+  max-width:570px;
+  margin:16px auto 0;
+  color:#b9c8d4;
+  font-size:15px;
+  line-height:1.85;
+}
+.fortune-meta{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+.fortune-pill{
+  padding:7px 10px;
+  border:1px solid rgba(0,239,255,.16);
+  background:rgba(0,239,255,.045);
+  color:#a9ddea;
+  font-size:11px;
+  font-weight:900;
+}
+.fortune-note{
+  margin:20px 0 0;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.07);
+  color:#6e8192;
+  font-size:11px;
+  line-height:1.65;
+  text-align:center;
+}
+.fortune-close{
+  width:38px;
+  height:38px;
+  border:1px solid rgba(255,255,255,.1);
+  background:#0d1621;
+  color:#fff;
+  cursor:pointer;
+}
+
 @media(max-width:850px){
   .grid{grid-template-columns:1fr}
   .hero{min-height:430px}
@@ -737,6 +970,63 @@ iframe{
         <div class="action"><span>연구 시작</span><span>→</span></div>
       </div>
     </button>
+
+    <button class="project whisper-card" id="etherWhisperCard" type="button">
+      <div class="project-meta"><span>LAB-004</span><span class="tag">ACTIVE</span></div>
+      <div class="visual whisper-visual">
+        <img src="./images/ether-whisper.png" alt="얽힘의 속삭임을 상징하는 푸른 에테르 유물">
+      </div>
+      <div class="project-copy">
+        <h3 class="project-title">얽힘의 속삭임</h3>
+        <span class="project-eng">PROJECT E · ETHER WHISPER</span>
+        <p>에테르의 실이 얽히며 만들어내는 오늘의 흐름을 해석합니다.</p>
+        <div class="action"><span>얽힘의 속삭임 듣기</span><span>→</span></div>
+      </div>
+    </button>
+
+    <button class="project locked lab-slot" type="button" data-locked-message="PROJECT N · 아직 공개되지 않은 연구입니다.">
+      <div class="project-meta"><span>LAB-005</span><span class="tag">SEALED</span></div>
+      <div class="visual"><span class="slot-mark">N</span></div>
+      <div class="project-copy">
+        <h3 class="project-title">PROJECT N</h3>
+        <span class="project-eng">CLASSIFIED · NULL RECORD</span>
+        <p>기록은 존재하지만, 현재 열람 권한이 잠겨 있습니다.</p>
+        <div class="action"><span>비공개 연구</span><span>×</span></div>
+      </div>
+    </button>
+
+    <button class="project locked lab-slot" type="button" data-locked-message="PROJECT O · 관측 데이터가 아직 안정화되지 않았습니다.">
+      <div class="project-meta"><span>LAB-006</span><span class="tag">OBSERVING</span></div>
+      <div class="visual"><span class="slot-mark">O</span></div>
+      <div class="project-copy">
+        <h3 class="project-title">PROJECT O</h3>
+        <span class="project-eng">OBSERVATION · PENDING</span>
+        <p>에테르 관측값을 수집 중입니다. 실험 개시는 보류되었습니다.</p>
+        <div class="action"><span>연구중</span><span>…</span></div>
+      </div>
+    </button>
+
+    <button class="project locked lab-slot" type="button" data-locked-message="PROJECT R · 복원 중인 자료입니다.">
+      <div class="project-meta"><span>LAB-007</span><span class="tag">RESTORING</span></div>
+      <div class="visual"><span class="slot-mark">R</span></div>
+      <div class="project-copy">
+        <h3 class="project-title">PROJECT R</h3>
+        <span class="project-eng">RESTORATION · DAMAGED</span>
+        <p>손상된 연구 기록을 복원하고 있습니다. 일부 데이터가 누락되었습니다.</p>
+        <div class="action"><span>복원중</span><span>…</span></div>
+      </div>
+    </button>
+
+    <button class="project locked lab-slot" type="button" data-locked-message="PROJECT U · 정의되지 않은 실험입니다.">
+      <div class="project-meta"><span>LAB-008</span><span class="tag">UNKNOWN</span></div>
+      <div class="visual"><span class="slot-mark">U</span></div>
+      <div class="project-copy">
+        <h3 class="project-title">PROJECT U</h3>
+        <span class="project-eng">UNDEFINED · ACCESS LOCKED</span>
+        <p>분류되지 않은 연구 항목입니다. 접근 시도가 기록되었습니다.</p>
+        <div class="action"><span>접근 제한</span><span>×</span></div>
+      </div>
+    </button>
   </section>
 
   <aside class="legal-notice">
@@ -762,6 +1052,29 @@ iframe{
     입구 위치 및 비공개 프로젝트 정보는 외부에 공개하지 마십시오.
   </footer>
 </main>
+
+
+<div class="fortune-modal" id="fortuneModal" aria-hidden="true">
+  <div class="fortune-dialog" role="dialog" aria-modal="true" aria-labelledby="fortuneTitle">
+    <div class="fortune-head">
+      <div><small>ETHER WHISPER · DAILY ENTANGLEMENT</small><strong id="fortuneTitle">오늘의 얽힘</strong></div>
+      <button class="fortune-close" id="fortuneCloseBtn" type="button" aria-label="얽힘 결과 닫기">✕</button>
+    </div>
+    <div class="fortune-body">
+      <div class="fortune-orb" aria-hidden="true"></div>
+      <div class="fortune-result">
+        <div class="fortune-grade" id="fortuneGrade">분석 중</div>
+        <h3 class="fortune-title" id="fortuneResultTitle">에테르의 실을 읽고 있습니다</h3>
+        <p class="fortune-message" id="fortuneMessage">잠시만 기다려 주세요.</p>
+        <div class="fortune-meta">
+          <span class="fortune-pill" id="fortuneType">얽힘 해석</span>
+          <span class="fortune-pill" id="fortuneDate">KST 00:00 갱신</span>
+        </div>
+        <p class="fortune-note">얽힘의 속삭임은 브라우저에 하루 동안 보관됩니다. 새로고침해도 같은 결과가 유지되며, 한국 시간 0시 이후 새로운 흐름을 해석합니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal" id="modal" aria-hidden="true">
   <div class="dialog">
@@ -808,6 +1121,126 @@ modal.addEventListener("click", event => {
 
 document.addEventListener("keydown", event => {
   if(event.key === "Escape" && modal.classList.contains("open")) closeGame();
+});
+
+
+const fortuneMessages = [
+  { grade:"찬란한 얽힘", type:"소환운", title:"에테르가 새로운 형상을 부릅니다", message:"오늘은 형상 소환의 흐름이 맑게 열려 있습니다. 스탠더의 손끝에 모인 에테르가 평소보다 높은 등급의 빛을 끌어당길지도 모릅니다." },
+  { grade:"은은한 얽힘", type:"소환운", title:"탈것의 발굽 소리가 가까워집니다", message:"오늘의 얽힘은 이동의 기운을 품고 있습니다. 탈것 소환에서 뜻밖의 결과가 찾아올 수 있으니, 너무 큰 기대보다는 가벼운 마음이 좋습니다." },
+  { grade:"반짝이는 얽힘", type:"소환운", title:"정령의 눈동자가 당신을 바라봅니다", message:"정령 소환의 기운이 조용히 흔들립니다. 오늘은 작은 빛이 큰 동행으로 이어질 수 있는 날입니다." },
+  { grade:"불안정한 얽힘", type:"소환운", title:"에테르의 실이 조금 어긋나 있습니다", message:"오늘의 소환은 기대와 결과가 다를 수 있습니다. 큰 지출보다는 무료 소환과 작은 시도에 만족하는 편이 좋겠습니다." },
+  { grade:"깨어난 얽힘", type:"소환운", title:"닫혀 있던 소환진이 미세하게 열립니다", message:"형상, 탈것, 정령 중 하나의 흐름이 평소보다 강합니다. 오늘은 하나를 정해 집중하는 것이 흩어진 운을 모으는 길입니다." },
+  { grade:"찬란한 얽힘", type:"연성운", title:"흩어진 조각들이 하나로 이어집니다", message:"오늘은 연성의 기운이 강하게 감돕니다. 형상, 탈것, 정령의 에테르가 상위 등급을 향해 조용히 움직이고 있습니다." },
+  { grade:"위험한 얽힘", type:"연성운", title:"성공과 실패의 실이 맞닿아 있습니다", message:"연성의 문은 열려 있지만, 그 너머의 결과는 아직 흐릿합니다. 꼭 필요한 시도가 아니라면 하루를 넘기는 것도 나쁘지 않습니다." },
+  { grade:"고조된 얽힘", type:"연성운", title:"에테르가 높은 등급을 향해 솟구칩니다", message:"오늘의 연성은 도파민의 기운을 품고 있습니다. 오래 기다린 연성이 있다면, 조심스럽게 한 번쯤 흐름을 확인해볼 만합니다." },
+  { grade:"잔잔한 얽힘", type:"연성운", title:"무리한 욕심은 실을 끊을 수 있습니다", message:"오늘은 연성보다 재료를 모으기에 좋은 날입니다. 얽힘은 아직 완전히 이어지지 않았으니, 다음 기회를 준비해보세요." },
+  { grade:"번뜩이는 얽힘", type:"연성운", title:"실패의 기억 위로 빛이 내려앉습니다", message:"이전의 실패가 오늘의 흐름을 막지는 못합니다. 연성을 시도한다면 결과보다 타이밍을 믿어보는 날입니다." },
+  { grade:"뜨거운 얽힘", type:"강화운", title:"강화석이 평소보다 묵직하게 빛납니다", message:"장비 강화의 기운이 강하게 움직입니다. 안전강화 구간은 순조롭고, 파괴강화는 신중함이 행운을 지켜줄 것입니다." },
+  { grade:"아슬아슬한 얽힘", type:"강화운", title:"파괴의 기운이 가까이 머뭅니다", message:"오늘은 파괴강화에 쉽게 손이 갈 수 있는 날입니다. 에테르는 경고합니다. 장비가 소중하다면 한 번 더 생각하세요." },
+  { grade:"묵직한 얽힘", type:"강화운", title:"절대자의 힘이 잠시 눈을 뜹니다", message:"절대자 강화의 흐름이 짧게 열려 있습니다. 많은 시도보다 적은 횟수의 신중한 도전이 더 좋은 결과를 부를 수 있습니다." },
+  { grade:"인내의 얽힘", type:"강화운", title:"유물과 견갑이 쉽게 마음을 열지 않습니다", message:"오늘은 낮은 확률의 벽이 유난히 높아 보일 수 있습니다. 성공보다 멈출 타이밍을 아는 것이 더 큰 운입니다." },
+  { grade:"맑은 얽힘", type:"강화운", title:"기억의 조각이 선명하게 이어집니다", message:"기억회복 아이템 강화에 작은 빛이 깃듭니다. 원하는 단계까지 한 번에 이어질 가능성이 평소보다 조금 높아진 흐름입니다." },
+  { grade:"흔들리는 얽힘", type:"강화운", title:"강화창 앞에서 손끝이 망설입니다", message:"오늘은 강화 버튼이 유난히 커 보이는 날입니다. 하지만 얽힘은 말합니다. 충동보다 계획이 강한 하루입니다." },
+  { grade:"선명한 얽힘", type:"강화운", title:"실패의 그림자가 잠시 옅어집니다", message:"강화의 흐름이 나쁘지 않습니다. 오래 고민하던 장비가 있다면 무리하지 않는 선에서 시도해볼 만합니다." },
+  { grade:"찬란한 얽힘", type:"마법부여운", title:"옵션의 별들이 한곳에 모입니다", message:"마법부여의 기운이 밝습니다. 원하는 옵션이 3개 이상 떠오를 수 있는 흐름이니, 오늘의 손맛을 기대해도 좋습니다." },
+  { grade:"흐린 얽힘", type:"마법부여운", title:"옵션들이 제멋대로 흩어집니다", message:"오늘은 원하는 옵션이 쉽게 잡히지 않을 수 있습니다. 깊게 들어가면 스트레스가 커질 수 있으니 가볍게 확인만 해보세요." },
+  { grade:"집중된 얽힘", type:"마법부여운", title:"하나의 옵션이 유난히 또렷합니다", message:"오늘은 모든 것을 노리기보다 꼭 필요한 옵션 하나에 집중하는 것이 좋습니다. 욕심을 줄이면 결과가 더 선명해질 수 있습니다." },
+  { grade:"반짝이는 얽힘", type:"마법부여운", title:"세 번째 옵션에 작은 빛이 깃듭니다", message:"마법부여에서 아쉬웠던 마지막 한 줄이 오늘은 다르게 보일 수 있습니다. 완벽은 아니어도 만족스러운 결과가 가까이 있습니다." },
+  { grade:"탐구의 얽힘", type:"분석운", title:"몬스터의 흔적이 선명하게 남습니다", message:"몬스터 도감 분석의 흐름이 안정적입니다. 같은 색의 기운이 이어지고, 최대 능력치에 가까운 결과를 기대해볼 수 있습니다." },
+  { grade:"어긋난 얽힘", type:"분석운", title:"색의 흐름이 서로 엇갈립니다", message:"오늘의 분석은 색상이 쉽게 맞물리지 않을 수 있습니다. 억지로 밀어붙이기보다 재료를 아끼는 편이 좋아 보입니다." },
+  { grade:"푸른 얽힘", type:"분석운", title:"도감 속 에테르가 차분히 가라앉습니다", message:"분석 결과가 안정적으로 붙을 수 있는 날입니다. 최고 수치를 노린다면 작은 기대를 품어도 좋습니다." },
+  { grade:"붉은 얽힘", type:"분석운", title:"몬스터의 기억이 강하게 반응합니다", message:"오늘은 공격적인 능력치의 흐름이 강합니다. 도감 분석에서 전투에 도움이 되는 결과를 만날 수 있습니다." },
+  { grade:"각성의 얽힘", type:"각성운", title:"추종자의 잠든 힘이 흔들립니다", message:"추종자 각성의 기운이 살아납니다. 낮은 확률 속에서도 한 번의 성공이 큰 도파민으로 돌아올 수 있는 날입니다." },
+  { grade:"침묵의 얽힘", type:"각성운", title:"추종자들이 아직 응답하지 않습니다", message:"오늘은 각성의 흐름이 조용합니다. 무리한 시도보다는 재료를 모으고 다음 얽힘을 기다리는 것이 좋겠습니다." },
+  { grade:"솟구치는 얽힘", type:"각성운", title:"상위 등급의 문이 잠시 흔들립니다", message:"추종자 각성에서 뜻밖의 상승 흐름이 보입니다. 오래 모아둔 시도가 있다면 오늘의 기운을 확인해볼 만합니다." },
+  { grade:"인내의 얽힘", type:"각성운", title:"낮은 확률은 쉽게 무너지지 않습니다", message:"오늘은 결과보다 마음 관리가 중요한 날입니다. 실패하더라도 얽힘은 끊어진 것이 아니라 다시 감기는 중입니다." },
+  { grade:"전장의 얽힘", type:"전투운", title:"쟁의 기운이 날카롭게 벼려집니다", message:"오늘은 적대와의 전투에서 집중력이 빛날 수 있습니다. 무리한 돌진보다 결사의 흐름에 맞춘 움직임이 승리를 부릅니다." },
+  { grade:"숨은 얽힘", type:"전투운", title:"썰자의 그림자가 가까이 있습니다", message:"오늘은 사냥터에서 예기치 못한 PK를 만날 수 있습니다. 자동사냥 위치와 주변 흐름을 한 번 더 확인하는 것이 좋습니다." },
+  { grade:"결속의 얽힘", type:"전투운", title:"결사의 깃발 아래 에테르가 모입니다", message:"개인의 힘보다 결사의 움직임이 중요한 날입니다. 함께 움직일수록 전장의 흐름이 유리하게 기울 수 있습니다." },
+  { grade:"맹렬한 얽힘", type:"전투운", title:"오늘의 손끝은 평소보다 빠릅니다", message:"쟁과 썰자에서 반응이 좋은 날입니다. 단, 이길 수 있는 싸움과 피해야 할 싸움을 구분하는 눈이 필요합니다." },
+  { grade:"경계의 얽힘", type:"전투운", title:"붉은 이름이 멀지 않습니다", message:"오늘은 적대의 움직임이 가까울 수 있습니다. 사냥터를 오래 비울수록 위험하니, 한 번씩 화면을 확인하세요." },
+  { grade:"황금 얽힘", type:"재물운", title:"골드의 흐름이 조금씩 차오릅니다", message:"오늘은 사냥과 판매에서 골드가 평소보다 부드럽게 모일 수 있습니다. 작은 수익을 놓치지 않는 것이 중요합니다." },
+  { grade:"메마른 얽힘", type:"재물운", title:"주머니의 에테르가 빠르게 흩어집니다", message:"오늘은 골드 소모가 커질 수 있습니다. 강화, 마법부여, 구매를 동시에 진행하면 금세 바닥이 보일 수 있습니다." },
+  { grade:"풍요의 얽힘", type:"재물운", title:"뜻밖의 판매금이 들어올 수 있습니다", message:"등급은 낮아도 값비싼 아이템과 인연이 닿을 수 있는 날입니다. 드랍 목록과 거래 가치를 꼼꼼히 확인해보세요." },
+  { grade:"절약의 얽힘", type:"재물운", title:"오늘의 행운은 쓰지 않는 데 있습니다", message:"골드를 버는 것보다 지키는 것이 더 중요한 하루입니다. 충동적인 강화와 구매를 참는다면 내일의 기회가 커집니다." },
+  { grade:"신화의 얽힘", type:"득템운", title:"아주 낮은 확률의 문이 미세하게 열립니다", message:"전설과 신화 아이템의 기운이 멀리서 반짝입니다. 큰 기대는 금물이지만, 오늘의 사냥에는 작은 설렘을 가져도 좋습니다." },
+  { grade:"전설의 얽힘", type:"득템운", title:"드랍창에 낯선 빛이 스칠 수 있습니다", message:"아이템 획득 운이 좋은 편입니다. 사냥터를 오래 유지할수록 뜻밖의 보상이 찾아올 가능성이 있습니다." },
+  { grade:"상자의 얽힘", type:"득템운", title:"닫힌 상자 안쪽에서 빛이 샙니다", message:"랜덤 상자에서 원하는 아이템이나 기대보다 많은 수량을 만날 수 있는 흐름입니다. 오늘은 개봉의 손맛이 나쁘지 않습니다." },
+  { grade:"희미한 얽힘", type:"득템운", title:"빛은 있지만 아직 멀리 있습니다", message:"오늘의 득템운은 강하지 않습니다. 큰 기대보다 꾸준한 사냥과 재료 수급에 의미를 두는 것이 좋겠습니다." },
+  { grade:"반전의 얽힘", type:"득템운", title:"낮은 등급 속에 뜻밖의 가치가 숨어 있습니다", message:"전설이 아니어도 좋은 날입니다. 판매금액이 큰 아이템이나 필요한 재료가 조용히 가방에 들어올 수 있습니다." },
+  { grade:"결속의 얽힘", type:"결사운", title:"결사의 이름 아래 에테르가 모입니다", message:"오늘은 결사 활동에 좋은 흐름이 있습니다. 공헌, 토벌, 지원 요청에 응답하면 예상보다 큰 만족이 돌아올 수 있습니다." },
+  { grade:"따뜻한 얽힘", type:"결사운", title:"스탠더들의 실이 서로 이어집니다", message:"혼자보다 함께할 때 운이 살아나는 날입니다. 결사원과의 작은 대화나 파티가 좋은 흐름을 만들 수 있습니다." },
+  { grade:"분주한 얽힘", type:"결사운", title:"오늘의 결사는 조금 시끄러울 수 있습니다", message:"공지, 토벌, 쟁, 요청이 한꺼번에 몰릴 수 있습니다. 정신없더라도 흐름을 잘 타면 얻는 것이 많은 하루입니다." },
+  { grade:"희생의 얽힘", type:"결사운", title:"작은 공헌이 큰 신뢰로 돌아옵니다", message:"오늘은 눈에 띄지 않는 참여가 더 빛나는 날입니다. 루비 공헌이나 콘텐츠 참여가 결사의 흐름을 단단하게 만듭니다." },
+  { grade:"균형의 얽힘", type:"종합운", title:"오늘의 에테르는 과하지도 부족하지도 않습니다", message:"소환, 강화, 전투, 사냥 모두 무난한 흐름입니다. 큰 승부보다는 매일 해야 할 일을 차분히 끝내기에 좋은 날입니다." },
+  { grade:"혼돈의 얽힘", type:"종합운", title:"에테르의 실이 여러 방향으로 꼬입니다", message:"오늘은 한 가지에 집중하지 않으면 손해가 커질 수 있습니다. 강화, 소환, 쟁을 모두 건드리기보다 하나만 선택하세요." },
+  { grade:"행운의 얽힘", type:"종합운", title:"작은 선택이 좋은 결과로 이어집니다", message:"오늘은 전반적인 흐름이 부드럽습니다. 평소 미뤄둔 콘텐츠를 하나 처리하면 생각보다 기분 좋은 결과가 따를 수 있습니다." },
+  { grade:"휴식의 얽힘", type:"종합운", title:"에테르가 천천히 숨을 고릅니다", message:"오늘은 무리해서 결과를 만들기보다 정비에 어울리는 날입니다. 가방 정리, 재료 확인, 다음 목표 설정이 좋은 운을 부릅니다." },
+  { grade:"도약의 얽힘", type:"종합운", title:"멈춰 있던 흐름이 다시 움직입니다", message:"최근 막혀 있던 콘텐츠가 있다면 오늘 작은 돌파구가 보일 수 있습니다. 한 번의 성공보다 다음 단계로 나아가는 흐름을 믿어보세요." }
+];
+
+const fortuneModal = document.getElementById("fortuneModal");
+const fortuneCloseBtn = document.getElementById("fortuneCloseBtn");
+const fortuneGrade = document.getElementById("fortuneGrade");
+const fortuneResultTitle = document.getElementById("fortuneResultTitle");
+const fortuneMessage = document.getElementById("fortuneMessage");
+const fortuneType = document.getElementById("fortuneType");
+const fortuneDate = document.getElementById("fortuneDate");
+const fortuneStorageKey = "noruHiddenLabEtherWhisper";
+
+function getKstDateKey(){
+  const now = new Date();
+  const kst = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+  return kst.toISOString().slice(0,10);
+}
+
+function getTodayFortune(){
+  const today = getKstDateKey();
+  try{
+    const saved = JSON.parse(localStorage.getItem(fortuneStorageKey) || "null");
+    if(saved && saved.date === today && Number.isInteger(saved.index) && fortuneMessages[saved.index]){
+      return { ...fortuneMessages[saved.index], date: today };
+    }
+  }catch(error){
+    localStorage.removeItem(fortuneStorageKey);
+  }
+
+  const index = Math.floor(Math.random() * fortuneMessages.length);
+  localStorage.setItem(fortuneStorageKey, JSON.stringify({ date: today, index }));
+  return { ...fortuneMessages[index], date: today };
+}
+
+function openFortune(){
+  const fortune = getTodayFortune();
+  fortuneGrade.textContent = fortune.grade;
+  fortuneResultTitle.textContent = fortune.title;
+  fortuneMessage.textContent = fortune.message;
+  fortuneType.textContent = fortune.type;
+  fortuneDate.textContent = `${fortune.date} · KST`;
+  fortuneModal.classList.add("open");
+  fortuneModal.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeFortune(){
+  fortuneModal.classList.remove("open");
+  fortuneModal.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("etherWhisperCard")?.addEventListener("click", openFortune);
+fortuneCloseBtn?.addEventListener("click", closeFortune);
+fortuneModal?.addEventListener("click", event => {
+  if(event.target === fortuneModal) closeFortune();
+});
+
+document.querySelectorAll(".locked").forEach(card => {
+  card.addEventListener("click", () => {
+    window.clearTimeout(toastTimer);
+    toast.textContent = card.dataset.lockedMessage || "ACCESS DENIED · 현재 열람할 수 없는 프로젝트입니다.";
+    toast.classList.add("show");
+    toastTimer = window.setTimeout(() => toast.classList.remove("show"), 1800);
+  });
 });
 
 const contactMailButton = document.getElementById("contactMailButton");
