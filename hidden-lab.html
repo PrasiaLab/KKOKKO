@@ -685,6 +685,55 @@ iframe{
   border-color:rgba(0,239,255,.34);
   background:rgba(0,239,255,.08);
 }
+
+.project.forge-card{
+  border-color:rgba(255,85,119,.28);
+  box-shadow:
+    0 18px 46px rgba(0,0,0,.4),
+    0 0 34px rgba(255,85,119,.07);
+}
+.project.forge-card .tag{
+  color:#ffe6ec;
+  border-color:rgba(255,85,119,.34);
+  background:rgba(255,85,119,.08);
+}
+.forge-visual{
+  display:grid;
+  place-items:center;
+  padding:12px;
+  background:
+    radial-gradient(circle at center,rgba(255,85,119,.12),transparent 48%),
+    radial-gradient(circle at 74% 18%,rgba(132,49,255,.14),transparent 34%),
+    linear-gradient(145deg,#11080f,#0b0d14 72%,#15070c);
+}
+.forge-visual img{
+  width:min(100%,220px);
+  max-height:174px;
+  object-fit:contain;
+  filter:
+    saturate(1.08)
+    contrast(1.06)
+    drop-shadow(0 0 22px rgba(182,74,255,.24))
+    drop-shadow(0 18px 26px rgba(0,0,0,.58));
+  transition:transform .24s ease,filter .24s ease;
+}
+.project:hover .forge-visual img{
+  transform:scale(1.032);
+  filter:
+    saturate(1.16)
+    contrast(1.08)
+    drop-shadow(0 0 30px rgba(255,85,119,.24))
+    drop-shadow(0 18px 30px rgba(0,0,0,.6));
+}
+.forge-visual::before{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border:1px solid rgba(255,85,119,.12);
+  border-radius:18px;
+  box-shadow:inset 0 0 24px rgba(182,74,255,.08);
+}
+
 .lab-slot .visual{
   display:grid;
   place-items:center;
@@ -1006,18 +1055,23 @@ iframe{
       </div>
     </button>
 
-    <button class="project locked lab-slot" type="button" data-locked-message="PROJECT R · 복원 중인 자료입니다.">
-      <div class="project-meta"><span>LAB-007</span><span class="tag">RESTORING</span></div>
-      <div class="visual"><span class="slot-mark">R</span></div>
+    <button class="project forge-card" type="button"
+      data-game="./games/reinforcement-isolation/index.html"
+      data-title="파괴강화 격리실험"
+      data-code="LAB-007 · PROJECT R">
+      <div class="project-meta"><span>LAB-007</span><span class="tag">ACTIVE</span></div>
+      <div class="visual forge-visual">
+        <img src="./images/project-r-card.png" alt="파괴강화 격리실험 카드 이미지">
+      </div>
       <div class="project-copy">
-        <h3 class="project-title">PROJECT R</h3>
-        <span class="project-eng">RESTORATION · DAMAGED</span>
-        <p>손상된 연구 기록을 복원하고 있습니다. 일부 데이터가 누락되었습니다.</p>
-        <div class="action"><span>복원중</span><span>…</span></div>
+        <h3 class="project-title">파괴강화 격리실험</h3>
+        <span class="project-eng">PROJECT R · REINFORCEMENT ISOLATION</span>
+        <p>실패 스택을 격리된 공간에 축적합니다. 실제 장비는 안전하지만, 멘탈은 보장되지 않습니다.</p>
+        <div class="action"><span>실패 스택 쌓기</span><span>→</span></div>
       </div>
     </button>
 
-    <button class="project locked lab-slot" type="button" data-locked-message="PROJECT U · 정의되지 않은 실험입니다.">
+        <button class="project locked lab-slot" type="button" data-locked-message="PROJECT U · 정의되지 않은 실험입니다.">
       <div class="project-meta"><span>LAB-008</span><span class="tag">UNKNOWN</span></div>
       <div class="visual"><span class="slot-mark">U</span></div>
       <div class="project-copy">
