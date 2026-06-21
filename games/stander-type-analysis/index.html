@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PROJECT N · 스탠더 타입 분석실</title>
+<style>
+:root{
+  --bg:#05080d;--panel:#09111b;--panel2:#0e1824;--line:rgba(82,211,255,.18);
+  --cyan:#00efff;--pink:#ff2ec8;--green:#6fffaa;--violet:#9b70ff;--gold:#d8bd73;
+  --text:#eef8ff;--muted:#8fa4b5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#030509;color:var(--text);font-family:Pretendard,"Noto Sans KR","Segoe UI",sans-serif}
+body{
+  background:
+    radial-gradient(circle at 50% 0%,rgba(0,239,255,.08),transparent 30%),
+    radial-gradient(circle at 80% 100%,rgba(155,112,255,.08),transparent 27%),
+    linear-gradient(180deg,#05080d,#020306);
+}
+.app{width:min(920px,calc(100% - 18px));margin:0 auto;padding:12px 0 16px}
+.lab{position:relative;overflow:hidden;border:1px solid rgba(0,239,255,.24);background:linear-gradient(180deg,rgba(8,16,25,.96),rgba(4,7,12,.98));box-shadow:0 24px 70px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,46,200,.06)}
+.lab::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(180deg,transparent 0 7px,rgba(255,255,255,.018) 8px),linear-gradient(90deg,transparent,rgba(0,239,255,.05),transparent);opacity:.8}
+.head{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid rgba(0,239,255,.13);background:rgba(4,10,16,.74)}
+.head small{display:block;color:#7a92a5;font-size:10px;font-weight:950;letter-spacing:.15em}
+.head strong{display:block;margin-top:4px;font-size:20px;letter-spacing:-.04em}
+.progress{min-width:150px;text-align:right;color:#95a8b7;font-size:12px;font-weight:900}
+.bar{height:6px;margin-top:7px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.05);overflow:hidden}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--green),var(--violet));transition:.28s}
+.body{position:relative;z-index:1;padding:20px}
+.intro{display:grid;grid-template-columns:250px 1fr;gap:20px;align-items:center}
+.card-art{position:relative;min-height:250px;display:grid;place-items:center;border:1px solid rgba(0,239,255,.11);background:radial-gradient(circle at center,rgba(0,239,255,.12),transparent 48%),linear-gradient(145deg,#071019,#080a12)}
+.card-art img{width:100%;height:250px;object-fit:cover;display:block;filter:saturate(1.1) contrast(1.05)}
+.intro h1{margin:0;font-size:34px;letter-spacing:-.07em;text-shadow:2px 0 rgba(0,239,255,.45),-2px 0 rgba(255,46,200,.28)}
+.intro p{color:#b8c7d3;line-height:1.75;font-size:15px}
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pill{padding:7px 10px;border:1px solid rgba(0,239,255,.16);background:rgba(0,239,255,.045);color:#a9ddea;font-size:11px;font-weight:900}
+.start-btn,.option,.ghost-btn,.share-btn{border:1px solid rgba(0,239,255,.18);background:rgba(0,239,255,.055);color:#eafcff;font:inherit;font-weight:900;cursor:pointer;transition:.18s}
+.start-btn{margin-top:18px;min-height:48px;padding:0 18px}
+.start-btn:hover,.option:hover,.ghost-btn:hover,.share-btn:hover{border-color:rgba(0,239,255,.42);box-shadow:0 0 18px rgba(0,239,255,.08);transform:translateY(-1px)}
+.quiz{display:none}
+.question-meta{display:flex;justify-content:space-between;gap:10px;align-items:center;color:#7f94a7;font-size:11px;font-weight:950;letter-spacing:.12em}
+.question h2{margin:12px 0 0;font-size:28px;letter-spacing:-.055em}
+.situation{margin:12px 0 0;padding:13px 14px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.025);color:#b8c7d3;line-height:1.7;font-size:14px}
+.options{display:grid;gap:10px;margin-top:15px}
+.option{position:relative;display:grid;grid-template-columns:42px 1fr;align-items:center;gap:10px;min-height:58px;padding:10px 14px;text-align:left;background:rgba(8,16,25,.82)}
+.option b{display:grid;place-items:center;width:34px;height:34px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#d9faff}
+.option.selected{border-color:rgba(111,255,170,.5);background:rgba(111,255,170,.07)}
+.meter{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+.meter-card{padding:10px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.025);text-align:center}
+.meter-card small{display:block;color:#7d90a2;font-size:10px;font-weight:950;letter-spacing:.1em}
+.meter-card strong{display:block;margin-top:4px;color:#d9f7ff;font-size:15px}
+.result{display:none;text-align:center}
+.result-code{font-size:64px;line-height:1;margin:10px 0 0;color:#eaffff;text-shadow:3px 0 rgba(0,239,255,.45),-3px 0 rgba(255,46,200,.28)}
+.result h1{margin:8px 0 0;font-size:34px;letter-spacing:-.06em;color:#fff4c9}
+.result-desc{max-width:650px;margin:16px auto 0;color:#c0ceda;line-height:1.8;font-size:15px}
+.result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:18px}
+.result-stat{padding:12px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.025)}
+.result-stat small{display:block;color:#7e92a6;font-size:10px;font-weight:950;letter-spacing:.1em}
+.result-stat strong{display:block;margin-top:4px;font-size:22px;color:#aafcff}
+.recommend{margin:16px auto 0;max-width:650px;display:grid;gap:8px;text-align:left}
+.recommend div{padding:12px 14px;border:1px solid rgba(216,189,115,.16);background:rgba(216,189,115,.045);color:#d8c99b;line-height:1.6;font-size:13px}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+.ghost-btn,.share-btn{min-height:44px;padding:0 16px}
+.share-btn{border-color:rgba(216,189,115,.28);background:rgba(216,189,115,.07);color:#fff2c6}
+.note{margin-top:14px;color:#65798c;font-size:11px;line-height:1.6;text-align:center}
+@media(max-width:760px){
+  .intro{grid-template-columns:1fr}
+  .card-art,.card-art img{min-height:180px;height:210px}
+  .head{align-items:flex-start;flex-direction:column}
+  .progress{width:100%;text-align:left}
+  .result-grid,.meter{grid-template-columns:repeat(2,1fr)}
+  .question h2,.intro h1,.result h1{font-size:26px}
+  .result-code{font-size:50px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <main class="lab">
+    <header class="head">
+      <div>
+        <small>PROJECT N · STANDER TYPE ANALYSIS</small>
+        <strong>스탠더 타입 분석실</strong>
+      </div>
+      <div class="progress">
+        <span id="progressText">대기 중</span>
+        <div class="bar"><span id="progressBar"></span></div>
+      </div>
+    </header>
+
+    <section class="body">
+      <div class="intro" id="intro">
+        <div class="card-art"><img src="../../images/stander-type-card.png" alt=""></div>
+        <div>
+          <h1>스탠더의 선택은 늘 기록되고 있습니다.</h1>
+          <p>
+            총 15개의 상황 질문을 통해 전투 반응, 성장 방식, 결사 태도, 확률 대응 성향을 분석합니다.<br>
+            결과는 연구소식 분류이며, 실제 플레이 실력이나 계정 상태와는 무관합니다.
+          </p>
+          <div class="pill-row">
+            <span class="pill">F/S · 전투 반응</span>
+            <span class="pill">P/R · 성장 방식</span>
+            <span class="pill">C/L · 결사 태도</span>
+            <span class="pill">G/A · 확률 대응</span>
+          </div>
+          <button class="start-btn" id="startBtn" type="button">분석 시작 →</button>
+        </div>
+      </div>
+
+      <div class="quiz" id="quiz">
+        <div class="question-meta">
+          <span id="questionIndex">Q01</span>
+          <span>ETHER RESPONSE RECORDING</span>
+        </div>
+        <div class="question">
+          <h2 id="questionTitle"></h2>
+          <p class="situation" id="questionSituation"></p>
+        </div>
+        <div class="options" id="options"></div>
+        <div class="meter" aria-hidden="true">
+          <div class="meter-card"><small>전투 반응</small><strong id="meterFS">측정 중</strong></div>
+          <div class="meter-card"><small>성장 방식</small><strong id="meterPR">측정 중</strong></div>
+          <div class="meter-card"><small>결사 태도</small><strong id="meterCL">측정 중</strong></div>
+          <div class="meter-card"><small>확률 대응</small><strong id="meterGA">측정 중</strong></div>
+        </div>
+      </div>
+
+      <div class="result" id="result">
+        <small class="pill">ANALYSIS COMPLETE</small>
+        <div class="result-code" id="resultCode">FRCA</div>
+        <h1 id="resultName">결사형 전략 스탠더</h1>
+        <p class="result-desc" id="resultDesc"></p>
+        <div class="result-grid">
+          <div class="result-stat"><small>전투 반응</small><strong id="axisFS">F</strong></div>
+          <div class="result-stat"><small>성장 방식</small><strong id="axisPR">R</strong></div>
+          <div class="result-stat"><small>결사 태도</small><strong id="axisCL">C</strong></div>
+          <div class="result-stat"><small>확률 대응</small><strong id="axisGA">A</strong></div>
+        </div>
+        <div class="recommend">
+          <div><b>추천 연구</b> · <span id="resultRecommend"></span></div>
+          <div><b>주의 문구</b> · <span id="resultWarning"></span></div>
+        </div>
+        <div class="actions">
+          <button class="share-btn" id="shareBtn" type="button">결과 이미지 저장</button>
+          <button class="ghost-btn" id="retryBtn" type="button">다시 분석하기</button>
+        </div>
+        <p class="note">결과 이미지는 브라우저에서 직접 생성됩니다. 일부 환경에서는 글꼴이 다르게 보일 수 있습니다.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+const questions = [{"id": "Q01", "title": "강화 버튼 앞에 섰다", "situation": "강화 재료와 주문서가 준비되었다. 성공 확률은 낮지만, 성공하면 확실히 강해진다.", "options": [["A", "지금이 타이밍이다. 고민하면 손만 떨린다. 바로 누른다.", ["P", "G"]], ["B", "실패 스택, 재료, 골드, 다음 목표까지 먼저 계산한다.", ["R", "A"]], ["C", "결사원에게 “이거 지금 눌러도 됨?” 하고 물어본다.", ["C", "A"]], ["D", "오늘의 운세나 느낌부터 확인하고 온다.", ["L", "G"]]]}, {"id": "Q02", "title": "자동사냥 중 적대가 근처에 보였다", "situation": "자동사냥 중인데, 근처에 적대 캐릭터가 보인다.", "options": [["A", "위치를 확인하고 바로 대응할 준비를 한다.", ["F", "A"]], ["B", "우선 귀환하거나 안전한 곳으로 이동한다.", ["S", "A"]], ["C", "결사 채팅에 위치와 상황을 공유한다.", ["C", "F"]], ["D", "괜히 엮이기 싫어서 조용히 사냥터를 바꾼다.", ["S", "L"]]]}, {"id": "Q03", "title": "전설 상자를 얻었다", "situation": "드디어 전설 상자를 얻었다. 지금 열 수도 있고, 나중에 열 수도 있다.", "options": [["A", "상자는 뜨거울 때 열어야 한다. 바로 연다.", ["G", "P"]], ["B", "좋은 날, 좋은 시간, 좋은 기분까지 기다린다.", ["A", "R"]], ["C", "결사 채팅에 먼저 자랑하고 다 같이 보는 앞에서 연다.", ["C", "G"]], ["D", "거래 가능 여부와 시세부터 확인한다.", ["R", "A"]]]}, {"id": "Q04", "title": "결사 던전 시간이 다가온다", "situation": "결사 던전 시간이 다가오고 있다. 그런데 아직 개인 루틴도 조금 남았다.", "options": [["A", "일단 접속해서 전투 대기부터 한다.", ["C", "A"]], ["B", "코리안타임에 맞춰서 최대한 늦게 합류한다.", ["L", "R"]], ["C", "인원이 부족하면 보상 상관없이 참여한다.", ["C", "F"]], ["D", "보상이 내 캐릭터 성장에 필요한지 먼저 본다.", ["L", "R"]]]}, {"id": "Q05", "title": "마법부여 옵션이 애매하게 좋게 떴다", "situation": "나쁘지 않은 옵션이 붙었다. 하지만 완벽하진 않다.", "options": [["A", "더 좋은 옵션을 노리고 다시 돌린다.", ["G", "P"]], ["B", "이 정도면 멈추는 게 맞는지 수치와 비용을 계산한다.", ["A", "R"]], ["C", "결사원에게 스크린샷을 보내고 판단을 맡긴다.", ["C", "A"]], ["D", "귀찮으니 일단 이걸로 쓴다.", ["L", "S"]]]}, {"id": "Q06", "title": "쟁 지원 요청이 올라왔다", "situation": "결사 채팅에 쟁 지원 요청이 올라왔다. 현재 나는 사냥 중이다.", "options": [["A", "사냥을 멈추고 바로 이동한다.", ["F", "C"]], ["B", "현재 위치, 상대 규모, 참여 인원부터 확인한다.", ["A", "C"]], ["C", "죽으면 손해라서 상황이 정리될 때까지 기다린다.", ["S", "R"]], ["D", "내 캐릭터가 도움이 될 상황인지 먼저 생각한다.", ["A", "L"]]]}, {"id": "Q07", "title": "골드가 꽤 모였다", "situation": "한동안 모은 골드가 꽤 쌓였다. 무엇을 할지 고민된다.", "options": [["A", "지금 바로 체감되는 스펙업에 투자한다.", ["P", "G"]], ["B", "다음 이벤트나 패치를 대비해 아껴둔다.", ["R", "A"]], ["C", "결사원에게 은근슬쩍 자랑한다.", ["C", "R"]], ["D", "당장 쓰지 않고, 필요할 때까지 조용히 보관한다.", ["L", "R"]]]}, {"id": "Q08", "title": "신규 토벌 보스 이야기가 자주 언급된다", "situation": "신규 토벌에 도전하는 사람이 많고, 채팅도 시끄러워졌다.", "options": [["A", "난이도가 있지만 직접 플레이를 시도한다.", ["F", "G"]], ["B", "스트레스가 심할것 같으므로 맛나는 꼬꼬에게 요청한다.", ["S", "A"]], ["C", "결사원들의 달성 여부를 먼저 확인한다.", ["C", "A"]], ["D", "보상과 난이도을 비교해서 갈지 말지 정한다.", ["R", "A"]]]}, {"id": "Q09", "title": "추종자 각성 재료가 모였다", "situation": "낮은 확률이지만 추종자 각성을 시도할 수 있다.", "options": [["A", "모였으면 해야지. 바로 시도한다.", ["P", "G"]], ["B", "몇 번 더 모아서 한 번에 시도한다.", ["R", "A"]], ["C", "결사원들 성공 사례를 먼저 물어본다.", ["C", "A"]], ["D", "낮은 확률은 믿지 않는다. 당분간 보류한다.", ["S", "R"]]]}, {"id": "Q10", "title": "사냥터 자리가 겹쳤다", "situation": "자동사냥 중인데, 다른 유저와 사냥터 자리가 겹쳤다.", "options": [["A", "자리 싸움도 게임이다. 쉽게 물러나지 않는다.", ["F", "P"]], ["B", "손해 보기 전에 다른 자리로 이동한다.", ["S", "R"]], ["C", "상대가 결사/연합 관련자인지 먼저 확인한다.", ["C", "A"]], ["D", "나의 사냥터 위치를 바꾼다.", ["L", "S"]]]}, {"id": "Q11", "title": "신규 성장 콘텐츠가 추가됐다", "situation": "새로운 성장 콘텐츠가 업데이트되었다. 정보가 아직 많지 않다.", "options": [["A", "일단 직접 해보면서 감을 잡는다.", ["P", "G"]], ["B", "공략과 효율표가 나올 때까지 기다린다.", ["R", "A"]], ["C", "결사원들과 정보를 모아가며 진행한다.", ["C", "A"]], ["D", "내 루틴에 영향이 있는지 보고 천천히 한다.", ["L", "R"]]]}, {"id": "Q12", "title": "결사원이 도움을 요청했다", "situation": "결사원이 콘텐츠 진행이나 적대 대응에 도움을 요청했다.", "options": [["A", "가능한 상황이면 바로 도와준다.", ["C", "F"]], ["B", "내 일정과 손해를 먼저 확인한다.", ["L", "A"]], ["C", "다른 지원 인원이 있는지 보고 판단한다.", ["C", "A"]], ["D", "내가 도와도 효율이 낮으면 조용히 넘긴다.", ["L", "R"]]]}, {"id": "Q13", "title": "누군가 “오늘 강화 잘 붙는다”고 했다", "situation": "결사 채팅에서 누군가 오늘 강화가 잘 붙는다고 말한다.", "options": [["A", "그 말 들으면 못 참지. 바로 강화창을 연다.", ["G", "P"]], ["B", "남의 운은 남의 운이다. 내 재료부터 본다.", ["A", "R"]], ["C", "누가 몇 번 만에 성공했는지 더 물어본다.", ["C", "A"]], ["D", "괜히 흔들리기 싫어서 채팅을 닫는다.", ["S", "L"]]]}, {"id": "Q14", "title": "적대에게 당했다", "situation": "자동사냥 중이던 캐릭터가 적대에게 당했다.", "options": [["A", "바로 위치 확인하고 복수하러 간다.", ["F", "G"]], ["B", "일단 안전한 사냥터로 옮긴다.", ["S", "R"]], ["C", "결사 채팅에 상황을 공유하고 대응을 요청한다.", ["C", "F"]], ["D", "손해를 계산하고 당분간 그 지역을 피한다.", ["A", "S"]]]}, {"id": "Q15", "title": "오늘 시간이 별로 없다", "situation": "오늘은 접속 시간이 짧다. 무엇을 먼저 할지 정해야 한다.", "options": [["A", "전투력에 바로 도움 되는 콘텐츠부터 한다.", ["P", "A"]], ["B", "결사 일정이나 단체 콘텐츠부터 챙긴다.", ["C", "A"]], ["C", "손실이 큰 일일 루틴부터 최소한으로 끝낸다.", ["R", "S"]], ["D", "피곤하니 출석체크 보상만 받고 쉰다.", ["L", "S"]]]}];
+const results = {"FPCG": ["전장 돌격 강화광", "쟁 냄새가 나면 먼저 움직이고, 강화 버튼 앞에서는 손이 더 빨라지는 타입입니다. 결사에 도움이 되는 순간이라면 골드와 재료도 과감하게 태웁니다.", "파괴강화 격리실험", "강화창 앞에서는 보호자가 필요합니다."], "FPCA": ["계산하는 전투 성장러", "전투에는 적극적이지만, 무작정 움직이진 않습니다. 스펙업도 좋아하지만 재료와 확률을 확인한 뒤 움직이는 타입입니다.", "스탠더 타입 분석실", "계산이 끝났을 때 이미 쟁이 끝나 있을 수 있습니다."], "FPLG": ["혼자 뛰는 폭주 스탠더", "혼자서도 잘 뛰고, 위험해도 일단 해보는 타입입니다. 결사 흐름보다 자신의 감각과 타이밍을 더 믿습니다.", "파괴강화 격리실험", "혼자 들어간 전장은 혼자 나와야 할 수도 있습니다."], "FPLA": ["필드형 효율 사냥꾼", "필드 상황에는 빠르게 반응하지만, 손해 보는 싸움은 피하려는 타입입니다. 혼자 움직이더라도 계산은 확실합니다.", "전리품 관측실", "너무 계산하다 보면 도파민이 부족할 수 있습니다."], "FRCG": ["결사형 도파민 수집가", "결사와 함께 움직일 때 가장 활발해지는 타입입니다. 전투, 득템, 강화 모두 결사원들과 함께할 때 더 즐겁습니다.", "결사 생존 보고서", "분위기에 휩쓸려 재료를 태울 수 있습니다."], "FRCA": ["결사형 전략 스탠더", "필드 상황에 빠르게 반응하지만 무작정 뛰어들지는 않습니다. 결사의 흐름, 자원 상황, 성공 확률을 함께 보고 움직입니다.", "고대문자 해독실험", "전략을 세우다 보면 어느새 지휘를 맡고 있을 수 있습니다."], "FRLG": ["자유로운 전리품 사냥꾼", "전장을 두려워하지 않고, 전리품과 기회를 찾아 움직이는 타입입니다. 단체보다 자신의 루트와 감을 믿는 편입니다.", "전리품 관측실", "자유는 좋지만 가끔 결사 채팅도 봐야 합니다."], "FRLA": ["독립형 자원 설계자", "필드 감각은 있지만, 무리하지 않고 자원을 설계하는 타입입니다. 혼자 조용히 성장 루트를 짜고, 필요한 순간에만 움직입니다.", "주문석 연구", "너무 조용해서 접속 중인지 모를 수 있습니다."], "SPCG": ["안전지대 강화 신봉자", "전투 손실은 피하고 싶지만, 강화 버튼 앞에서는 묘하게 과감해지는 타입입니다. 결사원들과 함께 있을 때 도전 욕구가 올라갑니다.", "파괴강화 격리실험", "안전지대에서도 재료는 사라집니다."], "SPCA": ["신중한 성장 관리자", "안전을 중시하면서도 성장 욕구가 강한 타입입니다. 무리한 쟁보다 확실한 스펙업과 안정적인 진행을 선호합니다.", "스탠더 타입 분석실", "너무 신중하면 강화 버튼에 먼지가 쌓입니다."], "SPLG": ["조용한 강화 도전자", "혼자 조용히 접속해, 아무도 모르게 강화 버튼을 누르는 타입입니다. 실패해도 크게 말하지 않고, 성공하면 살짝 자랑합니다.", "파괴강화 격리실험", "조용한 사람일수록 강화 기록이 무섭습니다."], "SPLA": ["은둔형 스펙 설계자", "위험한 전장보다 안정적인 성장과 개인 루틴을 선호합니다. 확률형 콘텐츠도 충분히 고민한 뒤 움직입니다.", "주문석 연구", "효율표가 없으면 마음이 불편할 수 있습니다."], "SRCG": ["결사 루틴 수호자", "전투보다는 안정적인 결사 활동과 꾸준한 루틴을 중시합니다. 공헌, 전쟁, 지원 같은 반복 활동에서 빛나는 타입입니다.", "결사 생존 보고서", "꾸준함은 강하지만 가끔은 쉬어도 됩니다."], "SRCA": ["안정형 결사 참모", "안전과 효율, 결사의 흐름을 함께 보는 타입입니다. 앞에서 돌격하기보다는 뒤에서 상황을 정리하고 판단합니다.", "고대문자 해독실험", "결사원이 자꾸 의견을 물어볼 수 있습니다."], "SRLG": ["느긋한 재화 수집가", "큰 전투나 무리한 강화보다, 조용히 재료와 골드를 모으는 타입입니다. 혼자서도 꾸준히 계정을 키우는 힘이 있습니다.", "전리품 관측실", "너무 아끼다 보면 가방이 먼저 터질 수 있습니다."], "SRLA": ["은둔형 자원 관리자", "위험을 피하고, 자원을 아끼고, 확률을 의심하는 타입입니다. 느리지만 안정적인 성장 루트를 선호합니다.", "얽힘의 속삭임", "가끔은 눌러야 결과가 나옵니다."]};
+const axes = [["F","S"],["P","R"],["C","L"],["G","A"]];
+let index = 0;
+let scores = { F:0,S:0,P:0,R:0,C:0,L:0,G:0,A:0 };
+let lastByAxis = { FS:"F", PR:"P", CL:"C", GA:"G" };
+let finalResult = null;
+
+const intro = document.getElementById("intro");
+const quiz = document.getElementById("quiz");
+const result = document.getElementById("result");
+const progressText = document.getElementById("progressText");
+const progressBar = document.getElementById("progressBar");
+const questionIndex = document.getElementById("questionIndex");
+const questionTitle = document.getElementById("questionTitle");
+const questionSituation = document.getElementById("questionSituation");
+const optionsEl = document.getElementById("options");
+
+document.getElementById("startBtn").addEventListener("click", start);
+document.getElementById("retryBtn").addEventListener("click", start);
+document.getElementById("shareBtn").addEventListener("click", downloadShareCard);
+
+function start(){
+  index = 0;
+  scores = { F:0,S:0,P:0,R:0,C:0,L:0,G:0,A:0 };
+  lastByAxis = { FS:"F", PR:"P", CL:"C", GA:"G" };
+  finalResult = null;
+  intro.style.display = "none";
+  result.style.display = "none";
+  quiz.style.display = "block";
+  renderQuestion();
+}
+
+function axisKey(code){
+  if(code === "F" || code === "S") return "FS";
+  if(code === "P" || code === "R") return "PR";
+  if(code === "C" || code === "L") return "CL";
+  return "GA";
+}
+
+function renderQuestion(){
+  const q = questions[index];
+  const current = index + 1;
+  questionIndex.textContent = q.id + " · " + current + "/15";
+  questionTitle.textContent = q.title;
+  questionSituation.textContent = q.situation;
+  progressText.textContent = current + " / " + questions.length;
+  progressBar.style.width = Math.round((index / questions.length) * 100) + "%";
+  optionsEl.innerHTML = "";
+  q.options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.type = "button";
+    btn.innerHTML = `<b>${opt[0]}</b><span>${opt[1]}</span>`;
+    btn.addEventListener("click", () => selectOption(opt));
+    optionsEl.appendChild(btn);
+  });
+  updateMeters();
+}
+
+function selectOption(opt){
+  opt[2].forEach(code => {
+    scores[code] += 1;
+    lastByAxis[axisKey(code)] = code;
+  });
+  index += 1;
+  if(index >= questions.length){
+    progressBar.style.width = "100%";
+    showResult();
+  }else{
+    renderQuestion();
+  }
+}
+
+function pick(a,b,key){
+  if(scores[a] > scores[b]) return a;
+  if(scores[b] > scores[a]) return b;
+  return lastByAxis[key] || a;
+}
+
+function updateMeters(){
+  document.getElementById("meterFS").textContent = scores.F === scores.S ? "흔들림" : (scores.F > scores.S ? "F 반응" : "S 반응");
+  document.getElementById("meterPR").textContent = scores.P === scores.R ? "흔들림" : (scores.P > scores.R ? "P 반응" : "R 반응");
+  document.getElementById("meterCL").textContent = scores.C === scores.L ? "흔들림" : (scores.C > scores.L ? "C 반응" : "L 반응");
+  document.getElementById("meterGA").textContent = scores.G === scores.A ? "흔들림" : (scores.G > scores.A ? "G 반응" : "A 반응");
+}
+
+function showResult(){
+  const code = pick("F","S","FS") + pick("P","R","PR") + pick("C","L","CL") + pick("G","A","GA");
+  const data = results[code] || results.FRCA;
+  finalResult = { code, name:data[0], desc:data[1], recommend:data[2], warning:data[3] };
+  quiz.style.display = "none";
+  result.style.display = "block";
+  progressText.textContent = "분석 완료";
+  progressBar.style.width = "100%";
+  document.getElementById("resultCode").textContent = code;
+  document.getElementById("resultName").textContent = data[0];
+  document.getElementById("resultDesc").textContent = data[1];
+  document.getElementById("axisFS").textContent = code[0];
+  document.getElementById("axisPR").textContent = code[1];
+  document.getElementById("axisCL").textContent = code[2];
+  document.getElementById("axisGA").textContent = code[3];
+  document.getElementById("resultRecommend").textContent = data[2];
+  document.getElementById("resultWarning").textContent = data[3];
+}
+
+function roundRect(ctx,x,y,w,h,r){
+  const rr = Math.min(r,w/2,h/2);
+  ctx.beginPath();
+  ctx.moveTo(x+rr,y);
+  ctx.arcTo(x+w,y,x+w,y+h,rr);
+  ctx.arcTo(x+w,y+h,x,y+h,rr);
+  ctx.arcTo(x,y+h,x,y,rr);
+  ctx.arcTo(x,y,x+w,y,rr);
+  ctx.closePath();
+}
+
+function wrapText(ctx,text,x,y,maxWidth,lineHeight){
+  const words = text.split(" ");
+  let line = "";
+  for(let i=0;i<words.length;i++){
+    const test = line + words[i] + " ";
+    if(ctx.measureText(test).width > maxWidth && i > 0){
+      ctx.fillText(line.trim(),x,y);
+      line = words[i] + " ";
+      y += lineHeight;
+    }else{
+      line = test;
+    }
+  }
+  if(line) ctx.fillText(line.trim(),x,y);
+}
+
+function downloadShareCard(){
+  if(!finalResult) return;
+  const canvas = document.createElement("canvas");
+  canvas.width = 1080;
+  canvas.height = 1350;
+  const ctx = canvas.getContext("2d");
+  const bg = ctx.createLinearGradient(0,0,0,1350);
+  bg.addColorStop(0,"#071019");
+  bg.addColorStop(.55,"#081019");
+  bg.addColorStop(1,"#030509");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.strokeStyle = "rgba(0,239,255,.32)";
+  ctx.lineWidth = 2;
+  roundRect(ctx,44,44,992,1262,28);
+  ctx.stroke();
+
+  ctx.fillStyle = "#8ffcff";
+  ctx.font = "900 28px Pretendard, sans-serif";
+  ctx.fillText("NORU PRASIA LAB",78,102);
+  ctx.fillStyle = "#8497aa";
+  ctx.font = "900 20px Pretendard, sans-serif";
+  ctx.fillText("PROJECT N · STANDER TYPE ANALYSIS",78,138);
+
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "900 120px Pretendard, sans-serif";
+  ctx.fillText(finalResult.code,78,330);
+
+  ctx.fillStyle = "#fff2c6";
+  ctx.font = "900 54px Pretendard, sans-serif";
+  ctx.fillText(finalResult.name,78,415);
+
+  ctx.fillStyle = "#dce7f2";
+  ctx.font = "500 31px Pretendard, sans-serif";
+  wrapText(ctx,finalResult.desc,78,500,924,48);
+
+  const chips = [
+    "전투 반응 · " + finalResult.code[0],
+    "성장 방식 · " + finalResult.code[1],
+    "결사 태도 · " + finalResult.code[2],
+    "확률 대응 · " + finalResult.code[3]
+  ];
+  let x = 78, y = 795;
+  ctx.font = "900 27px Pretendard, sans-serif";
+  chips.forEach((chip,i)=>{
+    const w = ctx.measureText(chip).width + 42;
+    ctx.fillStyle = i%2 ? "rgba(111,255,170,.10)" : "rgba(0,239,255,.10)";
+    ctx.strokeStyle = i%2 ? "rgba(111,255,170,.25)" : "rgba(0,239,255,.25)";
+    roundRect(ctx,x,y,w,50,16);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = "#eefbff";
+    ctx.fillText(chip,x+21,y+34);
+    x += w + 12;
+    if(x > 760){ x = 78; y += 68; }
+  });
+
+  ctx.fillStyle = "#d8bd73";
+  ctx.font = "900 30px Pretendard, sans-serif";
+  ctx.fillText("추천 연구 · " + finalResult.recommend,78,1010);
+  ctx.fillStyle = "#bfcbd8";
+  ctx.font = "500 27px Pretendard, sans-serif";
+  wrapText(ctx,"주의 문구 · " + finalResult.warning,78,1070,924,42);
+
+  ctx.fillStyle = "#71869a";
+  ctx.font = "500 23px Pretendard, sans-serif";
+  ctx.fillText("스탠더의 선택은 늘 기록되고 있습니다.",78,1248);
+  ctx.fillText("숨겨진 연구소 · 스탠더 타입 분석실",78,1284);
+
+  const link = document.createElement("a");
+  link.href = canvas.toDataURL("image/png");
+  link.download = "stander-type-" + finalResult.code + ".png";
+  link.click();
+}
+</script>
+</body>
+</html>
