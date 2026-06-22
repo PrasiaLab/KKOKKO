@@ -1,62 +1,589 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>비공개 기록물 · Classified Records</title>
 <style>
-:root{--bg:#05080d;--panel:#09111b;--cyan:#00efff;--pink:#ff2ec8;--gold:#d8bd73;--text:#eef8ff;--muted:#8fa4b5}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#030509;color:var(--text);font-family:Pretendard,"Noto Sans KR","Segoe UI",sans-serif}body{overflow-x:hidden;background:radial-gradient(circle at 18% 0%,rgba(0,239,255,.08),transparent 30%),radial-gradient(circle at 86% 100%,rgba(255,46,200,.06),transparent 28%),linear-gradient(180deg,#05080d,#020306)}body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:20;opacity:.18;background:repeating-linear-gradient(180deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 4px);mix-blend-mode:screen}.shell{width:min(1180px,calc(100% - 24px));margin:0 auto;padding:18px 0 28px}.hero{position:relative;overflow:hidden;min-height:230px;border:1px solid rgba(0,239,255,.24);background:linear-gradient(90deg,rgba(4,8,13,.88),rgba(4,8,13,.48),rgba(4,8,13,.92)),url("../../archive/classified-records/secret-record.png") center/cover no-repeat;box-shadow:0 22px 70px rgba(0,0,0,.46),inset 0 0 0 1px rgba(255,46,200,.06)}.hero:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 0 7%,rgba(0,239,255,.10) 7.2%,transparent 7.5%),linear-gradient(180deg,transparent 0 69%,rgba(255,46,200,.10) 69.2%,transparent 69.5%),repeating-linear-gradient(180deg,transparent 0 7px,rgba(255,255,255,.018) 8px)}.hero-inner{position:relative;z-index:1;display:flex;min-height:230px;flex-direction:column;justify-content:flex-end;padding:24px}.kicker{margin:0 0 8px;color:#9cdfff;font-size:11px;font-weight:950;letter-spacing:.18em}.title{margin:0;font-size:clamp(34px,6vw,64px);line-height:.96;letter-spacing:-.07em;text-shadow:2px 0 var(--cyan),-2px 0 var(--pink)}.desc{max-width:660px;margin:14px 0 0;color:#c1cfdb;font-size:14px;line-height:1.75}.toolbar{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin:18px 0 14px}.toolbar small{display:block;color:#6e8598;font-size:10px;font-weight:950;letter-spacing:.18em}.toolbar h2{margin:4px 0 0;font-size:24px;letter-spacing:-.04em}.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{appearance:none;border:1px solid rgba(0,239,255,.16);background:rgba(0,239,255,.045);color:#a8eaf0;min-height:34px;padding:0 12px;cursor:pointer;font:inherit;font-size:11px;font-weight:950}.filter.active,.filter:hover{color:#fff;border-color:rgba(0,239,255,.38);box-shadow:0 0 16px rgba(0,239,255,.06)}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.record{position:relative;overflow:hidden;border:1px solid rgba(0,239,255,.16);background:linear-gradient(180deg,rgba(11,22,33,.94),rgba(5,10,16,.96));color:inherit;text-align:left;cursor:pointer;transition:.2s;box-shadow:0 18px 44px rgba(0,0,0,.34);padding:0}.record:hover{transform:translateY(-3px);border-color:rgba(0,239,255,.42);box-shadow:0 20px 56px rgba(0,0,0,.48),0 0 24px rgba(0,239,255,.05)}.media{position:relative;height:188px;overflow:hidden;background:#080d14}.media img,.media video,.viewer-media img,.viewer-media video{-webkit-user-drag:none;user-select:none}.media img,.media video{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.03) contrast(1.04)}.media:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.12),transparent 35%,rgba(0,0,0,.42)),repeating-linear-gradient(180deg,transparent 0 5px,rgba(255,255,255,.018) 6px)}.badge{position:absolute;left:10px;top:10px;z-index:2;display:flex;gap:6px}.badge span{padding:4px 7px;border:1px solid rgba(0,239,255,.22);background:rgba(2,5,8,.68);color:#c7faff;font-size:10px;font-weight:950;letter-spacing:.1em}.play{position:absolute;right:10px;top:10px;z-index:2;display:grid;place-items:center;width:33px;height:33px;border:1px solid rgba(255,255,255,.18);border-radius:50%;background:rgba(0,0,0,.45);color:#fff;font-size:13px}.copy{padding:14px}.copy h3{margin:0;font-size:18px;letter-spacing:-.04em}.copy p{min-height:42px;margin:9px 0 0;color:#8fa0af;font-size:12px;line-height:1.55}.action{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.07);color:#d8bd73;font-size:11px;font-weight:950}.viewer{position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:14px;background:rgba(1,3,6,.90);backdrop-filter:blur(12px)}.viewer.open{display:grid}.dialog{width:min(1180px,98vw);max-height:96vh;overflow:hidden;display:grid;grid-template-rows:auto minmax(0,1fr);border:1px solid rgba(0,239,255,.28);background:#04070b;box-shadow:0 0 0 1px rgba(255,46,200,.10),0 35px 120px rgba(0,0,0,.75)}.head{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:58px;padding:12px 14px 12px 18px;border-bottom:1px solid rgba(0,239,255,.13);background:#08101a}.head small{display:block;color:#6d879a;font-size:9px;font-weight:950;letter-spacing:.16em}.head strong{display:block;margin-top:3px;font-size:16px}.close{width:38px;height:38px;border:1px solid rgba(255,255,255,.1);background:#0d1621;color:#fff;cursor:pointer}.viewer-body{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 330px}.viewer-media{min-height:0;display:grid;place-items:center;background:#020306;overflow:auto;padding:12px}.viewer-media img,.viewer-media video{max-width:100%;max-height:calc(96vh - 96px);object-fit:contain;border:1px solid rgba(255,255,255,.05);background:#05080d}.info{border-left:1px solid rgba(0,239,255,.12);padding:18px;background:linear-gradient(180deg,rgba(9,17,27,.94),rgba(4,8,13,.98))}.info h3{margin:0;font-size:24px;letter-spacing:-.05em}.info p{color:#b7c7d4;line-height:1.7;font-size:14px}.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.pill{padding:7px 10px;border:1px solid rgba(0,239,255,.16);background:rgba(0,239,255,.045);color:#a9ddea;font-size:11px;font-weight:900}.note{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.07);color:#6f8395;font-size:11px;line-height:1.65}.loading,.empty{padding:28px;border:1px solid rgba(0,239,255,.12);background:rgba(255,255,255,.025);color:#8fa4b5;font-size:13px}@media(max-width:860px){.grid{grid-template-columns:1fr}.toolbar{align-items:flex-start;flex-direction:column}.viewer-body{grid-template-columns:1fr}.info{border-left:0;border-top:1px solid rgba(0,239,255,.12)}.viewer-media img,.viewer-media video{max-height:54vh}}
-
-.viewer-media.record-media{
-  height:auto !important;
+:root{
+  --bg:#05080d;
+  --panel:#09111b;
+  --panel2:#0d1824;
+  --line:rgba(82,211,255,.20);
+  --cyan:#00efff;
+  --pink:#ff2ec8;
+  --gold:#d8bd73;
+  --text:#eef8ff;
+  --muted:#8fa4b5;
+  --danger:#ff5577;
 }
-.viewer-media{
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  min-height:100%;
+  background:#030509;
+  color:var(--text);
+  font-family:Pretendard,"Noto Sans KR","Segoe UI",sans-serif;
+}
+body{
+  overflow-x:hidden;
+  background:
+    radial-gradient(circle at 18% 0%,rgba(0,239,255,.08),transparent 30%),
+    radial-gradient(circle at 86% 100%,rgba(255,46,200,.06),transparent 28%),
+    linear-gradient(180deg,#05080d,#020306);
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:20;
+  opacity:.18;
+  background:repeating-linear-gradient(
+    180deg,
+    rgba(255,255,255,.025) 0,
+    rgba(255,255,255,.025) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  mix-blend-mode:screen;
+}
+.archive-shell{
+  width:min(1180px,calc(100% - 24px));
+  margin:0 auto;
+  padding:18px 0 28px;
+}
+.archive-hero{
+  position:relative;
+  overflow:hidden;
+  min-height:230px;
+  border:1px solid rgba(0,239,255,.24);
+  background:
+    linear-gradient(90deg,rgba(4,8,13,.88),rgba(4,8,13,.48),rgba(4,8,13,.92)),
+    url("../../archive/classified-records/secret-record.png") center/cover no-repeat;
+  box-shadow:0 22px 70px rgba(0,0,0,.46),inset 0 0 0 1px rgba(255,46,200,.06);
+}
+.archive-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,transparent 0 7%,rgba(0,239,255,.10) 7.2%,transparent 7.5%),
+    linear-gradient(180deg,transparent 0 69%,rgba(255,46,200,.10) 69.2%,transparent 69.5%),
+    repeating-linear-gradient(180deg,transparent 0 7px,rgba(255,255,255,.018) 8px);
+}
+.archive-hero-inner{
+  position:relative;
+  z-index:1;
+  display:flex;
+  min-height:230px;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:24px;
+}
+.archive-kicker{
+  margin:0 0 8px;
+  color:#9cdfff;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.18em;
+}
+.archive-title{
+  margin:0;
+  font-size:clamp(34px,6vw,64px);
+  line-height:.96;
+  letter-spacing:-.07em;
+  text-shadow:2px 0 var(--cyan),-2px 0 var(--pink);
+}
+.archive-desc{
+  max-width:660px;
+  margin:14px 0 0;
+  color:#c1cfdb;
+  font-size:14px;
+  line-height:1.75;
+}
+.toolbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:14px;
+  margin:18px 0 14px;
+}
+.toolbar small,
+.detail-kicker{
+  display:block;
+  color:#6e8598;
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:.18em;
+}
+.toolbar h2{
+  margin:4px 0 0;
+  font-size:24px;
+  letter-spacing:-.04em;
+}
+.filter-row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.filter-btn,
+.back-btn{
+  appearance:none;
+  border:1px solid rgba(0,239,255,.16);
+  background:rgba(0,239,255,.045);
+  color:#a8eaf0;
+  min-height:34px;
+  padding:0 12px;
+  cursor:pointer;
+  font:inherit;
+  font-size:11px;
+  font-weight:950;
+}
+.filter-btn.active,
+.filter-btn:hover,
+.back-btn:hover{
+  color:#fff;
+  border-color:rgba(0,239,255,.38);
+  box-shadow:0 0 16px rgba(0,239,255,.06);
+}
+.record-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+.record-card{
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(0,239,255,.16);
+  background:linear-gradient(180deg,rgba(11,22,33,.94),rgba(5,10,16,.96));
+  color:inherit;
+  text-align:left;
+  cursor:pointer;
+  transition:.2s;
+  box-shadow:0 18px 44px rgba(0,0,0,.34);
+}
+.record-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(0,239,255,.42);
+  box-shadow:0 20px 56px rgba(0,0,0,.48),0 0 24px rgba(0,239,255,.05);
+}
+.record-media{
+  position:relative;
+  height:188px;
+  overflow:hidden;
+  background:#080d14;
+}
+.record-media img,
+.record-media video,
+.detail-media img,
+.detail-media video{
+  -webkit-user-drag:none;
+  user-select:none;
+}
+.record-media img,
+.record-media video{
+  width:100%;
   height:100%;
+  object-fit:cover;
+  display:block;
+  filter:saturate(1.03) contrast(1.04);
 }
-.viewer-media img,
-.viewer-media video{
+.record-media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.12),transparent 35%,rgba(0,0,0,.42)),
+    repeating-linear-gradient(180deg,transparent 0 5px,rgba(255,255,255,.018) 6px);
+}
+.record-badge{
+  position:absolute;
+  left:10px;
+  top:10px;
+  z-index:2;
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
+.record-badge span{
+  padding:4px 7px;
+  border:1px solid rgba(0,239,255,.22);
+  background:rgba(2,5,8,.68);
+  color:#c7faff;
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:.1em;
+}
+.play-mark{
+  position:absolute;
+  right:10px;
+  top:10px;
+  z-index:2;
+  display:grid;
+  place-items:center;
+  width:33px;
+  height:33px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:50%;
+  background:rgba(0,0,0,.45);
+  color:#fff;
+  font-size:13px;
+}
+.record-copy{
+  padding:14px;
+}
+.record-copy h3{
+  margin:0;
+  font-size:18px;
+  letter-spacing:-.04em;
+}
+.record-copy p{
+  min-height:42px;
+  margin:9px 0 0;
+  color:#8fa0af;
+  font-size:12px;
+  line-height:1.55;
+}
+.record-action{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,.07);
+  color:#d8bd73;
+  font-size:11px;
+  font-weight:950;
+}
+.detail-view{
+  display:none;
+}
+.detail-view.open{
   display:block;
 }
-
-
-/* viewer full-fit patch */
-.viewer .dialog{
-  width:min(1320px,98vw) !important;
-  height:min(900px,94vh) !important;
-  max-height:94vh !important;
-  display:grid !important;
-  grid-template-rows:auto minmax(0,1fr) !important;
+.list-view.hidden{
+  display:none;
 }
-.viewer-body{
-  min-height:0 !important;
-  height:100% !important;
-  display:grid !important;
-  grid-template-columns:minmax(0,1fr) 330px !important;
+.detail-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:14px;
+  margin:18px 0 14px;
 }
-.viewer-media{
-  min-width:0 !important;
-  min-height:0 !important;
-  height:100% !important;
-  display:grid !important;
-  place-items:center !important;
-  overflow:hidden !important;
-  padding:12px !important;
-  background:#020306 !important;
+.detail-head h2{
+  margin:5px 0 0;
+  font-size:25px;
+  line-height:1.15;
+  letter-spacing:-.055em;
 }
-.viewer-media img,
-.viewer-media video{
-  width:100% !important;
-  height:100% !important;
-  max-width:100% !important;
-  max-height:100% !important;
-  object-fit:contain !important;
+.detail-panel{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 320px;
+  min-height:640px;
+  border:1px solid rgba(0,239,255,.22);
+  background:linear-gradient(180deg,rgba(7,14,22,.92),rgba(3,6,10,.98));
+  box-shadow:0 22px 70px rgba(0,0,0,.46);
+}
+.detail-media{
+  display:grid;
+  place-items:center;
+  min-width:0;
+  min-height:0;
+  padding:16px;
+  background:#020306;
+  overflow:hidden;
+}
+.detail-media img,
+.detail-media video{
+  display:block;
+  width:100%;
+  height:100%;
+  max-width:100%;
+  max-height:calc(100vh - 210px);
+  object-fit:contain;
+  border:1px solid rgba(255,255,255,.05);
+  background:#05080d;
+}
+.detail-info{
+  border-left:1px solid rgba(0,239,255,.12);
+  padding:20px;
+  background:linear-gradient(180deg,rgba(9,17,27,.94),rgba(4,8,13,.98));
+}
+.detail-info h3{
+  margin:0;
+  font-size:26px;
+  line-height:1.15;
+  letter-spacing:-.06em;
+}
+.detail-info p{
+  color:#b7c7d4;
+  line-height:1.75;
+  font-size:14px;
+}
+.detail-pills{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:14px;
+}
+.detail-pill{
+  padding:7px 10px;
+  border:1px solid rgba(0,239,255,.16);
+  background:rgba(0,239,255,.045);
+  color:#a9ddea;
+  font-size:11px;
+  font-weight:900;
+}
+.detail-note{
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.07);
+  color:#6f8395;
+  font-size:11px;
+  line-height:1.65;
+}
+.loading,
+.empty{
+  padding:28px;
+  border:1px solid rgba(0,239,255,.12);
+  background:rgba(255,255,255,.025);
+  color:#8fa4b5;
+  font-size:13px;
 }
 @media(max-width:860px){
-  .viewer .dialog{height:94vh !important}
-  .viewer-body{grid-template-columns:1fr !important;grid-template-rows:minmax(0,1fr) auto !important}
-  .viewer-media{height:56vh !important}
+  .record-grid{grid-template-columns:1fr}
+  .toolbar,
+  .detail-head{align-items:flex-start;flex-direction:column}
+  .detail-panel{grid-template-columns:1fr;min-height:0}
+  .detail-media{min-height:55vh}
+  .detail-info{border-left:0;border-top:1px solid rgba(0,239,255,.12)}
+  .detail-media img,.detail-media video{max-height:55vh}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+<main class="archive-shell" id="classifiedArchive">
+  <section class="archive-hero" id="archiveHero">
+    <div class="archive-hero-inner">
+      <p class="archive-kicker">PROJECT A · ARCHIVED RECORDS</p>
+      <h1 class="archive-title">비공개 기록물</h1>
+      <p class="archive-desc">
+        공식 기록에서 제외된 사진과 촬영본을 보관한 비인가 아카이브입니다.
+        전투 밖의 존재들, 촬영 중단 장면, 회복실 자료 등이 손상된 기록 형태로 남아 있습니다.
+      </p>
+    </div>
+  </section>
+
+  <section class="list-view" id="listView">
+    <div class="toolbar">
+      <div>
+        <small>CLASSIFIED ARCHIVE</small>
+        <h2>회수된 기록</h2>
+      </div>
+      <div class="filter-row" aria-label="기록 필터">
+        <button class="filter-btn active" type="button" data-filter="all">전체</button>
+        <button class="filter-btn" type="button" data-filter="image">사진</button>
+        <button class="filter-btn" type="button" data-filter="video">영상</button>
+      </div>
+    </div>
+
+    <section class="record-grid" id="recordGrid">
+      <div class="loading">기록 목록을 불러오고 있습니다.</div>
+    </section>
+  </section>
+
+  <section class="detail-view" id="detailView" aria-hidden="true">
+    <div class="detail-head">
+      <div>
+        <small class="detail-kicker" id="detailCode">REC-000 · CLASSIFIED</small>
+        <h2 id="detailTitle">기록물</h2>
+      </div>
+      <button class="back-btn" id="backBtn" type="button">← 목록으로 돌아가기</button>
+    </div>
+
+    <div class="detail-panel">
+      <div class="detail-media" id="detailMedia"></div>
+      <aside class="detail-info">
+        <h3 id="detailInfoTitle">기록물 제목</h3>
+        <p id="detailDesc">기록물 설명</p>
+        <div class="detail-pills">
+          <span class="detail-pill" id="detailType">TYPE</span>
+          <span class="detail-pill" id="detailStatus">STATUS</span>
+        </div>
+        <p class="detail-note">
+          이 기록물 영역에서는 우클릭 메뉴가 제한됩니다. 단, 브라우저 개발자 도구와 네트워크 접근까지 완전히 차단하는 기능은 아닙니다.
+        </p>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<script>
+const ARCHIVE_BASE = "../../archive/classified-records/";
+const archiveHero = document.getElementById("archiveHero");
+const listView = document.getElementById("listView");
+const detailView = document.getElementById("detailView");
+const grid = document.getElementById("recordGrid");
+const detailMedia = document.getElementById("detailMedia");
+const detailCode = document.getElementById("detailCode");
+const detailTitle = document.getElementById("detailTitle");
+const detailInfoTitle = document.getElementById("detailInfoTitle");
+const detailDesc = document.getElementById("detailDesc");
+const detailType = document.getElementById("detailType");
+const detailStatus = document.getElementById("detailStatus");
+const backBtn = document.getElementById("backBtn");
+let records = [];
+let currentFilter = "all";
+
+function esc(value){
+  return String(value || "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;","\\"":"&quot;","'":"&#039;"
+  }[char]));
 }
 
-</style></head><body>
-<main class="shell" id="classifiedArchive"><section class="hero"><div class="hero-inner"><p class="kicker">PROJECT A · ARCHIVED RECORDS</p><h1 class="title">비공개 기록물</h1><p class="desc">공식 기록에서 제외된 사진과 촬영본을 보관한 비인가 아카이브입니다. 전투 밖의 존재들, 촬영 중단 장면, 회복실 자료 등이 손상된 기록 형태로 남아 있습니다.</p></div></section><div class="toolbar"><div><small>CLASSIFIED ARCHIVE</small><h2>회수된 기록</h2></div><div class="filters"><button class="filter active" data-filter="all" type="button">전체</button><button class="filter" data-filter="image" type="button">사진</button><button class="filter" data-filter="video" type="button">영상</button></div></div><section class="grid" id="recordGrid"><div class="loading">기록 목록을 불러오고 있습니다.</div></section></main>
-<div class="viewer" id="viewer" aria-hidden="true"><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="viewerTitle"><div class="head"><div><small id="viewerCode">REC-000 · CLASSIFIED</small><strong id="viewerTitle">기록물</strong></div><button class="close" id="viewerClose" type="button" aria-label="닫기">✕</button></div><div class="viewer-body"><div class="viewer-media" id="viewerMedia"></div><aside class="info"><h3 id="viewerInfoTitle">기록물 제목</h3><p id="viewerDesc">기록물 설명</p><div class="pills"><span class="pill" id="viewerType">TYPE</span><span class="pill" id="viewerStatus">STATUS</span></div><p class="note">이 기록물 영역에서는 우클릭 메뉴가 제한됩니다. 단, 브라우저 개발자 도구와 네트워크 접근까지 완전히 차단하는 기능은 아닙니다.</p></aside></div></div></div>
-<script>
-const BASE="../../archive/classified-records/";const grid=document.getElementById("recordGrid"),viewer=document.getElementById("viewer"),viewerMedia=document.getElementById("viewerMedia"),viewerCode=document.getElementById("viewerCode"),viewerTitle=document.getElementById("viewerTitle"),viewerInfoTitle=document.getElementById("viewerInfoTitle"),viewerDesc=document.getElementById("viewerDesc"),viewerType=document.getElementById("viewerType"),viewerStatus=document.getElementById("viewerStatus"),viewerClose=document.getElementById("viewerClose");let records=[],filter="all";function esc(v){return String(v||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]))}function isVideo(r){return r.type==="video"||/\.(mp4|webm|mov)$/i.test(r.file||"")}function label(t){return t==="video"?"VIDEO LOG":"PHOTO RECORD"}function lock(){document.querySelectorAll("#classifiedArchive img,#classifiedArchive video,#viewer img,#viewer video").forEach(el=>{el.setAttribute("draggable","false");if(el.tagName==="VIDEO"){el.setAttribute("controlsList","nodownload");el.setAttribute("disablePictureInPicture","")}})}function render(){let list=filter==="all"?records:records.filter(r=>(isVideo(r)?"video":"image")===filter);if(!list.length){grid.innerHTML='<div class="empty">표시할 기록물이 없습니다.</div>';return}grid.innerHTML=list.map(r=>{let v=isVideo(r),src=BASE+r.file,poster=r.poster?BASE+r.poster:src,media=v?`<video muted preload="metadata" playsinline controlsList="nodownload" disablePictureInPicture poster="${esc(poster)}"><source src="${esc(src)}" type="video/mp4"></video>`:`<img src="${esc(src)}" alt="${esc(r.title)}" draggable="false">`;return `<button class="record" type="button" data-i="${records.indexOf(r)}"><div class="media"><div class="badge"><span>${esc(r.id)}</span><span>${esc(r.status||"CLASSIFIED")}</span></div>${v?'<div class="play">▶</div>':''}${media}</div><div class="copy"><h3>${esc(r.title)}</h3><p>${esc(r.desc)}</p><div class="action"><span>${label(v?"video":"image")}</span><span>열람 →</span></div></div></button>`}).join("");grid.querySelectorAll(".record").forEach(card=>card.addEventListener("click",()=>openViewer(records[Number(card.dataset.i)])));lock()}function openViewer(r){let v=isVideo(r),src=BASE+r.file;viewerCode.textContent=`${r.id} · ${r.status||"CLASSIFIED"}`;viewerTitle.textContent=r.title;viewerInfoTitle.textContent=r.title;viewerDesc.textContent=r.desc;viewerType.textContent=label(v?"video":"image");viewerStatus.textContent=r.status||"CLASSIFIED";viewerMedia.innerHTML=v?`<video controls controlsList="nodownload" disablePictureInPicture playsinline ${r.poster?`poster="${esc(BASE+r.poster)}"`:""}><source src="${esc(src)}" type="video/mp4"></video>`:`<img src="${esc(src)}" alt="${esc(r.title)}" draggable="false">`;lock();viewer.classList.add("open");viewer.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}function closeViewer(){viewer.classList.remove("open");viewer.setAttribute("aria-hidden","true");viewerMedia.innerHTML="";document.body.style.overflow=""}document.addEventListener("contextmenu",e=>{if(e.target.closest("#classifiedArchive .media")||e.target.closest("#viewer .media"))e.preventDefault()});document.addEventListener("dragstart",e=>{if(e.target.closest("#classifiedArchive .media")||e.target.closest("#viewer .media"))e.preventDefault()});viewerClose.addEventListener("click",closeViewer);viewer.addEventListener("click",e=>{if(e.target===viewer)closeViewer()});document.addEventListener("keydown",e=>{if(e.key==="Escape"&&viewer.classList.contains("open"))closeViewer()});document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));btn.classList.add("active");filter=btn.dataset.filter;render()}));fetch(BASE+"records.json").then(r=>{if(!r.ok)throw new Error();return r.json()}).then(data=>{records=Array.isArray(data)?data:[];render()}).catch(()=>grid.innerHTML='<div class="empty">기록 목록을 불러오지 못했습니다. archive/classified-records/records.json 경로를 확인해 주세요.</div>');
-</script></body></html>
+function mediaTypeLabel(type){
+  return type === "video" ? "VIDEO LOG" : "PHOTO RECORD";
+}
+
+function isVideo(record){
+  return record.type === "video" || /\.(mp4|webm|mov)$/i.test(record.file || "");
+}
+
+function renderRecords(){
+  const filtered = currentFilter === "all"
+    ? records
+    : records.filter(record => (isVideo(record) ? "video" : "image") === currentFilter);
+
+  if(!filtered.length){
+    grid.innerHTML = '<div class="empty">표시할 기록물이 없습니다.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map((record) => {
+    const video = isVideo(record);
+    const src = ARCHIVE_BASE + record.file;
+    const poster = record.poster ? ARCHIVE_BASE + record.poster : src;
+    const media = video
+      ? `<video muted preload="metadata" playsinline controlsList="nodownload" disablePictureInPicture poster="${esc(poster)}"><source src="${esc(src)}" type="video/mp4"></video>`
+      : `<img src="${esc(src)}" alt="${esc(record.title)}" draggable="false">`;
+
+    return `
+      <button class="record-card" type="button" data-real-index="${records.indexOf(record)}">
+        <div class="record-media">
+          <div class="record-badge"><span>${esc(record.id)}</span><span>${esc(record.status || "CLASSIFIED")}</span></div>
+          ${video ? '<div class="play-mark">▶</div>' : ''}
+          ${media}
+        </div>
+        <div class="record-copy">
+          <h3>${esc(record.title)}</h3>
+          <p>${esc(record.desc)}</p>
+          <div class="record-action"><span>${mediaTypeLabel(video ? "video" : "image")}</span><span>열람 →</span></div>
+        </div>
+      </button>
+    `;
+  }).join("");
+
+  grid.querySelectorAll(".record-card").forEach(card => {
+    card.addEventListener("click", () => openDetail(records[Number(card.dataset.realIndex)]));
+  });
+
+  lockMediaEvents();
+}
+
+function openDetail(record){
+  const video = isVideo(record);
+  const src = ARCHIVE_BASE + record.file;
+  detailCode.textContent = `${record.id} · ${record.status || "CLASSIFIED"}`;
+  detailTitle.textContent = record.title;
+  detailInfoTitle.textContent = record.title;
+  detailDesc.textContent = record.desc;
+  detailType.textContent = mediaTypeLabel(video ? "video" : "image");
+  detailStatus.textContent = record.status || "CLASSIFIED";
+
+  if(video){
+    const poster = record.poster ? ARCHIVE_BASE + record.poster : "";
+    detailMedia.innerHTML = `
+      <video controls controlsList="nodownload" disablePictureInPicture playsinline ${poster ? `poster="${esc(poster)}"` : ""}>
+        <source src="${esc(src)}" type="video/mp4">
+      </video>
+    `;
+  }else{
+    detailMedia.innerHTML = `<img src="${esc(src)}" alt="${esc(record.title)}" draggable="false">`;
+  }
+
+  archiveHero.style.display = "none";
+  listView.classList.add("hidden");
+  detailView.classList.add("open");
+  detailView.setAttribute("aria-hidden","false");
+  lockMediaEvents();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function closeDetail(){
+  detailView.classList.remove("open");
+  detailView.setAttribute("aria-hidden","true");
+  detailMedia.innerHTML = "";
+  listView.classList.remove("hidden");
+  archiveHero.style.display = "";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function lockMediaEvents(){
+  document.querySelectorAll("#classifiedArchive img, #classifiedArchive video").forEach(el => {
+    el.setAttribute("draggable","false");
+    if(el.tagName === "VIDEO"){
+      el.setAttribute("controlsList","nodownload");
+      el.setAttribute("disablePictureInPicture","");
+    }
+  });
+}
+
+document.addEventListener("contextmenu", event => {
+  if(event.target.closest("#classifiedArchive .record-media") || event.target.closest("#classifiedArchive .detail-media")){
+    event.preventDefault();
+  }
+});
+
+document.addEventListener("dragstart", event => {
+  if(event.target.closest("#classifiedArchive .record-media") || event.target.closest("#classifiedArchive .detail-media")){
+    event.preventDefault();
+  }
+});
+
+backBtn.addEventListener("click", closeDetail);
+
+document.addEventListener("keydown", event => {
+  if(event.key === "Escape" && detailView.classList.contains("open")) closeDetail();
+});
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(item => item.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter = btn.dataset.filter;
+    renderRecords();
+  });
+});
+
+fetch(ARCHIVE_BASE + "records.json")
+  .then(response => {
+    if(!response.ok) throw new Error("records.json load failed");
+    return response.json();
+  })
+  .then(data => {
+    records = Array.isArray(data) ? data : [];
+    renderRecords();
+  })
+  .catch(() => {
+    grid.innerHTML = '<div class="empty">기록 목록을 불러오지 못했습니다. archive/classified-records/records.json 경로를 확인해 주세요.</div>';
+  });
+</script>
+</body>
+</html>
