@@ -107,6 +107,7 @@
   let currentList = [];
   let currentPage = 1;
   let currentSelectedValue = null;
+  let currentGradeClassName = null;
   let gradeClassPanel = null;
 
   function setStatus(
@@ -447,7 +448,7 @@
         <div>
           <span class="statistics-detail-kicker">CLASS ACHIEVEMENT</span>
           <h2 id="statisticsGradeClassTitle">직업별 달성 현황</h2>
-          <p>선택한 토벌레벨을 달성한 인원을 직업별로 비교합니다.</p>
+          <p>직업 막대를 누르면 해당 직업만 표시됩니다. 토벌레벨 카드를 다시 누르면 전체 목록으로 돌아옵니다.</p>
         </div>
         <div class="statistics-grade-class-summary">
           <article><span>총 달성 인원</span><strong id="statisticsGradeClassTotal">0명</strong></article>
@@ -461,6 +462,58 @@
     detail.parentNode.insertBefore(panel, detail);
     gradeClassPanel = panel;
     return panel;
+  }
+
+  function getGradeClassFullList() {
+    if (currentMode !== "grade" || currentSelectedValue === null) {
+      return [];
+    }
+
+    return sortPeople(
+      filterByValue(
+        "grade",
+        currentSelectedValue
+      )
+    );
+  }
+
+  function updateGradeClassActiveState() {
+    const panel = ensureGradeClassPanel();
+    if (!panel) return;
+
+    panel
+      .querySelectorAll(".statistics-grade-class-row")
+      .forEach((row) => {
+        row.classList.toggle(
+          "active",
+          row.dataset.className === currentGradeClassName
+        );
+      });
+  }
+
+  function applyGradeClassFilter(className) {
+    if (currentMode !== "grade" || currentSelectedValue === null) {
+      return;
+    }
+
+    currentPage = 1;
+    currentGradeClassName = className;
+
+    const fullList = getGradeClassFullList();
+    const filteredList = fullList.filter((item) => {
+      return String(item.className || formatClassName(item.classCode)) === String(className);
+    });
+
+    currentList = filteredList.slice(0, MAX_ITEMS);
+
+    detailTitle.textContent =
+      `토벌 ${currentSelectedValue} ${className} 대상자`;
+
+    detailCount.textContent =
+      `${currentList.length.toLocaleString()}명`;
+
+    updateGradeClassActiveState();
+    renderTable();
   }
 
   function renderGradeClassBreakdown(value, people) {
@@ -495,15 +548,22 @@
     bars.innerHTML = rows.map((item) => {
       const ratio = people.length ? (item.count / people.length) * 100 : 0;
       const width = item.count ? Math.max(3, (item.count / maximum) * 100) : 0;
+      const isActive = currentGradeClassName === item.name;
       return `
-        <div class="statistics-grade-class-row">
+        <button type="button" class="statistics-grade-class-row${isActive ? " active" : ""}" data-class-name="${item.name}" ${item.count ? "" : "disabled"}>
           <strong>${item.name}</strong>
           <div class="statistics-grade-class-track"><span style="width:${width.toFixed(2)}%"></span></div>
           <span>${item.count.toLocaleString("ko-KR")}명</span>
           <small>${ratio.toFixed(1)}%</small>
-        </div>
+        </button>
       `;
     }).join("");
+
+    bars.querySelectorAll(".statistics-grade-class-row").forEach((row) => {
+      row.addEventListener("click", () => {
+        applyGradeClassFilter(row.dataset.className);
+      });
+    });
 
     panel.hidden = false;
   }
@@ -642,6 +702,7 @@
   function selectValue(value) {
     currentPage = 1;
     currentSelectedValue = value;
+    currentGradeClassName = null;
 
     const fullList = sortPeople(
       filterByValue(
@@ -784,6 +845,7 @@
   function changeMode(mode) {
     currentMode = mode;
     currentSelectedValue = null;
+    currentGradeClassName = null;
 
     if (gradeClassPanel && mode !== "grade") {
       gradeClassPanel.hidden = true;
