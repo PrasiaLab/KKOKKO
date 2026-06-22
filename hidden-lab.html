@@ -734,13 +734,63 @@ iframe{
   box-shadow:inset 0 0 24px rgba(182,74,255,.08);
 }
 
-
 .project.archive-card{border-color:rgba(216,189,115,.30);box-shadow:0 18px 46px rgba(0,0,0,.4),0 0 34px rgba(216,189,115,.055)}
 .project.archive-card .tag{color:#fff2c6;border-color:rgba(216,189,115,.38);background:rgba(216,189,115,.085)}
 .archive-visual{display:grid;place-items:center;padding:12px;background:radial-gradient(circle at center,rgba(216,189,115,.12),transparent 48%),radial-gradient(circle at 72% 20%,rgba(0,239,255,.10),transparent 34%),linear-gradient(145deg,#100c08,#0a0d14 72%,#080b10)}
 .archive-visual img{width:min(100%,220px);max-height:174px;object-fit:contain;filter:saturate(1.05) contrast(1.08) drop-shadow(0 0 22px rgba(216,189,115,.16)) drop-shadow(0 18px 26px rgba(0,0,0,.58));transition:transform .24s ease,filter .24s ease}
 .project:hover .archive-visual img{transform:scale(1.035) rotate(-1deg);filter:saturate(1.14) contrast(1.1) drop-shadow(0 0 30px rgba(216,189,115,.24)) drop-shadow(0 18px 30px rgba(0,0,0,.62))}
 .archive-visual::before{content:"";position:absolute;inset:18px;border:1px solid rgba(216,189,115,.12);border-radius:18px;box-shadow:inset 0 0 24px rgba(0,239,255,.05),0 0 24px rgba(216,189,115,.04)}
+
+.project.stander-card{
+  border-color:rgba(74,255,205,.28);
+  box-shadow:
+    0 18px 46px rgba(0,0,0,.4),
+    0 0 34px rgba(74,255,205,.055);
+}
+.project.stander-card .tag{
+  color:#e8fff6;
+  border-color:rgba(74,255,205,.34);
+  background:rgba(74,255,205,.075);
+}
+.stander-visual{
+  display:grid;
+  place-items:center;
+  padding:12px;
+  background:
+    radial-gradient(circle at center,rgba(0,239,255,.14),transparent 48%),
+    radial-gradient(circle at 76% 18%,rgba(143,92,255,.14),transparent 34%),
+    radial-gradient(circle at 28% 74%,rgba(111,255,166,.10),transparent 33%),
+    linear-gradient(145deg,#071019,#090813 72%,#0b1118);
+}
+.stander-visual img{
+  width:min(100%,230px);
+  max-height:176px;
+  object-fit:contain;
+  filter:
+    saturate(1.08)
+    contrast(1.07)
+    drop-shadow(0 0 24px rgba(0,239,255,.20))
+    drop-shadow(0 18px 26px rgba(0,0,0,.58));
+  transition:transform .24s ease,filter .24s ease;
+}
+.project:hover .stander-visual img{
+  transform:scale(1.035);
+  filter:
+    saturate(1.22)
+    contrast(1.1)
+    drop-shadow(0 0 32px rgba(74,255,205,.22))
+    drop-shadow(0 18px 30px rgba(0,0,0,.6));
+}
+.stander-visual::before{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border:1px solid rgba(74,255,205,.12);
+  border-radius:50%;
+  box-shadow:
+    inset 0 0 28px rgba(0,239,255,.06),
+    0 0 24px rgba(143,92,255,.05);
+}
 
 .lab-slot .visual{
   display:grid;
@@ -1041,14 +1091,19 @@ iframe{
       </div>
     </button>
 
-    <button class="project locked lab-slot" type="button" data-locked-message="PROJECT N · 아직 공개되지 않은 연구입니다.">
-      <div class="project-meta"><span>LAB-005</span><span class="tag">SEALED</span></div>
-      <div class="visual"><span class="slot-mark">N</span></div>
+    <button class="project stander-card" type="button"
+      data-game="./games/stander-type-analysis/index.html"
+      data-title="스탠더 타입 분석실"
+      data-code="LAB-005 · PROJECT N">
+      <div class="project-meta"><span>LAB-005</span><span class="tag">ACTIVE</span></div>
+      <div class="visual stander-visual">
+        <img src="./images/stander-type-card.png" alt="스탠더 타입 분석실 카드 이미지">
+      </div>
       <div class="project-copy">
-        <h3 class="project-title">PROJECT N</h3>
-        <span class="project-eng">CLASSIFIED · NULL RECORD</span>
-        <p>기록은 존재하지만, 현재 열람 권한이 잠겨 있습니다.</p>
-        <div class="action"><span>비공개 연구</span><span>×</span></div>
+        <h3 class="project-title">스탠더 타입 분석실</h3>
+        <span class="project-eng">PROJECT N · STANDER TYPE ANALYSIS</span>
+        <p>스탠더의 선택 패턴을 분석해 전투, 성장, 결사, 확률 대응 성향을 분류합니다.</p>
+        <div class="action"><span>성향 분석 시작</span><span>→</span></div>
       </div>
     </button>
 
@@ -1083,17 +1138,6 @@ iframe{
         <div class="action"><span>실패 스택 쌓기</span><span>→</span></div>
       </div>
     </button>
-
-        <button class="project locked lab-slot" type="button" data-locked-message="PROJECT U · 정의되지 않은 실험입니다.">
-      <div class="project-meta"><span>LAB-008</span><span class="tag">UNKNOWN</span></div>
-      <div class="visual"><span class="slot-mark">U</span></div>
-      <div class="project-copy">
-        <h3 class="project-title">PROJECT U</h3>
-        <span class="project-eng">UNDEFINED · ACCESS LOCKED</span>
-        <p>분류되지 않은 연구 항목입니다. 접근 시도가 기록되었습니다.</p>
-        <div class="action"><span>접근 제한</span><span>×</span></div>
-      </div>
-    </button>
   </section>
 
   <aside class="legal-notice">
@@ -1119,7 +1163,6 @@ iframe{
     입구 위치 및 비공개 프로젝트 정보는 외부에 공개하지 마십시오.
   </footer>
 </main>
-
 
 <div class="fortune-modal" id="fortuneModal" aria-hidden="true">
   <div class="fortune-dialog" role="dialog" aria-modal="true" aria-labelledby="fortuneTitle">
@@ -1189,7 +1232,6 @@ modal.addEventListener("click", event => {
 document.addEventListener("keydown", event => {
   if(event.key === "Escape" && modal.classList.contains("open")) closeGame();
 });
-
 
 const fortuneMessages = [
   { grade:"찬란한 얽힘", type:"소환운", title:"에테르가 새로운 형상을 부릅니다", message:"오늘은 형상 소환의 흐름이 맑게 열려 있습니다. 스탠더의 손끝에 모인 에테르가 평소보다 높은 등급의 빛을 끌어당길지도 모릅니다." },
