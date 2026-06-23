@@ -297,7 +297,7 @@
       grade: {
         label: "토벌통계",
         description:
-          "클래스별 랭킹 데이터를 기준으로 최고 토벌레벨부터 6개 단계를 표시합니다.",
+          "토벌 카드는 해당 토벌 이상 누적 달성 인원을, 하단 목록은 현재 최고 토벌레벨 기준 인원을 표시합니다.",
         valueLabel: (value) =>
           `토벌 ${value}`
       },
@@ -412,6 +412,24 @@
     });
   }
 
+  function filterByGradeAtLeast(value) {
+    const source = getSourceData("grade");
+    const grade = Number(value);
+
+    return source.filter(
+      (item) => item.grade >= grade
+    );
+  }
+
+  function filterByGradeExact(value) {
+    const source = getSourceData("grade");
+    const grade = Number(value);
+
+    return source.filter(
+      (item) => item.grade === grade
+    );
+  }
+
   function sortPeople(list) {
     return [...list].sort((a, b) => {
       if (b.level !== a.level) {
@@ -448,10 +466,10 @@
         <div>
           <span class="statistics-detail-kicker">CLASS ACHIEVEMENT</span>
           <h2 id="statisticsGradeClassTitle">직업별 달성 현황</h2>
-          <p>직업 막대를 누르면 해당 직업만 표시됩니다. 토벌레벨 카드를 다시 누르면 전체 목록으로 돌아옵니다.</p>
+          <p>상단 그래프는 해당 토벌 이상 누적 달성 기준입니다. 직업 막대를 누르면 하단 목록에서 현재 최고 토벌레벨이 같은 해당 직업만 표시됩니다.</p>
         </div>
         <div class="statistics-grade-class-summary">
-          <article><span>총 달성 인원</span><strong id="statisticsGradeClassTotal">0명</strong></article>
+          <article><span>누적 달성 인원</span><strong id="statisticsGradeClassTotal">0명</strong></article>
           <article><span>최다 직업</span><strong id="statisticsGradeClassMax">-</strong></article>
           <article><span>최소 직업</span><strong id="statisticsGradeClassMin">-</strong></article>
         </div>
@@ -470,10 +488,7 @@
     }
 
     return sortPeople(
-      filterByValue(
-        "grade",
-        currentSelectedValue
-      )
+      filterByGradeExact(currentSelectedValue)
     );
   }
 
@@ -507,7 +522,7 @@
     currentList = filteredList.slice(0, MAX_ITEMS);
 
     detailTitle.textContent =
-      `토벌 ${currentSelectedValue} ${className} 대상자`;
+      `현재 최고 토벌 ${currentSelectedValue} · ${className} 대상자`;
 
     detailCount.textContent =
       `${currentList.length.toLocaleString()}명`;
@@ -539,7 +554,7 @@
     const top = rows[0];
     const minimum = [...rows].sort((a, b) => a.count - b.count || CLASS_ORDER.indexOf(a.name) - CLASS_ORDER.indexOf(b.name))[0];
 
-    document.getElementById("statisticsGradeClassTitle").textContent = `토벌 ${value} 직업별 달성 현황`;
+    document.getElementById("statisticsGradeClassTitle").textContent = `토벌 ${value} 이상 직업별 달성 현황`;
     document.getElementById("statisticsGradeClassTotal").textContent = `${people.length.toLocaleString("ko-KR")}명`;
     document.getElementById("statisticsGradeClassMax").textContent = `${top?.name || "-"} ${top ? top.count.toLocaleString("ko-KR") : 0}명`;
     document.getElementById("statisticsGradeClassMin").textContent = `${minimum?.name || "-"} ${minimum ? minimum.count.toLocaleString("ko-KR") : 0}명`;
@@ -638,10 +653,12 @@
     items.forEach(
       (value, index) => {
         const people =
-          filterByValue(
-            currentMode,
-            value
-          );
+          currentMode === "grade"
+            ? filterByGradeAtLeast(value)
+            : filterByValue(
+                currentMode,
+                value
+              );
 
         const ratio =
           allCount
@@ -711,6 +728,13 @@
       )
     );
 
+    const graphList =
+      currentMode === "grade"
+        ? sortPeople(
+            filterByGradeAtLeast(value)
+          )
+        : fullList;
+
     currentList = fullList.slice(0, MAX_ITEMS);
 
     document
@@ -729,12 +753,14 @@
       getModeConfig(currentMode);
 
     detailTitle.textContent =
-      `${config.valueLabel(value)} 대상자`;
+      currentMode === "grade"
+        ? `현재 최고 ${config.valueLabel(value)} 대상자`
+        : `${config.valueLabel(value)} 대상자`;
 
     detailCount.textContent =
       `${currentList.length.toLocaleString()}명`;
 
-    renderGradeClassBreakdown(value, fullList);
+    renderGradeClassBreakdown(value, graphList);
     renderTable();
   }
 
