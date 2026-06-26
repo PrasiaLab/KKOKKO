@@ -232,10 +232,10 @@
   }
 
   function traceLabel(guild) {
-    if (guild.match_rule === '92plus') return '92+';
-    if (guild.match_rule === '92plus_with_91_support') return '92+·91 보조';
-    if (guild.match_rule === 'top3_existing_levels') return `상위 ${guild.match_levels.join('/')}`;
-    return '자료 없음';
+    if (guild.match_rule === '92plus') return 'A조건';
+    if (guild.match_rule === '92plus_with_91_support') return 'A+B조건';
+    if (guild.match_rule === 'top3_existing_levels') return 'B조건';
+    return '내부기준';
   }
 
   function normalizeGuild(item, index = 0) {

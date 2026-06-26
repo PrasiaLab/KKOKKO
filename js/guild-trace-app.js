@@ -176,7 +176,12 @@ function displayJudgement(m) {
 }
 
 function traceLabelText(guild) {
-  return guild?.trace_label || '내부기준';
+  const raw = String(guild?.trace_label || guild?.match_rule || '').trim();
+  const rule = String(guild?.match_rule || '').trim();
+  if (rule === '92plus' || raw === '92+' || raw === '92plus') return 'A조건';
+  if (rule === '92plus_with_91_support' || raw === '92+·91 보조' || raw === '92+91' || raw.includes('91 보조')) return 'A+B조건';
+  if (rule === 'top3_existing_levels' || raw.startsWith('상위')) return 'B조건';
+  return '내부기준';
 }
 
 function updateServerFilter(matches) {
