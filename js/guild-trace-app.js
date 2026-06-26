@@ -349,6 +349,11 @@ function openModal(matchIndex) {
       <div class="detail-card"><span>이전 기준</span><strong>${escapeHtml(traceLabelText(m.before))}</strong></div>
       <div class="detail-card"><span>이후 기준</span><strong>${escapeHtml(traceLabelText(m.after))}</strong></div>
     </div>
+    ${alternateHtml(m)}
+    <div class="member-columns">
+      ${memberTable('이전 멤버', m.before)}
+      ${memberTable('이후 멤버', m.after)}
+    </div>
   `;
   $('modalBackdrop').hidden = false;
 }
