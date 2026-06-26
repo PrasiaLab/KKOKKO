@@ -217,3 +217,32 @@ select:focus, input:focus { border-color: #79aef7; box-shadow: 0 0 0 3px rgba(12
 .closed-message { color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
 .compact-detail-grid { margin-bottom: 0; }
 @media (max-width: 720px) { .guild-trace-main { padding: 16px; } }
+
+
+/* V3 card compact fix: 상세 요약 카드를 데스크톱에서 한 줄로 표시 */
+.compact-detail-grid {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 0;
+}
+.compact-detail-grid .detail-card {
+  padding: 12px 8px;
+  min-width: 0;
+}
+.compact-detail-grid .detail-card span {
+  font-size: 12px;
+  white-space: nowrap;
+}
+.compact-detail-grid .detail-card strong {
+  font-size: 17px;
+  word-break: keep-all;
+  white-space: nowrap;
+}
+@media (max-width: 1180px) {
+  .compact-detail-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  .compact-detail-grid { grid-template-columns: 1fr; }
+  .compact-detail-grid .detail-card span,
+  .compact-detail-grid .detail-card strong { white-space: normal; }
+}
