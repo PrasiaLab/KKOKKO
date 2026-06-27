@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>닉네임 검색 | 맛나는꼬꼬</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/nickname-search.css">
+</head>
+<body class="nickname-search-page">
+  <main class="nickname-search-shell">
+    <section class="nickname-search-card" aria-labelledby="nicknameSearchTitle">
+      <div class="nickname-search-brand">
+        <img src="./images/bi_simbol.png" alt="맛나는꼬꼬 심볼" onerror="this.style.display='none'">
+        <div>
+          <p class="nickname-search-kicker">MATTNANEUN KKOKKO · WARS OF PRASIA</p>
+          <h1 id="nicknameSearchTitle">닉네임 검색</h1>
+        </div>
+      </div>
+
+      <form class="nickname-search-form" id="nicknameSearchForm" autocomplete="off">
+        <label class="sr-only" for="nicknameSearchInput">닉네임 입력</label>
+        <input
+          id="nicknameSearchInput"
+          type="text"
+          maxlength="10"
+          spellcheck="false"
+          placeholder="닉네임 입력"
+          autofocus
+        >
+        <button type="submit">검색</button>
+      </form>
+
+      <div class="nickname-search-status" id="nicknameSearchStatus" aria-live="polite">
+        닉네임을 입력한 후 검색해 주세요.
+      </div>
+
+      <section class="nickname-result-panel" id="nicknameResultPanel" hidden>
+        <div class="nickname-result-head">
+          <div>
+            <p class="nickname-result-kicker">SEARCH RESULT</p>
+            <h2 id="nicknameResultTitle">검색 결과</h2>
+          </div>
+          <span class="nickname-result-count" id="nicknameResultCount">0건</span>
+        </div>
+
+        <div class="nickname-result-table-wrap">
+          <table class="nickname-result-table">
+            <thead>
+              <tr>
+                <th>서버</th>
+                <th>닉네임</th>
+                <th>레벨</th>
+                <th>토벌레벨</th>
+                <th>결사명</th>
+                <th>결사장</th>
+              </tr>
+            </thead>
+            <tbody id="nicknameResultBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="./js/mappings.js"></script>
+  <script src="./js/nickname-search.js"></script>
+</body>
+</html>
