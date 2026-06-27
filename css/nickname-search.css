@@ -1,0 +1,271 @@
+/* 닉네임 검색 전용 페이지: 기존 메뉴에 연결하지 않고 주소 직접 접근용으로 사용 */
+body.nickname-search-page {
+  min-width:1120px;
+  background:
+    radial-gradient(circle at 85% -8%, rgba(106,168,255,.16), transparent 30%),
+    radial-gradient(circle at 15% 115%, rgba(225,184,62,.10), transparent 28%),
+    var(--bg);
+}
+
+.nickname-search-shell {
+  min-height:100vh;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:54px 34px 80px;
+}
+
+.nickname-search-card {
+  width:min(1180px, 100%);
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:linear-gradient(180deg, rgba(29,34,42,.96), rgba(20,24,31,.96));
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.nickname-search-brand {
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:28px 32px 24px;
+  border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.025);
+}
+
+.nickname-search-brand img {
+  width:52px;
+  height:52px;
+  object-fit:contain;
+}
+
+.nickname-search-kicker,
+.nickname-result-kicker {
+  margin:0 0 7px;
+  color:var(--gold2);
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.13em;
+}
+
+.nickname-search-brand h1 {
+  margin:0;
+  font-size:30px;
+  letter-spacing:-.8px;
+}
+
+.nickname-search-form {
+  display:flex;
+  gap:12px;
+  padding:28px 32px 0;
+}
+
+.nickname-search-form input {
+  min-width:0;
+  flex:1;
+  height:56px;
+  padding:0 18px;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:15px;
+  outline:none;
+  background:#10151c;
+  color:var(--text);
+  font-size:17px;
+  font-weight:800;
+}
+
+.nickname-search-form input::placeholder {
+  color:#647085;
+}
+
+.nickname-search-form input:focus {
+  border-color:rgba(225,184,62,.68);
+  box-shadow:0 0 0 4px rgba(225,184,62,.10);
+}
+
+.nickname-search-form button {
+  min-width:112px;
+  height:56px;
+  border:0;
+  border-radius:15px;
+  background:linear-gradient(135deg, var(--gold2), #cf9727);
+  color:#19150c;
+  font-weight:950;
+  cursor:pointer;
+  box-shadow:0 12px 26px rgba(225,184,62,.15);
+}
+
+.nickname-search-form button:hover {
+  filter:brightness(1.04);
+  transform:translateY(-1px);
+}
+
+.nickname-search-status {
+  min-height:62px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:18px 32px 0;
+  padding:16px 18px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:rgba(255,255,255,.025);
+  color:#dfe4ea;
+  text-align:center;
+  font-size:16px;
+  font-weight:800;
+  line-height:1.6;
+}
+
+.nickname-search-status.error {
+  border-color:rgba(255,109,101,.42);
+  color:#ffc2bd;
+}
+
+.nickname-search-status strong,
+.nickname-search-status .count {
+  color:var(--gold2);
+  font-weight:950;
+}
+
+.nickname-result-panel {
+  margin:22px 32px 32px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:#151a22;
+  overflow:hidden;
+}
+
+.nickname-result-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:20px 22px;
+  border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.026);
+}
+
+.nickname-result-head h2 {
+  margin:0;
+  font-size:21px;
+  letter-spacing:-.4px;
+}
+
+.nickname-result-count {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:66px;
+  height:34px;
+  padding:0 14px;
+  border:1px solid rgba(225,184,62,.32);
+  border-radius:999px;
+  background:rgba(225,184,62,.10);
+  color:var(--gold2);
+  font-weight:950;
+}
+
+.nickname-result-table-wrap {
+  overflow:auto;
+}
+
+.nickname-result-table {
+  width:100%;
+  min-width:860px;
+  border-collapse:collapse;
+}
+
+.nickname-result-table th,
+.nickname-result-table td {
+  padding:16px 18px;
+  border-bottom:1px solid rgba(255,255,255,.065);
+  text-align:left;
+  vertical-align:middle;
+}
+
+.nickname-result-table th {
+  color:#9fb9e2;
+  font-size:13px;
+  font-weight:950;
+  background:#111821;
+}
+
+.nickname-result-table td {
+  color:#edf2f7;
+  font-size:15px;
+  font-weight:800;
+}
+
+.nickname-result-table tbody tr:hover {
+  background:rgba(255,255,255,.025);
+}
+
+.nickname-result-table .server-cell {
+  color:#9cc6ff;
+  white-space:nowrap;
+}
+
+.nickname-result-table .name-cell,
+.nickname-result-table .guild-cell,
+.nickname-result-table .master-cell {
+  color:#fff;
+}
+
+.nickname-result-table .level-cell,
+.nickname-result-table .grade-cell {
+  color:var(--gold2);
+  white-space:nowrap;
+  text-align:right;
+}
+
+.nickname-result-table th:nth-child(3),
+.nickname-result-table th:nth-child(4) {
+  text-align:right;
+}
+
+.sr-only {
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+
+@media (max-width: 760px) {
+  body.nickname-search-page {
+    min-width:0;
+  }
+
+  .nickname-search-shell {
+    padding:22px 14px 44px;
+  }
+
+  .nickname-search-brand,
+  .nickname-search-form {
+    padding-left:18px;
+    padding-right:18px;
+  }
+
+  .nickname-search-brand h1 {
+    font-size:24px;
+  }
+
+  .nickname-search-form {
+    flex-direction:column;
+  }
+
+  .nickname-search-form button {
+    width:100%;
+  }
+
+  .nickname-search-status,
+  .nickname-result-panel {
+    margin-left:18px;
+    margin-right:18px;
+  }
+}
