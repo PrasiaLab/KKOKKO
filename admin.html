@@ -63,6 +63,9 @@
         <button class="admin-nav-button" data-admin-page="data">
           데이터 갱신
         </button>
+        <button class="admin-nav-button" data-admin-page="guildTrace">
+          결사 이전 분석
+        </button>
       </nav>
 
       <div class="admin-user-card">
@@ -500,6 +503,217 @@
           </section>
         </div>
       </section>
+
+<section class="admin-page" id="adminGuildTracePage">
+  <div class="data-update-layout">
+    <section class="data-update-card data-update-main-card">
+      <div class="data-update-heading">
+        <div>
+          <span class="admin-list-kicker">GUILD TRANSFER</span>
+          <h2>결사 이전 분석 공개 설정</h2>
+          <p>
+            메뉴는 유지하고, OFF 상태에서는 페이지 본문에 안내문만 표시합니다.
+          </p>
+        </div>
+
+        <span
+          class="data-state-badge idle"
+          id="guildTraceStateBadge"
+        >
+          확인 중
+        </span>
+      </div>
+
+      <div class="data-summary-grid">
+        <article class="data-summary-item">
+          <span>화면 표시명</span>
+          <strong id="guildTracePreviewTitle">결사 이전 분석</strong>
+        </article>
+
+        <article class="data-summary-item">
+          <span>이전데이터</span>
+          <strong id="guildTraceBeforePreview">고정값 사용</strong>
+        </article>
+
+        <article class="data-summary-item">
+          <span>이후데이터</span>
+          <strong>latest</strong>
+        </article>
+      </div>
+
+      <div class="admin-form-grid two-columns">
+        <label>
+          <span>공개 상태</span>
+          <select id="guildTraceEnabled">
+            <option value="true">ON - 기능 이용 가능</option>
+            <option value="false">OFF - 안내문만 표시</option>
+          </select>
+        </label>
+
+        <label>
+          <span>메뉴 표시</span>
+          <select id="guildTraceMenuVisible">
+            <option value="true">표시</option>
+            <option value="false">숨김</option>
+          </select>
+        </label>
+
+        <label>
+          <span>타이틀</span>
+          <input id="guildTraceTitle" type="text" value="결사 이전 분석">
+        </label>
+
+        <label>
+          <span>시즌명</span>
+          <input id="guildTraceSeason" type="text" placeholder="예: S34">
+        </label>
+
+        <label>
+          <span>이전데이터 스냅샷</span>
+          <input id="guildTraceBeforeSnapshot" type="text" placeholder="예: 2026-06-25_1150">
+        </label>
+
+        <label>
+          <span>이후데이터 스냅샷</span>
+          <input id="guildTraceAfterSnapshot" type="text" value="latest">
+        </label>
+      </div>
+
+      <label class="admin-wide-field">
+        <span>OFF 안내문</span>
+        <textarea id="guildTraceClosedMessage" rows="3">결사 이전 분석 페이지는 서버 이전 기간에만 운영됩니다.</textarea>
+      </label>
+
+      <div class="data-update-message" id="guildTraceAdminMessage">
+        결사 이전 분석 설정을 불러오는 중입니다.
+      </div>
+
+      <div class="data-update-actions">
+        <button
+          class="primary-button data-update-button"
+          id="guildTraceSaveButton"
+          type="button"
+        >
+          공개 설정 저장
+        </button>
+
+        <a
+          class="secondary-button"
+          href="./pages/guild-trace.html"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          페이지 열기
+        </a>
+      </div>
+    </section>
+
+    <section class="data-update-card data-update-main-card">
+      <div class="data-update-heading">
+        <div>
+          <span class="admin-list-kicker">SNAPSHOT</span>
+          <h2>이전/이후 데이터 저장</h2>
+          <p>
+            상시 랭킹 갱신과 별개로 결사 이전 분석 전용 스냅샷만 생성합니다.
+          </p>
+        </div>
+
+        <span
+          class="data-state-badge idle"
+          id="guildTraceRunBadge"
+        >
+          대기 중
+        </span>
+      </div>
+
+      <label class="admin-check-row">
+        <input id="guildTraceUseExisting" type="checkbox">
+        <span>기존 trace raw JSON 사용(API 재추출 생략)</span>
+      </label>
+
+      <div class="data-update-actions">
+        <button
+          class="primary-button data-update-button"
+          id="guildTraceBeforeButton"
+          type="button"
+        >
+          이전데이터 저장
+        </button>
+
+        <button
+          class="secondary-button"
+          id="guildTraceAfterButton"
+          type="button"
+        >
+          이후데이터 저장
+        </button>
+      </div>
+
+      <p class="data-update-note">
+        이전데이터 저장은 기준 스냅샷을 고정하고, 이후데이터 저장은 최신 스냅샷으로 추가됩니다.
+        실제 실행에는 Firebase Functions 추가 배포가 필요합니다.
+      </p>
+
+      <div class="data-update-message" id="guildTraceRunMessage">
+        결사 이전 분석 스냅샷 작업은 아직 실행되지 않았습니다.
+      </div>
+    </section>
+
+    <section class="data-update-card">
+      <span class="admin-list-kicker">PROCESS</span>
+      <h2>진행 상태</h2>
+
+      <ol class="data-progress-list" id="guildTraceProgressList">
+        <li class="active" data-guild-trace-progress-step="request">
+          <span>1</span>
+          <div>
+            <strong>실행 요청</strong>
+            <small>관리자 권한과 요청 상태를 확인합니다.</small>
+          </div>
+        </li>
+
+        <li data-guild-trace-progress-step="queued">
+          <span>2</span>
+          <div>
+            <strong>작업 대기</strong>
+            <small>결사 이전 분석 전용 GitHub Actions 작업을 요청합니다.</small>
+          </div>
+        </li>
+
+        <li data-guild-trace-progress-step="running">
+          <span>3</span>
+          <div>
+            <strong>스냅샷 생성</strong>
+            <small>Python으로 결사 이전 분석 데이터를 생성합니다.</small>
+          </div>
+        </li>
+
+        <li data-guild-trace-progress-step="complete">
+          <span>4</span>
+          <div>
+            <strong>반영 완료</strong>
+            <small>JSON 커밋과 홈페이지 반영을 확인합니다.</small>
+          </div>
+        </li>
+      </ol>
+
+      <dl class="data-run-details">
+        <div>
+          <dt>실행 번호</dt>
+          <dd id="guildTraceRunId">-</dd>
+        </div>
+        <div>
+          <dt>요청 시간</dt>
+          <dd id="guildTraceRequestedAt">-</dd>
+        </div>
+        <div>
+          <dt>실행 결과</dt>
+          <dd id="guildTraceRunConclusion">-</dd>
+        </div>
+      </dl>
+    </section>
+  </div>
+</section>
     </main>
   </div>
 
