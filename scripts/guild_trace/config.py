@@ -7,6 +7,7 @@ DATA_DIR = ROOT_DIR / "data" / "guild-trace"
 RAW_DIR = DATA_DIR / "raw"
 SNAPSHOT_DIR = DATA_DIR / "snapshots"
 SNAPSHOT_INDEX = DATA_DIR / "snapshots_index.json"
+SITE_CONFIG = DATA_DIR / "site_config.json"
 
 # 추적 기준: 92레벨 이상을 고급 지문으로 사용합니다.
 HIGH_LEVEL_MIN = 92

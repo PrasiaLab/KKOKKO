@@ -11,10 +11,10 @@ from typing import Any, Dict, Iterable, List, Optional
 from zoneinfo import ZoneInfo
 
 try:
-    from config import CLASS_ALIASES, DATA_DIR, RAW_DIR, HIGH_LEVEL_MIN, HUNT_THRESHOLDS, ROOT_DIR, SNAPSHOT_DIR, SNAPSHOT_INDEX
+    from config import CLASS_ALIASES, DATA_DIR, RAW_DIR, HIGH_LEVEL_MIN, HUNT_THRESHOLDS, ROOT_DIR, SNAPSHOT_DIR, SNAPSHOT_INDEX, SITE_CONFIG, SITE_CONFIG
 except ImportError:
     sys.path.append(str(Path(__file__).resolve().parent))
-    from config import CLASS_ALIASES, DATA_DIR, RAW_DIR, HIGH_LEVEL_MIN, HUNT_THRESHOLDS, ROOT_DIR, SNAPSHOT_DIR, SNAPSHOT_INDEX
+    from config import CLASS_ALIASES, DATA_DIR, RAW_DIR, HIGH_LEVEL_MIN, HUNT_THRESHOLDS, ROOT_DIR, SNAPSHOT_DIR, SNAPSHOT_INDEX, SITE_CONFIG, SITE_CONFIG
 
 
 def now_snapshot_id() -> str:
@@ -415,11 +415,44 @@ def update_indexes(snapshot_id: str, created_at: str) -> None:
     write_json(SNAPSHOT_DIR / "manifest.json", out)
 
 
+
+def update_site_config(snapshot_id: str, snapshot_role: str) -> None:
+    config = {
+        "trace_enabled": False,
+        "trace_menu_visible": True,
+        "trace_title": "결사 이전 분석",
+        "trace_season": "S34",
+        "trace_closed_message": "결사 이전 분석 페이지는 서버 이전 기간에만 운영됩니다.",
+        "default_before_snapshot": "2026-06-25_1150",
+        "default_after_snapshot": "latest",
+        "menu_label": "결사 이전 분석",
+    }
+
+    if SITE_CONFIG.exists():
+        try:
+            loaded = json.loads(SITE_CONFIG.read_text(encoding="utf-8"))
+            if isinstance(loaded, dict):
+                config.update(loaded)
+        except Exception:
+            pass
+
+    if snapshot_role == "before":
+        config["default_before_snapshot"] = snapshot_id
+    elif snapshot_role == "after":
+        config["default_after_snapshot"] = "latest"
+
+    config["last_snapshot_id"] = snapshot_id
+    config["last_snapshot_role"] = snapshot_role
+    config["last_snapshot_updated_at"] = datetime.now(ZoneInfo("Asia/Seoul")).strftime("%Y-%m-%d %H:%M:%S")
+
+    write_json(SITE_CONFIG, config)
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="랭킹 데이터를 시간별 스냅샷으로 저장합니다. Trace v2 기준 지문을 포함합니다. 출력은 data/guild-trace 전용 경로를 사용합니다.")
     parser.add_argument("--snapshot-id", default=now_snapshot_id(), help="예: 2026-06-25_1200")
     parser.add_argument("--guild-source", default="data/guild-trace/raw/trace_who_are_you_guild_score.json")
     parser.add_argument("--member-source", action="append", default=[])
+    parser.add_argument("--snapshot-role", choices=["before", "after", "normal"], default="normal", help="before면 이전데이터 고정값 갱신, after면 latest 이후데이터로 사용")
     args = parser.parse_args()
 
     created_at = datetime.now(ZoneInfo("Asia/Seoul")).strftime("%Y-%m-%d %H:%M:%S")
@@ -463,6 +496,8 @@ def main() -> None:
     write_json(out_dir / "snapshot_info.json", payload["meta"])
     write_json(DATA_DIR / "latest_guilds.json", payload)
     update_indexes(args.snapshot_id, created_at)
+    if args.snapshot_role != "normal":
+        update_site_config(args.snapshot_id, args.snapshot_role)
     print(f"[OK] snapshot saved: {out_dir}")
     print(f"[OK] snapshot label: {snapshot_label(args.snapshot_id)}")
     print(f"[OK] guild count: {len(guilds):,}")
