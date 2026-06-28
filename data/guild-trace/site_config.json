@@ -1,8 +1,11 @@
 {
-  "trace_enabled": true,
-  "trace_message": "서버 이전 추적 페이지는 서버 이전 기간에만 운영됩니다.",
+  "trace_enabled": false,
+  "trace_menu_visible": true,
+  "trace_title": "결사 이전 분석",
+  "trace_season": "S34",
+  "trace_closed_message": "결사 이전 분석 페이지는 서버 이전 기간에만 운영됩니다.",
   "default_before_snapshot": "2026-06-25_1150",
   "default_after_snapshot": "latest",
-  "menu_label": "결사 이동 추적",
-  "public_note": "공개 전에는 trace_enabled를 false로 유지하세요."
+  "menu_label": "결사 이전 분석",
+  "public_note": "메뉴는 유지하고, trace_enabled=false일 때 본문만 안내문으로 대체합니다."
 }
