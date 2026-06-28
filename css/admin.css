@@ -589,6 +589,22 @@ select {
   min-width: 126px;
 }
 
+.secondary-button.admin-inline-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  text-decoration: none;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.data-update-actions .admin-inline-link {
+  flex: 0 0 auto;
+}
+
+
 .data-update-actions button:disabled {
   cursor: wait;
   opacity: .58;
