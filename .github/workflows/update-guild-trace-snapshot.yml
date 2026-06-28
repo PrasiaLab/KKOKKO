@@ -11,6 +11,10 @@ on:
         description: "원천 랭킹 API 추출을 건너뛰고 기존 trace raw JSON 사용 (true/false)"
         required: true
         default: "false"
+      snapshot_role:
+        description: "스냅샷 용도 (normal/before/after)"
+        required: true
+        default: "normal"
 
 permissions:
   contents: write
@@ -38,12 +42,16 @@ jobs:
         run: |
           SNAPSHOT_ID="${{ github.event.inputs.snapshot_id }}"
           USE_EXISTING="${{ github.event.inputs.use_existing }}"
+          SNAPSHOT_ROLE="${{ github.event.inputs.snapshot_role }}"
           CMD="python scripts/guild_trace/run_snapshot.py"
           if [ -n "$SNAPSHOT_ID" ]; then
             CMD="$CMD --snapshot-id $SNAPSHOT_ID"
           fi
           if [ "$USE_EXISTING" = "true" ]; then
             CMD="$CMD --use-existing"
+          fi
+          if [ -n "$SNAPSHOT_ROLE" ]; then
+            CMD="$CMD --snapshot-role $SNAPSHOT_ROLE"
           fi
           echo "Run CMD=$CMD"
           $CMD
