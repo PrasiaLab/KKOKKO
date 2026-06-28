@@ -55,10 +55,6 @@ const getRankingUpdateStatusCall = httpsCallable(
   "getRankingUpdateStatus"
 );
 
-const triggerGuildTraceSnapshotUpdateCall = httpsCallable(
-  functions,
-  "triggerGuildTraceSnapshotUpdate"
-);
 
 const pageTitles = {
   notice: "안내사항 관리",
@@ -1077,11 +1073,15 @@ async function startGuildTraceSnapshotUpdate(snapshotRole) {
   try {
     await saveGuildTraceConfig();
 
-    const result = await triggerGuildTraceSnapshotUpdateCall({
-      source: "admin-page",
+    const result = await triggerRankingUpdateCall({
+      type: "guild_trace",
+      mode: snapshotRole,
       snapshotRole,
       snapshotId,
-      useExisting
+      snapshot_id: snapshotId,
+      useExisting,
+      use_existing: useExisting,
+      source: "admin-page"
     });
 
     const data = result.data || {};
