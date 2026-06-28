@@ -3,23 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>결사 이동 추적</title>
+  <title>결사 이전 분석</title>
   <link rel="stylesheet" href="../css/guild-trace.css" />
 </head>
 <body class="guild-trace-page">
   <main class="main guild-trace-main" id="trace">
     <section class="panel trace-closed-panel" id="traceClosedPanel" hidden>
       <p class="eyebrow">Prasia Guild Trace</p>
-      <h1>결사 이동 추적</h1>
-      <p class="closed-message">서버 이전 추적 페이지는 서버 이전 기간에만 운영됩니다.</p>
+      <h1 id="traceClosedTitle">결사 이전 분석</h1>
+      <p class="closed-message">결사 이전 분석 페이지는 서버 이전 기간에만 운영됩니다.</p>
     </section>
 
     <div id="traceContent">
       <header class="hero panel">
         <div>
           <p class="eyebrow">Prasia Guild Trace</p>
-          <h1>결사 이동 추적</h1>
-          <p class="hero-desc">저장된 이전/이후 데이터를 기준으로 결사 이동 후보를 비교합니다. 결과는 내부 기준에 따른 참고용 후보입니다.</p>
+          <h1 id="tracePageTitle">결사 이전 분석</h1>
+          <p class="hero-desc">저장된 이전/이후 데이터를 기준으로 결사 이전 후보를 비교합니다. 결과는 내부 기준에 따른 참고용 후보입니다.</p>
         </div>
         <div class="status-card">
           <span class="status-label">저장된 스냅샷</span>
@@ -139,6 +139,7 @@
     </article>
   </div>
 
+  <script src="../js/guild-trace-firestore-config.js"></script>
   <script src="../js/guild-trace-mappings.js"></script>
   <script src="../js/guild-trace-compare.js"></script>
   <script src="../js/guild-trace-app.js"></script>
