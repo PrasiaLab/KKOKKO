@@ -16,6 +16,7 @@ import {
   getFirestore,
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   where,
@@ -590,6 +591,41 @@ async function loadVideos() {
   }
 }
 
+
+function formatGuildTraceTitle(config) {
+  const title = config?.trace_title || config?.menu_label || "결사 이전 분석";
+  const season = String(config?.trace_season || "").trim();
+
+  return season ? `${title} (${season})` : title;
+}
+
+async function loadGuildTraceMenuConfig() {
+  const menu = document.getElementById("guildTraceMenu");
+  const label = document.getElementById("guildTraceMenuLabel");
+
+  if (!menu || !label) {
+    return;
+  }
+
+  try {
+    const snapshot = await getDoc(doc(db, "siteSettings", "guildTraceConfig"));
+    const config = snapshot.exists() ? snapshot.data() : {};
+
+    label.textContent = formatGuildTraceTitle(config);
+
+    if (config?.trace_menu_visible === false) {
+      menu.hidden = true;
+      menu.setAttribute("aria-hidden", "true");
+    } else {
+      menu.hidden = false;
+      menu.removeAttribute("aria-hidden");
+    }
+  } catch (error) {
+    console.warn("결사 이전 분석 메뉴 설정을 불러오지 못했습니다.", error);
+    label.textContent = "결사 이전 분석";
+  }
+}
+
 initializeAnalyticsTracking();
 subscribeLiveStatus();
 
@@ -597,5 +633,6 @@ Promise.all([
   loadNotices(),
   loadSchedule(),
   loadVideos(),
-  loadRollingNotices()
+  loadRollingNotices(),
+  loadGuildTraceMenuConfig()
 ]);

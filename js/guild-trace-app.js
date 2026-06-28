@@ -20,25 +20,82 @@ async function fetchJson(path) {
   return res.json();
 }
 
-async function loadSiteConfig() {
+
+function formatTraceTitle(config) {
+  const title = config?.trace_title || config?.menu_label || '결사 이전 분석';
+  const season = String(config?.trace_season || '').trim();
+
+  return season ? `${title} (${season})` : title;
+}
+
+function applyTraceTitle(config) {
+  const title = formatTraceTitle(config);
+  document.title = title;
+
+  const pageTitle = $('tracePageTitle');
+  const closedTitle = $('traceClosedTitle');
+
+  if (pageTitle) pageTitle.textContent = title;
+  if (closedTitle) closedTitle.textContent = title;
+}
+
+async function loadFirestoreSiteConfig() {
   try {
-    state.siteConfig = await fetchJson(`${GUILD_TRACE_DATA_BASE}/site_config.json`);
-  } catch (err) {
-    state.siteConfig = { trace_enabled: true };
+    if (!window.guildTraceFirestoreConfigPromise) {
+      return null;
+    }
+
+    return await window.guildTraceFirestoreConfigPromise;
+  } catch (error) {
+    console.warn('Firestore 설정 로드 오류', error);
+    return null;
   }
+}
+
+async function loadSiteConfig() {
+  let fileConfig = {};
+
+  try {
+    fileConfig = await fetchJson(`${GUILD_TRACE_DATA_BASE}/site_config.json`);
+  } catch (err) {
+    fileConfig = {};
+  }
+
+  const firestoreConfig = await loadFirestoreSiteConfig();
+  state.siteConfig = {
+    trace_enabled: true,
+    trace_title: '결사 이전 분석',
+    trace_season: '',
+    trace_closed_message: '결사 이전 분석 페이지는 서버 이전 기간에만 운영됩니다.',
+    default_before_snapshot: '2026-06-25_1150',
+    default_after_snapshot: 'latest',
+    ...fileConfig,
+    ...(firestoreConfig || {}),
+  };
+
+  applyTraceTitle(state.siteConfig);
+
   const enabled = state.siteConfig?.trace_enabled !== false;
   const closedPanel = $('traceClosedPanel');
   const content = $('traceContent');
+
   if (!enabled) {
     if (closedPanel) {
       closedPanel.hidden = false;
-      closedPanel.querySelector('.closed-message').textContent = state.siteConfig?.trace_message || '서버 이전 추적 페이지는 서버 이전 기간에만 운영됩니다.';
+      closedPanel.querySelector('.closed-message').textContent =
+        state.siteConfig?.trace_closed_message ||
+        state.siteConfig?.trace_message ||
+        '결사 이전 분석 페이지는 서버 이전 기간에만 운영됩니다.';
     }
+
     if (content) content.hidden = true;
+
     return false;
   }
+
   if (closedPanel) closedPanel.hidden = true;
   if (content) content.hidden = false;
+
   return true;
 }
 

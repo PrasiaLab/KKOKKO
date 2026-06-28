@@ -55,13 +55,19 @@ const getRankingUpdateStatusCall = httpsCallable(
   "getRankingUpdateStatus"
 );
 
+const triggerGuildTraceSnapshotUpdateCall = httpsCallable(
+  functions,
+  "triggerGuildTraceSnapshotUpdate"
+);
+
 const pageTitles = {
   notice: "안내사항 관리",
   rolling: "한줄 공지 관리",
   schedule: "방송 일정 관리",
   live: "라이브 방송 관리",
   video: "영상 관리",
-  data: "데이터 갱신"
+  data: "데이터 갱신",
+  guildTrace: "결사 이전 분석 관리"
 };
 
 let noticeItems = [];
@@ -72,9 +78,13 @@ let activeVideoFilter = "all";
 let rankingStatusTimer = null;
 let activeRankingRunId = null;
 let rankingRequestedAt = null;
+let guildTraceStatusTimer = null;
+let activeGuildTraceRunId = null;
+let guildTraceRequestedAt = null;
 let currentAdminUser = null;
 
 const LIVE_STATUS_DOC = ["siteSettings", "liveStatus"];
+const GUILD_TRACE_CONFIG_DOC = ["siteSettings", "guildTraceConfig"];
 const DEFAULT_LIVE_URL =
   "https://www.youtube.com/@%EB%A7%9B%EB%82%98%EB%8A%94%EA%BC%AC%EA%BC%AC";
 
@@ -711,6 +721,419 @@ async function saveLiveStatus(isLive) {
   }
 }
 
+
+function nowKstSnapshotId() {
+  const parts = new Intl.DateTimeFormat("sv-SE", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  }).formatToParts(new Date());
+
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+
+  return `${values.year}-${values.month}-${values.day}_${values.hour}${values.minute}`;
+}
+
+function formatGuildTraceTitle(config = {}) {
+  const title = config.trace_title || "결사 이전 분석";
+  const season = String(config.trace_season || "").trim();
+
+  return season ? `${title} (${season})` : title;
+}
+
+function setGuildTraceMessage(message, type = "") {
+  const target = $("guildTraceAdminMessage");
+
+  if (!target) {
+    return;
+  }
+
+  target.textContent = message;
+  target.className = "data-update-message";
+
+  if (type) {
+    target.classList.add(type);
+  }
+}
+
+function setBooleanControl(id, value) {
+  const element = $(id);
+
+  if (!element) {
+    return;
+  }
+
+  if (element.type === "checkbox") {
+    element.checked = Boolean(value);
+    return;
+  }
+
+  element.value = String(Boolean(value));
+}
+
+function getBooleanControl(id) {
+  const element = $(id);
+
+  if (!element) {
+    return false;
+  }
+
+  if (element.type === "checkbox") {
+    return element.checked;
+  }
+
+  return element.value !== "false";
+}
+
+function renderGuildTraceConfig(data = {}) {
+  const enabled = data.trace_enabled !== false;
+  const menuVisible = data.trace_menu_visible !== false;
+
+  setBooleanControl("guildTraceEnabled", enabled);
+  setBooleanControl("guildTraceMenuVisible", menuVisible);
+  $("guildTraceTitle").value = data.trace_title || "결사 이전 분석";
+  $("guildTraceSeason").value = data.trace_season || "";
+  $("guildTraceClosedMessage").value =
+    data.trace_closed_message ||
+    data.trace_message ||
+    "결사 이전 분석 페이지는 서버 이전 기간에만 운영됩니다.";
+  $("guildTraceBeforeSnapshot").value =
+    data.default_before_snapshot || "2026-06-25_1150";
+  $("guildTraceAfterSnapshot").value =
+    data.default_after_snapshot || "latest";
+
+  if ($("guildTraceBeforePreview")) {
+    $("guildTraceBeforePreview").textContent =
+      data.default_before_snapshot || "2026-06-25_1150";
+  }
+
+  $("guildTracePreviewTitle").textContent = formatGuildTraceTitle({
+    trace_title: $("guildTraceTitle").value,
+    trace_season: $("guildTraceSeason").value
+  });
+  $("guildTraceStateBadge").textContent = enabled ? "ON" : "OFF";
+  $("guildTraceStateBadge").className = `data-state-badge ${enabled ? "success" : "idle"}`;
+}
+
+async function loadGuildTraceConfig() {
+  try {
+    const snapshot = await getDoc(doc(db, ...GUILD_TRACE_CONFIG_DOC));
+    const data = snapshot.exists()
+      ? snapshot.data()
+      : {
+          trace_enabled: false,
+          trace_menu_visible: true,
+          trace_title: "결사 이전 분석",
+          trace_season: "S34",
+          trace_closed_message: "결사 이전 분석 페이지는 서버 이전 기간에만 운영됩니다.",
+          default_before_snapshot: "2026-06-25_1150",
+          default_after_snapshot: "latest"
+        };
+
+    renderGuildTraceConfig(data);
+    setGuildTraceMessage("결사 이전 분석 설정을 불러왔습니다.", "success");
+    return data;
+  } catch (error) {
+    console.error("결사 이전 분석 설정 로드 오류", error);
+    setGuildTraceMessage(
+      "결사 이전 분석 설정을 불러오지 못했습니다. Firestore 규칙을 확인해주세요.",
+      "error"
+    );
+    return null;
+  }
+}
+
+async function saveGuildTraceConfig() {
+  assertClientAdmin();
+
+  const config = {
+    trace_enabled: getBooleanControl("guildTraceEnabled"),
+    trace_menu_visible: getBooleanControl("guildTraceMenuVisible"),
+    trace_title: $("guildTraceTitle").value.trim() || "결사 이전 분석",
+    trace_season: $("guildTraceSeason").value.trim(),
+    trace_closed_message:
+      $("guildTraceClosedMessage").value.trim() ||
+      "결사 이전 분석 페이지는 서버 이전 기간에만 운영됩니다.",
+    default_before_snapshot:
+      $("guildTraceBeforeSnapshot").value.trim() || "2026-06-25_1150",
+    default_after_snapshot:
+      $("guildTraceAfterSnapshot").value.trim() || "latest",
+    updatedAt: serverTimestamp(),
+    updatedByUid: currentAdminUser?.uid || "",
+    updatedByEmail: currentAdminUser?.email || ""
+  };
+
+  const button = $("guildTraceSaveButton");
+  button.disabled = true;
+  setGuildTraceMessage("결사 이전 분석 설정을 저장하는 중입니다.", "working");
+
+  try {
+    await setDoc(doc(db, ...GUILD_TRACE_CONFIG_DOC), config, { merge: true });
+    renderGuildTraceConfig(config);
+    setGuildTraceMessage("결사 이전 분석 설정을 저장했습니다.", "success");
+    showToast("결사 이전 분석 설정을 저장했습니다.");
+  } catch (error) {
+    console.error("결사 이전 분석 설정 저장 오류", error);
+    setGuildTraceMessage(
+      "설정을 저장하지 못했습니다. Firestore 권한을 확인해주세요.",
+      "error"
+    );
+    showToast("결사 이전 분석 설정 저장에 실패했습니다.");
+  } finally {
+    button.disabled = false;
+  }
+}
+
+function setGuildTraceRunMessage(message, state = "") {
+  const target = $("guildTraceRunMessage");
+
+  if (!target) {
+    return;
+  }
+
+  target.textContent = message;
+  target.className = "data-update-message";
+
+  if (state) {
+    target.classList.add(state);
+  }
+}
+
+function setGuildTraceProgress(step) {
+  const order = ["request", "queued", "running", "complete"];
+  const currentIndex = order.indexOf(step);
+
+  document
+    .querySelectorAll("[data-guild-trace-progress-step]")
+    .forEach((item) => {
+      const itemIndex = order.indexOf(item.dataset.guildTraceProgressStep);
+
+      item.classList.toggle("active", itemIndex === currentIndex);
+      item.classList.toggle(
+        "done",
+        currentIndex >= 0 && itemIndex < currentIndex
+      );
+    });
+}
+
+function stopGuildTracePolling() {
+  if (guildTraceStatusTimer) {
+    window.clearTimeout(guildTraceStatusTimer);
+    guildTraceStatusTimer = null;
+  }
+}
+
+function resetGuildTraceProgress() {
+  activeGuildTraceRunId = null;
+  guildTraceRequestedAt = null;
+  stopGuildTracePolling();
+
+  $("guildTraceRunId").textContent = "-";
+  $("guildTraceRequestedAt").textContent = "-";
+  $("guildTraceRunConclusion").textContent = "-";
+  setGuildTraceProgress("request");
+}
+
+async function pollGuildTraceRunStatus(runId, pollCount = 0) {
+  if (!runId) {
+    return;
+  }
+
+  try {
+    const result = await getRankingUpdateStatusCall({ runId });
+    const data = result.data || {};
+    const status = data.status;
+    const conclusion = data.conclusion;
+
+    $("guildTraceRunConclusion").textContent =
+      conclusion || status || "-";
+
+    if (status === "queued") {
+      $("guildTraceRunBadge").textContent = "대기 중";
+      $("guildTraceRunBadge").className = "data-state-badge working";
+      setGuildTraceRunMessage(
+        "결사 이전 분석 스냅샷 작업이 대기열에 등록되었습니다.",
+        "working"
+      );
+      setGuildTraceProgress("queued");
+    } else if (status === "in_progress") {
+      $("guildTraceRunBadge").textContent = "생성 중";
+      $("guildTraceRunBadge").className = "data-state-badge working";
+      setGuildTraceRunMessage(
+        "결사 이전 분석용 랭킹 데이터와 스냅샷을 생성하고 있습니다.",
+        "working"
+      );
+      setGuildTraceProgress("running");
+    } else if (status === "completed") {
+      stopGuildTracePolling();
+      activeGuildTraceRunId = null;
+      $("guildTraceBeforeButton").disabled = false;
+      $("guildTraceAfterButton").disabled = false;
+
+      if (conclusion === "success") {
+        $("guildTraceRunBadge").textContent = "완료";
+        $("guildTraceRunBadge").className = "data-state-badge success";
+        setGuildTraceRunMessage(
+          "결사 이전 분석 스냅샷 생성과 홈페이지 반영이 완료되었습니다.",
+          "success"
+        );
+        setGuildTraceProgress("complete");
+        showToast("결사 이전 분석 스냅샷 생성이 완료되었습니다.");
+      } else {
+        $("guildTraceRunBadge").textContent = "실패";
+        $("guildTraceRunBadge").className = "data-state-badge error";
+        setGuildTraceRunMessage(
+          `결사 이전 분석 작업이 실패했습니다. 결과: ${conclusion || "unknown"}`,
+          "error"
+        );
+        showToast("결사 이전 분석 스냅샷 생성에 실패했습니다.");
+      }
+
+      return;
+    }
+
+    if (pollCount >= RANKING_MAX_POLL_COUNT) {
+      stopGuildTracePolling();
+      activeGuildTraceRunId = null;
+      $("guildTraceBeforeButton").disabled = false;
+      $("guildTraceAfterButton").disabled = false;
+      $("guildTraceRunBadge").textContent = "확인 지연";
+      $("guildTraceRunBadge").className = "data-state-badge error";
+      setGuildTraceRunMessage(
+        "작업 상태 확인 시간이 길어지고 있습니다. GitHub Actions에서 직접 확인해주세요.",
+        "error"
+      );
+      return;
+    }
+
+    guildTraceStatusTimer = window.setTimeout(() => {
+      pollGuildTraceRunStatus(runId, pollCount + 1);
+    }, RANKING_POLL_INTERVAL);
+  } catch (error) {
+    console.error("결사 이전 분석 실행 상태 확인 오류", error);
+
+    if (pollCount >= 5) {
+      stopGuildTracePolling();
+      activeGuildTraceRunId = null;
+      $("guildTraceBeforeButton").disabled = false;
+      $("guildTraceAfterButton").disabled = false;
+      $("guildTraceRunBadge").textContent = "확인 오류";
+      $("guildTraceRunBadge").className = "data-state-badge error";
+      setGuildTraceRunMessage(
+        rankingErrorMessage(error),
+        "error"
+      );
+      return;
+    }
+
+    guildTraceStatusTimer = window.setTimeout(() => {
+      pollGuildTraceRunStatus(runId, pollCount + 1);
+    }, RANKING_POLL_INTERVAL);
+  }
+}
+
+async function startGuildTraceSnapshotUpdate(snapshotRole) {
+  assertClientAdmin();
+
+  if (activeGuildTraceRunId) {
+    showToast("이미 결사 이전 분석 작업을 확인하고 있습니다.");
+    return;
+  }
+
+  const roleLabel = snapshotRole === "before" ? "이전데이터" : "이후데이터";
+  const snapshotId = nowKstSnapshotId();
+  const useExisting = Boolean($("guildTraceUseExisting")?.checked);
+
+  const confirmed = window.confirm(
+    `${roleLabel}를 저장할까요?\n` +
+    `스냅샷 ID: ${snapshotId}\n\n` +
+    "완료까지 수 분이 걸릴 수 있습니다."
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  $("guildTraceBeforeButton").disabled = true;
+  $("guildTraceAfterButton").disabled = true;
+  resetGuildTraceProgress();
+  $("guildTraceRunBadge").textContent = "요청 중";
+  $("guildTraceRunBadge").className = "data-state-badge working";
+  setGuildTraceRunMessage(
+    "Firebase에서 결사 이전 분석 스냅샷 생성을 요청하고 있습니다.",
+    "working"
+  );
+
+  if (snapshotRole === "before") {
+    $("guildTraceBeforeSnapshot").value = snapshotId;
+  } else {
+    $("guildTraceAfterSnapshot").value = "latest";
+  }
+
+  try {
+    await saveGuildTraceConfig();
+
+    const result = await triggerGuildTraceSnapshotUpdateCall({
+      source: "admin-page",
+      snapshotRole,
+      snapshotId,
+      useExisting
+    });
+
+    const data = result.data || {};
+
+    guildTraceRequestedAt = data.requestedAt || new Date().toISOString();
+    activeGuildTraceRunId = data.runId || null;
+
+    $("guildTraceRequestedAt").textContent =
+      formatDateTime(guildTraceRequestedAt);
+
+    $("guildTraceRunId").textContent =
+      activeGuildTraceRunId || "확인 중";
+
+    setGuildTraceProgress("queued");
+    $("guildTraceRunBadge").textContent = "실행 시작";
+    $("guildTraceRunBadge").className = "data-state-badge working";
+    setGuildTraceRunMessage(
+      data.message || `${roleLabel} 저장 작업을 시작했습니다.`,
+      "working"
+    );
+
+    if (!activeGuildTraceRunId) {
+      $("guildTraceBeforeButton").disabled = false;
+      $("guildTraceAfterButton").disabled = false;
+      setGuildTraceRunMessage(
+        "작업 실행 요청은 완료됐지만 실행 번호 확인이 지연되고 있습니다. GitHub Actions에서 확인해주세요.",
+        "working"
+      );
+      showToast(`${roleLabel} 저장 작업을 요청했습니다.`);
+      return;
+    }
+
+    showToast(`${roleLabel} 저장 작업을 시작했습니다.`);
+    pollGuildTraceRunStatus(activeGuildTraceRunId);
+  } catch (error) {
+    console.error("결사 이전 분석 스냅샷 실행 오류", error);
+
+    activeGuildTraceRunId = null;
+    $("guildTraceBeforeButton").disabled = false;
+    $("guildTraceAfterButton").disabled = false;
+    $("guildTraceRunBadge").textContent = "실행 실패";
+    $("guildTraceRunBadge").className = "data-state-badge error";
+    setGuildTraceRunMessage(
+      rankingErrorMessage(error),
+      "error"
+    );
+    $("guildTraceRunConclusion").textContent = "요청 실패";
+    showToast("결사 이전 분석 스냅샷 요청에 실패했습니다.");
+  }
+}
+
+
 function clearForm(prefix) {
   if (prefix === "notice") {
     $("noticeForm").reset();
@@ -773,7 +1196,8 @@ async function loadAll() {
     loadSchedules(),
     loadVideos(),
     loadLiveStatus(),
-    loadRankingDataStatus()
+    loadRankingDataStatus(),
+    loadGuildTraceConfig()
   ]);
 }
 
@@ -1036,6 +1460,31 @@ $("rankingStatusRefresh").addEventListener(
     }
   }
 );
+
+$("guildTraceSaveButton")?.addEventListener(
+  "click",
+  saveGuildTraceConfig
+);
+
+$("guildTraceBeforeButton")?.addEventListener(
+  "click",
+  () => startGuildTraceSnapshotUpdate("before")
+);
+
+$("guildTraceAfterButton")?.addEventListener(
+  "click",
+  () => startGuildTraceSnapshotUpdate("after")
+);
+
+["guildTraceTitle", "guildTraceSeason"].forEach((id) => {
+  $(id)?.addEventListener("input", () => {
+    $("guildTracePreviewTitle").textContent = formatGuildTraceTitle({
+      trace_title: $("guildTraceTitle").value,
+      trace_season: $("guildTraceSeason").value
+    });
+  });
+});
+
 
 document
   .querySelectorAll("[data-video-filter]")
