@@ -897,3 +897,62 @@ body.admin-auth-pending {
 
 /* 한줄 공지 관리 */
 .rolling-admin-guide{margin:-5px 0 14px;color:var(--muted);font-size:12px;line-height:1.6}.admin-form-card label small{color:#7d8897;font-size:10px;font-weight:500}
+
+
+/* 결사 이전 분석 관리 */
+.admin-form-grid.two-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.admin-form-grid.two-columns label,
+.admin-wide-field {
+  display: grid;
+  gap: 8px;
+  color: #d8e2ff;
+  font-weight: 700;
+}
+
+.admin-form-grid.two-columns input,
+.admin-wide-field textarea {
+  width: 100%;
+  border: 1px solid rgba(146, 172, 255, .22);
+  border-radius: 12px;
+  background: rgba(10, 16, 32, .72);
+  color: #f7fbff;
+  padding: 12px 13px;
+  outline: none;
+}
+
+.admin-wide-field {
+  margin-top: 14px;
+}
+
+.admin-check-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #d8e2ff;
+  font-weight: 700;
+  margin: 12px 0;
+}
+
+.admin-check-row.compact {
+  margin: 0;
+  align-self: end;
+  min-height: 44px;
+}
+
+.admin-check-row input {
+  width: 18px;
+  height: 18px;
+  accent-color: #7aa2ff;
+}
+
+@media (max-width: 860px) {
+  .admin-form-grid.two-columns {
+    grid-template-columns: 1fr;
+  }
+}
