@@ -1,8 +1,8 @@
 {
   "metadata": {
     "data_type": "guild_ranking",
-    "extracted_at": "2026-07-01T03:25:15+09:00",
-    "extracted_at_text": "2026-07-01 03:25:15",
+    "extracted_at": "2026-07-01T09:21:48+09:00",
+    "extracted_at_text": "2026-07-01 09:21:48",
     "timezone": "Asia/Seoul",
     "world_count": 50,
     "item_count": 2500,
@@ -64,8 +64,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON03_LINESAUF",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON03_LINESAUF"
       ]
     },
     {
@@ -91,7 +91,7 @@
       "guild_name": "종국장",
       "guild_master": "나여나",
       "guild_level": 59,
-      "guild_member_count": 45,
+      "guild_member_count": 46,
       "max_guild_member_count": 50,
       "territory_flag_id": [],
       "territory_name": []
@@ -309,7 +309,7 @@
       "guild_name": "대교",
       "guild_master": "최유리",
       "guild_level": 44,
-      "guild_member_count": 4,
+      "guild_member_count": 5,
       "max_guild_member_count": 42,
       "territory_flag_id": [],
       "territory_name": []
@@ -412,24 +412,6 @@
       "world_id": "LIVE_W02_R1",
       "ranking": 27,
       "ranking_change": 0,
-      "guild_name": "킬",
-      "guild_master": "꼬꼬무",
-      "guild_level": 40,
-      "guild_member_count": 2,
-      "max_guild_member_count": 42,
-      "territory_flag_id": [
-        "Garrison"
-      ],
-      "territory_name": [
-        "GARRISON02_AMINTA"
-      ]
-    },
-    {
-      "world": "2-1",
-      "world_group_id": "LIVE_W02",
-      "world_id": "LIVE_W02_R1",
-      "ranking": 28,
-      "ranking_change": 0,
       "guild_name": "자연인",
       "guild_master": "개미지옥",
       "guild_level": 40,
@@ -440,6 +422,24 @@
       ],
       "territory_name": [
         "GARRISON03_AMINTA"
+      ]
+    },
+    {
+      "world": "2-1",
+      "world_group_id": "LIVE_W02",
+      "world_id": "LIVE_W02_R1",
+      "ranking": 28,
+      "ranking_change": 0,
+      "guild_name": "킬",
+      "guild_master": "꼬꼬무",
+      "guild_level": 40,
+      "guild_member_count": 2,
+      "max_guild_member_count": 42,
+      "territory_flag_id": [
+        "Garrison"
+      ],
+      "territory_name": [
+        "GARRISON02_AMINTA"
       ]
     },
     {
@@ -545,8 +545,12 @@
       "guild_level": 35,
       "guild_member_count": 44,
       "max_guild_member_count": 44,
-      "territory_flag_id": [],
-      "territory_name": []
+      "territory_flag_id": [
+        "Garrison"
+      ],
+      "territory_name": [
+        "GARRISON03_KROHN"
+      ]
     },
     {
       "world": "2-1",
@@ -775,7 +779,7 @@
       "guild_name": "더킹",
       "guild_master": "뜨사장",
       "guild_level": 70,
-      "guild_member_count": 46,
+      "guild_member_count": 47,
       "max_guild_member_count": 50,
       "territory_flag_id": [
         "Fortress",
@@ -1057,7 +1061,7 @@
       "guild_name": "하츠츠",
       "guild_master": "타람야호",
       "guild_level": 51,
-      "guild_member_count": 5,
+      "guild_member_count": 6,
       "max_guild_member_count": 45,
       "territory_flag_id": [
         "Garrison"
@@ -1662,8 +1666,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_SIGIL",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON02_SIGIL"
       ]
     },
     {
@@ -2039,7 +2043,7 @@
       "guild_name": "고구려",
       "guild_master": "dashitou",
       "guild_level": 42,
-      "guild_member_count": 45,
+      "guild_member_count": 44,
       "max_guild_member_count": 45,
       "territory_flag_id": [],
       "territory_name": []
@@ -2120,11 +2124,11 @@
       "world_id": "LIVE_W02_R3",
       "ranking": 38,
       "ranking_change": 0,
-      "guild_name": "프랑스",
-      "guild_master": "두식이",
+      "guild_name": "불꽃",
+      "guild_master": "윤아",
       "guild_level": 40,
-      "guild_member_count": 1,
-      "max_guild_member_count": 36,
+      "guild_member_count": 45,
+      "max_guild_member_count": 45,
       "territory_flag_id": [],
       "territory_name": []
     },
@@ -2134,11 +2138,11 @@
       "world_id": "LIVE_W02_R3",
       "ranking": 39,
       "ranking_change": 0,
-      "guild_name": "불꽃",
-      "guild_master": "윤아",
+      "guild_name": "프랑스",
+      "guild_master": "두식이",
       "guild_level": 40,
-      "guild_member_count": 45,
-      "max_guild_member_count": 45,
+      "guild_member_count": 1,
+      "max_guild_member_count": 36,
       "territory_flag_id": [],
       "territory_name": []
     },
@@ -2316,12 +2320,12 @@
       "guild_member_count": 45,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_LINESAUF",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON02_LINESAUF"
       ]
     },
     {
@@ -2333,15 +2337,15 @@
       "guild_name": "깡미",
       "guild_master": "코코피피",
       "guild_level": 67,
-      "guild_member_count": 2,
+      "guild_member_count": 1,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -2388,8 +2392,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_RONDO",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON02_RONDO"
       ]
     },
     {
@@ -3156,8 +3160,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON05_LINESAUF",
-        "GARRISON04_KROHN"
+        "GARRISON04_KROHN",
+        "GARRISON05_LINESAUF"
       ]
     },
     {
@@ -3167,7 +3171,7 @@
       "ranking": 7,
       "ranking_change": 0,
       "guild_name": "미루",
-      "guild_master": "미미루",
+      "guild_master": "내꺼일",
       "guild_level": 62,
       "guild_member_count": 46,
       "max_guild_member_count": 50,
@@ -3543,7 +3547,7 @@
       "guild_name": "CU",
       "guild_master": "오뜨",
       "guild_level": 40,
-      "guild_member_count": 26,
+      "guild_member_count": 25,
       "max_guild_member_count": 41,
       "territory_flag_id": [],
       "territory_name": []
@@ -3830,12 +3834,12 @@
       "guild_member_count": 48,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_LINESAUF",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON02_LINESAUF"
       ]
     },
     {
@@ -3850,12 +3854,12 @@
       "guild_member_count": 17,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -4196,8 +4200,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON01_SIGIL",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON01_SIGIL"
       ]
     },
     {
@@ -4548,11 +4552,11 @@
       "world_id": "LIVE_W03_R1",
       "ranking": 48,
       "ranking_change": 0,
-      "guild_name": "똥",
-      "guild_master": "도련",
+      "guild_name": "신",
+      "guild_master": "르네즈미",
       "guild_level": 32,
-      "guild_member_count": 14,
-      "max_guild_member_count": 38,
+      "guild_member_count": 12,
+      "max_guild_member_count": 37,
       "territory_flag_id": [],
       "territory_name": []
     },
@@ -4562,11 +4566,11 @@
       "world_id": "LIVE_W03_R1",
       "ranking": 49,
       "ranking_change": 0,
-      "guild_name": "신",
-      "guild_master": "르네즈미",
+      "guild_name": "똥",
+      "guild_master": "도련",
       "guild_level": 32,
-      "guild_member_count": 12,
-      "max_guild_member_count": 37,
+      "guild_member_count": 14,
+      "max_guild_member_count": 38,
       "territory_flag_id": [],
       "territory_name": []
     },
@@ -4596,12 +4600,12 @@
       "guild_member_count": 50,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON02_RONDO"
       ]
     },
     {
@@ -4616,12 +4620,12 @@
       "guild_member_count": 49,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_LINESAUF",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON02_LINESAUF"
       ]
     },
     {
@@ -4653,8 +4657,12 @@
       "guild_level": 61,
       "guild_member_count": 2,
       "max_guild_member_count": 50,
-      "territory_flag_id": [],
-      "territory_name": []
+      "territory_flag_id": [
+        "Castle"
+      ],
+      "territory_name": [
+        "GARRISON00_RONDO"
+      ]
     },
     {
       "world": "3-2",
@@ -4672,8 +4680,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_AMINTA",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON02_AMINTA"
       ]
     },
     {
@@ -4747,8 +4755,12 @@
       "guild_level": 57,
       "guild_member_count": 2,
       "max_guild_member_count": 50,
-      "territory_flag_id": [],
-      "territory_name": []
+      "territory_flag_id": [
+        "Fortress"
+      ],
+      "territory_name": [
+        "GARRISON00_AMINTA"
+      ]
     },
     {
       "world": "3-2",
@@ -5303,7 +5315,7 @@
       "ranking": 48,
       "ranking_change": 0,
       "guild_name": "테리아",
-      "guild_master": "눈눈",
+      "guild_master": "삐삐",
       "guild_level": 32,
       "guild_member_count": 3,
       "max_guild_member_count": 39,
@@ -5354,12 +5366,12 @@
       "guild_member_count": 50,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_LINESAUF",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON02_LINESAUF"
       ]
     },
     {
@@ -5679,7 +5691,7 @@
       "guild_name": "우리",
       "guild_master": "YOUANDI",
       "guild_level": 43,
-      "guild_member_count": 9,
+      "guild_member_count": 14,
       "max_guild_member_count": 45,
       "territory_flag_id": [
         "Garrison"
@@ -5857,8 +5869,12 @@
       "guild_level": 33,
       "guild_member_count": 5,
       "max_guild_member_count": 40,
-      "territory_flag_id": [],
-      "territory_name": []
+      "territory_flag_id": [
+        "Garrison"
+      ],
+      "territory_name": [
+        "GARRISON03_RONDO"
+      ]
     },
     {
       "world": "3-3",
@@ -6096,12 +6112,12 @@
       "guild_member_count": 48,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON02_RONDO"
       ]
     },
     {
@@ -6113,15 +6129,15 @@
       "guild_name": "시그니엘",
       "guild_master": "하니즈",
       "guild_level": 68,
-      "guild_member_count": 32,
+      "guild_member_count": 33,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_LINESAUF",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON02_LINESAUF"
       ]
     },
     {
@@ -6848,12 +6864,12 @@
       "guild_member_count": 48,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON02_RONDO"
       ]
     },
     {
@@ -6966,12 +6982,12 @@
       "guild_member_count": 50,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -7000,12 +7016,12 @@
       "guild_member_count": 5,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON01_KROHN",
-        "GARRISON00_AMINTA"
+        "GARRISON00_AMINTA",
+        "GARRISON01_KROHN"
       ]
     },
     {
@@ -8395,15 +8411,15 @@
       "guild_name": "땡",
       "guild_master": "르브",
       "guild_level": 62,
-      "guild_member_count": 50,
+      "guild_member_count": 47,
       "max_guild_member_count": 50,
       "territory_flag_id": [
         "Garrison",
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_LINESAUF",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON02_LINESAUF"
       ]
     },
     {
@@ -8606,8 +8622,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON05_RONDO",
-        "GARRISON03_KROHN"
+        "GARRISON03_KROHN",
+        "GARRISON05_RONDO"
       ]
     },
     {
@@ -9154,8 +9170,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_RONDO",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON02_RONDO"
       ]
     },
     {
@@ -9904,12 +9920,12 @@
       "guild_member_count": 31,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -9928,8 +9944,8 @@
         "Fortress"
       ],
       "territory_name": [
-        "GARRISON00_AMINTA",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON00_AMINTA"
       ]
     },
     {
@@ -11436,12 +11452,12 @@
       "guild_member_count": 18,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -11456,12 +11472,12 @@
       "guild_member_count": 50,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON03_KROHN",
-        "FORTRESS00_LINESAUF"
+        "FORTRESS00_LINESAUF",
+        "GARRISON03_KROHN"
       ]
     },
     {
@@ -11592,8 +11608,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_SIGIL",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON02_SIGIL"
       ]
     },
     {
@@ -12194,12 +12210,12 @@
       "guild_member_count": 50,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON03_KROHN",
-        "GARRISON00_AMINTA"
+        "GARRISON00_AMINTA",
+        "GARRISON03_KROHN"
       ]
     },
     {
@@ -12218,8 +12234,8 @@
         "Fortress"
       ],
       "territory_name": [
-        "GARRISON00_KROHN",
-        "FORTRESS00_LINESAUF"
+        "FORTRESS00_LINESAUF",
+        "GARRISON00_KROHN"
       ]
     },
     {
@@ -12234,12 +12250,12 @@
       "guild_member_count": 49,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -12278,8 +12294,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_LINESAUF",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON02_LINESAUF"
       ]
     },
     {
@@ -12977,15 +12993,15 @@
       "guild_name": "신백야",
       "guild_master": "뮤즈야호",
       "guild_level": 70,
-      "guild_member_count": 48,
+      "guild_member_count": 50,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_LINESAUF",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON02_LINESAUF"
       ]
     },
     {
@@ -13000,12 +13016,12 @@
       "guild_member_count": 10,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -13024,8 +13040,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON05_RONDO",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON05_RONDO"
       ]
     },
     {
@@ -13163,7 +13179,7 @@
       "ranking": 12,
       "ranking_change": 0,
       "guild_name": "홀",
-      "guild_master": "홀홀",
+      "guild_master": "드론",
       "guild_level": 58,
       "guild_member_count": 45,
       "max_guild_member_count": 50,
@@ -13758,12 +13774,12 @@
       "guild_member_count": 50,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON03_KROHN",
-        "GARRISON00_AMINTA"
+        "GARRISON00_AMINTA",
+        "GARRISON03_KROHN"
       ]
     },
     {
@@ -13782,8 +13798,8 @@
         "Fortress"
       ],
       "territory_name": [
-        "GARRISON00_KROHN",
-        "FORTRESS00_LINESAUF"
+        "FORTRESS00_LINESAUF",
+        "GARRISON00_KROHN"
       ]
     },
     {
@@ -14500,8 +14516,8 @@
         "Fortress"
       ],
       "territory_name": [
-        "GARRISON00_KROHN",
-        "GARRISON00_AMINTA"
+        "GARRISON00_AMINTA",
+        "GARRISON00_KROHN"
       ]
     },
     {
@@ -14552,12 +14568,12 @@
       "guild_member_count": 42,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -14740,8 +14756,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON05_AMINTA",
-        "GARRISON04_KROHN"
+        "GARRISON04_KROHN",
+        "GARRISON05_AMINTA"
       ]
     },
     {
@@ -15268,12 +15284,12 @@
       "guild_member_count": 50,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON02_RONDO"
       ]
     },
     {
@@ -15292,8 +15308,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON04_KROHN",
-        "GARRISON04_AMINTA"
+        "GARRISON04_AMINTA",
+        "GARRISON04_KROHN"
       ]
     },
     {
@@ -15319,7 +15335,7 @@
       "guild_name": "편하게",
       "guild_master": "Anaka",
       "guild_level": 66,
-      "guild_member_count": 48,
+      "guild_member_count": 47,
       "max_guild_member_count": 50,
       "territory_flag_id": [
         "Fortress"
@@ -16016,12 +16032,12 @@
       "guild_member_count": 50,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON05_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON05_RONDO"
       ]
     },
     {
@@ -16040,8 +16056,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON04_KROHN",
-        "GARRISON04_AMINTA"
+        "GARRISON04_AMINTA",
+        "GARRISON04_KROHN"
       ]
     },
     {
@@ -16792,8 +16808,8 @@
         "Fortress"
       ],
       "territory_name": [
-        "GARRISON00_KROHN",
-        "FORTRESS00_LINESAUF"
+        "FORTRESS00_LINESAUF",
+        "GARRISON00_KROHN"
       ]
     },
     {
@@ -16828,12 +16844,12 @@
       "guild_member_count": 40,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -17648,8 +17664,8 @@
         "Fortress"
       ],
       "territory_name": [
-        "GARRISON00_KROHN",
-        "GARRISON00_AMINTA"
+        "GARRISON00_AMINTA",
+        "GARRISON00_KROHN"
       ]
     },
     {
@@ -19084,12 +19100,12 @@
       "guild_member_count": 45,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -19398,8 +19414,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON03_KROHN",
-        "GARRISON02_SIGIL"
+        "GARRISON02_SIGIL",
+        "GARRISON03_KROHN"
       ]
     },
     {
@@ -19868,12 +19884,12 @@
       "guild_member_count": 50,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON02_RONDO"
       ]
     },
     {
@@ -19892,8 +19908,8 @@
         "Fortress"
       ],
       "territory_name": [
-        "GARRISON00_KROHN",
-        "GARRISON00_AMINTA"
+        "GARRISON00_AMINTA",
+        "GARRISON00_KROHN"
       ]
     },
     {
@@ -19941,7 +19957,7 @@
       "guild_name": "천사",
       "guild_master": "피크닉오디",
       "guild_level": 60,
-      "guild_member_count": 44,
+      "guild_member_count": 45,
       "max_guild_member_count": 45,
       "territory_flag_id": [
         "Garrison",
@@ -20642,12 +20658,12 @@
       "guild_member_count": 30,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -20713,17 +20729,17 @@
       "ranking": 5,
       "ranking_change": 0,
       "guild_name": "Me",
-      "guild_master": "Mw",
+      "guild_master": "Mq",
       "guild_level": 63,
-      "guild_member_count": 1,
+      "guild_member_count": 4,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON03_KROHN",
-        "GARRISON00_AMINTA"
+        "GARRISON00_AMINTA",
+        "GARRISON03_KROHN"
       ]
     },
     {
@@ -20782,20 +20798,6 @@
       "world_id": "LIVE_W11_R3",
       "ranking": 9,
       "ranking_change": 0,
-      "guild_name": "라라스윗",
-      "guild_master": "현율",
-      "guild_level": 55,
-      "guild_member_count": 1,
-      "max_guild_member_count": 50,
-      "territory_flag_id": [],
-      "territory_name": []
-    },
-    {
-      "world": "11-3",
-      "world_group_id": "LIVE_W11",
-      "world_id": "LIVE_W11_R3",
-      "ranking": 10,
-      "ranking_change": 0,
       "guild_name": "태양",
       "guild_master": "애슐린",
       "guild_level": 55,
@@ -20807,6 +20809,20 @@
       "territory_name": [
         "GARRISON05_LINESAUF"
       ]
+    },
+    {
+      "world": "11-3",
+      "world_group_id": "LIVE_W11",
+      "world_id": "LIVE_W11_R3",
+      "ranking": 10,
+      "ranking_change": 0,
+      "guild_name": "라라스윗",
+      "guild_master": "현율",
+      "guild_level": 55,
+      "guild_member_count": 1,
+      "max_guild_member_count": 50,
+      "territory_flag_id": [],
+      "territory_name": []
     },
     {
       "world": "11-3",
@@ -21648,8 +21664,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON05_LINESAUF",
-        "GARRISON03_KROHN"
+        "GARRISON03_KROHN",
+        "GARRISON05_LINESAUF"
       ]
     },
     {
@@ -22196,12 +22212,12 @@
       "guild_member_count": 50,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -22448,8 +22464,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON05_RONDO",
-        "GARRISON03_KROHN"
+        "GARRISON03_KROHN",
+        "GARRISON05_RONDO"
       ]
     },
     {
@@ -22982,12 +22998,12 @@
       "guild_member_count": 45,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -23060,8 +23076,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON01_SIGIL",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON01_SIGIL"
       ]
     },
     {
@@ -23198,8 +23214,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON03_KROHN",
-        "GARRISON03_AMINTA"
+        "GARRISON03_AMINTA",
+        "GARRISON03_KROHN"
       ]
     },
     {
@@ -23760,12 +23776,12 @@
       "guild_member_count": 44,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -24812,8 +24828,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON05_LINESAUF",
-        "GARRISON03_KROHN"
+        "GARRISON03_KROHN",
+        "GARRISON05_LINESAUF"
       ]
     },
     {
@@ -25358,8 +25374,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON04_AMINTA",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON04_AMINTA"
       ]
     },
     {
@@ -26110,8 +26126,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON03_AMINTA",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON03_AMINTA"
       ]
     },
     {
@@ -26278,7 +26294,7 @@
       "ranking_change": 0,
       "guild_name": "펩시",
       "guild_master": "표리",
-      "guild_level": 39,
+      "guild_level": 40,
       "guild_member_count": 11,
       "max_guild_member_count": 50,
       "territory_flag_id": [],
@@ -26816,12 +26832,12 @@
       "guild_member_count": 43,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -26833,7 +26849,7 @@
       "guild_name": "참교육",
       "guild_master": "교육부장관",
       "guild_level": 66,
-      "guild_member_count": 33,
+      "guild_member_count": 38,
       "max_guild_member_count": 50,
       "territory_flag_id": [
         "Garrison",
@@ -26860,8 +26876,8 @@
         "Fortress"
       ],
       "territory_name": [
-        "GARRISON00_KROHN",
-        "FORTRESS00_LINESAUF"
+        "FORTRESS00_LINESAUF",
+        "GARRISON00_KROHN"
       ]
     },
     {
@@ -27596,12 +27612,12 @@
       "guild_member_count": 37,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -27653,7 +27669,7 @@
       "guild_name": "아기고양이",
       "guild_master": "빨리",
       "guild_level": 66,
-      "guild_member_count": 26,
+      "guild_member_count": 27,
       "max_guild_member_count": 50,
       "territory_flag_id": [
         "Garrison"
@@ -27854,12 +27870,12 @@
       "guild_member_count": 1,
       "max_guild_member_count": 45,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON01_SIGIL",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON01_SIGIL"
       ]
     },
     {
@@ -28422,12 +28438,12 @@
       "guild_member_count": 7,
       "max_guild_member_count": 49,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON02_AMINTA",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON02_AMINTA"
       ]
     },
     {
@@ -29156,12 +29172,12 @@
       "guild_member_count": 50,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -29924,12 +29940,12 @@
       "guild_member_count": 48,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -29948,8 +29964,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON04_KROHN",
-        "GARRISON02_RONDO"
+        "GARRISON02_RONDO",
+        "GARRISON04_KROHN"
       ]
     },
     {
@@ -30140,8 +30156,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON04_LINESAUF",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON04_LINESAUF"
       ]
     },
     {
@@ -30830,8 +30846,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON01_SIGIL",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON01_SIGIL"
       ]
     },
     {
@@ -32706,12 +32722,12 @@
       "guild_member_count": 4,
       "max_guild_member_count": 45,
       "territory_flag_id": [
-        "Garrison",
-        "Fortress"
+        "Fortress",
+        "Garrison"
       ],
       "territory_name": [
-        "GARRISON03_LINESAUF",
-        "GARRISON00_KROHN"
+        "GARRISON00_KROHN",
+        "GARRISON03_LINESAUF"
       ]
     },
     {
@@ -32976,12 +32992,12 @@
       "guild_member_count": 48,
       "max_guild_member_count": 50,
       "territory_flag_id": [
-        "Castle",
-        "Fortress"
+        "Fortress",
+        "Castle"
       ],
       "territory_name": [
-        "GARRISON00_RONDO",
-        "FORTRESS00_SIGIL"
+        "FORTRESS00_SIGIL",
+        "GARRISON00_RONDO"
       ]
     },
     {
@@ -33762,8 +33778,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON05_RONDO",
-        "GARRISON04_KROHN"
+        "GARRISON04_KROHN",
+        "GARRISON05_RONDO"
       ]
     },
     {
@@ -33860,8 +33876,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON04_LINESAUF",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON04_LINESAUF"
       ]
     },
     {
@@ -34025,7 +34041,7 @@
       "guild_name": "배우1",
       "guild_master": "김부선",
       "guild_level": 48,
-      "guild_member_count": 8,
+      "guild_member_count": 9,
       "max_guild_member_count": 50,
       "territory_flag_id": [],
       "territory_name": []
@@ -34410,11 +34426,11 @@
       "world_id": "LIVE_W16_R5",
       "ranking": 43,
       "ranking_change": 0,
-      "guild_name": "사과나무",
-      "guild_master": "태연이",
+      "guild_name": "즌쟁",
+      "guild_master": "후루룩",
       "guild_level": 29,
-      "guild_member_count": 1,
-      "max_guild_member_count": 30,
+      "guild_member_count": 10,
+      "max_guild_member_count": 40,
       "territory_flag_id": [],
       "territory_name": []
     },
@@ -34424,11 +34440,11 @@
       "world_id": "LIVE_W16_R5",
       "ranking": 44,
       "ranking_change": 0,
-      "guild_name": "즌쟁",
-      "guild_master": "후루룩",
+      "guild_name": "사과나무",
+      "guild_master": "태연이",
       "guild_level": 29,
-      "guild_member_count": 10,
-      "max_guild_member_count": 40,
+      "guild_member_count": 1,
+      "max_guild_member_count": 30,
       "territory_flag_id": [],
       "territory_name": []
     },
@@ -35232,11 +35248,11 @@
       "world_id": "LIVE_W27_R1",
       "ranking": 47,
       "ranking_change": 0,
-      "guild_name": "오아시스",
-      "guild_master": "쌀먹왕승혁이",
+      "guild_name": "탁류",
+      "guild_master": "에바",
       "guild_level": 24,
-      "guild_member_count": 1,
-      "max_guild_member_count": 34,
+      "guild_member_count": 14,
+      "max_guild_member_count": 40,
       "territory_flag_id": [],
       "territory_name": []
     },
@@ -35246,11 +35262,11 @@
       "world_id": "LIVE_W27_R1",
       "ranking": 48,
       "ranking_change": 0,
-      "guild_name": "탁류",
-      "guild_master": "에바",
+      "guild_name": "오아시스",
+      "guild_master": "쌀먹왕승혁이",
       "guild_level": 24,
-      "guild_member_count": 14,
-      "max_guild_member_count": 40,
+      "guild_member_count": 1,
+      "max_guild_member_count": 34,
       "territory_flag_id": [],
       "territory_name": []
     },
@@ -35333,7 +35349,7 @@
       "guild_name": "하라리",
       "guild_master": "하츠하츠",
       "guild_level": 60,
-      "guild_member_count": 47,
+      "guild_member_count": 48,
       "max_guild_member_count": 50,
       "territory_flag_id": [],
       "territory_name": []
@@ -36758,7 +36774,7 @@
       "ranking_change": 0,
       "guild_name": "유성",
       "guild_master": "노을",
-      "guild_level": 23,
+      "guild_level": 24,
       "guild_member_count": 3,
       "max_guild_member_count": 30,
       "territory_flag_id": [],
@@ -36854,8 +36870,8 @@
         "Garrison"
       ],
       "territory_name": [
-        "GARRISON03_RONDO",
-        "GARRISON01_KROHN"
+        "GARRISON01_KROHN",
+        "GARRISON03_RONDO"
       ]
     },
     {
@@ -37364,20 +37380,6 @@
       "world_id": "LIVE_W27_R4",
       "ranking": 38,
       "ranking_change": 0,
-      "guild_name": "mhjhfyhr",
-      "guild_master": "ovo",
-      "guild_level": 28,
-      "guild_member_count": 30,
-      "max_guild_member_count": 40,
-      "territory_flag_id": [],
-      "territory_name": []
-    },
-    {
-      "world": "27-4",
-      "world_group_id": "LIVE_W27",
-      "world_id": "LIVE_W27_R4",
-      "ranking": 39,
-      "ranking_change": 0,
       "guild_name": "얼음성",
       "guild_master": "아란타",
       "guild_level": 28,
@@ -37389,6 +37391,20 @@
       "territory_name": [
         "GARRISON00_AMINTA"
       ]
+    },
+    {
+      "world": "27-4",
+      "world_group_id": "LIVE_W27",
+      "world_id": "LIVE_W27_R4",
+      "ranking": 39,
+      "ranking_change": 0,
+      "guild_name": "mhjhfyhr",
+      "guild_master": "ovo",
+      "guild_level": 28,
+      "guild_member_count": 30,
+      "max_guild_member_count": 40,
+      "territory_flag_id": [],
+      "territory_name": []
     },
     {
       "world": "27-4",
@@ -37584,8 +37600,8 @@
         "Fortress"
       ],
       "territory_name": [
-        "GARRISON00_KROHN",
-        "GARRISON00_AMINTA"
+        "GARRISON00_AMINTA",
+        "GARRISON00_KROHN"
       ]
     },
     {
@@ -37633,7 +37649,7 @@
       "guild_name": "좋은친구들",
       "guild_master": "천상",
       "guild_level": 52,
-      "guild_member_count": 50,
+      "guild_member_count": 49,
       "max_guild_member_count": 50,
       "territory_flag_id": [
         "Garrison"
@@ -37778,7 +37794,7 @@
       "ranking_change": 0,
       "guild_name": "후저",
       "guild_master": "분의",
-      "guild_level": 40,
+      "guild_level": 41,
       "guild_member_count": 42,
       "max_guild_member_count": 42,
       "territory_flag_id": [],
