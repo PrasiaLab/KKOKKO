@@ -131,7 +131,7 @@
       return {
         key: "maybe",
         label: "가능성 있음",
-        message: `${data.grade}등급 기준에서 ${parts.join(" / ")}입니다. -5~-10 정도의 차이라 가능성 있음으로 안내됩니다.`
+        message: `${data.grade}등급 기준에서 ${parts.join(" / ")}입니다. 현재 스펙으로는 가능성 있음으로 확인됩니다.`
       };
     }
 
@@ -146,16 +146,18 @@
   }
 
   function syncCertificate(data, result) {
+    const pending = result.key === "pending";
+
     setText("certGrade", data.grade);
-    setText("certClass", data.className);
+    setText("certClass", data.className || "-");
     setText("certStance", data.stance || "-");
     setText("certPower", data.power ? fmt(data.power) : "-");
     setText("certAttack", data.attack ? fmt(data.attack) : "-");
     setText("certDefense", data.defense ? fmt(data.defense) : "-");
     setText("certSpeed", data.speed ? fmt(data.speed) : "-");
     setText("certCritical", data.critical ? fmt(data.critical) : "-");
-    setText("certFinalHit", fmt(data.finalHit));
-    setText("certFinalSkillHit", fmt(data.finalSkill));
+    setText("certFinalHit", pending ? "-" : fmt(data.finalHit));
+    setText("certFinalSkillHit", pending ? "-" : fmt(data.finalSkill));
     setText("certVerdict", result.label);
     setText("certNote", result.message);
 
@@ -207,7 +209,11 @@
     $("raidVerdictCard").className = "raid-verdict-card pending";
     $("raidSaveButton").disabled = true;
 
-    syncCertificate(getInputData(), { key: "pending", label: "확인 전", message: "본 확인증은 토벌 의뢰 전 참고용이며, 최종 가능 여부는 실제 진행 상황에 따라 달라질 수 있습니다." });
+    syncCertificate(getInputData(), {
+      key: "pending",
+      label: "확인 전",
+      message: "본 확인증은 토벌 의뢰 전 참고용이며, 최종 가능 여부는 실제 진행 상황에 따라 달라질 수 있습니다."
+    });
   }
 
   async function saveCertificate() {
@@ -221,12 +227,22 @@
 
     button.disabled = true;
     button.classList.add("saving");
+    target.classList.add("exporting");
 
     try {
       const canvas = await window.html2canvas(target, {
-        backgroundColor: null,
-        scale: Math.min(window.devicePixelRatio || 2, 3),
-        useCORS: true
+        backgroundColor: "#e3bc77",
+        scale: Math.max(2, Math.min(window.devicePixelRatio || 2, 3)),
+        useCORS: true,
+        foreignObjectRendering: true,
+        imageTimeout: 0,
+        onclone: (doc) => {
+          const clone = doc.getElementById("raidCertificate");
+          if (clone) {
+            clone.classList.add("exporting");
+            clone.style.margin = "0";
+          }
+        }
       });
       const link = document.createElement("a");
       const grade = $("requestGrade").value;
@@ -236,8 +252,10 @@
       link.href = canvas.toDataURL("image/png");
       link.click();
     } catch (error) {
+      console.error(error);
       alert("스펙 확인증 저장 중 오류가 발생했습니다.");
     } finally {
+      target.classList.remove("exporting");
       button.disabled = false;
       button.classList.remove("saving");
     }
@@ -252,5 +270,9 @@
   $("raidSaveButton").addEventListener("click", saveCertificate);
 
   updateStances();
-  syncCertificate(getInputData(), { key: "pending", label: "확인 전", message: "본 확인증은 토벌 의뢰 전 참고용이며, 최종 가능 여부는 실제 진행 상황에 따라 달라질 수 있습니다." });
+  syncCertificate(getInputData(), {
+    key: "pending",
+    label: "확인 전",
+    message: "본 확인증은 토벌 의뢰 전 참고용이며, 최종 가능 여부는 실제 진행 상황에 따라 달라질 수 있습니다."
+  });
 })();
