@@ -114,34 +114,23 @@
   function judge(data) {
     const hitGap = data.finalHit - data.rule.hit;
     const skillGap = data.finalSkill - data.rule.skill;
-    const worstGap = Math.min(hitGap, skillGap);
 
     if (hitGap >= 0 && skillGap >= 0) {
       return {
         key: "possible",
-        label: "의뢰 가능",
-        message: `${data.grade}등급 기준 명중과 스킬명중을 모두 충족했습니다. 기본 조건상 클리어 가능성이 높습니다.`
-      };
-    }
-
-    if (worstGap >= -10) {
-      const parts = [];
-      if (hitGap < 0) parts.push(`명중 ${Math.abs(hitGap)} 부족`);
-      if (skillGap < 0) parts.push(`스킬명중 ${Math.abs(skillGap)} 부족`);
-      return {
-        key: "maybe",
-        label: "가능성 있음",
-        message: `${data.grade}등급 기준에서 ${parts.join(" / ")}입니다. 현재 스펙으로는 가능성 있음으로 확인됩니다.`
+        label: "명중 조건 충족",
+        message: `${data.grade}등급 기준 명중과 스킬명중 조건을 충족했습니다.`
       };
     }
 
     const parts = [];
     if (hitGap < 0) parts.push(`명중 ${Math.abs(hitGap)} 부족`);
     if (skillGap < 0) parts.push(`스킬명중 ${Math.abs(skillGap)} 부족`);
+
     return {
       key: "hard",
-      label: "어려움",
-      message: `${data.grade}등급 기준에서 ${parts.join(" / ")}입니다. 현재 입력 기준으로는 의뢰 진행이 어려울 수 있습니다.`
+      label: "명중 조건 불충족",
+      message: `${data.grade}등급 기준에서 ${parts.join(" / ")}입니다.`
     };
   }
 
@@ -230,20 +219,33 @@
     target.classList.add("exporting");
 
     try {
-      const canvas = await window.html2canvas(target, {
+      const renderOptions = {
         backgroundColor: "#e3bc77",
         scale: Math.max(2, Math.min(window.devicePixelRatio || 2, 3)),
         useCORS: true,
-        foreignObjectRendering: true,
+        allowTaint: true,
         imageTimeout: 0,
+        logging: false,
+        scrollX: 0,
+        scrollY: 0,
         onclone: (doc) => {
           const clone = doc.getElementById("raidCertificate");
           if (clone) {
             clone.classList.add("exporting");
             clone.style.margin = "0";
+            clone.style.opacity = "1";
+            clone.style.transform = "none";
+            clone.style.filter = "saturate(1.08) contrast(1.04) brightness(1.02)";
           }
         }
-      });
+      };
+
+      const canvas = await window.html2canvas(target, renderOptions);
+
+      if (!canvas || !canvas.width || !canvas.height) {
+        throw new Error("empty canvas");
+      }
+
       const link = document.createElement("a");
       const grade = $("requestGrade").value;
       const className = $("requestClass").value;
