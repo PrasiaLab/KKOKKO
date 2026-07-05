@@ -1,0 +1,493 @@
+.raid-request-heading {
+  align-items: center;
+}
+
+.raid-request-badge {
+  border-color: rgba(245, 185, 75, 0.35);
+  color: #f5d28b;
+  background: rgba(245, 185, 75, 0.08);
+}
+
+.raid-request-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.raid-request-form,
+.raid-request-result-panel {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(213, 154, 75, 0.22);
+  background:
+    radial-gradient(circle at top left, rgba(214, 154, 67, 0.12), transparent 36%),
+    linear-gradient(145deg, rgba(15, 20, 28, 0.96), rgba(9, 13, 20, 0.97));
+}
+
+.raid-request-section-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 20px 0 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.raid-request-section-title:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.raid-request-section-title > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(245, 196, 101, 0.45);
+  border-radius: 8px;
+  color: #f7d692;
+  background: rgba(245, 166, 70, 0.1);
+  font-weight: 800;
+}
+
+.raid-request-section-title strong {
+  display: block;
+  color: #f6e0b1;
+  font-size: 1.05rem;
+}
+
+.raid-request-section-title p {
+  margin: 3px 0 0;
+  color: rgba(229, 231, 235, 0.64);
+  font-size: 0.83rem;
+}
+
+.raid-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.raid-form-grid.compact {
+  grid-template-columns: minmax(180px, 260px);
+}
+
+.raid-form-grid.three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.raid-form-grid.four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.raid-field {
+  display: grid;
+  gap: 7px;
+  color: rgba(243, 238, 223, 0.84);
+  font-size: 0.9rem;
+}
+
+.raid-field span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.raid-field .mini {
+  display: inline;
+  color: rgba(245, 196, 101, 0.72);
+  font-size: 0.72rem;
+}
+
+.raid-field input,
+.raid-field select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid rgba(228, 185, 111, 0.22);
+  border-radius: 10px;
+  background: rgba(4, 9, 15, 0.74);
+  color: #f8efe0;
+  padding: 0 13px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.raid-field input:focus,
+.raid-field select:focus {
+  border-color: rgba(245, 196, 101, 0.72);
+  box-shadow: 0 0 0 3px rgba(245, 196, 101, 0.1);
+}
+
+.raid-extra-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.raid-check-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 10px;
+  align-items: center;
+  padding: 13px 14px;
+  border: 1px solid rgba(228, 185, 111, 0.22);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+  color: #f7e3b7;
+  cursor: pointer;
+}
+
+.raid-check-card input {
+  width: 18px;
+  height: 18px;
+  accent-color: #d69a3d;
+}
+
+.raid-check-card small {
+  grid-column: 2;
+  color: rgba(229, 231, 235, 0.66);
+}
+
+.raid-request-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.raid-main-button,
+.raid-sub-button,
+.raid-save-button {
+  border: 0;
+  border-radius: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.18s ease, filter 0.18s ease, opacity 0.18s ease;
+}
+
+.raid-main-button {
+  flex: 1;
+  min-height: 56px;
+  color: #1c1204;
+  background: linear-gradient(135deg, #f5d28b, #bd7931 58%, #f0c36d);
+  box-shadow: 0 14px 30px rgba(177, 101, 30, 0.22);
+  font-size: 1.02rem;
+}
+
+.raid-sub-button {
+  min-width: 92px;
+  color: #f2d8a4;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(228, 185, 111, 0.22);
+}
+
+.raid-main-button:hover,
+.raid-sub-button:hover,
+.raid-save-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.raid-result-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.raid-result-topline h2 {
+  margin: 3px 0 0;
+  color: #f8e7c0;
+}
+
+#raidResultStamp {
+  color: rgba(229, 231, 235, 0.62);
+  font-size: 0.8rem;
+}
+
+.raid-result-summary {
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.raid-result-numbers {
+  padding: 16px;
+  border: 1px solid rgba(228, 185, 111, 0.18);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.19);
+}
+
+.raid-result-numbers p {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  color: rgba(243, 238, 223, 0.8);
+}
+
+.raid-result-numbers p:last-child {
+  border-bottom: 0;
+}
+
+.raid-result-numbers strong {
+  color: #79c9ff;
+  font-size: 1.28rem;
+}
+
+.raid-verdict-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+  border: 1px solid rgba(228, 185, 111, 0.22);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.12));
+  text-align: center;
+}
+
+.raid-verdict-card span {
+  color: rgba(243, 238, 223, 0.72);
+  font-size: 0.86rem;
+}
+
+.raid-verdict-card strong {
+  margin-top: 8px;
+  font-size: 1.85rem;
+}
+
+.raid-verdict-card.possible strong { color: #78f0b0; }
+.raid-verdict-card.maybe strong { color: #ffd166; }
+.raid-verdict-card.hard strong { color: #ff8b7d; }
+.raid-verdict-card.pending strong { color: #f6d594; }
+
+.raid-result-message {
+  margin: 12px 0;
+  padding: 13px 14px;
+  border: 1px solid rgba(228, 185, 111, 0.18);
+  border-radius: 14px;
+  background: rgba(245, 196, 101, 0.07);
+  color: #f8e7c0;
+  line-height: 1.6;
+}
+
+.raid-result-guide {
+  margin: 0 0 18px;
+  color: rgba(229, 231, 235, 0.62);
+  font-size: 0.8rem;
+}
+
+.raid-certificate-label {
+  margin: 6px 0 10px;
+  text-align: center;
+  color: #f2d08b;
+  font-weight: 800;
+}
+
+.raid-certificate {
+  position: relative;
+  overflow: hidden;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px 34px 28px;
+  color: #3e2410;
+  border-radius: 12px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+.raid-certificate.parchment {
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255, 248, 205, 0.82), transparent 22%),
+    radial-gradient(circle at 80% 20%, rgba(162, 91, 35, 0.2), transparent 26%),
+    linear-gradient(135deg, #f1d9a2, #d8aa62 46%, #f0d094);
+  border: 2px solid rgba(92, 48, 17, 0.45);
+}
+
+.raid-certificate::before,
+.raid-certificate::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(88, 48, 20, 0.36);
+  pointer-events: none;
+}
+
+.raid-certificate::after {
+  inset: 18px;
+  border-style: dashed;
+  opacity: 0.45;
+}
+
+.certificate-header,
+.certificate-grade,
+.certificate-grid,
+.certificate-note {
+  position: relative;
+  z-index: 1;
+}
+
+.certificate-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  border-bottom: 2px solid rgba(87, 47, 16, 0.35);
+  padding-bottom: 14px;
+}
+
+.certificate-mark {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(91, 48, 18, 0.46);
+  color: #75410f;
+}
+
+.certificate-header h3 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: -0.04em;
+  color: #3e210c;
+}
+
+.certificate-header p {
+  margin: 4px 0 0;
+  color: rgba(62, 33, 12, 0.76);
+  font-weight: 700;
+}
+
+.certificate-grade {
+  margin: 14px 0;
+  text-align: center;
+  font-weight: 800;
+}
+
+.certificate-grade strong {
+  margin-left: 7px;
+  color: #a3321b;
+  font-size: 1.3rem;
+}
+
+.certificate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  border-top: 1px solid rgba(87, 47, 16, 0.28);
+  padding-top: 13px;
+}
+
+.certificate-grid + .certificate-grid {
+  margin-top: 12px;
+}
+
+.certificate-grid h4 {
+  margin: 0 0 8px;
+  color: #5c3211;
+  font-size: 1rem;
+}
+
+.certificate-grid p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 4px 0;
+  font-size: 0.92rem;
+}
+
+.certificate-grid strong {
+  color: #2f1a09;
+}
+
+.certificate-grid.result strong:not(.certificate-verdict) {
+  color: #0f5791;
+  font-size: 1.15rem;
+}
+
+.certificate-verdict {
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.certificate-verdict.possible { color: #1f7a42; }
+.certificate-verdict.maybe { color: #a56b09; }
+.certificate-verdict.hard { color: #a42d1d; }
+.certificate-verdict.pending { color: #704016; }
+
+.certificate-note {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(87, 47, 16, 0.28);
+  color: rgba(62, 33, 12, 0.78);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.raid-save-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: min(460px, 100%);
+  min-height: 50px;
+  margin: 16px auto 0;
+  color: #e9f4ff;
+  background: linear-gradient(135deg, #294b76, #172b48);
+  border: 1px solid rgba(141, 184, 237, 0.34);
+  box-shadow: 0 14px 28px rgba(24, 70, 119, 0.22);
+}
+
+.raid-save-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.raid-save-button.saving::after {
+  content: " 저장 중...";
+}
+
+@media (max-width: 1180px) {
+  .raid-request-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .raid-form-grid,
+  .raid-form-grid.three,
+  .raid-form-grid.four,
+  .raid-extra-grid,
+  .raid-result-summary,
+  .certificate-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .raid-request-actions {
+    flex-direction: column;
+  }
+
+  .raid-sub-button {
+    min-height: 44px;
+  }
+
+  .raid-certificate {
+    padding: 24px 22px;
+  }
+
+  .certificate-header h3 {
+    font-size: 1.55rem;
+  }
+}
