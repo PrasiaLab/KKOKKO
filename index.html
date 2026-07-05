@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="./css/guild-ranking.css">
   <link rel="stylesheet" href="./css/guild-analysis.css">
   <link rel="stylesheet" href="./css/class-analysis.css">
+  <link rel="stylesheet" href="./css/raid-request.css">
   <link rel="stylesheet" href="./css/admin-auth.css">
 </head>
 <body>
@@ -69,8 +70,8 @@
 
         <p class="menu-section-title">CONTENTS</p>
         <button class="side-menu-item" data-page="review">
-          <span>▶</span>
-          리뷰 방송
+          <span>✦</span>
+          토벌의뢰서
         </button>
         <button class="side-menu-item" data-page="raid">
           <span>◆</span>
@@ -674,28 +675,227 @@
       </section>
 
       <section class="page" id="review">
-        <div class="page-heading simple">
+        <div class="page-heading simple raid-request-heading">
           <div>
-            <p class="eyebrow">REVIEW LIVE</p>
-            <h1>리뷰 방송</h1>
+            <p class="eyebrow">KOKKO RAID REQUEST</p>
+            <h1>토벌의뢰서</h1>
             <p class="page-description">
-              쟁 리뷰와 콘텐츠 리뷰 방송 중 주요 영상 6개를 확인합니다.
+              토벌 의뢰 전, 현재 스펙으로 기본 조건을 충족하는지 확인하고 스펙 확인증을 PNG로 저장합니다.
             </p>
           </div>
+          <span class="site-badge raid-request-badge">맛나는꼬꼬 의뢰용</span>
         </div>
 
-        <div class="content-panel video-board-panel">
-          <div class="video-grid six-video-grid" id="reviewVideoGrid"></div>
+        <div class="raid-request-layout">
+          <form class="content-panel raid-request-form" id="raidRequestForm">
+            <div class="raid-request-section-title">
+              <span>1</span>
+              <div>
+                <strong>토벌등급</strong>
+                <p>의뢰할 토벌 등급만 기준으로 판정합니다.</p>
+              </div>
+            </div>
 
-          <a
-            class="youtube-more-button"
-            href="https://www.youtube.com/@%EB%A7%9B%EB%82%98%EB%8A%94%EA%BC%AC%EA%BC%AC"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            더 많은 리뷰 방송은 유튜브에서 보기
-            <span>↗</span>
-          </a>
+            <div class="raid-form-grid compact">
+              <label class="raid-field">
+                <span>토벌</span>
+                <select id="requestGrade" name="grade">
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25" selected>25</option>
+                  <option value="26">26</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="raid-request-section-title">
+              <span>2</span>
+              <div>
+                <strong>기본정보</strong>
+                <p>클래스를 선택하면 주력 스탠스 선택지가 자동으로 바뀝니다.</p>
+              </div>
+            </div>
+
+            <div class="raid-form-grid three">
+              <label class="raid-field">
+                <span>클래스</span>
+                <select id="requestClass" name="className">
+                  <option value="주문각인사">주문각인사</option>
+                  <option value="향사수" selected>향사수</option>
+                  <option value="야만투사">야만투사</option>
+                  <option value="집행관">집행관</option>
+                  <option value="환영검사">환영검사</option>
+                  <option value="태양감시자">태양감시자</option>
+                  <option value="심연추방자">심연추방자</option>
+                </select>
+              </label>
+
+              <label class="raid-field">
+                <span>주력 스탠스</span>
+                <select id="requestStance" name="stance"></select>
+              </label>
+
+              <label class="raid-field">
+                <span>주 스탠스 전투력</span>
+                <input id="requestPower" name="power" type="number" inputmode="numeric" min="0" placeholder="예: 183500">
+              </label>
+            </div>
+
+            <div class="raid-request-section-title">
+              <span>3</span>
+              <div>
+                <strong>기본스텟</strong>
+                <p>공격력, 방어력, 스피율, 치명타를 입력합니다.</p>
+              </div>
+            </div>
+
+            <div class="raid-form-grid four">
+              <label class="raid-field"><span>공격력</span><input id="requestAttack" type="number" inputmode="numeric" min="0"></label>
+              <label class="raid-field"><span>방어력</span><input id="requestDefense" type="number" inputmode="numeric" min="0"></label>
+              <label class="raid-field"><span>스피율</span><input id="requestSpeed" type="number" inputmode="decimal" min="0" step="0.1"></label>
+              <label class="raid-field"><span>치명타</span><input id="requestCritical" type="number" inputmode="numeric" min="0"></label>
+            </div>
+
+            <div class="raid-request-section-title">
+              <span>4</span>
+              <div>
+                <strong>명중계산</strong>
+                <p>명중과 스킬명중은 일반 몬스터 명중, 소마 명중, 기타 보정값을 합산합니다.</p>
+              </div>
+            </div>
+
+            <div class="raid-form-grid three">
+              <label class="raid-field"><span>명중</span><input id="requestHit" type="number" inputmode="numeric" min="0"></label>
+              <label class="raid-field"><span>클래스명중<span class="mini">원거리/근거리</span></span><input id="requestClassHit" type="number" inputmode="numeric" min="0"></label>
+              <label class="raid-field"><span>스킬 명중</span><input id="requestSkillHit" type="number" inputmode="numeric" min="0"></label>
+              <label class="raid-field"><span>소마 명중</span><input id="requestSomaHit" type="number" inputmode="numeric" min="0"></label>
+              <label class="raid-field"><span>일반 몬스터 명중</span><input id="requestMonsterHit" type="number" inputmode="numeric" min="0"></label>
+            </div>
+
+            <div class="raid-request-section-title">
+              <span>5</span>
+              <div>
+                <strong>기타</strong>
+                <p>전설 명사수와 봉인전 가능 여부를 선택합니다.</p>
+              </div>
+            </div>
+
+            <div class="raid-extra-grid">
+              <label class="raid-check-card">
+                <input id="requestMarksman" type="checkbox">
+                <span>전설 명사수</span>
+                <small>명중 +21 / 스킬명중 +17</small>
+              </label>
+              <label class="raid-check-card">
+                <input id="requestSeal" type="checkbox">
+                <span>봉인전 가능여부</span>
+                <small>명중 +5</small>
+              </label>
+            </div>
+
+            <div class="raid-request-actions">
+              <button class="raid-main-button" type="submit">
+                <span>⚔</span>
+                토벌의뢰 가능여부 확인하기
+              </button>
+              <button class="raid-sub-button" id="raidRequestReset" type="button">초기화</button>
+            </div>
+          </form>
+
+          <section class="content-panel raid-request-result-panel">
+            <div class="raid-result-topline">
+              <div>
+                <p class="panel-kicker">REQUEST RESULT</p>
+                <h2>의뢰 가능여부 결과</h2>
+              </div>
+              <span id="raidResultStamp">입력 대기 중</span>
+            </div>
+
+            <div class="raid-result-summary" id="raidResultSummary">
+              <div class="raid-result-numbers">
+                <p><span>최종 명중</span><strong id="finalHit">-</strong></p>
+                <p><span>최종 스킬명중</span><strong id="finalSkillHit">-</strong></p>
+                <p><span id="needHitLabel">필요 명중</span><strong id="needHit">-</strong></p>
+                <p><span id="needSkillLabel">필요 스킬명중</span><strong id="needSkillHit">-</strong></p>
+              </div>
+              <div class="raid-verdict-card pending" id="raidVerdictCard">
+                <span>최종 판정</span>
+                <strong id="raidVerdictText">확인 전</strong>
+              </div>
+            </div>
+
+            <div class="raid-result-message" id="raidResultMessage">
+              토벌 등급과 스펙을 입력한 뒤 확인 버튼을 눌러 주세요.
+            </div>
+
+            <p class="raid-result-guide">
+              판정 기준: 필요 수치 이상은 의뢰 가능, -5~-10 정도 부족은 가능성 있음, 차이가 크면 어려움으로 안내합니다.
+            </p>
+
+            <div class="raid-certificate-wrap">
+              <div class="raid-certificate-label">토벌 스펙 확인증 미리보기</div>
+              <article class="raid-certificate parchment" id="raidCertificate">
+                <div class="certificate-corner tl"></div>
+                <div class="certificate-corner tr"></div>
+                <div class="certificate-corner bl"></div>
+                <div class="certificate-corner br"></div>
+                <div class="certificate-header">
+                  <span class="certificate-mark">✦</span>
+                  <div>
+                    <h3>토벌 스펙 확인증</h3>
+                    <p>맛나는꼬꼬 토벌 의뢰용</p>
+                  </div>
+                </div>
+
+                <div class="certificate-grade">
+                  의뢰 토벌 등급 <strong id="certGrade">25</strong>
+                </div>
+
+                <div class="certificate-grid">
+                  <div>
+                    <h4>기본정보</h4>
+                    <p><span>클래스</span><strong id="certClass">향사수</strong></p>
+                    <p><span>주력 스탠스</span><strong id="certStance">장궁</strong></p>
+                    <p><span>전투력</span><strong id="certPower">-</strong></p>
+                  </div>
+                  <div>
+                    <h4>기본스텟</h4>
+                    <p><span>공격력</span><strong id="certAttack">-</strong></p>
+                    <p><span>방어력</span><strong id="certDefense">-</strong></p>
+                    <p><span>스피율</span><strong id="certSpeed">-</strong></p>
+                    <p><span>치명타</span><strong id="certCritical">-</strong></p>
+                  </div>
+                </div>
+
+                <div class="certificate-grid result">
+                  <div>
+                    <h4>계산 결과</h4>
+                    <p><span>최종 명중</span><strong id="certFinalHit">-</strong></p>
+                    <p><span>최종 스킬명중</span><strong id="certFinalSkillHit">-</strong></p>
+                  </div>
+                  <div>
+                    <h4>최종 판정</h4>
+                    <strong class="certificate-verdict pending" id="certVerdict">확인 전</strong>
+                  </div>
+                </div>
+
+                <div class="certificate-note" id="certNote">
+                  본 확인증은 토벌 의뢰 전 참고용이며, 최종 가능 여부는 실제 진행 상황에 따라 달라질 수 있습니다.
+                </div>
+              </article>
+
+              <button class="raid-save-button" id="raidSaveButton" type="button" disabled>
+                <span>▣</span>
+                스펙정보 저장하기
+              </button>
+            </div>
+          </section>
         </div>
       </section>
 
@@ -965,6 +1165,7 @@
   <script src="./js/guild-search.js"></script>
   <script src="./js/guild-ranking.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="./js/raid-request.js"></script>
   <script src="./js/guild-analysis.js"></script>
   <script src="./js/calendar.js"></script>
   <script type="module" src="./js/firebase-content.js"></script>
