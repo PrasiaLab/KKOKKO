@@ -112,6 +112,25 @@
     };
   }
 
+  function renderCertificateVerdict(result) {
+    const certVerdict = $("certVerdict");
+    if (!certVerdict) return;
+
+    certVerdict.className = `certificate-verdict ${result.key}`;
+
+    if (result.key === "possible") {
+      certVerdict.innerHTML = '<span class="stamp-sub">명중 조건</span><span class="stamp-main">충족</span>';
+      return;
+    }
+
+    if (result.key === "hard") {
+      certVerdict.innerHTML = '<span class="stamp-sub">명중 조건</span><span class="stamp-main">불충족</span>';
+      return;
+    }
+
+    certVerdict.innerHTML = '<span class="stamp-main">확인 전</span>';
+  }
+
   function syncCertificate(data, result) {
     const pending = result.key === "pending";
 
@@ -125,11 +144,9 @@
     setText("certCritical", data.critical ? fmt(data.critical) : "-");
     setText("certFinalHit", pending ? "-" : fmt(data.finalHit));
     setText("certFinalSkillHit", pending ? "-" : fmt(data.finalSkill));
-    setText("certVerdict", result.label);
     setText("certNote", result.message);
 
-    const certVerdict = $("certVerdict");
-    certVerdict.className = `certificate-verdict ${result.key}`;
+    renderCertificateVerdict(result);
   }
 
   function renderResult() {
