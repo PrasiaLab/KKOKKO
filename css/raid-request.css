@@ -361,26 +361,14 @@
 }
 
 .certificate-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
+  display: block;
   text-align: center;
   padding-bottom: 26px;
   border-bottom: 2px solid rgba(111, 79, 42, 0.33);
 }
 
 .certificate-mark {
-  display: inline-flex;
-  width: 62px;
-  height: 62px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: 2px solid rgba(120, 85, 48, 0.46);
-  color: #7b4b20;
-  font-size: 1.3rem;
-  flex: 0 0 auto;
+  display: none;
 }
 
 .certificate-header h3 {
@@ -415,7 +403,7 @@
 .certificate-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px 28px;
+  gap: 22px 20px;
   border-top: 1px solid rgba(105, 71, 36, 0.28);
   padding-top: 22px;
 }
@@ -426,7 +414,7 @@
 
 .certificate-grid > div {
   width: 100%;
-  max-width: 270px;
+  max-width: 294px;
   justify-self: center;
 }
 
@@ -460,7 +448,22 @@
 
 .certificate-grid.result {
   align-items: start;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 22px 10px;
+}
+
+.certificate-grid.result > div:first-child {
+  max-width: 290px;
+}
+
+.certificate-grid.result > div:last-child {
+  max-width: 340px;
+  justify-self: center;
+  text-align: center;
+}
+
+.certificate-grid.result > div:last-child h4 {
+  text-align: center;
 }
 
 .certificate-grid.result strong:not(.certificate-verdict) {
@@ -469,9 +472,9 @@
 }
 
 .certificate-verdict {
-  width: 186px;
-  height: 186px;
-  margin: 12px auto 0;
+  width: 214px;
+  height: 214px;
+  margin: 14px auto 0;
   border-radius: 50%;
   border: 4px solid currentColor;
   display: flex;
@@ -505,13 +508,13 @@
 
 .certificate-verdict .stamp-sub {
   display: block;
-  font-size: 0.98rem;
-  letter-spacing: 0.06em;
+  font-size: 1.08rem;
+  letter-spacing: 0.05em;
 }
 
 .certificate-verdict .stamp-main {
   display: block;
-  font-size: 2.2rem;
+  font-size: 2.6rem;
   letter-spacing: -0.02em;
 }
 
@@ -613,13 +616,7 @@
   }
 
   .certificate-header {
-    gap: 12px;
     padding-bottom: 20px;
-  }
-
-  .certificate-mark {
-    width: 52px;
-    height: 52px;
   }
 
   .certificate-header h3 {
@@ -659,13 +656,17 @@
     font-size: 1.05rem;
   }
 
+  .certificate-grid.result > div:last-child {
+    max-width: none;
+  }
+
   .certificate-grid.result strong:not(.certificate-verdict) {
     font-size: 1.34rem;
   }
 
   .certificate-verdict {
-    width: 154px;
-    height: 154px;
+    width: 166px;
+    height: 166px;
     margin-top: 10px;
     gap: 6px;
   }
