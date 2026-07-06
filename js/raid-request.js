@@ -28,9 +28,7 @@
   const $ = (id) => document.getElementById(id);
   const form = $("raidRequestForm");
 
-  if (!form) {
-    return;
-  }
+  if (!form) return;
 
   const numberIds = [
     "requestPower",
@@ -51,48 +49,30 @@
   }
 
   function fmt(value) {
-    if (value === "" || value === null || value === undefined) {
-      return "-";
-    }
+    if (value === "" || value === null || value === undefined) return "-";
     const numeric = Number(value);
-    if (!Number.isFinite(numeric)) {
-      return value;
-    }
+    if (!Number.isFinite(numeric)) return value;
     return numeric.toLocaleString("ko-KR");
   }
 
   function setText(id, value) {
     const element = $(id);
-    if (element) {
-      element.textContent = value;
-    }
+    if (element) element.textContent = value;
   }
 
   function updateStances() {
     const className = $("requestClass").value;
     const stanceSelect = $("requestStance");
     const stances = stanceMap[className] || [];
-
-    stanceSelect.innerHTML = stances
-      .map((stance) => `<option value="${stance}">${stance}</option>`)
-      .join("");
+    stanceSelect.innerHTML = stances.map((stance) => `<option value="${stance}">${stance}</option>`).join("");
   }
 
   function getInputData() {
     const grade = Number($("requestGrade").value);
     const marksman = $("requestMarksman").checked;
     const seal = $("requestSeal").checked;
-    const finalHit =
-      n("requestHit") +
-      n("requestClassHit") +
-      n("requestSomaHit") +
-      n("requestMonsterHit") +
-      (marksman ? 21 : 0) +
-      (seal ? 5 : 0);
-    const finalSkill =
-      n("requestSkillHit") +
-      n("requestMonsterHit") +
-      (marksman ? 17 : 0);
+    const finalHit = n("requestHit") + n("requestClassHit") + n("requestSomaHit") + n("requestMonsterHit") + (marksman ? 21 : 0) + (seal ? 5 : 0);
+    const finalSkill = n("requestSkillHit") + n("requestMonsterHit") + (marksman ? 17 : 0);
 
     return {
       grade,
@@ -105,9 +85,7 @@
       speed: n("requestSpeed"),
       critical: n("requestCritical"),
       finalHit,
-      finalSkill,
-      marksman,
-      seal
+      finalSkill
     };
   }
 
@@ -180,6 +158,7 @@
       const input = $(id);
       if (input) input.value = "";
     });
+
     $("requestGrade").value = "25";
     $("requestClass").value = "향사수";
     $("requestMarksman").checked = false;
@@ -205,6 +184,16 @@
     });
   }
 
+  async function waitForFonts() {
+    if (document.fonts && document.fonts.ready) {
+      try {
+        await document.fonts.ready;
+      } catch (e) {
+        // ignore font readiness issues
+      }
+    }
+  }
+
   async function saveCertificate() {
     const target = $("raidCertificate");
     const button = $("raidSaveButton");
@@ -219,32 +208,27 @@
     target.classList.add("exporting");
 
     try {
-      const renderOptions = {
-        backgroundColor: "#e3bc77",
+      await waitForFonts();
+      await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+
+      const canvas = await window.html2canvas(target, {
+        backgroundColor: null,
         scale: Math.max(2, Math.min(window.devicePixelRatio || 2, 3)),
         useCORS: true,
-        allowTaint: true,
         imageTimeout: 0,
-        logging: false,
-        scrollX: 0,
-        scrollY: 0,
-        onclone: (doc) => {
+        onclone: async (doc) => {
+          if (doc.fonts && doc.fonts.ready) {
+            try {
+              await doc.fonts.ready;
+            } catch (e) {}
+          }
           const clone = doc.getElementById("raidCertificate");
           if (clone) {
             clone.classList.add("exporting");
             clone.style.margin = "0";
-            clone.style.opacity = "1";
-            clone.style.transform = "none";
-            clone.style.filter = "saturate(1.08) contrast(1.04) brightness(1.02)";
           }
         }
-      };
-
-      const canvas = await window.html2canvas(target, renderOptions);
-
-      if (!canvas || !canvas.width || !canvas.height) {
-        throw new Error("empty canvas");
-      }
+      });
 
       const link = document.createElement("a");
       const grade = $("requestGrade").value;
