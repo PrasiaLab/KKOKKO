@@ -1472,10 +1472,9 @@ button {
 .nickname-status-list-head,
 .nickname-status-list-row {
   display:grid;
-  grid-template-columns:140px minmax(0,1fr);
+  grid-template-columns:repeat(2,minmax(0,1fr));
   align-items:center;
-  justify-content:start;
-  gap:12px;
+  gap:0;
   padding:13px 16px
 }
 
@@ -1484,7 +1483,8 @@ button {
   background:#20252d;
   color:#9fb9e2;
   font-size:12px;
-  font-weight:950
+  font-weight:950;
+  text-align:center
 }
 
 .nickname-status-list-row {
@@ -1503,11 +1503,15 @@ button {
 }
 
 .nickname-status-server {
-  color:#9cc6ff
+  width:100%;
+  color:#9cc6ff;
+  text-align:center
 }
 
 .nickname-status-name {
-  color:#fff
+  width:100%;
+  color:#fff;
+  text-align:center
 }
 
 .nickname-status-notes {
