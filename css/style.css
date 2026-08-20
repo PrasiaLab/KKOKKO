@@ -1472,9 +1472,10 @@ button {
 .nickname-status-list-head,
 .nickname-status-list-row {
   display:grid;
-  grid-template-columns:minmax(140px,.9fr) minmax(180px,1.1fr);
+  grid-template-columns:140px minmax(0,1fr);
   align-items:center;
-  gap:14px;
+  justify-content:start;
+  gap:12px;
   padding:13px 16px
 }
 
