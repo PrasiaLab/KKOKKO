@@ -1461,6 +1461,54 @@ button {
   color:#f0b5b5
 }
 
+.nickname-status-list {
+  margin-top:12px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#12171d
+}
+
+.nickname-status-list-head,
+.nickname-status-list-row {
+  display:grid;
+  grid-template-columns:minmax(140px,.9fr) minmax(180px,1.1fr);
+  align-items:center;
+  gap:14px;
+  padding:13px 16px
+}
+
+.nickname-status-list-head {
+  border-bottom:1px solid var(--line);
+  background:#20252d;
+  color:#9fb9e2;
+  font-size:12px;
+  font-weight:950
+}
+
+.nickname-status-list-row {
+  border-bottom:1px solid rgba(255,255,255,.06);
+  color:#edf2f7;
+  font-size:14px;
+  font-weight:800
+}
+
+.nickname-status-list-row:last-child {
+  border-bottom:0
+}
+
+.nickname-status-list-row:hover {
+  background:rgba(255,255,255,.025)
+}
+
+.nickname-status-server {
+  color:#9cc6ff
+}
+
+.nickname-status-name {
+  color:#fff
+}
+
 .nickname-status-notes {
   margin-top:20px;
   padding-top:17px;
