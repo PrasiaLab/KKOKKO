@@ -318,13 +318,34 @@ fetch("./data/videos.json", {
   const form = document.getElementById("nicknameStatusForm");
   const input = document.getElementById("nicknameStatusInput");
   const result = document.getElementById("nicknameStatusResult");
+  const list = document.getElementById("nicknameStatusList");
+  const listBody = document.getElementById("nicknameStatusListBody");
 
-  if (!openButton || !nicknameModal || !closeButton || !form || !input || !result) {
+  if (!openButton || !nicknameModal || !closeButton || !form || !input || !result || !list || !listBody) {
     return;
   }
 
   const dataUrl = "./data/Who_are_you_class.json";
-  let nicknameCountPromise = null;
+  let nicknameDataPromise = null;
+
+  function normalizeText(value) {
+    return typeof value === "string" ? value.trim() : "";
+  }
+
+  function normalizeKey(value) {
+    return normalizeText(value).toLowerCase();
+  }
+
+  function formatServer(world) {
+    const code = normalizeText(world);
+    const serverMap = window.PRASIA_MAPPINGS?.servers || {};
+    return serverMap[code] || code || "-";
+  }
+
+  function clearList() {
+    list.hidden = true;
+    listBody.replaceChildren();
+  }
 
   function setResult(message, options = {}) {
     const { error = false, nickname = "", count = null } = options;
@@ -346,12 +367,36 @@ fetch("./data/videos.json", {
     result.textContent = message;
   }
 
-  function loadNicknameCounts() {
-    if (nicknameCountPromise) {
-      return nicknameCountPromise;
+  function renderList(items) {
+    listBody.replaceChildren();
+
+    const fragment = document.createDocumentFragment();
+    items.forEach((item) => {
+      const row = document.createElement("div");
+      row.className = "nickname-status-list-row";
+
+      const server = document.createElement("span");
+      server.className = "nickname-status-server";
+      server.textContent = formatServer(item?.world);
+
+      const name = document.createElement("span");
+      name.className = "nickname-status-name";
+      name.textContent = normalizeText(item?.name) || "-";
+
+      row.append(server, name);
+      fragment.appendChild(row);
+    });
+
+    listBody.appendChild(fragment);
+    list.hidden = false;
+  }
+
+  function loadNicknameData() {
+    if (nicknameDataPromise) {
+      return nicknameDataPromise;
     }
 
-    nicknameCountPromise = fetch(dataUrl, { cache: "no-store" })
+    nicknameDataPromise = fetch(dataUrl, { cache: "no-store" })
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}`);
@@ -362,27 +407,14 @@ fetch("./data/videos.json", {
         if (!data || !Array.isArray(data.rankings)) {
           throw new Error("Invalid ranking data");
         }
-
-        const counts = new Map();
-
-        data.rankings.forEach((character) => {
-          const name = typeof character?.name === "string"
-            ? character.name.trim()
-            : "";
-
-          if (name) {
-            counts.set(name, (counts.get(name) || 0) + 1);
-          }
-        });
-
-        return counts;
+        return data.rankings;
       })
       .catch((error) => {
-        nicknameCountPromise = null;
+        nicknameDataPromise = null;
         throw error;
       });
 
-    return nicknameCountPromise;
+    return nicknameDataPromise;
   }
 
   function isValidNickname(value) {
@@ -420,6 +452,7 @@ fetch("./data/videos.json", {
     event.preventDefault();
 
     const nickname = input.value.trim();
+    clearList();
 
     if (!nickname) {
       setResult("닉네임을 입력해 주세요.", { error: true });
@@ -439,20 +472,26 @@ fetch("./data/videos.json", {
     setResult("랭킹 데이터를 확인하고 있습니다.");
 
     try {
-      const counts = await loadNicknameCounts();
-      const count = counts.get(nickname) || 0;
+      const characters = await loadNicknameData();
+      const target = normalizeKey(nickname);
+      const matches = characters
+        .filter((character) => normalizeKey(character?.name) === target)
+        .sort((a, b) => {
+          const serverA = formatServer(a?.world);
+          const serverB = formatServer(b?.world);
+          return serverA.localeCompare(serverB, "ko-KR");
+        });
 
-      if (count === 0) {
-        setResult(
-          `검색한 닉네임 ‘${nickname}’은 현재 랭킹 데이터에서 확인되지 않습니다.`,
-          { error: false }
-        );
+      if (!matches.length) {
+        setResult(`검색한 닉네임 ‘${nickname}’은 현재 랭킹 데이터에서 확인되지 않습니다.`);
         return;
       }
 
-      setResult("", { nickname, count });
+      setResult("", { nickname, count: matches.length });
+      renderList(matches);
     } catch (error) {
       console.error("닉네임 현황 데이터를 불러오지 못했습니다.", error);
+      clearList();
       setResult(
         "랭킹 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
         { error: true }
